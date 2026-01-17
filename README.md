@@ -1,127 +1,248 @@
-# claude-plugin-template
+# Human Voice Plugin
 
-A ready-to-fork template for building a **Claude Code “plugin”** using:
+A Claude Code plugin that detects and prevents AI-generated writing patterns to ensure authentic, professional human voice in all content.
 
-- **Claude Code project assets**: `.claude/commands`, `.claude/hooks`, `.claude/settings.json`
-- **MCP server** (Model Context Protocol) in **TypeScript** using stdio transport
-- **Team automation** in `.github/` (CI, templates, Copilot prompts/instructions)
+## Features
 
-## Quickstart
+- **Multi-tier pattern detection**: Character, language, structural, and voice analysis
+- **Automated character fixes**: Auto-fix em dashes, smart quotes, emojis
+- **Proactive review**: Agent triggers after content creation/editing
+- **Interactive setup**: Configuration wizard for project-specific settings
+- **Configurable**: Customize file types, directories, and detection tiers
 
-```bash
-npm install
-npm run typecheck
-npm run build
-```
+## Installation
 
-Run the MCP server locally:
+### From GitHub
 
 ```bash
-npm run dev
-# or
-npm run start
+claude plugin install zircote/human-voice
 ```
 
-## Fork checklist (rename it once)
+### Manual Installation
 
-- Rename the package in `package.json` and the server name/version in `src/index.ts`.
-- Update the `.mcp.json` server key (`mcpServers.<name>`) to match.
-
-## Using with Claude Code (recommended)
-
-1) Build the server:
+Clone and add to Claude Code:
 
 ```bash
-npm run build
+git clone https://github.com/zircote/human-voice.git
+claude --plugin-dir /path/to/human-voice
 ```
 
-2) Ensure `.mcp.json` exists at repo root (it does in this template):
+Or copy to your project's `.claude-plugin/` directory.
 
-```json
-{
-  "mcpServers": {
-    "claude-plugin-template": {
-      "type": "stdio",
-      "command": "node",
-      "args": ["dist/index.js"],
-      "env": {}
-    }
-  }
-}
-```
+## Prerequisites
 
-3) Add/enable the MCP server in Claude Code.
+- Claude Code CLI
+- Node.js 18+ (for validation scripts)
 
-If you use the CLI, the flow is typically:
+## Components
+
+| Component | Name | Purpose |
+|-----------|------|---------|
+| Skill | human-voice | Core detection patterns and writing guidelines |
+| Command | `/human-voice:setup` | Interactive configuration wizard |
+| Command | `/human-voice:review [path]` | Analyze content for AI patterns |
+| Command | `/human-voice:fix [path]` | Auto-fix character-level issues |
+| Agent | voice-reviewer | Proactive content review after edits |
+
+## Usage
+
+### Quick Start
 
 ```bash
-claude mcp add claude-plugin-template -- node dist/index.js
-claude mcp list
+# Set up configuration for your project
+/human-voice:setup
+
+# Review content for AI patterns
+/human-voice:review docs
+
+# Auto-fix character issues
+/human-voice:fix docs --dry-run
 ```
 
-Docs: https://code.claude.com/docs/en/mcp
+### Skill Triggers
 
-## Using with Claude Desktop
+The skill loads automatically when you say:
+- "review for AI patterns"
+- "make this sound human"
+- "check for AI writing"
+- "ai slop detection"
+- "fix AI voice"
+- "improve writing voice"
 
-Claude Desktop MCP servers are typically configured in `claude_desktop_config.json`.
-Common location (macOS): `~/Library/Application Support/Claude/claude_desktop_config.json`.
-Docs: https://modelcontextprotocol.io/docs/develop/connect-local-servers
+### Commands
 
-## What’s included
-
-### 1) MCP server (`src/index.ts`)
-
-This template exposes:
-- Tool: `hello({ name })` → returns “Hello, <name>!”
-- Resource: `template://readme`
-
-Add more tools/resources in `src/index.ts`.
-
-### 2) Claude Code commands (`.claude/commands/*`)
-
-Examples included:
-- `/setup` – install + build sanity check
-- `/mcp [dev|build|start]` – run the MCP server
-- `/github:pr-review <owner/repo#PR>` – review a PR with `gh`
-
-Reminder: nested folders create namespaces, e.g. `.claude/commands/github/pr-review.md` ⇒ `/github:pr-review`.
-Docs: https://code.claude.com/docs/en/slash-commands
-
-### 3) Claude Code hooks (`.claude/settings.json` + `.claude/hooks/*`)
-
-This template includes a minimal **PreToolUse** Bash guard hook that blocks obviously-dangerous shell commands.
-Docs: https://code.claude.com/docs/en/hooks
-
-### 4) “Skills” (`skills/*`)
-
-Put durable team guidance here: conventions, how-to, runbooks.
-
-### 5) GitHub automation (`.github/*`)
-
-- CI (`.github/workflows/ci.yml`) runs `npm ci`, `typecheck`, `build`.
-- Issue templates + PR template.
-- Copilot instructions and reusable prompts.
-
-## Developing new features
-
-### Add a new MCP tool
-
-1) Add `server.tool(...)` in `src/index.ts`.
-2) Run:
-
-```bash
-npm run typecheck
-npm run build
+**Set up configuration:**
+```
+/human-voice:setup
 ```
 
-### Add a new slash command
+Detects project structure, content directories, and creates `.claude/human-voice.local.md` with your preferences.
 
-Create: `.claude/commands/<name>.md`
+**Review content for AI patterns:**
+```
+/human-voice:review docs           # review specific directory
+/human-voice:review content/blog   # review specific path
+/human-voice:review                # auto-detects content directories
+```
 
-Use YAML frontmatter to set `description` and restrict tools via `allowed-tools`.
+**Auto-fix character issues:**
+```
+/human-voice:fix docs              # apply fixes to directory
+/human-voice:fix --dry-run docs    # preview changes first
+/human-voice:fix                   # auto-detect and fix
+```
 
-## Security checklist
+### Agent
 
-- Never commit tokens or API keys.
-- Prefer `env` entries in `.mcp.json` and local overrides in `.claude/settings.local.json`.
-- Keep hooks fail-open unless you’re confident about payload compatibility.
+The `voice-reviewer` agent triggers:
+- **Proactively**: After Write/Edit operations on .md/.mdx files
+- **On request**: When you ask to review content voice
+
+## Detection Tiers
+
+### Tier 1: Character Patterns (Automated)
+
+| Character | Unicode | Replacement |
+|-----------|---------|-------------|
+| Em dash (--) | U+2014 | Period, comma, colon |
+| En dash (-) | U+2013 | Hyphen |
+| Smart quotes | U+201C/D, U+2018/9 | Straight quotes |
+| Ellipsis (...) | U+2026 | Three periods |
+| Emojis | Various | Remove |
+
+### Tier 2: Language Patterns (Manual)
+
+- **Buzzwords**: delve, realm, pivotal, harness, revolutionize, seamlessly
+- **Hedging**: "it's worth noting", "generally speaking", "arguably"
+- **Filler**: "in order to", "due to the fact", "at this point in time"
+
+### Tier 3: Structural Patterns
+
+- List addiction (everything as bullets)
+- Rule of three overuse
+- "From X to Y" constructions
+- Monotonous sentence structure
+
+### Tier 4: Voice Patterns
+
+- Passive voice overuse
+- Generic analogies
+- Meta-commentary ("In this article...")
+- Perfect grammar with shallow insights
+
+## Configuration
+
+Run `/human-voice:setup` for interactive configuration, or create `.claude/human-voice.local.md` manually.
+
+See `templates/human-voice.local.md.example` for a complete example.
+
+### Basic Configuration
+
+```yaml
+---
+extensions:
+  - .md
+  - .mdx
+  - .txt
+content_directories:
+  - _posts
+  - content
+  - docs
+---
+```
+
+### Full Configuration Options
+
+```yaml
+---
+extensions:
+  - .md
+  - .mdx
+  - .txt
+
+content_directories:
+  - _posts
+  - content
+  - docs
+
+ignore:
+  - "**/node_modules/**"
+  - "**/vendor/**"
+  - "CHANGELOG.md"
+
+detection:
+  character_patterns:
+    enabled: true
+    em_dash: true
+    smart_quotes: true
+    emojis: true
+  language_patterns:
+    enabled: true
+  structural_patterns:
+    enabled: true
+  voice_patterns:
+    enabled: true
+
+fix:
+  dry_run_by_default: true
+  report_format: detailed
+
+output:
+  verbosity: normal
+  format: markdown
+---
+
+# Project Voice Notes
+
+Add project-specific voice guidelines here.
+```
+
+## File Structure
+
+```
+human-voice/
+├── .claude-plugin/
+│   └── plugin.json
+├── agents/
+│   └── voice-reviewer.md
+├── commands/
+│   ├── fix.md
+│   ├── review.md
+│   └── setup.md
+├── skills/
+│   └── human-voice/
+│       ├── SKILL.md
+│       ├── scripts/
+│       │   ├── fix-character-restrictions.js
+│       │   └── validate-character-restrictions.js
+│       ├── references/
+│       │   ├── character-patterns.md
+│       │   ├── language-patterns.md
+│       │   ├── structural-patterns.md
+│       │   └── voice-patterns.md
+│       └── examples/
+│           └── before-after.md
+├── templates/
+│   └── human-voice.local.md.example
+├── LICENSE
+├── CHANGELOG.md
+└── README.md
+```
+
+## Research Sources
+
+Pattern detection based on:
+- [Measuring AI "Slop" in Text](https://arxiv.org/html/2509.19163v1)
+- [The Field Guide to AI Slop](https://www.ignorance.ai/p/the-field-guide-to-ai-slop)
+- [Common AI Words - Grammarly](https://www.grammarly.com/blog/ai/common-ai-words/)
+
+## Contributing
+
+1. Fork the repository
+2. Create a feature branch
+3. Make your changes
+4. Submit a pull request
+
+## License
+
+MIT

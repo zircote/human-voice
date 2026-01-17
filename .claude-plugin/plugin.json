@@ -1,0 +1,20 @@
+{
+  "name": "human-voice",
+  "version": "0.1.0",
+  "description": "Detect and prevent AI-generated writing patterns to ensure authentic human voice in content",
+  "author": {
+    "name": "zircote",
+    "url": "https://github.com/zircote"
+  },
+  "repository": "https://github.com/zircote/human-voice",
+  "homepage": "https://github.com/zircote/human-voice#readme",
+  "license": "MIT",
+  "keywords": [
+    "writing",
+    "ai-detection",
+    "content-quality",
+    "human-voice",
+    "markdown",
+    "documentation"
+  ]
+}

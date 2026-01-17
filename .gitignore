@@ -1,6 +1,10 @@
-node_modules/
-dist/
+# OS files
 .DS_Store
+
+# Environment
 .env
 .env.*
+
+# Claude Code local settings (user-specific)
 .claude/settings.local.json
+.claude/*.local.md

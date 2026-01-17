@@ -2,17 +2,51 @@ name: CI
 
 on:
   push:
+    branches: [main]
   pull_request:
+    branches: [main]
 
 jobs:
-  build:
+  validate:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+
+      - name: Validate plugin.json
+        run: |
+          if [ ! -f ".claude-plugin/plugin.json" ]; then
+            echo "ERROR: .claude-plugin/plugin.json not found"
+            exit 1
+          fi
+          echo "plugin.json found"
+          cat .claude-plugin/plugin.json | python3 -m json.tool > /dev/null
+          echo "plugin.json is valid JSON"
+
+      - name: Validate plugin structure
+        run: |
+          echo "Checking required directories..."
+          for dir in skills commands agents; do
+            if [ -d "$dir" ]; then
+              echo "  Found: $dir/"
+            fi
+          done
+
+          echo "Checking skill structure..."
+          if [ -f "skills/human-voice/SKILL.md" ]; then
+            echo "  Found: skills/human-voice/SKILL.md"
+          else
+            echo "ERROR: skills/human-voice/SKILL.md not found"
+            exit 1
+          fi
+
+      - name: Validate JavaScript syntax
+        uses: actions/setup-node@v4
         with:
           node-version: 20
-          cache: npm
-      - run: npm ci
-      - run: npm run typecheck
-      - run: npm run build
+
+      - name: Check script syntax
+        run: |
+          for script in skills/human-voice/scripts/*.js; do
+            echo "Checking: $script"
+            node --check "$script"
+          done

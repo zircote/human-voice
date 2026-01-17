@@ -1,0 +1,96 @@
+---
+# Human Voice Plugin Configuration
+# Copy this file to: .claude/human-voice.local.md
+
+# File extensions to scan for AI patterns
+extensions:
+  - .md
+  - .mdx
+  - .txt
+
+# Content directories to scan (auto-detected if not specified)
+content_directories:
+  - _posts
+  - content
+  - docs
+  - _docs
+
+# Files/patterns to ignore
+ignore:
+  - "**/node_modules/**"
+  - "**/vendor/**"
+  - "**/.git/**"
+  - "**/dist/**"
+  - "**/build/**"
+  - "CHANGELOG.md"
+  - "**/LICENSE*"
+
+# Detection settings
+detection:
+  # Tier 1: Character patterns (automated fixes available)
+  character_patterns:
+    enabled: true
+    em_dash: true              # U+2014 -> period/comma/colon
+    en_dash: true              # U+2013 -> hyphen
+    smart_quotes: true         # U+201C/D, U+2018/9 -> straight quotes
+    ellipsis: true             # U+2026 -> three periods
+    emojis: true               # Remove emojis
+
+  # Tier 2: Language patterns (manual review)
+  language_patterns:
+    enabled: true
+    buzzwords: true            # delve, realm, pivotal, harness, etc.
+    hedging: true              # "it's worth noting", "generally speaking"
+    filler: true               # "in order to", "due to the fact"
+    meta_commentary: true      # "In this article...", "Let's dive in"
+
+  # Tier 3: Structural patterns (manual review)
+  structural_patterns:
+    enabled: true
+    list_addiction: true       # Everything as bullets
+    rule_of_three: true        # Overuse of triple constructions
+    from_x_to_y: true          # "From X to Y" patterns
+
+  # Tier 4: Voice patterns (manual review)
+  voice_patterns:
+    enabled: true
+    passive_voice: true        # Excessive passive constructions
+    generic_analogies: true    # "Think of it like..."
+    perfect_grammar: true      # Too perfect with shallow insights
+
+# Fix settings
+fix:
+  dry_run_by_default: true     # Always preview before applying
+  backup_files: false          # Create .bak files before modifying
+  report_format: detailed      # minimal, normal, detailed
+
+# Output preferences
+output:
+  verbosity: normal            # minimal, normal, detailed
+  format: markdown             # markdown, json
+  show_line_numbers: true
+  max_results_per_tier: 20     # Limit results to avoid overwhelming output
+---
+
+# Project Voice Notes
+
+Add project-specific voice and style context here.
+This section provides additional context to the voice-reviewer agent.
+
+## Voice Guidelines
+
+- Document your project's preferred writing style
+- Note any terminology or phrasing conventions
+- Reference style guides if applicable
+
+## Exceptions
+
+- List any AI patterns that are acceptable for this project
+- Note files or directories that should use different standards
+- Document any approved buzzwords or phrases
+
+## Areas of Focus
+
+- List areas where voice review is most critical
+- Note any known content that needs attention
+- Highlight documentation with specific voice requirements
