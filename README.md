@@ -1,5 +1,10 @@
 # Human Voice Plugin
 
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
+[![Claude Code Plugin](https://img.shields.io/badge/Claude_Code-Plugin-blueviolet)](https://github.com/anthropics/claude-code)
+[![CI](https://github.com/zircote/human-voice/actions/workflows/ci.yml/badge.svg)](https://github.com/zircote/human-voice/actions/workflows/ci.yml)
+[![Version](https://img.shields.io/badge/version-0.1.0-green.svg)](https://github.com/zircote/human-voice/releases)
+
 A Claude Code plugin that detects and prevents AI-generated writing patterns to ensure authentic, professional human voice in all content.
 
 ## Features
