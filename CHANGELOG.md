@@ -5,6 +5,22 @@ All notable changes to the Human Voice plugin will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.2.0] - 2026-01-17
+
+### Added
+
+- **CLAUDE.md**: Project-level instructions with development guidelines
+- **Subcog Memory Integration**: Optional memory support across all components
+  - Recall existing voice decisions before analysis
+  - Capture findings for future sessions
+  - Graceful degradation when Subcog unavailable
+
+### Changed
+
+- **Skill**: Added optional memory workflow section to `SKILL.md`
+- **Agent**: `voice-reviewer` now supports optional memory context
+- **Commands**: All commands (`fix`, `review`, `setup`) enhanced with optional memory integration
+
 ## [0.1.0] - 2025-01-16
 
 ### Added

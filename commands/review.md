@@ -82,3 +82,13 @@ Run `/human-voice:fix [path]` to auto-fix character issues.
 ```
 
 Load the human-voice skill for detailed pattern reference if needed.
+
+## Memory Integration (Optional)
+
+If Subcog MCP tools are available, enhance the review with persistent context:
+
+**Before reviewing:** Recall existing voice decisions and patterns for this project.
+
+**After reviewing:** If significant findings are identified, suggest capturing them for future sessions.
+
+This integration is optional. Core review functionality works without Subcog.

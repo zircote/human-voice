@@ -59,6 +59,26 @@ After fixing character issues:
 | Bullet (•) | Markdown dash |
 | Emojis | Removed |
 
+## Memory Integration (Optional)
+
+If Subcog MCP tools are available:
+
+**Before fixing:** Recall project-specific exceptions
+```
+subcog_recall: query="voice exceptions OR character patterns allowed", filter="ns:decisions", limit=5
+```
+
+**After fixing:** Capture summary of changes for future reference
+```
+subcog_capture:
+  namespace: learnings
+  content: "Fixed [N] character issues in [path]: [summary]"
+  tags: [human-voice, character-fix, automated]
+  source: [target path]
+```
+
+If Subcog is unavailable, proceed with fixes normally. Memory integration is additive.
+
 ## Note
 
 This command only fixes Tier 1 (character-level) patterns. For language, structural, and voice patterns, manual review is required. Run `/human-voice:review` for comprehensive analysis.

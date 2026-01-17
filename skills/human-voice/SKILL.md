@@ -211,6 +211,48 @@ For detailed patterns and examples:
 - **`${CLAUDE_PLUGIN_ROOT}/skills/human-voice/scripts/validate-character-restrictions.js`** - Detect character violations
 - **`${CLAUDE_PLUGIN_ROOT}/skills/human-voice/scripts/fix-character-restrictions.js`** - Auto-fix character issues
 
+## Memory Integration (Optional)
+
+When Subcog MCP server is available, enhance the workflow with persistent memory:
+
+### Before Analysis
+
+Recall existing voice decisions and patterns:
+```
+subcog_recall: query="voice patterns OR voice decisions", filter="ns:decisions ns:patterns", limit=5
+```
+
+This surfaces:
+- Project-specific voice exceptions (e.g., "README allows emojis")
+- Previously identified patterns to watch for
+- Configuration preferences from past sessions
+
+### After Analysis
+
+Capture significant findings for future sessions:
+```
+subcog_capture:
+  namespace: learnings
+  content: "[Description of finding]"
+  tags: [human-voice, voice-pattern, project-name]
+  source: [file path]
+```
+
+Capture voice decisions when made:
+```
+subcog_capture:
+  namespace: decisions
+  content: "[Decision and rationale]"
+  tags: [human-voice, voice-decision]
+```
+
+### Graceful Degradation
+
+All skill functionality works without Subcog. Memory integration is additive:
+- If Subcog unavailable, skip recall/capture steps
+- Core detection and fixing always works
+- Configuration via `.claude/human-voice.local.md` is the primary method
+
 ## Related Skills
 
 - `documentation-review:documentation-standards` - Documentation quality standards

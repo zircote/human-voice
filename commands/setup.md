@@ -210,6 +210,16 @@ Edit `.claude/human-voice.local.md` directly to:
 - Document acceptable exceptions
 ```
 
+## Memory Integration (Optional)
+
+If Subcog MCP tools are available:
+
+**Before setup:** Recall any existing voice configuration decisions for this project.
+
+**After setup:** Capture the configuration decision for future reference, including which directories and settings were chosen.
+
+This integration is optional. Setup works fully without Subcog - configuration is always stored in `.claude/human-voice.local.md`.
+
 ## Template Reference
 
 The example configuration template is available at:
