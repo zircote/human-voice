@@ -9,6 +9,8 @@
 
 A Claude Code plugin that detects and prevents AI-generated writing patterns to ensure authentic, professional human voice in all content.
 
+![Human Voice Plugin - 4-tier analysis flow](.github/infographic.jpg)
+
 ## Features
 
 - **Multi-tier pattern detection**: Character, language, structural, and voice analysis
