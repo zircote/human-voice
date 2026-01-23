@@ -5,59 +5,103 @@
  * Auto-fixes AI-telltale characters in content files
  *
  * Usage:
- *   node fix-character-restrictions.js [--dry-run] <directory> [directory...]
+ *   node fix-character-restrictions.js [--dry-run] [--ignore=categories] <directory> [directory...]
  *   node fix-character-restrictions.js --dry-run _posts
- *   node fix-character-restrictions.js _posts content _docs
+ *   node fix-character-restrictions.js --ignore=emojis,em-dash _posts content
  *
  * Options:
- *   --dry-run  Show what would be changed without modifying files
+ *   --dry-run            Show what would be changed without modifying files
+ *   --ignore=categories  Comma-separated list of categories to ignore:
+ *                        emojis, em-dash, en-dash, smart-quotes, ellipsis, bullet, arrow
  *
  * Exit codes:
  *   0 - Success (files fixed or no changes needed)
  *   1 - Error
  */
 
-const fs = require('fs');
-const path = require('path');
+const fs = require("fs");
+const path = require("path");
 
 // Replacement rules
 const REPLACEMENTS = [
   // Em dash: context-dependent, default to period for sentence break
-  { pattern: /\u2014/g, replacement: '. ', name: 'Em Dash' },
+  { pattern: /\u2014/g, replacement: ". ", name: "Em Dash" },
   // En dash: simple hyphen
-  { pattern: /\u2013/g, replacement: '-', name: 'En Dash' },
+  { pattern: /\u2013/g, replacement: "-", name: "En Dash" },
   // Smart double quotes
-  { pattern: /[\u201C\u201D]/g, replacement: '"', name: 'Smart Double Quotes' },
+  { pattern: /[\u201C\u201D]/g, replacement: '"', name: "Smart Double Quotes" },
   // Smart single quotes / apostrophes
-  { pattern: /[\u2018\u2019]/g, replacement: "'", name: 'Smart Single Quotes' },
+  { pattern: /[\u2018\u2019]/g, replacement: "'", name: "Smart Single Quotes" },
   // Horizontal ellipsis
-  { pattern: /\u2026/g, replacement: '...', name: 'Horizontal Ellipsis' },
+  { pattern: /\u2026/g, replacement: "...", name: "Horizontal Ellipsis" },
   // Bullet character
-  { pattern: /\u2022/g, replacement: '-', name: 'Bullet Character' },
+  { pattern: /\u2022/g, replacement: "-", name: "Bullet Character" },
   // Common emojis (remove entirely)
   {
-    pattern: /[\u{1F600}-\u{1F64F}\u{1F300}-\u{1F5FF}\u{1F680}-\u{1F6FF}\u{1F1E0}-\u{1F1FF}\u{2600}-\u{26FF}\u{2700}-\u{27BF}]/gu,
-    replacement: '',
-    name: 'Emoji'
+    pattern:
+      /[\u{1F600}-\u{1F64F}\u{1F300}-\u{1F5FF}\u{1F680}-\u{1F6FF}\u{1F1E0}-\u{1F1FF}\u{2600}-\u{26FF}\u{2700}-\u{27BF}]/gu,
+    replacement: "",
+    name: "Emoji",
   },
   // Arrow characters
-  { pattern: /\u2192/g, replacement: '->', name: 'Right Arrow' },
-  { pattern: /\u2190/g, replacement: '<-', name: 'Left Arrow' },
-  { pattern: /\u2194/g, replacement: '<->', name: 'Bidirectional Arrow' },
-  { pattern: /[\u2191\u2193]/g, replacement: '', name: 'Vertical Arrow' }
+  { pattern: /\u2192/g, replacement: "->", name: "Right Arrow" },
+  { pattern: /\u2190/g, replacement: "<-", name: "Left Arrow" },
+  { pattern: /\u2194/g, replacement: "<->", name: "Bidirectional Arrow" },
+  { pattern: /[\u2191\u2193]/g, replacement: "", name: "Vertical Arrow" },
 ];
 
 // File extensions to process
-const EXTENSIONS = ['.md', '.mdx', '.markdown', '.txt'];
+const EXTENSIONS = [".md", ".mdx", ".markdown", ".txt"];
+
+// Category name mapping for --ignore flag
+const CATEGORY_MAP = {
+  emojis: ["Emoji"],
+  "em-dash": ["Em Dash"],
+  "en-dash": ["En Dash"],
+  "smart-quotes": ["Smart Double Quotes", "Smart Single Quotes"],
+  ellipsis: ["Horizontal Ellipsis"],
+  bullet: ["Bullet Character"],
+  arrow: ["Right Arrow", "Left Arrow", "Bidirectional Arrow", "Vertical Arrow"],
+};
+
+// Valid category names for help text
+const VALID_CATEGORIES = Object.keys(CATEGORY_MAP).join(", ");
+
+// Parse --ignore flag and return set of replacement names to skip
+function parseIgnoreCategories(args) {
+  const ignoreArg = args.find((arg) => arg.startsWith("--ignore="));
+  if (!ignoreArg) return new Set();
+
+  const categories = ignoreArg
+    .substring(9)
+    .split(",")
+    .map((c) => c.trim().toLowerCase());
+  const ignoredNames = new Set();
+
+  categories.forEach((cat) => {
+    if (CATEGORY_MAP[cat]) {
+      CATEGORY_MAP[cat].forEach((name) => ignoredNames.add(name));
+    } else if (cat) {
+      console.warn(
+        colorize(
+          `Warning: Unknown category "${cat}". Valid: ${VALID_CATEGORIES}`,
+          "yellow",
+        ),
+      );
+    }
+  });
+
+  return ignoredNames;
+}
 
 // Colors for terminal output
 const colors = {
-  red: '\x1b[31m',
-  yellow: '\x1b[33m',
-  green: '\x1b[32m',
-  cyan: '\x1b[36m',
-  reset: '\x1b[0m',
-  bold: '\x1b[1m'
+  red: "\x1b[31m",
+  yellow: "\x1b[33m",
+  green: "\x1b[32m",
+  cyan: "\x1b[36m",
+  reset: "\x1b[0m",
+  bold: "\x1b[1m",
 };
 
 function colorize(text, color) {
@@ -75,7 +119,7 @@ function getFilesRecursively(dir, files = []) {
     const fullPath = path.join(dir, entry.name);
 
     if (entry.isDirectory()) {
-      if (!entry.name.startsWith('.') && entry.name !== 'node_modules') {
+      if (!entry.name.startsWith(".") && entry.name !== "node_modules") {
         getFilesRecursively(fullPath, files);
       }
     } else if (entry.isFile()) {
@@ -89,43 +133,45 @@ function getFilesRecursively(dir, files = []) {
   return files;
 }
 
-function fixContent(content) {
+function fixContent(content, ignoredNames) {
   let fixed = content;
   const changes = [];
 
   for (const rule of REPLACEMENTS) {
+    if (ignoredNames.has(rule.name)) continue;
+
     const matches = fixed.match(rule.pattern);
     if (matches) {
       changes.push({
         name: rule.name,
-        count: matches.length
+        count: matches.length,
       });
       fixed = fixed.replace(rule.pattern, rule.replacement);
     }
   }
 
   // Clean up double spaces that might result from replacements
-  fixed = fixed.replace(/  +/g, ' ');
+  fixed = fixed.replace(/  +/g, " ");
 
   // Clean up ". ." patterns from em dash replacement
-  fixed = fixed.replace(/\. \./g, '.');
+  fixed = fixed.replace(/\. \./g, ".");
 
   // Clean up space before punctuation
-  fixed = fixed.replace(/ ([.,;:!?])/g, '$1');
+  fixed = fixed.replace(/ ([.,;:!?])/g, "$1");
 
   return { fixed, changes };
 }
 
-function processFile(filePath, dryRun) {
-  const original = fs.readFileSync(filePath, 'utf8');
-  const { fixed, changes } = fixContent(original);
+function processFile(filePath, dryRun, ignoredNames) {
+  const original = fs.readFileSync(filePath, "utf8");
+  const { fixed, changes } = fixContent(original, ignoredNames);
 
   if (changes.length === 0) {
     return { modified: false, changes: [] };
   }
 
   if (!dryRun) {
-    fs.writeFileSync(filePath, fixed, 'utf8');
+    fs.writeFileSync(filePath, fixed, "utf8");
   }
 
   return { modified: true, changes };
@@ -135,24 +181,47 @@ function main() {
   const args = process.argv.slice(2);
 
   // Parse options
-  const dryRun = args.includes('--dry-run');
-  const directories = args.filter(arg => !arg.startsWith('--'));
+  const dryRun = args.includes("--dry-run");
+  const ignoredNames = parseIgnoreCategories(args);
+  const directories = args.filter((arg) => !arg.startsWith("--"));
 
   if (directories.length === 0) {
-    console.error('Usage: node fix-character-restrictions.js [--dry-run] <directory> [directory...]');
-    console.error('Example: node fix-character-restrictions.js --dry-run _posts content _docs');
+    console.error(
+      "Usage: node fix-character-restrictions.js [--dry-run] [--ignore=categories] <directory> [directory...]",
+    );
+    console.error(
+      "Example: node fix-character-restrictions.js --dry-run _posts content _docs",
+    );
+    console.error(
+      "Example: node fix-character-restrictions.js --ignore=emojis,em-dash _posts",
+    );
+    console.error(
+      "Categories: emojis, em-dash, en-dash, smart-quotes, ellipsis, bullet, arrow",
+    );
     process.exit(1);
   }
 
   // Validate directories
-  const invalidDirs = directories.filter(dir => !fs.existsSync(dir));
+  const invalidDirs = directories.filter((dir) => !fs.existsSync(dir));
   if (invalidDirs.length > 0) {
-    console.error(`Error: Directory not found: ${invalidDirs.join(', ')}`);
+    console.error(`Error: Directory not found: ${invalidDirs.join(", ")}`);
     process.exit(1);
   }
 
-  const modeLabel = dryRun ? '(DRY RUN)' : '';
-  console.log(colorize(`\n=== Character Restriction Fix ${modeLabel} ===\n`, 'bold'));
+  const modeLabel = dryRun ? "(DRY RUN)" : "";
+  console.log(
+    colorize(`\n=== Character Restriction Fix ${modeLabel} ===\n`, "bold"),
+  );
+
+  if (ignoredNames.size > 0) {
+    console.log(
+      colorize(
+        "Ignoring categories: " + Array.from(ignoredNames).join(", "),
+        "yellow",
+      ),
+    );
+    console.log();
+  }
 
   let totalFiles = 0;
   let modifiedFiles = 0;
@@ -164,11 +233,13 @@ function main() {
     totalFiles += files.length;
 
     for (const file of files) {
-      const result = processFile(file, dryRun);
+      const result = processFile(file, dryRun, ignoredNames);
 
       if (result.modified) {
         modifiedFiles++;
-        console.log(colorize(`${dryRun ? 'Would fix' : 'Fixed'}: ${file}`, 'cyan'));
+        console.log(
+          colorize(`${dryRun ? "Would fix" : "Fixed"}: ${file}`, "cyan"),
+        );
 
         for (const change of result.changes) {
           console.log(`  - ${change.name}: ${change.count} occurrence(s)`);
@@ -185,25 +256,31 @@ function main() {
   }
 
   // Print summary
-  console.log(colorize('=== Summary ===', 'bold'));
-  console.log(`  Mode: ${dryRun ? 'Dry run (no files modified)' : 'Applied fixes'}`);
+  console.log(colorize("=== Summary ===", "bold"));
+  console.log(
+    `  Mode: ${dryRun ? "Dry run (no files modified)" : "Applied fixes"}`,
+  );
   console.log(`  Files checked: ${totalFiles}`);
-  console.log(`  Files ${dryRun ? 'needing fixes' : 'modified'}: ${modifiedFiles}`);
+  console.log(
+    `  Files ${dryRun ? "needing fixes" : "modified"}: ${modifiedFiles}`,
+  );
   console.log(`  Total replacements: ${totalChanges}`);
 
   if (Object.keys(summary).length > 0) {
-    console.log('\n  By type:');
+    console.log("\n  By type:");
     for (const [name, count] of Object.entries(summary)) {
       console.log(`    ${name}: ${count}`);
     }
   }
 
   if (dryRun && modifiedFiles > 0) {
-    console.log(colorize('\nRun without --dry-run to apply fixes.', 'yellow'));
+    console.log(colorize("\nRun without --dry-run to apply fixes.", "yellow"));
   } else if (modifiedFiles === 0) {
-    console.log(colorize('\nNo character restrictions found. Content is clean.', 'green'));
+    console.log(
+      colorize("\nNo character restrictions found. Content is clean.", "green"),
+    );
   } else {
-    console.log(colorize('\nAll fixes applied.', 'green'));
+    console.log(colorize("\nAll fixes applied.", "green"));
   }
 
   process.exit(0);

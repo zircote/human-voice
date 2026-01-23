@@ -1,12 +1,18 @@
 ---
 description: Review content for AI writing patterns
-argument-hint: "[path]"
+argument-hint: "[path] [--ignore=categories]"
 allowed-tools: Read, Glob, Grep, Bash(node:*), Bash(test:*), Bash(ls:*), Bash(grep:*)
 ---
 
 # Human Voice Review
 
 Analyze content for AI-generated writing patterns using a multi-tier approach.
+
+## Options
+
+- `--ignore=emojis,em-dash` - Skip specific pattern categories during character detection
+  - Valid categories: `emojis`, `em-dash`, `en-dash`, `smart-quotes`, `ellipsis`, `bullet`, `arrow`
+  - Example: `/human-voice:review --ignore=emojis,arrow docs/`
 
 ## Target
 
@@ -25,9 +31,9 @@ $IF($1,
 Run automated character validation:
 
 $IF($1,
-  !`node "${CLAUDE_PLUGIN_ROOT}/skills/human-voice/scripts/validate-character-restrictions.js" "$1" 2>&1 || true`
+  !`node "${CLAUDE_PLUGIN_ROOT}/skills/human-voice/scripts/validate-character-restrictions.js" $ARGS 2>&1 || true`
 ,
-  !`for d in _posts content _docs docs; do test -d "$d" && echo "$d"; done | xargs -r node "${CLAUDE_PLUGIN_ROOT}/skills/human-voice/scripts/validate-character-restrictions.js" 2>&1 || echo "No content directories found to validate"`
+  !`for d in _posts content _docs docs; do test -d "$d" && echo "$d"; done | xargs -r node "${CLAUDE_PLUGIN_ROOT}/skills/human-voice/scripts/validate-character-restrictions.js" $ARGS 2>&1 || echo "No content directories found to validate"`
 )
 
 Report any em dashes, smart quotes, emojis, or other AI-telltale characters found.

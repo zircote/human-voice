@@ -5,6 +5,21 @@ All notable changes to the Human Voice plugin will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.3.0] - 2026-01-23
+
+### Added
+
+- **Ignore Categories**: New `--ignore=categories` argument for both review and fix commands
+  - Skip specific pattern categories during detection/fixing
+  - Available categories: `emojis`, `em-dash`, `en-dash`, `smart-quotes`, `ellipsis`, `bullet`, `arrow`
+  - Example: `/human-voice:fix --ignore=emojis,em-dash docs/`
+- **Validation Warnings**: Unknown category names now show a warning with valid options
+
+### Changed
+
+- **Commands**: Updated `review.md` and `fix.md` with `--ignore` option documentation
+- **Scripts**: Both validation and fix scripts now support category filtering
+
 ## [0.2.0] - 2026-01-17
 
 ### Added
@@ -57,5 +72,6 @@ Pattern detection based on:
 - [The Field Guide to AI Slop](https://www.ignorance.ai/p/the-field-guide-to-ai-slop)
 - [Common AI Words - Grammarly](https://www.grammarly.com/blog/ai/common-ai-words/)
 
+[0.3.0]: https://github.com/zircote/human-voice/compare/v0.2.0...v0.3.0
 [0.2.0]: https://github.com/zircote/human-voice/compare/v0.1.0...v0.2.0
 [0.1.0]: https://github.com/zircote/human-voice/releases/tag/v0.1.0

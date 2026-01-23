@@ -1,12 +1,19 @@
 ---
 description: Auto-fix AI character patterns in content
-argument-hint: "[path] [--dry-run]"
+argument-hint: "[path] [--dry-run] [--ignore=categories]"
 allowed-tools: Read, Bash(node:*), Bash(test:*), Bash(ls:*), Bash(for:*)
 ---
 
 # Human Voice Fix
 
 Auto-fix AI-telltale characters (em dashes, smart quotes, emojis, etc.) in content files.
+
+## Options
+
+- `--dry-run` - Preview changes without modifying files
+- `--ignore=emojis,em-dash` - Skip specific pattern categories
+  - Valid categories: `emojis`, `em-dash`, `en-dash`, `smart-quotes`, `ellipsis`, `bullet`, `arrow`
+  - Example: `/human-voice:fix --dry-run --ignore=emojis docs/`
 
 ## Target
 
@@ -25,9 +32,9 @@ $IF($1,
 When --dry-run is specified or when unsure, show what would change without modifying files:
 
 $IF($1,
-  !`node "${CLAUDE_PLUGIN_ROOT}/skills/human-voice/scripts/fix-character-restrictions.js" --dry-run "$1" 2>&1 || true`
+  !`node "${CLAUDE_PLUGIN_ROOT}/skills/human-voice/scripts/fix-character-restrictions.js" --dry-run $ARGS 2>&1 || true`
 ,
-  !`for d in _posts content _docs docs; do test -d "$d" && echo "$d"; done | xargs -r node "${CLAUDE_PLUGIN_ROOT}/skills/human-voice/scripts/fix-character-restrictions.js" --dry-run 2>&1 || echo "No content directories found"`
+  !`for d in _posts content _docs docs; do test -d "$d" && echo "$d"; done | xargs -r node "${CLAUDE_PLUGIN_ROOT}/skills/human-voice/scripts/fix-character-restrictions.js" --dry-run $ARGS 2>&1 || echo "No content directories found"`
 )
 
 ## Apply Fixes
@@ -35,9 +42,9 @@ $IF($1,
 If user confirms or no --dry-run flag:
 
 $IF($1,
-  !`node "${CLAUDE_PLUGIN_ROOT}/skills/human-voice/scripts/fix-character-restrictions.js" "$1" 2>&1 || true`
+  !`node "${CLAUDE_PLUGIN_ROOT}/skills/human-voice/scripts/fix-character-restrictions.js" $ARGS 2>&1 || true`
 ,
-  !`for d in _posts content _docs docs; do test -d "$d" && echo "$d"; done | xargs -r node "${CLAUDE_PLUGIN_ROOT}/skills/human-voice/scripts/fix-character-restrictions.js" 2>&1 || echo "No content directories found"`
+  !`for d in _posts content _docs docs; do test -d "$d" && echo "$d"; done | xargs -r node "${CLAUDE_PLUGIN_ROOT}/skills/human-voice/scripts/fix-character-restrictions.js" $ARGS 2>&1 || echo "No content directories found"`
 )
 
 ## Post-Fix Actions
