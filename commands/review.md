@@ -1,7 +1,7 @@
 ---
 description: Review content for AI writing patterns
 argument-hint: "[path] [--ignore=categories]"
-allowed-tools: Read, Glob, Grep, Bash(node:*), Bash(test:*), Bash(ls:*), Bash(grep:*)
+allowed-tools: Read, Glob, Grep, Bash(node:*), Bash(test:*), Bash(ls:*), Bash(grep:*), Skill
 ---
 
 # Human Voice Review
@@ -89,12 +89,23 @@ Run `/human-voice:fix [path]` to auto-fix character issues.
 
 Load the human-voice skill for detailed pattern reference if needed.
 
-## Memory Integration (Optional)
+## Memory Integration
 
-If Subcog MCP tools are available, enhance the review with persistent context:
+**Before reviewing:** Recall existing voice decisions and patterns
 
-**Before reviewing:** Recall existing voice decisions and patterns for this project.
+```bash
+# Search for voice decisions and patterns
+rg -i "voice\|human.voice\|ai.pattern" ~/.claude/mnemonic/ --glob "*.memory.md"
+```
 
-**After reviewing:** If significant findings are identified, suggest capturing them for future sessions.
+**After reviewing:** Capture significant findings
 
-This integration is optional. Core review functionality works without Subcog.
+For **recurring patterns**:
+```bash
+/mnemonic:capture learnings "Human Voice: {PATH} - {PATTERN_TYPE} patterns found"
+```
+
+For **project voice decisions**:
+```bash
+/mnemonic:capture decisions "Voice Decision: {PROJECT} - {DECISION}"
+```

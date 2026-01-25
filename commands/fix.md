@@ -1,7 +1,7 @@
 ---
 description: Auto-fix AI character patterns in content
 argument-hint: "[path] [--dry-run] [--ignore=categories]"
-allowed-tools: Read, Bash(node:*), Bash(test:*), Bash(ls:*), Bash(for:*)
+allowed-tools: Read, Bash(node:*), Bash(test:*), Bash(ls:*), Bash(for:*), Skill
 ---
 
 # Human Voice Fix
@@ -66,25 +66,25 @@ After fixing character issues:
 | Bullet (•) | Markdown dash |
 | Emojis | Removed |
 
-## Memory Integration (Optional)
-
-If Subcog MCP tools are available:
+## Memory Integration
 
 **Before fixing:** Recall project-specific exceptions
-```
-subcog_recall: query="voice exceptions OR character patterns allowed", filter="ns:decisions", limit=5
+
+```bash
+# Search for voice exceptions and allowed patterns
+rg -i "voice\|exception\|character.patterns" ~/.claude/mnemonic/ --glob "*decisions*" --glob "*.memory.md"
 ```
 
-**After fixing:** Capture summary of changes for future reference
-```
-subcog_capture:
-  namespace: learnings
-  content: "Fixed [N] character issues in [path]: [summary]"
-  tags: [human-voice, character-fix, automated]
-  source: [target path]
+**After fixing:** Capture summary of changes
+
+```bash
+/mnemonic:capture learnings "Human Voice Fix: {PATH} - {N} character issues fixed"
 ```
 
-If Subcog is unavailable, proceed with fixes normally. Memory integration is additive.
+Include:
+- Files modified
+- Total replacements by type
+- Any exceptions applied
 
 ## Note
 

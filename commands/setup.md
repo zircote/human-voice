@@ -8,6 +8,7 @@ allowed-tools:
   - Glob
   - Bash
   - AskUserQuestion
+  - Skill
 ---
 
 # Human Voice Setup
@@ -210,15 +211,26 @@ Edit `.claude/human-voice.local.md` directly to:
 - Document acceptable exceptions
 ```
 
-## Memory Integration (Optional)
+## Memory Integration
 
-If Subcog MCP tools are available:
+**Before setup:** Recall existing voice configuration decisions
 
-**Before setup:** Recall any existing voice configuration decisions for this project.
+```bash
+# Search for prior voice setup decisions
+rg -i "human.voice\|voice.config" ~/.claude/mnemonic/ --glob "*decisions*" --glob "*.memory.md"
+```
 
-**After setup:** Capture the configuration decision for future reference, including which directories and settings were chosen.
+**After setup:** Capture the configuration decision
 
-This integration is optional. Setup works fully without Subcog - configuration is always stored in `.claude/human-voice.local.md`.
+```bash
+/mnemonic:capture decisions "Human Voice Setup: {PROJECT} - configuration created"
+```
+
+Include:
+- Content directories selected
+- Detection tiers enabled
+- Strictness level
+- Any exceptions configured
 
 ## Template Reference
 
