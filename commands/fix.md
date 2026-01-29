@@ -72,7 +72,7 @@ After fixing character issues:
 
 ```bash
 # Search for voice exceptions and allowed patterns
-rg -i "voice\|exception\|character.patterns" ~/.claude/mnemonic/ --glob "*decisions*" --glob "*.memory.md"
+rg -i "voice\|exception\|character.patterns" ~/.claude/mnemonic/ ./.claude/mnemonic/ --glob "*decisions*" --glob "*.memory.md"
 ```
 
 **After fixing:** Capture summary of changes

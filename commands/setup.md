@@ -217,7 +217,7 @@ Edit `.claude/human-voice.local.md` directly to:
 
 ```bash
 # Search for prior voice setup decisions
-rg -i "human.voice\|voice.config" ~/.claude/mnemonic/ --glob "*decisions*" --glob "*.memory.md"
+rg -i "human.voice\|voice.config" ~/.claude/mnemonic/ ./.claude/mnemonic/ --glob "*decisions*" --glob "*.memory.md"
 ```
 
 **After setup:** Capture the configuration decision

@@ -95,7 +95,7 @@ Load the human-voice skill for detailed pattern reference if needed.
 
 ```bash
 # Search for voice decisions and patterns
-rg -i "voice\|human.voice\|ai.pattern" ~/.claude/mnemonic/ --glob "*.memory.md"
+rg -i "voice\|human.voice\|ai.pattern" ~/.claude/mnemonic/ ./.claude/mnemonic/ --glob "*.memory.md"
 ```
 
 **After reviewing:** Capture significant findings
