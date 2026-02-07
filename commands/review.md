@@ -1,4 +1,5 @@
 ---
+name: review
 description: Review content for AI writing patterns
 argument-hint: "[path] [--ignore=categories]"
 allowed-tools: Read, Glob, Grep, Bash(node:*), Bash(test:*), Bash(ls:*), Bash(grep:*), Skill
