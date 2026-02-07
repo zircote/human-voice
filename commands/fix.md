@@ -1,5 +1,4 @@
 ---
-name: fix
 description: Auto-fix AI character patterns in content
 argument-hint: "[path] [--dry-run] [--ignore=categories]"
 allowed-tools: Read, Bash(node:*), Bash(test:*), Bash(ls:*), Bash(for:*), Skill
