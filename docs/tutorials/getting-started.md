@@ -25,8 +25,8 @@ Before we begin, we need the following installed on our machine:
 First, we will clone the repository and run the setup script.
 
 ```bash
-git clone https://github.com/zircote/mivoca.git
-cd mivoca
+git clone https://github.com/zircote/human-voice.git
+cd human-voice
 ```
 
 Now run the setup script, which creates a virtual environment, installs all dependencies, downloads the spaCy language model, and validates the question bank:

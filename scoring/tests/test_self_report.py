@@ -112,14 +112,12 @@ class TestCronbachsAlpha:
         alpha = cronbachs_alpha([])
         assert alpha is None
 
-    def test_single_observation_fallback(self):
-        """Single-session scoring (n=1) uses fallback computation."""
-        # 4 items, each with 1 observation — varied values
+    def test_single_observation_returns_none(self):
+        """Single-session scoring (n=1) returns None -- alpha is not meaningful."""
+        # 4 items, each with 1 observation -- cannot compute reliability
         item_scores = [[30.0], [50.0], [70.0], [90.0]]
         alpha = cronbachs_alpha(item_scores)
-        assert alpha is not None
-        # Fallback: item variances are 0 each, so alpha = k/(k-1) * 1 = 1.33 clipped to 1.0
-        assert alpha == pytest.approx(1.0, abs=0.01)
+        assert alpha is None
 
 
 # ---------- score_self_report ----------

@@ -135,18 +135,13 @@ def cronbachs_alpha(item_scores: list[list[float]]) -> float | None:
     n = arr.shape[1]
 
     if n < 2:
-        # With a single observation we cannot compute variance reliably.
-        # Fall back: treat the k item scores as a single observation set and
-        # compute alpha treating each item as a "test" across a synthetic
-        # leave-one-out approach.  This is a pragmatic fallback for single-
-        # session scoring.
-        scores = arr.flatten()
-        total_var = float(np.var(scores, ddof=1))
-        if total_var == 0:
-            return 1.0  # No variance means perfect consistency.
-        item_vars = 0.0  # Each "item" has single value → variance = 0.
-        alpha = (k / (k - 1)) * (1 - item_vars / total_var)
-        return float(np.clip(alpha, -1.0, 1.0))
+        # Single-session scoring: each item has exactly one observation,
+        # so per-item variance is 0 and alpha always evaluates to 1.0.
+        # This is a known limitation: Cronbach's alpha requires multiple
+        # respondents or repeated measures to be meaningful. For single-
+        # session use, alpha is returned as None to signal that reliability
+        # cannot be assessed, rather than returning a misleading 1.0.
+        return None
 
     item_variances = np.var(arr, axis=1, ddof=1)
     total_scores = np.sum(arr, axis=0)

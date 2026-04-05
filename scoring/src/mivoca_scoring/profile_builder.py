@@ -32,14 +32,15 @@ TIER_WEIGHTS: dict[int, tuple[float, float]] = {
 
 # Default tier assignments for gold-standard dimensions.
 # These can be overridden by calibration awareness levels.
+# Tiers match self_reportability_tier in scoring-weights.json.
 DEFAULT_DIMENSION_TIERS: dict[str, int] = {
     "formality": 1,
     "emotional_tone": 1,
     "personality": 2,
     "complexity": 2,
-    "audience_awareness": 2,
-    "authority": 3,
-    "narrativity": 3,
+    "audience_awareness": 1,
+    "authority": 2,
+    "narrativity": 1,
     "humor": 1,
 }
 
@@ -386,9 +387,9 @@ def assemble_voice_profile(
     for dim, data in merged.items():
         if isinstance(data, dict):
             gold_standard[dim] = {
-                "score": data.get("merged_score", 0),
-                "self_report": data.get("self_report_score", 0),
-                "observed": data.get("observed_score", 0),
+                "score": data.get("merged_score"),
+                "self_report": data.get("self_report_score"),
+                "observed": data.get("observed_score"),
                 "tier": data.get("tier"),
                 "weight_sr": data.get("weight_sr"),
                 "weight_obs": data.get("weight_obs"),
@@ -399,7 +400,7 @@ def assemble_voice_profile(
     for dim, data in gap.items():
         if isinstance(data, dict):
             gap_dims[dim] = {
-                "score": data.get("score", 0),
+                "score": data.get("score"),
                 "source": data.get("source", "self_report"),
             }
 

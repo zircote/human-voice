@@ -12,7 +12,7 @@ from pathlib import Path
 
 import jsonschema
 import pytest
-import spacy
+spacy = pytest.importorskip("spacy", reason="spacy required for integration tests")
 
 from lib.session import create_session, record_response, save_writing_sample, save_session
 from lib.branching import evaluate_primary_route

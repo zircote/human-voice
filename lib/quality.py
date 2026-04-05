@@ -53,10 +53,33 @@ def load_quality_config() -> dict:
     }
 
 
-def _is_scale_response(response: dict) -> bool:
-    """Check if a response is from a scale-type question (likert or semantic_differential)."""
+def _is_scale_response(response: dict, question: dict | None = None) -> bool:
+    """Check if a response is from a scale-type question.
+
+    Checks the question definition type first (authoritative), then falls
+    back to response-level question_type, then infers from value type.
+    """
+    # Authoritative: question bank definition.
+    if question is not None:
+        q_type = question.get("type", "")
+        return q_type in ("likert", "semantic_differential", "calibration")
+
+    # Response-level (supports both naming conventions).
     q_type = response.get("question_type", "")
-    return q_type in ("likert_scale", "semantic_differential")
+    if q_type in ("likert", "likert_scale", "semantic_differential", "calibration"):
+        return True
+    # Explicitly non-scale types.
+    if q_type in ("open_text", "open_ended", "writing_sample", "process_narration",
+                  "select", "select_multiple", "forced_choice", "scenario",
+                  "projective", "behavioral"):
+        return False
+
+    # No type information at all: infer from value.
+    if not q_type:
+        val = _get_scale_value(response)
+        return val is not None
+
+    return False
 
 
 def _quality_config() -> dict:
@@ -91,12 +114,32 @@ def _quality_config() -> dict:
 
 
 def _get_scale_value(response: dict) -> int | None:
-    """Extract numeric scale value from a response, returning None if not applicable."""
-    val = response.get("value")
+    """Extract numeric scale value from a response, handling the answer envelope.
+
+    Supports both schema-compliant format (top-level value/scale_value) and
+    interview-conductor format (nested answer.value).
+    """
+    # Try top-level scale_value first.
+    val = response.get("scale_value")
     if val is None:
-        val = response.get("answer")
+        val = response.get("semantic_differential_value")
+    if val is None:
+        val = response.get("value")
+    # Unwrap answer envelope if present.
+    if val is None or isinstance(val, dict):
+        answer = response.get("answer")
+        if isinstance(answer, dict):
+            val = answer.get("scale_value")
+            if val is None:
+                val = answer.get("value")
     if isinstance(val, (int, float)):
         return int(val)
+    # Try numeric string conversion.
+    if isinstance(val, str):
+        try:
+            return int(float(val))
+        except ValueError:
+            pass
     return None
 
 
@@ -126,6 +169,9 @@ def detect_straightlining(recent_responses: list[dict], threshold: int = 5) -> b
     return len(set(tail)) == 1
 
 
+# Keep the old signature working but also support question-aware calls.
+
+
 def detect_speed_flag(response: dict, question: dict) -> bool:
     """Check if response was too fast.
 
@@ -140,7 +186,12 @@ def detect_speed_flag(response: dict, question: dict) -> bool:
         True if speed flag should be raised.
     """
     qc = _quality_config()
+    # estimated_seconds is nested under metadata in question bank definitions.
     estimated = question.get("estimated_seconds")
+    if estimated is None:
+        metadata = question.get("metadata", {})
+        if isinstance(metadata, dict):
+            estimated = metadata.get("estimated_seconds")
     if estimated is None or estimated <= qc["speed_exempt_below_seconds"]:
         return False
 
