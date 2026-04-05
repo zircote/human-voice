@@ -220,7 +220,7 @@ def _load_question_bank(candidates: list[Path]) -> dict[str, dict[str, Any]]:
             if isinstance(questions, list):
                 for q in questions:
                     qid = q.get("question_id")
-                    if qid:
+                    if qid and qid not in lookup:
                         lookup[qid] = q
     return lookup
 

@@ -179,7 +179,8 @@ def _build_response_lookup(responses: list[dict[str, Any]]) -> dict[str, dict[st
                 flat = {**r}
                 # Promote answer keys to top level without overwriting
                 # existing top-level keys (schema fields take precedence).
-                for key in ("value", "raw"):
+                for key in ("value", "raw", "scale_value", "selected_options",
+                            "semantic_differential_value", "raw_text"):
                     if key not in flat or flat[key] is None:
                         if key in answer:
                             flat[key] = answer[key]
@@ -244,7 +245,9 @@ def _resolve_scoring_map_value(
 
     # scoring_map keys may be strings even for numeric values.
     str_value = str(value)
-    entry = scoring_map.get(value) or scoring_map.get(str_value)
+    entry = scoring_map.get(value)
+    if entry is None:
+        entry = scoring_map.get(str_value)
     if not isinstance(entry, dict):
         return None
 
@@ -254,14 +257,14 @@ def _resolve_scoring_map_value(
     if dimension in entry:
         return float(entry[dimension])
 
-    # Prefix match: "formality" matches "formality_baseline".
+    # Prefix match with separator: "formality" matches "formality_baseline".
     for key, val in entry.items():
-        if isinstance(val, (int, float)) and key.startswith(dimension):
+        if isinstance(val, (int, float)) and key.startswith(dimension + "_"):
             return float(val)
 
-    # Reverse prefix: "formality_baseline" dimension matches "formality" key.
+    # Reverse prefix with separator: "formality_baseline" dimension matches "formality_" key.
     for key, val in entry.items():
-        if isinstance(val, (int, float)) and dimension.startswith(key):
+        if isinstance(val, (int, float)) and dimension.startswith(key + "_"):
             return float(val)
 
     # No match found. Do not fabricate a score by averaging unrelated
@@ -297,22 +300,22 @@ def _scoring_map_range(
         if dimension in entry and isinstance(entry[dimension], (int, float)):
             matched_values.append(float(entry[dimension]))
             continue
-        # Prefix match: "formality" matches "formality_baseline".
+        # Prefix match with separator.
         for key, val in entry.items():
-            if isinstance(val, (int, float)) and key.startswith(dimension):
+            if isinstance(val, (int, float)) and key.startswith(dimension + "_"):
                 matched_values.append(float(val))
                 break
         else:
-            # Reverse prefix.
+            # Reverse prefix with separator.
             for key, val in entry.items():
-                if isinstance(val, (int, float)) and dimension.startswith(key):
+                if isinstance(val, (int, float)) and dimension.startswith(key + "_"):
                     matched_values.append(float(val))
                     break
 
     if not matched_values:
         return (1, 5)
 
-    return (int(min(matched_values)), int(max(matched_values)))
+    return (round(min(matched_values)), round(max(matched_values)))
 
 
 def score_self_report(
