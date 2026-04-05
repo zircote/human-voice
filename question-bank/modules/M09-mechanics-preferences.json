@@ -1,0 +1,273 @@
+[
+  {
+    "question_id": "M09-Q01",
+    "module_id": "M09",
+    "module_name": "Mechanics & Preferences",
+    "text": "How do you feel about semicolons?",
+    "type": "select",
+    "options": [
+      { "value": "love", "label": "Love them \u2014 I use them regularly" },
+      { "value": "occasional", "label": "I use them occasionally when the sentence calls for it" },
+      { "value": "avoid", "label": "I tend to avoid them" },
+      { "value": "never", "label": "I never use them" },
+      { "value": "unsure", "label": "I\u2019m not sure when to use them" }
+    ],
+    "scoring": {
+      "dimensions": ["punctuation_style", "formality_baseline"],
+      "weights": { "punctuation_style": 0.8, "formality_baseline": 0.4 }
+    },
+    "metadata": {
+      "self_reportability_tier": 1,
+      "finding_refs": ["LT-015", "CS-007", "LT-016", "CS-019"],
+      "bias_mitigation": "All attitudes toward semicolons framed as valid preferences",
+      "branching": { "required_branches": ["*"], "excluded_branches": [] },
+      "position": { "module_sequence": 1, "funnel_stage": "core" },
+      "estimated_seconds": 15,
+      "format_category": "select"
+    }
+  },
+  {
+    "question_id": "M09-Q02",
+    "module_id": "M09",
+    "module_name": "Mechanics & Preferences",
+    "text": "Inserting an aside: em dashes, parentheses, or commas?",
+    "type": "forced_choice",
+    "options": [
+      { "value": "em_dashes", "label": "Em dashes \u2014 like this" },
+      { "value": "parentheses", "label": "Parentheses (like this)" },
+      { "value": "commas", "label": "Commas, like this, set off" },
+      { "value": "varies", "label": "It varies depending on the aside" }
+    ],
+    "scoring": {
+      "dimensions": ["punctuation_style"],
+      "weights": { "punctuation_style": 0.9 }
+    },
+    "metadata": {
+      "self_reportability_tier": 1,
+      "finding_refs": ["LT-015", "CS-007", "LT-016", "CS-019"],
+      "bias_mitigation": "Concrete examples for each option reduce ambiguity; no option presented as correct",
+      "branching": { "required_branches": ["*"], "excluded_branches": [] },
+      "position": { "module_sequence": 2, "funnel_stage": "core" },
+      "estimated_seconds": 15,
+      "format_category": "forced_choice"
+    }
+  },
+  {
+    "question_id": "M09-Q03",
+    "module_id": "M09",
+    "module_name": "Mechanics & Preferences",
+    "text": "How often do you use exclamation marks professionally?",
+    "type": "likert",
+    "options": [
+      { "value": 1, "label": "Never \u2014 I avoid them entirely in professional writing" },
+      { "value": 2, "label": "Rarely \u2014 only in exceptional circumstances" },
+      { "value": 3, "label": "Sometimes \u2014 when genuine enthusiasm warrants it" },
+      { "value": 4, "label": "Often \u2014 they help convey energy and warmth" },
+      { "value": 5, "label": "Frequently \u2014 they\u2019re part of how I communicate" }
+    ],
+    "scoring": {
+      "dimensions": ["punctuation_style", "tone_warmth"],
+      "weights": { "punctuation_style": 0.7, "tone_warmth": 0.5 },
+      "scoring_map": {
+        "1": { "punctuation_style": 1, "tone_warmth": 1 },
+        "2": { "punctuation_style": 2, "tone_warmth": 2 },
+        "3": { "punctuation_style": 3, "tone_warmth": 3 },
+        "4": { "punctuation_style": 4, "tone_warmth": 4 },
+        "5": { "punctuation_style": 5, "tone_warmth": 5 }
+      }
+    },
+    "metadata": {
+      "self_reportability_tier": 1,
+      "finding_refs": ["LT-015", "CS-007", "LT-016", "CS-019"],
+      "bias_mitigation": "Labels describe rationale for each frequency level; no usage level framed as unprofessional",
+      "branching": { "required_branches": ["*"], "excluded_branches": [] },
+      "position": { "module_sequence": 3, "funnel_stage": "core" },
+      "estimated_seconds": 15,
+      "format_category": "likert"
+    }
+  },
+  {
+    "question_id": "M09-Q04",
+    "module_id": "M09",
+    "module_name": "Mechanics & Preferences",
+    "text": "Are you an Oxford comma person?",
+    "type": "forced_choice",
+    "options": [
+      { "value": "always", "label": "Yes, always \u2014 clarity demands it" },
+      { "value": "never", "label": "No \u2014 it\u2019s unnecessary" },
+      { "value": "depends", "label": "Only when needed for clarity" },
+      { "value": "no_opinion", "label": "I don\u2019t have a strong opinion" }
+    ],
+    "scoring": {
+      "dimensions": ["punctuation_style"],
+      "weights": { "punctuation_style": 0.6 }
+    },
+    "metadata": {
+      "self_reportability_tier": 1,
+      "finding_refs": ["LT-015", "CS-007", "LT-016", "CS-019"],
+      "bias_mitigation": "Both sides of the Oxford comma debate represented; no-opinion option included",
+      "branching": { "required_branches": ["*"], "excluded_branches": [] },
+      "position": { "module_sequence": 4, "funnel_stage": "core" },
+      "estimated_seconds": 10,
+      "format_category": "forced_choice"
+    }
+  },
+  {
+    "question_id": "M09-Q05",
+    "module_id": "M09",
+    "module_name": "Mechanics & Preferences",
+    "text": "Do you use ellipses? In what contexts?",
+    "type": "scenario",
+    "scoring": {
+      "dimensions": ["punctuation_style"],
+      "weights": { "punctuation_style": 0.7 }
+    },
+    "metadata": {
+      "self_reportability_tier": 1,
+      "finding_refs": ["LT-015", "CS-007", "LT-016", "CS-019"],
+      "bias_mitigation": "Scenario format invites contextual explanation rather than yes/no judgment",
+      "branching": { "required_branches": ["*"], "excluded_branches": [] },
+      "position": { "module_sequence": 5, "funnel_stage": "core" },
+      "estimated_seconds": 45,
+      "format_category": "scenario"
+    }
+  },
+  {
+    "question_id": "M09-Q06",
+    "module_id": "M09",
+    "module_name": "Mechanics & Preferences",
+    "text": "How do you feel about sentence fragments for effect?",
+    "type": "likert",
+    "options": [
+      { "value": 1, "label": "Strongly avoid \u2014 sentences should be complete" },
+      { "value": 2, "label": "Generally avoid" },
+      { "value": 3, "label": "Occasionally use when it serves the text" },
+      { "value": 4, "label": "Neutral" },
+      { "value": 5, "label": "Comfortable using them" },
+      { "value": 6, "label": "Enjoy using them for rhythm and emphasis" },
+      { "value": 7, "label": "Love them. Use them often. Like this." }
+    ],
+    "scoring": {
+      "dimensions": ["punctuation_style", "complexity_preference"],
+      "weights": { "punctuation_style": 0.7, "complexity_preference": 0.4 },
+      "scoring_map": {
+        "1": { "punctuation_style": 1, "complexity_preference": 6 },
+        "2": { "punctuation_style": 2, "complexity_preference": 5 },
+        "3": { "punctuation_style": 3, "complexity_preference": 4 },
+        "4": { "punctuation_style": 4, "complexity_preference": 4 },
+        "5": { "punctuation_style": 5, "complexity_preference": 3 },
+        "6": { "punctuation_style": 6, "complexity_preference": 2 },
+        "7": { "punctuation_style": 7, "complexity_preference": 1 }
+      }
+    },
+    "metadata": {
+      "self_reportability_tier": 1,
+      "finding_refs": ["LT-015", "CS-007", "LT-016", "CS-019"],
+      "bias_mitigation": "Bidirectional scale; fragment usage not coded as error or sophistication",
+      "branching": { "required_branches": ["*"], "excluded_branches": [] },
+      "position": { "module_sequence": 6, "funnel_stage": "core" },
+      "estimated_seconds": 15,
+      "format_category": "likert"
+    }
+  },
+  {
+    "question_id": "M09-Q07",
+    "module_id": "M09",
+    "module_name": "Mechanics & Preferences",
+    "text": "Phrases or expressions you know you overuse?",
+    "type": "open_ended",
+    "scoring": {
+      "dimensions": ["lexical_signature", "self_awareness"],
+      "weights": { "lexical_signature": 0.9, "self_awareness": 0.6 }
+    },
+    "metadata": {
+      "self_reportability_tier": 1,
+      "finding_refs": ["LT-015", "CS-007", "LT-016", "CS-019"],
+      "bias_mitigation": "Normalizing framing ('you know you overuse') reduces embarrassment about verbal tics",
+      "branching": { "required_branches": ["*"], "excluded_branches": [] },
+      "position": { "module_sequence": 7, "funnel_stage": "core" },
+      "estimated_seconds": 45,
+      "format_category": "open_ended"
+    }
+  },
+  {
+    "question_id": "M09-Q08",
+    "module_id": "M09",
+    "module_name": "Mechanics & Preferences",
+    "text": "Go-to ways of starting paragraphs, sentences, or emails?",
+    "type": "open_ended",
+    "scoring": {
+      "dimensions": ["lexical_signature"],
+      "weights": { "lexical_signature": 0.9 }
+    },
+    "metadata": {
+      "self_reportability_tier": 1,
+      "finding_refs": ["LT-015", "CS-007", "LT-016", "CS-019"],
+      "bias_mitigation": "Open-ended format captures habitual patterns without judgment",
+      "branching": { "required_branches": ["*"], "excluded_branches": [] },
+      "position": { "module_sequence": 8, "funnel_stage": "core" },
+      "estimated_seconds": 45,
+      "format_category": "open_ended"
+    }
+  },
+  {
+    "question_id": "M09-Q09",
+    "module_id": "M09",
+    "module_name": "Mechanics & Preferences",
+    "text": "\u201cUse\u201d vs \u201cutilize,\u201d \u201chelp\u201d vs \u201cfacilitate\u201d \u2014 which do you gravitate toward?",
+    "type": "forced_choice",
+    "options": [
+      { "value": "plain", "label": "The simpler word \u2014 \u201cuse,\u201d \u201chelp\u201d" },
+      { "value": "formal", "label": "The more formal word \u2014 \u201cutilize,\u201d \u201cfacilitate\u201d" },
+      { "value": "context_dependent", "label": "Depends on the context and audience" }
+    ],
+    "scoring": {
+      "dimensions": ["lexical_signature", "formality_baseline"],
+      "weights": { "lexical_signature": 0.7, "formality_baseline": 0.8 },
+      "scoring_map": {
+        "plain": { "lexical_signature": 2, "formality_baseline": 2 },
+        "formal": { "lexical_signature": 6, "formality_baseline": 6 },
+        "context_dependent": { "lexical_signature": 4, "formality_baseline": 4 }
+      }
+    },
+    "metadata": {
+      "self_reportability_tier": 1,
+      "finding_refs": ["LT-015", "CS-007", "LT-016", "CS-019"],
+      "bias_mitigation": "Concrete examples ground the question; neither register framed as better writing",
+      "branching": { "required_branches": ["*"], "excluded_branches": [] },
+      "position": { "module_sequence": 9, "funnel_stage": "core" },
+      "estimated_seconds": 15,
+      "format_category": "forced_choice"
+    }
+  },
+  {
+    "question_id": "M09-Q10",
+    "module_id": "M09",
+    "module_name": "Mechanics & Preferences",
+    "text": "Actively seek varied word choices or comfortable reusing terms?",
+    "type": "forced_choice",
+    "options": [
+      { "value": "varied", "label": "I actively seek varied word choices to avoid repetition" },
+      { "value": "reuse", "label": "I\u2019m comfortable reusing terms for consistency and clarity" },
+      { "value": "depends_genre", "label": "It depends on the genre or format" }
+    ],
+    "scoring": {
+      "dimensions": ["lexical_signature"],
+      "weights": { "lexical_signature": 0.7 },
+      "scoring_map": {
+        "varied": { "lexical_signature": 6 },
+        "reuse": { "lexical_signature": 2 },
+        "depends_genre": { "lexical_signature": 4 }
+      }
+    },
+    "metadata": {
+      "self_reportability_tier": 1,
+      "finding_refs": ["LT-015", "CS-007", "LT-016", "CS-019"],
+      "bias_mitigation": "Both strategies framed with positive rationale (variety vs. consistency)",
+      "branching": { "required_branches": ["*"], "excluded_branches": [] },
+      "position": { "module_sequence": 10, "funnel_stage": "core" },
+      "estimated_seconds": 15,
+      "format_category": "forced_choice"
+    }
+  }
+]

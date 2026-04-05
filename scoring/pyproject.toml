@@ -1,0 +1,22 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "mivoca-scoring"
+version = "0.1.0"
+description = "Self-report scoring engine for mivoca voice elicitation"
+requires-python = ">=3.10"
+license = "MIT"
+dependencies = [
+    "numpy>=1.24",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=7.0",
+    "pytest-cov>=4.0",
+]
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/mivoca_scoring"]

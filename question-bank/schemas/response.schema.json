@@ -1,0 +1,135 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://mivoca.zircote.com/schemas/response.schema.json",
+  "title": "Mivoca Response",
+  "description": "Captures a single participant response to a question during a voice elicitation session. Includes the raw and structured answer, precise timing telemetry, and quality flags for satisficing detection.",
+  "type": "object",
+  "required": [
+    "response_id",
+    "session_id",
+    "question_id",
+    "timestamp",
+    "value",
+    "timing",
+    "quality_flags"
+  ],
+  "properties": {
+    "response_id": {
+      "type": "string",
+      "format": "uuid",
+      "description": "Unique identifier for this response record."
+    },
+    "session_id": {
+      "type": "string",
+      "format": "uuid",
+      "description": "Identifier of the interview session this response belongs to."
+    },
+    "question_id": {
+      "type": "string",
+      "description": "Identifier of the question being answered, matching a question_id in the question bank."
+    },
+    "timestamp": {
+      "type": "string",
+      "format": "date-time",
+      "description": "ISO-8601 timestamp of when the response was submitted."
+    },
+    "value": {
+      "description": "The primary response value. Type depends on question type: number for Likert/scales, string for open-ended/select, null if skipped.",
+      "oneOf": [
+        { "type": "string" },
+        { "type": "number" },
+        { "type": "null" }
+      ]
+    },
+    "raw_text": {
+      "description": "Free-text content of the response for open-ended, writing sample, and process narration questions. Null for closed-ended types.",
+      "oneOf": [
+        { "type": "string" },
+        { "type": "null" }
+      ]
+    },
+    "selected_options": {
+      "description": "Array of selected option values for select and select_multiple question types. Null for non-select types.",
+      "oneOf": [
+        {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        { "type": "null" }
+      ]
+    },
+    "scale_value": {
+      "description": "Numeric scale position for Likert and rating-scale responses. Null for non-scale types.",
+      "oneOf": [
+        { "type": "number" },
+        { "type": "null" }
+      ]
+    },
+    "semantic_differential_value": {
+      "description": "Position on a semantic differential scale (typically 1.0-7.0) for bipolar adjective pair questions. Null for other types.",
+      "oneOf": [
+        { "type": "number" },
+        { "type": "null" }
+      ]
+    },
+    "timing": {
+      "type": "object",
+      "description": "Precise timing telemetry for the response, enabling engagement analysis and satisficing detection.",
+      "required": [
+        "displayed_at",
+        "first_interaction_at",
+        "submitted_at",
+        "duration_ms"
+      ],
+      "properties": {
+        "displayed_at": {
+          "type": "string",
+          "format": "date-time",
+          "description": "ISO-8601 timestamp of when the question was first displayed to the participant."
+        },
+        "first_interaction_at": {
+          "type": "string",
+          "format": "date-time",
+          "description": "ISO-8601 timestamp of the participant's first interaction with the question (click, keypress, etc.)."
+        },
+        "submitted_at": {
+          "type": "string",
+          "format": "date-time",
+          "description": "ISO-8601 timestamp of when the participant submitted their response."
+        },
+        "duration_ms": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Total time in milliseconds from question display to response submission."
+        }
+      },
+      "additionalProperties": false
+    },
+    "quality_flags": {
+      "type": "object",
+      "description": "Automated quality indicators for detecting low-effort or patterned responding.",
+      "required": [
+        "too_fast",
+        "straightline_sequence",
+        "changed_answer"
+      ],
+      "properties": {
+        "too_fast": {
+          "type": "boolean",
+          "description": "True if the response duration was below the minimum threshold for the question type, suggesting the participant did not fully engage."
+        },
+        "straightline_sequence": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Count of consecutive identical responses ending with this one. A high value suggests straightlining (selecting the same answer repeatedly without reading)."
+        },
+        "changed_answer": {
+          "type": "boolean",
+          "description": "True if the participant changed their initial selection before submitting, indicating deliberation."
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": false
+}

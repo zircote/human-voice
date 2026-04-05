@@ -48,9 +48,9 @@ Or copy to your project's `.claude-plugin/` directory.
 | Component | Name | Purpose |
 |-----------|------|---------|
 | Skill | human-voice | Core detection patterns and writing guidelines |
-| Command | `/human-voice:setup` | Interactive configuration wizard |
-| Command | `/human-voice:review [path]` | Analyze content for AI patterns |
-| Command | `/human-voice:fix [path]` | Auto-fix character-level issues |
+| Command | `/human-voice:voice-setup` | Interactive configuration wizard |
+| Command | `/human-voice:voice-review [path]` | Analyze content for AI patterns |
+| Command | `/human-voice:voice-fix [path]` | Auto-fix character-level issues |
 | Agent | voice-reviewer | Proactive content review after edits |
 
 ## Usage
@@ -59,13 +59,13 @@ Or copy to your project's `.claude-plugin/` directory.
 
 ```bash
 # Set up configuration for your project
-/human-voice:setup
+/human-voice:voice-setup
 
 # Review content for AI patterns
-/human-voice:review docs
+/human-voice:voice-review docs
 
 # Auto-fix character issues
-/human-voice:fix docs --dry-run
+/human-voice:voice-fix docs --dry-run
 ```
 
 ### Skill Triggers
@@ -82,23 +82,23 @@ The skill loads automatically when you say:
 
 **Set up configuration:**
 ```
-/human-voice:setup
+/human-voice:voice-setup
 ```
 
 Detects project structure, content directories, and creates `.claude/human-voice.local.md` with your preferences.
 
 **Review content for AI patterns:**
 ```
-/human-voice:review docs           # review specific directory
-/human-voice:review content/blog   # review specific path
-/human-voice:review                # auto-detects content directories
+/human-voice:voice-review docs           # review specific directory
+/human-voice:voice-review content/blog   # review specific path
+/human-voice:voice-review                # auto-detects content directories
 ```
 
 **Auto-fix character issues:**
 ```
-/human-voice:fix docs              # apply fixes to directory
-/human-voice:fix --dry-run docs    # preview changes first
-/human-voice:fix                   # auto-detect and fix
+/human-voice:voice-fix docs              # apply fixes to directory
+/human-voice:voice-fix --dry-run docs    # preview changes first
+/human-voice:voice-fix                   # auto-detect and fix
 ```
 
 ### Agent
@@ -141,7 +141,7 @@ The `voice-reviewer` agent triggers:
 
 ## Configuration
 
-Run `/human-voice:setup` for interactive configuration, or create `.claude/human-voice.local.md` manually.
+Run `/human-voice:voice-setup` for interactive configuration, or create `.claude/human-voice.local.md` manually.
 
 See `templates/human-voice.local.md.example` for a complete example.
 
@@ -225,9 +225,9 @@ human-voice/
 ├── agents/
 │   └── voice-reviewer.md
 ├── commands/
-│   ├── fix.md
-│   ├── review.md
-│   └── setup.md
+│   ├── voice-fix.md
+│   ├── voice-review.md
+│   └── voice-setup.md
 ├── skills/
 │   └── human-voice/
 │       ├── SKILL.md

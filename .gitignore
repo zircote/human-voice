@@ -5,6 +5,19 @@
 .env
 .env.*
 
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.egg-info/
+dist/
+build/
+.eggs/
+.venv/
+.pytest_cache/
+.coverage
+htmlcov/
+
 # Claude Code local settings (user-specific)
 .claude/settings.local.json
 .claude/*.local.md

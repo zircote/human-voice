@@ -1,13 +1,22 @@
 # Human Voice Plugin
 
-A Claude Code plugin for detecting and preventing AI-generated writing patterns.
+A Claude Code plugin for detecting AI-generated writing patterns and building authentic voice profiles through adaptive interviews and computational stylistics.
 
 ## Project Context
 
-This plugin provides:
-- **Skill**: `human-voice` - Core detection patterns and writing guidelines
-- **Commands**: `/human-voice:setup`, `/human-voice:review`, `/human-voice:fix`
-- **Agent**: `voice-reviewer` - Proactive content review after edits
+This plugin provides two complementary capabilities:
+
+**AI Pattern Detection:**
+- **Skill**: `human-voice` — Core detection patterns and writing guidelines
+- **Commands**: `/human-voice:voice-setup`, `/human-voice:voice-review`, `/human-voice:voice-fix`
+- **Agent**: `voice-reviewer` — Proactive content review after edits
+
+**Voice Elicitation (Mivoca):**
+- **Skill**: `mivoca` — Adaptive interview engine for voice profiling
+- **Commands**: `/human-voice:voice-interview`, `/human-voice:voice-resume`, `/human-voice:voice-status`, `/human-voice:voice-profile`, `/human-voice:voice-sessions`
+- **Agents**: `interview-conductor` — Conversational interview, `profile-synthesizer` — Profile generation
+- **NLP Pipeline**: spaCy-based writing sample analysis (lexical, syntactic, pragmatic, discourse, composite)
+- **Scoring Engine**: Self-report dimension scoring with calibration
 
 ## Development Guidelines
 
@@ -19,11 +28,24 @@ This plugin provides:
 ## File Structure
 
 ```
+# AI Pattern Detection
 skills/human-voice/SKILL.md     # Core skill with detection patterns
-commands/*.md                   # Slash commands
-agents/voice-reviewer.md        # Proactive review agent
-scripts/                        # Node.js validation/fix scripts
-references/                     # Pattern documentation
+commands/voice-*.md              # voice-setup, voice-review, voice-fix
+agents/voice-reviewer.md         # Proactive review agent
+skills/human-voice/scripts/      # Node.js validation/fix scripts
+skills/human-voice/references/   # Pattern documentation
+
+# Voice Elicitation (Mivoca)
+skills/mivoca/SKILL.md           # Interview engine skill
+commands/{interview,resume,status,profile,sessions}.md
+agents/{interview-conductor,profile-synthesizer}.md
+question-bank/                   # 130 questions, 13 modules, branching rules, schemas
+lib/                             # Python: session, branching, sequencer, quality, profile
+nlp/                             # Python NLP pipeline (spaCy)
+scoring/                         # Python scoring engine
+bin/                             # CLI executables
+tests/                           # pytest suite (118 tests)
+docs/                            # Diátaxis documentation
 ```
 
 ## Subcog Memory Integration (Optional)

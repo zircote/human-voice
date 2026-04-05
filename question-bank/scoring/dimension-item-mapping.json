@@ -1,0 +1,171 @@
+{
+  "schema_version": "1.0.0",
+  "description": "Maps each voice dimension to its contributing question items and semantic differential pairs. Gold standard dimensions are the primary output; gap dimensions capture additional voice characteristics.",
+  "gold_standard_dimensions": {
+    "formality": {
+      "contributing_items": {
+        "M03": ["M03-Q01", "M03-Q02", "M03-Q03", "M03-Q04", "M03-Q05", "M03-Q06"],
+        "SD": ["formal_casual", "accessible_specialized"]
+      },
+      "total_items": 8,
+      "min_items_for_score": 5,
+      "description": "Degree of formality in writing voice, from highly formal/specialized to casual/accessible"
+    },
+    "emotional_tone": {
+      "contributing_items": {
+        "M04": ["M04-Q01", "M04-Q02", "M04-Q03", "M04-Q04", "M04-Q05", "M04-Q06"],
+        "SD": ["emotional_analytical", "warm_detached"]
+      },
+      "total_items": 8,
+      "min_items_for_score": 5,
+      "description": "Emotional coloring of writing voice, from warm/emotional to detached/analytical"
+    },
+    "personality": {
+      "contributing_items": {
+        "M02": ["M02-Q01", "M02-Q02", "M02-Q03", "M02-Q04", "M02-Q05"],
+        "M11": ["M11-Q01", "M11-Q02", "M11-Q03"],
+        "SD": ["personal_impersonal", "earnest_ironic"]
+      },
+      "total_items": 10,
+      "min_items_for_score": 6,
+      "description": "Distinctive personality expressed through writing, from earnest/personal to ironic/impersonal"
+    },
+    "complexity": {
+      "contributing_items": {
+        "M06": ["M06-Q01", "M06-Q02", "M06-Q03", "M06-Q04", "M06-Q05"],
+        "SD": ["elaborate_minimalist", "concise_expansive"]
+      },
+      "total_items": 7,
+      "min_items_for_score": 4,
+      "description": "Structural and linguistic complexity, from minimalist/concise to elaborate/expansive"
+    },
+    "audience_awareness": {
+      "contributing_items": {
+        "M07": ["M07-Q01", "M07-Q02", "M07-Q03", "M07-Q04", "M07-Q05"]
+      },
+      "total_items": 5,
+      "min_items_for_score": 3,
+      "description": "Degree to which writing voice adapts to and accounts for the intended audience"
+    },
+    "authority": {
+      "contributing_items": {
+        "M08": ["M08-Q01", "M08-Q02", "M08-Q03", "M08-Q04"],
+        "M02": ["M02-Q06", "M02-Q07"],
+        "SD": ["assertive_tentative", "authoritative_collaborative"]
+      },
+      "total_items": 8,
+      "min_items_for_score": 5,
+      "description": "Stance of authority in writing, from collaborative/tentative to assertive/authoritative"
+    },
+    "narrativity": {
+      "contributing_items": {
+        "M05": ["M05-Q01", "M05-Q02", "M05-Q03", "M05-Q04", "M05-Q05"],
+        "SD": ["narrative_expository"]
+      },
+      "total_items": 6,
+      "min_items_for_score": 4,
+      "description": "Tendency toward narrative vs. expository modes in writing"
+    },
+    "humor": {
+      "contributing_items": {
+        "M04": ["M04-Q07", "M04-Q08"],
+        "M02": ["M02-Q08", "M02-Q09"],
+        "SD": ["serious_playful"]
+      },
+      "total_items": 5,
+      "min_items_for_score": 3,
+      "description": "Use of humor, wit, and playfulness in writing voice"
+    }
+  },
+  "gap_dimensions": {
+    "precision": {
+      "contributing_items": {
+        "M09": ["M09-Q01", "M09-Q02", "M09-Q03", "M09-Q04", "M09-Q05"]
+      },
+      "min_items_for_score": 3,
+      "description": "Attention to grammatical precision, word choice exactness, and mechanical correctness"
+    },
+    "revision_orientation": {
+      "contributing_items": {
+        "M10": ["M10-Q01", "M10-Q02", "M10-Q03", "M10-Q04"]
+      },
+      "min_items_for_score": 2,
+      "description": "Approach to revision and editing in the writing process"
+    },
+    "contextual_flexibility": {
+      "contributing_items": {
+        "M11": ["M11-Q04", "M11-Q05", "M11-Q06"]
+      },
+      "min_items_for_score": 2,
+      "description": "Ability and willingness to shift voice across different writing contexts"
+    },
+    "risk_tolerance": {
+      "contributing_items": {
+        "M02": ["M02-Q10"],
+        "M05": ["M05-Q04"]
+      },
+      "min_items_for_score": 1,
+      "description": "Willingness to take creative risks and experiment with unconventional voice choices"
+    },
+    "self_awareness": {
+      "contributing_items": {
+        "M12": ["M12-Q01", "M12-Q02", "M12-Q03"]
+      },
+      "min_items_for_score": 2,
+      "description": "Metacognitive awareness of one's own writing voice and its effects"
+    },
+    "consistency": {
+      "contributing_items": {
+        "M12": ["M12-Q04", "M12-Q05"]
+      },
+      "min_items_for_score": 1,
+      "description": "Consistency of voice across writing sessions and pieces"
+    },
+    "influence_absorption": {
+      "contributing_items": {
+        "M02": ["M02-Q03"],
+        "M10": ["M10-Q03"]
+      },
+      "min_items_for_score": 1,
+      "description": "Tendency to absorb and integrate influences from other writers"
+    },
+    "vocabulary_range": {
+      "contributing_items": {
+        "M06": ["M06-Q02"],
+        "M09": ["M09-Q03"]
+      },
+      "min_items_for_score": 1,
+      "description": "Breadth and register range of vocabulary usage"
+    },
+    "sentence_rhythm": {
+      "contributing_items": {
+        "M06": ["M06-Q04"],
+        "M09": ["M09-Q06"]
+      },
+      "min_items_for_score": 1,
+      "description": "Characteristic sentence length patterns and rhythmic variation"
+    },
+    "genre_awareness": {
+      "contributing_items": {
+        "M07": ["M07-Q04"],
+        "M08": ["M08-Q03"]
+      },
+      "min_items_for_score": 1,
+      "description": "Awareness of and adherence to genre-specific voice conventions"
+    }
+  },
+  "semantic_differential_pairs": [
+    "formal_casual",
+    "accessible_specialized",
+    "emotional_analytical",
+    "warm_detached",
+    "personal_impersonal",
+    "earnest_ironic",
+    "elaborate_minimalist",
+    "concise_expansive",
+    "assertive_tentative",
+    "authoritative_collaborative",
+    "narrative_expository",
+    "serious_playful"
+  ]
+}

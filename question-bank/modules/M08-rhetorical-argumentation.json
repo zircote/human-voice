@@ -1,0 +1,277 @@
+[
+  {
+    "question_id": "M08-Q01",
+    "module_id": "M08",
+    "module_name": "Rhetorical & Argumentation",
+    "text": "Making an argument: conclusion first or build evidence?",
+    "type": "forced_choice",
+    "options": [
+      { "value": "conclusion_first", "label": "State the conclusion first, then support it with evidence" },
+      { "value": "build_evidence", "label": "Build the evidence first, then arrive at the conclusion" },
+      { "value": "depends_context", "label": "It depends on the context" }
+    ],
+    "scoring": {
+      "dimensions": ["authority"],
+      "weights": { "authority": 0.8 },
+      "scoring_map": {
+        "conclusion_first": { "authority": 6 },
+        "build_evidence": { "authority": 3 },
+        "depends_context": { "authority": 4 }
+      }
+    },
+    "metadata": {
+      "self_reportability_tier": 2,
+      "finding_refs": ["LT-014", "LT-007", "LT-013", "PL-014"],
+      "bias_mitigation": "Both rhetorical strategies presented as equally valid approaches",
+      "branching": { "required_branches": ["creative_literary", "business_professional", "academic_technical"], "excluded_branches": [] },
+      "position": { "module_sequence": 1, "funnel_stage": "core" },
+      "estimated_seconds": 15,
+      "format_category": "forced_choice"
+    }
+  },
+  {
+    "question_id": "M08-Q02",
+    "module_id": "M08",
+    "module_name": "Rhetorical & Argumentation",
+    "text": "How do you handle opposing viewpoints?",
+    "type": "select",
+    "options": [
+      { "value": "acknowledge_refute", "label": "Acknowledge them, then refute" },
+      { "value": "integrate", "label": "Integrate them into a nuanced position" },
+      { "value": "ignore", "label": "Focus on my own argument and leave them aside" },
+      { "value": "preempt", "label": "Address them preemptively before they arise" },
+      { "value": "concede_partially", "label": "Concede valid points while maintaining my core position" }
+    ],
+    "scoring": {
+      "dimensions": ["authority"],
+      "weights": { "authority": 0.9 }
+    },
+    "metadata": {
+      "self_reportability_tier": 2,
+      "finding_refs": ["LT-014", "LT-007", "LT-013", "PL-014"],
+      "bias_mitigation": "All strategies framed as deliberate rhetorical choices without value ranking",
+      "branching": { "required_branches": ["creative_literary", "business_professional", "academic_technical"], "excluded_branches": [] },
+      "position": { "module_sequence": 2, "funnel_stage": "core" },
+      "estimated_seconds": 20,
+      "format_category": "select"
+    }
+  },
+  {
+    "question_id": "M08-Q03",
+    "module_id": "M08",
+    "module_name": "Rhetorical & Argumentation",
+    "text": "Persuading: logical evidence, emotional appeal, or credibility?",
+    "type": "forced_choice",
+    "options": [
+      { "value": "logical", "label": "Logical evidence and data (logos)" },
+      { "value": "emotional", "label": "Emotional appeal and connection (pathos)" },
+      { "value": "credibility", "label": "Credibility and expertise (ethos)" },
+      { "value": "blend", "label": "A blend depending on the situation" }
+    ],
+    "scoring": {
+      "dimensions": ["authority"],
+      "weights": { "authority": 0.8 },
+      "scoring_map": {
+        "logical": { "authority": 5 },
+        "emotional": { "authority": 3 },
+        "credibility": { "authority": 6 },
+        "blend": { "authority": 4 }
+      }
+    },
+    "metadata": {
+      "self_reportability_tier": 2,
+      "finding_refs": ["LT-014", "LT-007", "LT-013", "PL-014"],
+      "bias_mitigation": "Classical rhetorical modes presented without hierarchy",
+      "branching": { "required_branches": ["creative_literary", "business_professional", "academic_technical"], "excluded_branches": [] },
+      "position": { "module_sequence": 3, "funnel_stage": "core" },
+      "estimated_seconds": 15,
+      "format_category": "forced_choice"
+    }
+  },
+  {
+    "question_id": "M08-Q04",
+    "module_id": "M08",
+    "module_name": "Rhetorical & Argumentation",
+    "text": "Do you explain why evidence supports your conclusion, or let it speak?",
+    "type": "forced_choice",
+    "options": [
+      { "value": "explain", "label": "I explain the connection explicitly" },
+      { "value": "let_speak", "label": "I let the evidence speak for itself" },
+      { "value": "mix", "label": "A mix of both depending on complexity" }
+    ],
+    "scoring": {
+      "dimensions": ["authority"],
+      "weights": { "authority": 0.7 },
+      "scoring_map": {
+        "explain": { "authority": 5 },
+        "let_speak": { "authority": 3 },
+        "mix": { "authority": 4 }
+      }
+    },
+    "metadata": {
+      "self_reportability_tier": 2,
+      "finding_refs": ["LT-014", "LT-007", "LT-013", "PL-014"],
+      "bias_mitigation": "Both approaches framed as valid rhetorical strategies",
+      "branching": { "required_branches": ["creative_literary", "business_professional", "academic_technical"], "excluded_branches": [] },
+      "position": { "module_sequence": 4, "funnel_stage": "core" },
+      "estimated_seconds": 15,
+      "format_category": "forced_choice"
+    }
+  },
+  {
+    "question_id": "M08-Q05",
+    "module_id": "M08",
+    "module_name": "Rhetorical & Argumentation",
+    "text": "When not 100% certain, how do you signal that?",
+    "type": "open_ended",
+    "scoring": {
+      "dimensions": ["authority"],
+      "weights": { "authority": 0.8 }
+    },
+    "metadata": {
+      "self_reportability_tier": 2,
+      "finding_refs": ["LT-014", "LT-007", "LT-013", "PL-014"],
+      "bias_mitigation": "Open-ended format avoids anchoring on specific hedging strategies",
+      "branching": { "required_branches": ["creative_literary", "business_professional", "academic_technical"], "excluded_branches": [] },
+      "position": { "module_sequence": 5, "funnel_stage": "core" },
+      "estimated_seconds": 45,
+      "format_category": "open_ended"
+    }
+  },
+  {
+    "question_id": "M08-Q06",
+    "module_id": "M08",
+    "module_name": "Rhetorical & Argumentation",
+    "text": "Present views as definitive or qualified?",
+    "type": "likert",
+    "options": [
+      { "value": 1, "label": "Always definitive — I state things with certainty" },
+      { "value": 2, "label": "Mostly definitive" },
+      { "value": 3, "label": "Somewhat definitive" },
+      { "value": 4, "label": "Balanced between definitive and qualified" },
+      { "value": 5, "label": "Somewhat qualified" },
+      { "value": 6, "label": "Mostly qualified" },
+      { "value": 7, "label": "Always qualified — I hedge and caveat extensively" }
+    ],
+    "scoring": {
+      "dimensions": ["authority"],
+      "weights": { "authority": 0.9 },
+      "scoring_map": {
+        "1": { "authority": 7 },
+        "2": { "authority": 6 },
+        "3": { "authority": 5 },
+        "4": { "authority": 4 },
+        "5": { "authority": 3 },
+        "6": { "authority": 2 },
+        "7": { "authority": 1 }
+      }
+    },
+    "metadata": {
+      "self_reportability_tier": 2,
+      "finding_refs": ["LT-014", "LT-007", "LT-013", "PL-014"],
+      "bias_mitigation": "Bidirectional scale; neither definitiveness nor qualification framed as superior",
+      "branching": { "required_branches": ["creative_literary", "business_professional", "academic_technical"], "excluded_branches": [] },
+      "position": { "module_sequence": 6, "funnel_stage": "core" },
+      "estimated_seconds": 15,
+      "format_category": "likert"
+    }
+  },
+  {
+    "question_id": "M08-Q07",
+    "module_id": "M08",
+    "module_name": "Rhetorical & Argumentation",
+    "text": "Handle disagreement directly or diplomatically?",
+    "type": "forced_choice",
+    "options": [
+      { "value": "directly", "label": "Directly — I state my disagreement clearly" },
+      { "value": "diplomatically", "label": "Diplomatically — I soften my disagreement" },
+      { "value": "depends", "label": "It depends on the relationship and stakes" }
+    ],
+    "scoring": {
+      "dimensions": ["authority"],
+      "weights": { "authority": 0.7 },
+      "scoring_map": {
+        "directly": { "authority": 6 },
+        "diplomatically": { "authority": 3 },
+        "depends": { "authority": 4 }
+      }
+    },
+    "metadata": {
+      "self_reportability_tier": 2,
+      "finding_refs": ["LT-014", "LT-007", "LT-013", "PL-014"],
+      "bias_mitigation": "Both approaches framed as deliberate communication choices",
+      "branching": { "required_branches": ["creative_literary", "business_professional", "academic_technical"], "excluded_branches": [] },
+      "position": { "module_sequence": 7, "funnel_stage": "core" },
+      "estimated_seconds": 15,
+      "format_category": "forced_choice"
+    }
+  },
+  {
+    "question_id": "M08-Q08",
+    "module_id": "M08",
+    "module_name": "Rhetorical & Argumentation",
+    "text": "How comfortable with ambiguity in your writing?",
+    "type": "likert",
+    "options": [
+      { "value": 1, "label": "Very uncomfortable — I need clear, definitive statements" },
+      { "value": 2, "label": "Mostly uncomfortable" },
+      { "value": 3, "label": "Somewhat uncomfortable" },
+      { "value": 4, "label": "Neutral" },
+      { "value": 5, "label": "Somewhat comfortable" },
+      { "value": 6, "label": "Mostly comfortable" },
+      { "value": 7, "label": "Very comfortable — I embrace ambiguity and complexity" }
+    ],
+    "scoring": {
+      "dimensions": ["authority"],
+      "weights": { "authority": 0.7 },
+      "scoring_map": {
+        "1": { "authority": 7 },
+        "2": { "authority": 6 },
+        "3": { "authority": 5 },
+        "4": { "authority": 4 },
+        "5": { "authority": 3 },
+        "6": { "authority": 2 },
+        "7": { "authority": 1 }
+      }
+    },
+    "metadata": {
+      "self_reportability_tier": 2,
+      "finding_refs": ["LT-014", "LT-007", "LT-013", "PL-014"],
+      "bias_mitigation": "Bidirectional scale; comfort with ambiguity not framed as intellectually superior",
+      "branching": { "required_branches": ["creative_literary", "business_professional", "academic_technical"], "excluded_branches": [] },
+      "position": { "module_sequence": 8, "funnel_stage": "core" },
+      "estimated_seconds": 15,
+      "format_category": "likert"
+    }
+  },
+  {
+    "question_id": "M08-Q09",
+    "module_id": "M08",
+    "module_name": "Rhetorical & Argumentation",
+    "text": "Enjoy exploring multiple sides or prefer clear position?",
+    "type": "forced_choice",
+    "options": [
+      { "value": "explore", "label": "I enjoy exploring multiple sides of an issue" },
+      { "value": "clear_position", "label": "I prefer taking a clear position" },
+      { "value": "start_explore_then_commit", "label": "I explore first, then commit to a position" }
+    ],
+    "scoring": {
+      "dimensions": ["authority"],
+      "weights": { "authority": 0.7 },
+      "scoring_map": {
+        "explore": { "authority": 2 },
+        "clear_position": { "authority": 6 },
+        "start_explore_then_commit": { "authority": 4 }
+      }
+    },
+    "metadata": {
+      "self_reportability_tier": 2,
+      "finding_refs": ["LT-014", "LT-007", "LT-013", "PL-014"],
+      "bias_mitigation": "Both orientations framed positively; exploration not coded as indecisive",
+      "branching": { "required_branches": ["creative_literary", "business_professional", "academic_technical"], "excluded_branches": [] },
+      "position": { "module_sequence": 9, "funnel_stage": "core" },
+      "estimated_seconds": 15,
+      "format_category": "forced_choice"
+    }
+  }
+]

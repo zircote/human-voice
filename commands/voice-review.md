@@ -1,5 +1,5 @@
 ---
-name: review
+name: voice-review
 description: Review content for AI writing patterns
 argument-hint: "[path] [--ignore=categories]"
 allowed-tools: Read, Glob, Grep, Bash(node:*), Bash(test:*), Bash(ls:*), Bash(grep:*), Skill
@@ -13,7 +13,7 @@ Analyze content for AI-generated writing patterns using a multi-tier approach.
 
 - `--ignore=emojis,em-dash` - Skip specific pattern categories during character detection
   - Valid categories: `emojis`, `em-dash`, `en-dash`, `smart-quotes`, `ellipsis`, `bullet`, `arrow`
-  - Example: `/human-voice:review --ignore=emojis,arrow docs/`
+  - Example: `/human-voice:voice-review --ignore=emojis,arrow docs/`
 
 ## Target
 
@@ -85,28 +85,8 @@ Recommendations:
 2. [Secondary fix]
 ...
 
-Run `/human-voice:fix [path]` to auto-fix character issues.
+Run `/human-voice:voice-fix [path]` to auto-fix character issues.
 ```
 
 Load the human-voice skill for detailed pattern reference if needed.
 
-## Memory Integration
-
-**Before reviewing:** Recall existing voice decisions and patterns
-
-```bash
-# Search for voice decisions and patterns
-rg -i "voice\|human.voice\|ai.pattern" ~/.claude/mnemonic/ ./.claude/mnemonic/ --glob "*.memory.md"
-```
-
-**After reviewing:** Capture significant findings
-
-For **recurring patterns**:
-```bash
-/mnemonic:capture learnings "Human Voice: {PATH} - {PATTERN_TYPE} patterns found"
-```
-
-For **project voice decisions**:
-```bash
-/mnemonic:capture decisions "Voice Decision: {PROJECT} - {DECISION}"
-```

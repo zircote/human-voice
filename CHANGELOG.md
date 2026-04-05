@@ -5,6 +5,26 @@ All notable changes to the Human Voice plugin will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.4.0] - 2026-04-04
+
+### Added
+
+- **Mivoca Voice Elicitation Engine**: Adaptive interview system for building multi-dimensional voice profiles
+  - 130 questions across 12 thematic modules + 20 semantic differential pairs
+  - 4 writer-type branches (Creative, Business, Academic, Personal)
+  - Dual-output architecture: self-reported preferences + computational observation
+  - NLP pipeline (spaCy): lexical diversity, syntactic complexity, pragmatic markers, discourse cohesion, LIWC-equivalent metrics
+  - Scoring engine: per-dimension subscale scoring, Cronbach's alpha, tier-weighted merging
+  - Calibration report: self-perception gap analysis, blind spots, aspirational gaps
+  - Session management with pause/resume across Claude Code sessions
+  - Active profile published to `~/.human-voice/profile.json` for cross-session use
+- **New Commands**: `interview`, `resume`, `status`, `profile`, `sessions`
+- **New Agents**: `interview-conductor`, `profile-synthesizer`
+- **New Skill**: `mivoca` for voice elicitation
+- **Documentation**: Diátaxis-structured docs (tutorial, how-to, reference, explanation)
+- **Tests**: 118 pytest tests covering session, branching, sequencing, quality, NLP, scoring, integration
+- **CLI Tools**: 6 bin/ executables for session, branching, sequencer, quality, NLP, scoring
+
 ## [0.3.0] - 2026-01-23
 
 ### Added
@@ -12,7 +32,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **Ignore Categories**: New `--ignore=categories` argument for both review and fix commands
   - Skip specific pattern categories during detection/fixing
   - Available categories: `emojis`, `em-dash`, `en-dash`, `smart-quotes`, `ellipsis`, `bullet`, `arrow`
-  - Example: `/human-voice:fix --ignore=emojis,em-dash docs/`
+  - Example: `/human-voice:voice-fix --ignore=emojis,em-dash docs/`
 - **Validation Warnings**: Unknown category names now show a warning with valid options
 
 ### Changed
@@ -47,9 +67,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Structural patterns detection (list addiction, rule of three)
   - Voice patterns detection (passive voice, generic analogies)
 - **Commands**:
-  - `/human-voice:setup` - Interactive configuration wizard
-  - `/human-voice:review [path]` - Analyze content for AI patterns
-  - `/human-voice:fix [path]` - Auto-fix character-level issues
+  - `/human-voice:voice-setup` - Interactive configuration wizard
+  - `/human-voice:voice-review [path]` - Analyze content for AI patterns
+  - `/human-voice:voice-fix [path]` - Auto-fix character-level issues
 - **Agent**: `voice-reviewer` - Proactive content review after Write/Edit operations
 - **Scripts**:
   - `validate-character-restrictions.js` - Validation script for character patterns

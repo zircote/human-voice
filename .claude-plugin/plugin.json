@@ -1,7 +1,7 @@
 {
   "name": "human-voice",
-  "version": "0.2.0",
-  "description": "Detect and prevent AI-generated writing patterns to ensure authentic human voice in content",
+  "version": "0.3.0",
+  "description": "Detect AI-generated writing patterns and build authentic voice profiles through adaptive interviews and computational stylistics",
   "author": {
     "name": "zircote",
     "url": "https://github.com/zircote"
@@ -15,6 +15,10 @@
     "content-quality",
     "human-voice",
     "markdown",
-    "documentation"
+    "documentation",
+    "voice-profile",
+    "interview-engine",
+    "stylometry",
+    "nlp"
   ]
 }

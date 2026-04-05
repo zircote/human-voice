@@ -1,0 +1,61 @@
+{
+  "schema_version": "1.0.0",
+  "description": "Satisficing detection rules to identify low-effort or disengaged response patterns. When thresholds are met, the engine flags the behavior and may inject engagement resets.",
+  "detection_rules": {
+    "straightlining": {
+      "description": "Respondent selects the same scale value for 5 or more consecutive items on Likert or semantic differential scales",
+      "condition": {
+        "pattern": "identical_consecutive_responses",
+        "min_consecutive": 5,
+        "applies_to": ["likert_scale", "semantic_differential"]
+      },
+      "severity": "warning",
+      "flags_generated": 1
+    },
+    "speed": {
+      "description": "Respondent completes a complex item (estimated >10 seconds) in under 2 seconds, indicating the item was not read",
+      "condition": {
+        "metric": "response_time_seconds",
+        "operator": "<",
+        "threshold": 2,
+        "item_filter": {
+          "estimated_seconds": {
+            "operator": ">",
+            "value": 10
+          }
+        }
+      },
+      "severity": "warning",
+      "flags_generated": 1
+    },
+    "alternation": {
+      "description": "Respondent alternates between extreme scale values (e.g., 1,7,1,7) for 4 or more consecutive questions, indicating patterned non-engagement",
+      "condition": {
+        "pattern": "alternating_extremes",
+        "min_consecutive": 4,
+        "extreme_values": [1, 7],
+        "applies_to": ["likert_scale", "semantic_differential"]
+      },
+      "severity": "warning",
+      "flags_generated": 1
+    }
+  },
+  "engagement_reset_threshold": {
+    "description": "When cumulative satisficing flags reach or exceed this threshold, inject an engagement reset prompt",
+    "min_flags": 2,
+    "action": "inject_engagement_reset",
+    "reset_clears_flags": false,
+    "max_resets_per_session": 3
+  },
+  "session_validity": {
+    "description": "Thresholds for determining whether the overall session data is usable",
+    "max_flags_before_invalid": 8,
+    "action_on_invalid": "flag_session_for_manual_review",
+    "confidence_penalty_per_flag": 0.05
+  },
+  "notes": {
+    "flag_accumulation": "Flags accumulate across all detection rules. A single response can trigger at most one flag from each rule type.",
+    "engagement_reset": "See deep-dive-triggers.json low_engagement_detector for the corresponding trigger rule.",
+    "estimated_seconds": "Each question item has an estimated_seconds field in the question bank indicating expected minimum completion time for engaged respondents."
+  }
+}

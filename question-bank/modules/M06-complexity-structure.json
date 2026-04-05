@@ -1,0 +1,322 @@
+[
+  {
+    "question_id": "M06-Q01",
+    "module_id": "M06",
+    "module_name": "Complexity & Structure",
+    "text": "Do you naturally write longer, multi-clause sentences or shorter ones?",
+    "type": "forced_choice",
+    "options": [
+      { "value": "longer", "label": "Longer, multi-clause sentences — I let ideas flow in connected streams" },
+      { "value": "shorter", "label": "Shorter sentences — I keep each thought tight and separate" },
+      { "value": "mix", "label": "A mix of both, depending on the moment" }
+    ],
+    "scoring": {
+      "dimensions": ["complexity"],
+      "weights": { "complexity": 1.0 },
+      "scoring_map": {
+        "longer": { "complexity": 5 },
+        "shorter": { "complexity": 1 },
+        "mix": { "complexity": 3 }
+      }
+    },
+    "metadata": {
+      "self_reportability_tier": 2,
+      "finding_refs": ["CS-003", "CS-004", "CS-015", "CS-010"],
+      "bias_mitigation": "Both sentence lengths framed as natural stylistic preferences",
+      "branching": { "required_branches": ["*"] },
+      "position": { "module_sequence": 1, "funnel_stage": "general" },
+      "estimated_seconds": 15,
+      "format_category": "forced_choice"
+    }
+  },
+  {
+    "question_id": "M06-Q02",
+    "module_id": "M06",
+    "module_name": "Complexity & Structure",
+    "text": "Complex idea: break into multiple sentences or one elaborate sentence?",
+    "type": "forced_choice",
+    "options": [
+      { "value": "multiple", "label": "Break it into multiple shorter sentences for clarity" },
+      { "value": "elaborate", "label": "Craft one elaborate sentence that captures the full complexity" },
+      { "value": "depends", "label": "It depends on the idea and context" }
+    ],
+    "scoring": {
+      "dimensions": ["complexity"],
+      "weights": { "complexity": 1.0 },
+      "scoring_map": {
+        "multiple": { "complexity": 2 },
+        "elaborate": { "complexity": 5 },
+        "depends": { "complexity": 3 }
+      }
+    },
+    "metadata": {
+      "self_reportability_tier": 2,
+      "finding_refs": ["CS-003", "CS-004", "CS-015", "CS-010"],
+      "bias_mitigation": "Both approaches framed as valid strategies for handling complexity",
+      "branching": { "required_branches": ["*"] },
+      "position": { "module_sequence": 2, "funnel_stage": "comparative" },
+      "estimated_seconds": 15,
+      "format_category": "forced_choice"
+    }
+  },
+  {
+    "question_id": "M06-Q03",
+    "module_id": "M06",
+    "module_name": "Complexity & Structure",
+    "text": "Do you front-load important information or build up to it?",
+    "type": "forced_choice",
+    "options": [
+      { "value": "front_load", "label": "Front-load — I lead with the key point and then elaborate" },
+      { "value": "build_up", "label": "Build up — I set context and arrive at the main point" },
+      { "value": "varies", "label": "It varies depending on the situation" }
+    ],
+    "scoring": {
+      "dimensions": ["complexity"],
+      "weights": { "complexity": 1.0 },
+      "scoring_map": {
+        "front_load": { "complexity": 2 },
+        "build_up": { "complexity": 4 },
+        "varies": { "complexity": 3 }
+      }
+    },
+    "metadata": {
+      "self_reportability_tier": 2,
+      "finding_refs": ["CS-003", "CS-004", "CS-015", "CS-010"],
+      "bias_mitigation": "Both information ordering strategies presented as effective rhetorical choices",
+      "branching": { "required_branches": ["*"] },
+      "position": { "module_sequence": 3, "funnel_stage": "comparative" },
+      "estimated_seconds": 15,
+      "format_category": "forced_choice"
+    }
+  },
+  {
+    "question_id": "M06-Q04",
+    "module_id": "M06",
+    "module_name": "Complexity & Structure",
+    "text": "Which feels more natural? \"The report was completed by the team\" or \"The team completed the report.\"",
+    "type": "forced_choice",
+    "options": [
+      { "value": "active", "label": "\"The team completed the report\" — active voice feels more natural" },
+      { "value": "passive", "label": "\"The report was completed by the team\" — passive voice feels more natural" },
+      { "value": "either", "label": "Either works — I switch between them freely" }
+    ],
+    "scoring": {
+      "dimensions": ["complexity"],
+      "weights": { "complexity": 1.0 },
+      "scoring_map": {
+        "active": { "complexity": 2 },
+        "passive": { "complexity": 4 },
+        "either": { "complexity": 3 }
+      }
+    },
+    "metadata": {
+      "self_reportability_tier": 2,
+      "finding_refs": ["CS-003", "CS-004", "CS-015", "CS-010"],
+      "bias_mitigation": "Concrete example avoids abstract preference; both voices framed as natural choices",
+      "branching": { "required_branches": ["*"] },
+      "position": { "module_sequence": 4, "funnel_stage": "comparative" },
+      "estimated_seconds": 15,
+      "format_category": "forced_choice"
+    }
+  },
+  {
+    "question_id": "M06-Q05",
+    "module_id": "M06",
+    "module_name": "Complexity & Structure",
+    "text": "Do you write long paragraphs or shorter, punchier ones?",
+    "type": "likert",
+    "options": [
+      { "value": 1, "label": "Very short and punchy — often just 1-2 sentences" },
+      { "value": 2, "label": "Mostly short with occasional longer ones" },
+      { "value": 3, "label": "A moderate mix" },
+      { "value": 4, "label": "Somewhat long — I develop ideas before moving on" },
+      { "value": 5, "label": "Moderately long — I build full arguments in each paragraph" },
+      { "value": 6, "label": "Quite long — paragraphs are extended, detailed units" },
+      { "value": 7, "label": "Very long — I write dense, elaborate paragraphs" }
+    ],
+    "scoring": {
+      "dimensions": ["complexity"],
+      "weights": { "complexity": 1.0 },
+      "scoring_map": {
+        "1": { "complexity": 1 },
+        "2": { "complexity": 2 },
+        "3": { "complexity": 3 },
+        "4": { "complexity": 4 },
+        "5": { "complexity": 5 },
+        "6": { "complexity": 6 },
+        "7": { "complexity": 7 }
+      }
+    },
+    "metadata": {
+      "self_reportability_tier": 2,
+      "finding_refs": ["CS-003", "CS-004", "CS-015", "CS-010"],
+      "bias_mitigation": "Full 7-point scale with balanced endpoints; no length framed as superior",
+      "branching": { "required_branches": ["*"] },
+      "position": { "module_sequence": 5, "funnel_stage": "specific" },
+      "estimated_seconds": 15,
+      "format_category": "likert"
+    }
+  },
+  {
+    "question_id": "M06-Q06",
+    "module_id": "M06",
+    "module_name": "Complexity & Structure",
+    "text": "When starting a paragraph, lead with main point or build up?",
+    "type": "forced_choice",
+    "options": [
+      { "value": "lead", "label": "Lead with the main point — topic sentence first, then support" },
+      { "value": "build", "label": "Build up — set the stage before stating the point" },
+      { "value": "varies", "label": "It varies by paragraph and context" }
+    ],
+    "scoring": {
+      "dimensions": ["complexity"],
+      "weights": { "complexity": 1.0 },
+      "scoring_map": {
+        "lead": { "complexity": 2 },
+        "build": { "complexity": 4 },
+        "varies": { "complexity": 3 }
+      }
+    },
+    "metadata": {
+      "self_reportability_tier": 2,
+      "finding_refs": ["CS-003", "CS-004", "CS-015", "CS-010"],
+      "bias_mitigation": "Both paragraph opening strategies presented as valid structural choices",
+      "branching": { "required_branches": ["*"] },
+      "position": { "module_sequence": 6, "funnel_stage": "comparative" },
+      "estimated_seconds": 15,
+      "format_category": "forced_choice"
+    }
+  },
+  {
+    "question_id": "M06-Q07",
+    "module_id": "M06",
+    "module_name": "Complexity & Structure",
+    "text": "How often do you use bulleted or numbered lists?",
+    "type": "likert",
+    "options": [
+      { "value": 1, "label": "Almost never — I prefer continuous prose" },
+      { "value": 2, "label": "Rarely — only when absolutely necessary" },
+      { "value": 3, "label": "Sometimes — when the content calls for it" },
+      { "value": 4, "label": "Often — lists are a regular part of my writing" },
+      { "value": 5, "label": "Very frequently — I reach for lists whenever possible" }
+    ],
+    "scoring": {
+      "dimensions": ["complexity"],
+      "weights": { "complexity": 1.0 },
+      "scoring_map": {
+        "1": { "complexity": 5 },
+        "2": { "complexity": 4 },
+        "3": { "complexity": 3 },
+        "4": { "complexity": 2 },
+        "5": { "complexity": 1 }
+      }
+    },
+    "metadata": {
+      "self_reportability_tier": 2,
+      "finding_refs": ["CS-003", "CS-004", "CS-015", "CS-010"],
+      "bias_mitigation": "Reversed scoring — frequent list use maps to lower complexity; both preferences normalized",
+      "branching": { "required_branches": ["*"] },
+      "position": { "module_sequence": 7, "funnel_stage": "specific" },
+      "estimated_seconds": 15,
+      "format_category": "likert"
+    }
+  },
+  {
+    "question_id": "M06-Q08",
+    "module_id": "M06",
+    "module_name": "Complexity & Structure",
+    "text": "Headings/subheadings extensively, or continuous prose?",
+    "type": "forced_choice",
+    "options": [
+      { "value": "headings", "label": "Headings and subheadings extensively — I structure with clear signposts" },
+      { "value": "prose", "label": "Continuous prose — I let the writing flow without imposed structure" },
+      { "value": "moderate", "label": "A moderate amount — headings for major sections but prose within them" }
+    ],
+    "scoring": {
+      "dimensions": ["complexity"],
+      "weights": { "complexity": 1.0 },
+      "scoring_map": {
+        "headings": { "complexity": 2 },
+        "prose": { "complexity": 5 },
+        "moderate": { "complexity": 3 }
+      }
+    },
+    "metadata": {
+      "self_reportability_tier": 2,
+      "finding_refs": ["CS-003", "CS-004", "CS-015", "CS-010"],
+      "bias_mitigation": "Both formatting approaches framed as deliberate structural decisions",
+      "branching": { "required_branches": ["*"] },
+      "position": { "module_sequence": 8, "funnel_stage": "specific" },
+      "estimated_seconds": 15,
+      "format_category": "forced_choice"
+    }
+  },
+  {
+    "question_id": "M06-Q09",
+    "module_id": "M06",
+    "module_name": "Complexity & Structure",
+    "text": "Do you elaborate extensively or express concisely?",
+    "type": "likert",
+    "options": [
+      { "value": 1, "label": "Extremely concise — I strip away everything non-essential" },
+      { "value": 2, "label": "Quite concise — brevity is a priority" },
+      { "value": 3, "label": "Lean but with some elaboration where needed" },
+      { "value": 4, "label": "Balanced between conciseness and elaboration" },
+      { "value": 5, "label": "Moderately elaborate — I develop ideas with supporting detail" },
+      { "value": 6, "label": "Quite elaborate — I explore ideas thoroughly" },
+      { "value": 7, "label": "Extensively elaborate — I leave no angle unexplored" }
+    ],
+    "scoring": {
+      "dimensions": ["complexity"],
+      "weights": { "complexity": 1.0 },
+      "scoring_map": {
+        "1": { "complexity": 1 },
+        "2": { "complexity": 2 },
+        "3": { "complexity": 3 },
+        "4": { "complexity": 4 },
+        "5": { "complexity": 5 },
+        "6": { "complexity": 6 },
+        "7": { "complexity": 7 }
+      }
+    },
+    "metadata": {
+      "self_reportability_tier": 2,
+      "finding_refs": ["CS-003", "CS-004", "CS-015", "CS-010"],
+      "bias_mitigation": "Full 7-point scale with balanced endpoints; neither extreme framed as superior",
+      "branching": { "required_branches": ["*"] },
+      "position": { "module_sequence": 9, "funnel_stage": "specific" },
+      "estimated_seconds": 15,
+      "format_category": "likert"
+    }
+  },
+  {
+    "question_id": "M06-Q10",
+    "module_id": "M06",
+    "module_name": "Complexity & Structure",
+    "text": "Organizing a piece: start with big picture or build from details?",
+    "type": "forced_choice",
+    "options": [
+      { "value": "big_picture", "label": "Start with the big picture — outline the whole, then fill in details" },
+      { "value": "details", "label": "Build from details — work through specifics and let the structure emerge" },
+      { "value": "both", "label": "A combination — I move between big picture and details" }
+    ],
+    "scoring": {
+      "dimensions": ["complexity"],
+      "weights": { "complexity": 1.0 },
+      "scoring_map": {
+        "big_picture": { "complexity": 3 },
+        "details": { "complexity": 4 },
+        "both": { "complexity": 3 }
+      }
+    },
+    "metadata": {
+      "self_reportability_tier": 2,
+      "finding_refs": ["CS-003", "CS-004", "CS-015", "CS-010"],
+      "bias_mitigation": "Both organizational approaches framed as valid cognitive strategies",
+      "branching": { "required_branches": ["*"] },
+      "position": { "module_sequence": 10, "funnel_stage": "comparative" },
+      "estimated_seconds": 15,
+      "format_category": "forced_choice"
+    }
+  }
+]

@@ -1,0 +1,230 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://mivoca.zircote.com/schemas/session-state.schema.json",
+  "title": "Mivoca Session State",
+  "description": "Represents the complete state of a voice elicitation interview session at any point in time. Tracks progress through modules, branching decisions, quality metrics, and deep dive triggers to enable pause/resume and adaptive interview flow.",
+  "type": "object",
+  "required": [
+    "session_id",
+    "created_at",
+    "updated_at",
+    "state",
+    "writer_type",
+    "branch_path",
+    "current_module",
+    "current_question_index",
+    "questions_answered",
+    "questions_remaining_estimate",
+    "elapsed_seconds",
+    "format_streak",
+    "quality_flags",
+    "module_progress",
+    "deep_dives_triggered"
+  ],
+  "properties": {
+    "session_id": {
+      "type": "string",
+      "format": "uuid",
+      "description": "Unique identifier for this interview session."
+    },
+    "created_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "ISO-8601 timestamp of when the session was created."
+    },
+    "updated_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "ISO-8601 timestamp of the most recent state update."
+    },
+    "state": {
+      "type": "string",
+      "enum": [
+        "init",
+        "screening",
+        "branching",
+        "in_progress",
+        "deep_dive",
+        "engagement_reset",
+        "writing_samples",
+        "paused",
+        "interview_complete",
+        "scoring",
+        "analyzing",
+        "generating",
+        "complete"
+      ],
+      "description": "Current phase of the interview session lifecycle. Transitions follow a defined state machine from init through complete."
+    },
+    "writer_type": {
+      "description": "The participant's determined writer type after the branching phase. Null until branching is complete.",
+      "oneOf": [
+        {
+          "type": "string",
+          "enum": [
+            "creative_literary",
+            "business_professional",
+            "academic_technical",
+            "personal_journalistic"
+          ]
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "branch_path": {
+      "type": "array",
+      "description": "Ordered list of branching decisions made during the session, recording the path through the adaptive interview tree.",
+      "items": {
+        "type": "string"
+      }
+    },
+    "current_module": {
+      "description": "Identifier of the module currently being administered. Null when between modules or before the interview starts.",
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "current_question_index": {
+      "type": "integer",
+      "minimum": 0,
+      "description": "Zero-based index of the current question within the active module."
+    },
+    "questions_answered": {
+      "type": "integer",
+      "minimum": 0,
+      "description": "Total number of questions the participant has answered so far."
+    },
+    "questions_remaining_estimate": {
+      "type": "integer",
+      "minimum": 0,
+      "description": "Estimated number of questions remaining, accounting for branching and adaptive skipping."
+    },
+    "elapsed_seconds": {
+      "type": "number",
+      "minimum": 0,
+      "description": "Total elapsed time in seconds since the session began, excluding paused time."
+    },
+    "format_streak": {
+      "type": "object",
+      "description": "Tracks consecutive questions of the same format type for monotony prevention.",
+      "required": [
+        "current_type",
+        "count"
+      ],
+      "properties": {
+        "current_type": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "The format category of the most recently presented question, or null before first question."
+        },
+        "count": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Number of consecutive questions with this format category."
+        }
+      },
+      "additionalProperties": false
+    },
+    "quality_flags": {
+      "type": "object",
+      "description": "Aggregated quality metrics across all responses in the session for engagement monitoring.",
+      "required": [
+        "straightline_count",
+        "too_fast_count",
+        "attention_checks_passed",
+        "attention_checks_total",
+        "engagement_resets_triggered"
+      ],
+      "properties": {
+        "straightline_count": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Total number of responses flagged as part of a straightlining pattern."
+        },
+        "too_fast_count": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Total number of responses flagged as too fast."
+        },
+        "attention_checks_passed": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Number of attention check questions answered correctly."
+        },
+        "attention_checks_total": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Total number of attention check questions presented."
+        },
+        "engagement_resets_triggered": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Number of times the engagement reset intervention was activated due to quality degradation."
+        }
+      },
+      "additionalProperties": false
+    },
+    "module_progress": {
+      "type": "object",
+      "description": "Progress status for each module, keyed by module_id.",
+      "additionalProperties": {
+        "type": "string",
+        "enum": [
+          "pending",
+          "in_progress",
+          "complete",
+          "skipped"
+        ],
+        "description": "Current status of the module."
+      }
+    },
+    "deep_dives_triggered": {
+      "type": "array",
+      "description": "List of deep dive module identifiers that have been triggered by response patterns.",
+      "items": {
+        "type": "string"
+      }
+    },
+    "deep_dive_return": {
+      "description": "Bookmark for returning to the main interview flow after completing a deep dive. Null when not in a deep dive.",
+      "oneOf": [
+        {
+          "type": "object",
+          "required": [
+            "module",
+            "question_index"
+          ],
+          "properties": {
+            "module": {
+              "type": "string",
+              "description": "The module_id to return to after the deep dive completes."
+            },
+            "question_index": {
+              "type": "integer",
+              "minimum": 0,
+              "description": "The question index within the return module to resume from."
+            }
+          },
+          "additionalProperties": false
+        },
+        {
+          "type": "null"
+        }
+      ]
+    }
+  },
+  "additionalProperties": false
+}

@@ -1,0 +1,142 @@
+[
+  {
+    "question_id": "M11-Q01",
+    "module_id": "M11",
+    "module_name": "Voice Aspirations & Anti-Patterns",
+    "text": "Three adjectives for your writing voice right now",
+    "type": "open_ended",
+    "scoring": {
+      "dimensions": ["voice_identity", "self_awareness"],
+      "weights": { "voice_identity": 1.0, "self_awareness": 0.8 }
+    },
+    "metadata": {
+      "self_reportability_tier": 1,
+      "finding_refs": ["EF-013", "PL-012", "LT-010"],
+      "bias_mitigation": "Constrained to three adjectives to reduce overthinking and social desirability bias",
+      "branching": { "required_branches": ["*"], "excluded_branches": [] },
+      "position": { "module_sequence": 1, "funnel_stage": "core" },
+      "estimated_seconds": 30,
+      "format_category": "open_ended"
+    }
+  },
+  {
+    "question_id": "M11-Q02",
+    "module_id": "M11",
+    "module_name": "Voice Aspirations & Anti-Patterns",
+    "text": "Three adjectives for the voice you aspire to",
+    "type": "open_ended",
+    "scoring": {
+      "dimensions": ["voice_identity", "voice_aspiration"],
+      "weights": { "voice_identity": 0.6, "voice_aspiration": 1.0 }
+    },
+    "metadata": {
+      "self_reportability_tier": 1,
+      "finding_refs": ["EF-013", "PL-012", "LT-010"],
+      "bias_mitigation": "Paired with Q01 to reveal gap between current and aspirational voice",
+      "branching": { "required_branches": ["*"], "excluded_branches": [] },
+      "position": { "module_sequence": 2, "funnel_stage": "core" },
+      "estimated_seconds": 30,
+      "format_category": "open_ended"
+    }
+  },
+  {
+    "question_id": "M11-Q03",
+    "module_id": "M11",
+    "module_name": "Voice Aspirations & Anti-Patterns",
+    "text": "Three adjectives for writing styles you actively reject",
+    "type": "open_ended",
+    "scoring": {
+      "dimensions": ["voice_identity", "voice_anti_patterns"],
+      "weights": { "voice_identity": 0.7, "voice_anti_patterns": 1.0 }
+    },
+    "metadata": {
+      "self_reportability_tier": 1,
+      "finding_refs": ["EF-013", "PL-012", "LT-010"],
+      "bias_mitigation": "Anti-pattern elicitation reveals boundaries of voice identity through contrast",
+      "branching": { "required_branches": ["*"], "excluded_branches": [] },
+      "position": { "module_sequence": 3, "funnel_stage": "core" },
+      "estimated_seconds": 30,
+      "format_category": "open_ended"
+    }
+  },
+  {
+    "question_id": "M11-Q04",
+    "module_id": "M11",
+    "module_name": "Voice Aspirations & Anti-Patterns",
+    "text": "Which characteristic is most distinctively \u201cyou\u201d?",
+    "type": "open_ended",
+    "scoring": {
+      "dimensions": ["voice_identity"],
+      "weights": { "voice_identity": 1.0 }
+    },
+    "metadata": {
+      "self_reportability_tier": 1,
+      "finding_refs": ["EF-013", "PL-012", "LT-010"],
+      "bias_mitigation": "Open-ended to avoid anchoring on researcher-defined voice characteristics",
+      "branching": { "required_branches": ["*"], "excluded_branches": [] },
+      "position": { "module_sequence": 4, "funnel_stage": "core" },
+      "estimated_seconds": 30,
+      "format_category": "open_ended"
+    }
+  },
+  {
+    "question_id": "M11-Q05",
+    "module_id": "M11",
+    "module_name": "Voice Aspirations & Anti-Patterns",
+    "text": "If you could change one thing about your style, what?",
+    "type": "open_ended",
+    "scoring": {
+      "dimensions": ["voice_identity", "voice_aspiration"],
+      "weights": { "voice_identity": 0.6, "voice_aspiration": 0.9 }
+    },
+    "metadata": {
+      "self_reportability_tier": 1,
+      "finding_refs": ["EF-013", "PL-012", "LT-010"],
+      "bias_mitigation": "Single-change constraint avoids aspirational list-making and encourages prioritization",
+      "branching": { "required_branches": ["*"], "excluded_branches": [] },
+      "position": { "module_sequence": 5, "funnel_stage": "core" },
+      "estimated_seconds": 30,
+      "format_category": "open_ended"
+    }
+  },
+  {
+    "question_id": "M11-Q06",
+    "module_id": "M11",
+    "module_name": "Voice Aspirations & Anti-Patterns",
+    "text": "A piece of writing you admire \u2014 what about its voice appeals?",
+    "type": "projective",
+    "scoring": {
+      "dimensions": ["voice_aspiration", "voice_identity"],
+      "weights": { "voice_aspiration": 1.0, "voice_identity": 0.5 }
+    },
+    "metadata": {
+      "self_reportability_tier": 1,
+      "finding_refs": ["EF-013", "PL-012", "LT-010"],
+      "bias_mitigation": "Projective technique reduces self-report bias by eliciting preferences through admiration of others",
+      "branching": { "required_branches": ["*"], "excluded_branches": [] },
+      "position": { "module_sequence": 6, "funnel_stage": "deep_dive" },
+      "estimated_seconds": 60,
+      "format_category": "projective"
+    }
+  },
+  {
+    "question_id": "M11-Q07",
+    "module_id": "M11",
+    "module_name": "Voice Aspirations & Anti-Patterns",
+    "text": "Writing whose voice you find off-putting \u2014 what bothers you?",
+    "type": "projective",
+    "scoring": {
+      "dimensions": ["voice_anti_patterns", "voice_identity"],
+      "weights": { "voice_anti_patterns": 1.0, "voice_identity": 0.5 }
+    },
+    "metadata": {
+      "self_reportability_tier": 1,
+      "finding_refs": ["EF-013", "PL-012", "LT-010"],
+      "bias_mitigation": "Projective technique reveals anti-patterns through aversion rather than direct self-report",
+      "branching": { "required_branches": ["*"], "excluded_branches": [] },
+      "position": { "module_sequence": 7, "funnel_stage": "deep_dive" },
+      "estimated_seconds": 60,
+      "format_category": "projective"
+    }
+  }
+]

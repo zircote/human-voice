@@ -1,0 +1,35 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "mivoca"
+version = "0.1.0"
+description = "Adaptive interview engine for writing style and voice elicitation"
+requires-python = ">=3.10"
+license = "MIT"
+dependencies = []
+
+[project.optional-dependencies]
+nlp = [
+    "spacy>=3.7",
+    "textstat>=0.7",
+    "numpy>=1.24",
+]
+scoring = [
+    "numpy>=1.24",
+]
+all = [
+    "mivoca[nlp,scoring]",
+]
+dev = [
+    "pytest>=7.0",
+    "pytest-cov>=4.0",
+    "jsonschema>=4.0",
+]
+
+[tool.hatch.build.targets.wheel]
+packages = ["lib"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]

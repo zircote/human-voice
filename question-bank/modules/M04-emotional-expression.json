@@ -1,0 +1,356 @@
+[
+  {
+    "question_id": "M04-Q01",
+    "module_id": "M04",
+    "module_name": "Emotional Expression & Tone",
+    "text": "How much emotion do you typically let into your professional writing?",
+    "type": "likert",
+    "options": [
+      { "value": 1, "label": "Almost none — I keep it neutral and objective" },
+      { "value": 2, "label": "Very little — only when it serves a clear purpose" },
+      { "value": 3, "label": "A moderate amount — I show engagement without being heavy-handed" },
+      { "value": 4, "label": "Quite a bit — I want readers to feel something" },
+      { "value": 5, "label": "A lot — my emotional investment comes through clearly" }
+    ],
+    "scoring": {
+      "dimensions": ["emotional_expressiveness", "tone_warmth"],
+      "weights": { "emotional_expressiveness": 1.0, "tone_warmth": 0.6 },
+      "scoring_map": {
+        "1": { "emotional_expressiveness": 1, "tone_warmth": 2 },
+        "2": { "emotional_expressiveness": 2, "tone_warmth": 2 },
+        "3": { "emotional_expressiveness": 3, "tone_warmth": 3 },
+        "4": { "emotional_expressiveness": 4, "tone_warmth": 4 },
+        "5": { "emotional_expressiveness": 5, "tone_warmth": 5 }
+      }
+    },
+    "metadata": {
+      "self_reportability_tier": 2,
+      "finding_refs": ["EF-003", "PL-011"],
+      "bias_mitigation": "Neutral scale anchors; objectivity and expressiveness both framed positively",
+      "branching": { "required_branches": ["*"] },
+      "position": { "module_sequence": 1, "funnel_stage": "general" },
+      "estimated_seconds": 15,
+      "format_category": "likert"
+    }
+  },
+  {
+    "question_id": "M04-Q02",
+    "module_id": "M04",
+    "module_name": "Emotional Expression & Tone",
+    "text": "When you're excited about a topic you're writing about, how does that excitement show up in your writing?",
+    "type": "forced_choice",
+    "options": [
+      { "value": "visible", "label": "It's obvious — exclamation points, vivid language, enthusiastic phrasing" },
+      { "value": "subtle", "label": "It shows in subtle ways — more detail, better flow, deeper engagement" },
+      { "value": "controlled", "label": "I keep it contained — the quality improves but the tone stays steady" }
+    ],
+    "scoring": {
+      "dimensions": ["emotional_expressiveness", "enthusiasm_display", "emotional_regulation"],
+      "weights": { "emotional_expressiveness": 0.8, "enthusiasm_display": 1.0, "emotional_regulation": 0.6 },
+      "scoring_map": {
+        "visible": { "emotional_expressiveness": 5, "enthusiasm_display": 5, "emotional_regulation": 1 },
+        "subtle": { "emotional_expressiveness": 3, "enthusiasm_display": 3, "emotional_regulation": 3 },
+        "controlled": { "emotional_expressiveness": 1, "enthusiasm_display": 2, "emotional_regulation": 5 }
+      }
+    },
+    "metadata": {
+      "self_reportability_tier": 2,
+      "finding_refs": ["EF-003"],
+      "bias_mitigation": "Behavioral framing; all three expression styles validated",
+      "branching": { "required_branches": ["*"] },
+      "position": { "module_sequence": 2, "funnel_stage": "exploratory" },
+      "estimated_seconds": 20,
+      "format_category": "forced_choice"
+    }
+  },
+  {
+    "question_id": "M04-Q03",
+    "module_id": "M04",
+    "module_name": "Emotional Expression & Tone",
+    "text": "How do you feel about using exclamation points in professional communication?",
+    "type": "likert",
+    "options": [
+      { "value": 1, "label": "I avoid them entirely" },
+      { "value": 2, "label": "I use them very sparingly (once in an email at most)" },
+      { "value": 3, "label": "I use them when they feel natural" },
+      { "value": 4, "label": "I use them fairly often to convey warmth and energy" },
+      { "value": 5, "label": "I use them freely — they're essential for conveying tone in text" }
+    ],
+    "scoring": {
+      "dimensions": ["emotional_expressiveness", "punctuation_expressiveness", "formality_baseline"],
+      "weights": { "emotional_expressiveness": 0.7, "punctuation_expressiveness": 1.0, "formality_baseline": 0.4 },
+      "scoring_map": {
+        "1": { "emotional_expressiveness": 1, "punctuation_expressiveness": 1, "formality_baseline": 5 },
+        "2": { "emotional_expressiveness": 2, "punctuation_expressiveness": 2, "formality_baseline": 4 },
+        "3": { "emotional_expressiveness": 3, "punctuation_expressiveness": 3, "formality_baseline": 3 },
+        "4": { "emotional_expressiveness": 4, "punctuation_expressiveness": 4, "formality_baseline": 2 },
+        "5": { "emotional_expressiveness": 5, "punctuation_expressiveness": 5, "formality_baseline": 1 }
+      }
+    },
+    "metadata": {
+      "self_reportability_tier": 1,
+      "finding_refs": ["EF-003", "PL-011"],
+      "bias_mitigation": "Concrete linguistic feature; easy to self-assess accurately",
+      "branching": { "required_branches": ["*"] },
+      "position": { "module_sequence": 3, "funnel_stage": "specific" },
+      "estimated_seconds": 15,
+      "format_category": "likert"
+    }
+  },
+  {
+    "question_id": "M04-Q04",
+    "module_id": "M04",
+    "module_name": "Emotional Expression & Tone",
+    "text": "You've just received great news about a project. Write a quick Slack message or email to your team sharing the news. Use whatever tone comes naturally.",
+    "type": "writing_sample",
+    "scoring": {
+      "dimensions": ["emotional_expressiveness", "enthusiasm_display", "tone_warmth", "formality_baseline"],
+      "weights": { "emotional_expressiveness": 1.0, "enthusiasm_display": 0.9, "tone_warmth": 0.7, "formality_baseline": 0.5 }
+    },
+    "metadata": {
+      "self_reportability_tier": 4,
+      "finding_refs": ["EF-003"],
+      "bias_mitigation": "Behavioral measurement; natural writing context reveals actual emotional expression patterns",
+      "branching": { "required_branches": ["*"] },
+      "position": { "module_sequence": 4, "funnel_stage": "probing" },
+      "estimated_seconds": 60,
+      "format_category": "writing_sample"
+    }
+  },
+  {
+    "question_id": "M04-Q05",
+    "module_id": "M04",
+    "module_name": "Emotional Expression & Tone",
+    "text": "When writing about a topic that frustrates or angers you, what do you do with that emotion?",
+    "type": "forced_choice",
+    "options": [
+      { "value": "channel", "label": "I channel it — the frustration fuels more passionate, pointed writing" },
+      { "value": "temper", "label": "I acknowledge it but temper it — I want to be firm but fair" },
+      { "value": "remove", "label": "I remove it — I rewrite until the emotion is gone and only the argument remains" }
+    ],
+    "scoring": {
+      "dimensions": ["emotional_regulation", "emotional_expressiveness", "directness"],
+      "weights": { "emotional_regulation": 0.9, "emotional_expressiveness": 0.7, "directness": 0.5 },
+      "scoring_map": {
+        "channel": { "emotional_regulation": 1, "emotional_expressiveness": 5, "directness": 5 },
+        "temper": { "emotional_regulation": 3, "emotional_expressiveness": 3, "directness": 3 },
+        "remove": { "emotional_regulation": 5, "emotional_expressiveness": 1, "directness": 2 }
+      }
+    },
+    "metadata": {
+      "self_reportability_tier": 2,
+      "finding_refs": ["EF-003", "PL-011"],
+      "bias_mitigation": "All approaches framed as intentional strategies, not weaknesses",
+      "branching": { "required_branches": ["*"] },
+      "position": { "module_sequence": 5, "funnel_stage": "comparative" },
+      "estimated_seconds": 20,
+      "format_category": "forced_choice"
+    }
+  },
+  {
+    "question_id": "M04-Q06",
+    "module_id": "M04",
+    "module_name": "Emotional Expression & Tone",
+    "text": "Which description best matches the overall tone you aim for in most of your writing?",
+    "type": "select",
+    "options": [
+      { "value": "warm_encouraging", "label": "Warm and encouraging" },
+      { "value": "cool_analytical", "label": "Cool and analytical" },
+      { "value": "energetic_enthusiastic", "label": "Energetic and enthusiastic" },
+      { "value": "measured_thoughtful", "label": "Measured and thoughtful" },
+      { "value": "witty_irreverent", "label": "Witty and irreverent" },
+      { "value": "earnest_sincere", "label": "Earnest and sincere" },
+      { "value": "neutral_balanced", "label": "Neutral and balanced" }
+    ],
+    "scoring": {
+      "dimensions": ["tone_archetype", "tone_warmth", "energy_level"],
+      "weights": { "tone_archetype": 1.0, "tone_warmth": 0.7, "energy_level": 0.6 },
+      "scoring_map": {
+        "warm_encouraging": { "tone_archetype": 1, "tone_warmth": 5, "energy_level": 3 },
+        "cool_analytical": { "tone_archetype": 2, "tone_warmth": 1, "energy_level": 2 },
+        "energetic_enthusiastic": { "tone_archetype": 3, "tone_warmth": 4, "energy_level": 5 },
+        "measured_thoughtful": { "tone_archetype": 4, "tone_warmth": 3, "energy_level": 2 },
+        "witty_irreverent": { "tone_archetype": 5, "tone_warmth": 3, "energy_level": 4 },
+        "earnest_sincere": { "tone_archetype": 6, "tone_warmth": 4, "energy_level": 3 },
+        "neutral_balanced": { "tone_archetype": 7, "tone_warmth": 3, "energy_level": 2 }
+      }
+    },
+    "metadata": {
+      "self_reportability_tier": 2,
+      "finding_refs": ["PL-011"],
+      "bias_mitigation": "Diverse tone options without hierarchy; no option labeled as 'best'",
+      "branching": { "required_branches": ["*"] },
+      "position": { "module_sequence": 6, "funnel_stage": "general" },
+      "estimated_seconds": 20,
+      "format_category": "select"
+    }
+  },
+  {
+    "question_id": "M04-Q07",
+    "module_id": "M04",
+    "module_name": "Emotional Expression & Tone",
+    "text": "When reading someone else's writing, how much does their emotional tone affect your engagement?",
+    "type": "likert",
+    "options": [
+      { "value": 1, "label": "Very little — I focus on content, not tone" },
+      { "value": 2, "label": "Somewhat — I notice it but it's not the main thing" },
+      { "value": 3, "label": "Moderately — tone is part of how I evaluate writing" },
+      { "value": 4, "label": "Significantly — tone shapes how I receive the message" },
+      { "value": 5, "label": "Enormously — tone can make or break a piece for me" }
+    ],
+    "scoring": {
+      "dimensions": ["tone_sensitivity", "emotional_awareness"],
+      "weights": { "tone_sensitivity": 1.0, "emotional_awareness": 0.7 },
+      "scoring_map": {
+        "1": { "tone_sensitivity": 1, "emotional_awareness": 2 },
+        "2": { "tone_sensitivity": 2, "emotional_awareness": 3 },
+        "3": { "tone_sensitivity": 3, "emotional_awareness": 3 },
+        "4": { "tone_sensitivity": 4, "emotional_awareness": 4 },
+        "5": { "tone_sensitivity": 5, "emotional_awareness": 5 }
+      }
+    },
+    "metadata": {
+      "self_reportability_tier": 2,
+      "finding_refs": ["EF-003"],
+      "bias_mitigation": "Reader perspective as indirect measure of writer's own tone priorities",
+      "branching": { "required_branches": ["*"] },
+      "position": { "module_sequence": 7, "funnel_stage": "comparative" },
+      "estimated_seconds": 15,
+      "format_category": "likert"
+    }
+  },
+  {
+    "question_id": "M04-Q08",
+    "module_id": "M04",
+    "module_name": "Emotional Expression & Tone",
+    "text": "How do you convey empathy or support in writing when someone shares bad news?",
+    "type": "open_ended",
+    "scoring": {
+      "dimensions": ["empathy_expression", "tone_warmth", "emotional_vocabulary"],
+      "weights": { "empathy_expression": 1.0, "tone_warmth": 0.8, "emotional_vocabulary": 0.7 }
+    },
+    "metadata": {
+      "self_reportability_tier": 3,
+      "finding_refs": ["EF-003", "PL-011"],
+      "bias_mitigation": "Open-ended to capture natural empathy patterns without prescriptive options",
+      "branching": { "required_branches": ["*"] },
+      "position": { "module_sequence": 8, "funnel_stage": "probing" },
+      "estimated_seconds": 45,
+      "format_category": "open_ended"
+    }
+  },
+  {
+    "question_id": "M04-Q09",
+    "module_id": "M04",
+    "module_name": "Emotional Expression & Tone",
+    "text": "How comfortable are you expressing uncertainty or doubt in your writing (e.g., 'I'm not sure about this, but...' or 'This might be wrong, however...')?",
+    "type": "likert",
+    "options": [
+      { "value": 1, "label": "Very uncomfortable — I only write when I'm confident" },
+      { "value": 2, "label": "Somewhat uncomfortable — I hedge occasionally but prefer certainty" },
+      { "value": 3, "label": "Neutral — I'll express doubt when it's honest" },
+      { "value": 4, "label": "Comfortable — showing uncertainty builds trust" },
+      { "value": 5, "label": "Very comfortable — intellectual humility is central to my voice" }
+    ],
+    "scoring": {
+      "dimensions": ["uncertainty_comfort", "intellectual_humility", "confidence_display"],
+      "weights": { "uncertainty_comfort": 1.0, "intellectual_humility": 0.8, "confidence_display": 0.6 },
+      "scoring_map": {
+        "1": { "uncertainty_comfort": 1, "intellectual_humility": 1, "confidence_display": 5 },
+        "2": { "uncertainty_comfort": 2, "intellectual_humility": 2, "confidence_display": 4 },
+        "3": { "uncertainty_comfort": 3, "intellectual_humility": 3, "confidence_display": 3 },
+        "4": { "uncertainty_comfort": 4, "intellectual_humility": 4, "confidence_display": 2 },
+        "5": { "uncertainty_comfort": 5, "intellectual_humility": 5, "confidence_display": 1 }
+      }
+    },
+    "metadata": {
+      "self_reportability_tier": 2,
+      "finding_refs": ["PL-011"],
+      "bias_mitigation": "Both confidence and humility framed as strengths",
+      "branching": { "required_branches": ["*"] },
+      "position": { "module_sequence": 9, "funnel_stage": "specific" },
+      "estimated_seconds": 15,
+      "format_category": "likert"
+    }
+  },
+  {
+    "question_id": "M04-Q10",
+    "module_id": "M04",
+    "module_name": "Emotional Expression & Tone",
+    "text": "When you want to motivate or inspire a reader, which approach do you naturally gravitate toward?",
+    "type": "forced_choice",
+    "options": [
+      { "value": "stories", "label": "Sharing a story or example that illustrates the point" },
+      { "value": "data", "label": "Presenting compelling data or evidence" },
+      { "value": "direct_appeal", "label": "Making a direct emotional appeal to the reader" }
+    ],
+    "scoring": {
+      "dimensions": ["persuasion_style", "emotional_expressiveness", "narrative_preference"],
+      "weights": { "persuasion_style": 0.9, "emotional_expressiveness": 0.5, "narrative_preference": 0.7 },
+      "scoring_map": {
+        "stories": { "persuasion_style": 1, "emotional_expressiveness": 3, "narrative_preference": 5 },
+        "data": { "persuasion_style": 2, "emotional_expressiveness": 1, "narrative_preference": 1 },
+        "direct_appeal": { "persuasion_style": 3, "emotional_expressiveness": 5, "narrative_preference": 2 }
+      }
+    },
+    "metadata": {
+      "self_reportability_tier": 2,
+      "finding_refs": ["EF-003", "PL-011"],
+      "bias_mitigation": "All three persuasion strategies presented as equally valid tools",
+      "branching": { "required_branches": ["*"] },
+      "position": { "module_sequence": 10, "funnel_stage": "comparative" },
+      "estimated_seconds": 20,
+      "format_category": "forced_choice"
+    }
+  },
+  {
+    "question_id": "M04-Q11",
+    "module_id": "M04",
+    "module_name": "Emotional Expression & Tone",
+    "text": "Do you use emoji, emoticons, or expressive punctuation (!!!, ..., —) in professional communication?",
+    "type": "forced_choice",
+    "options": [
+      { "value": "freely", "label": "Yes, regularly — they help convey tone that text alone can miss" },
+      { "value": "selectively", "label": "Sometimes — in the right context with the right audience" },
+      { "value": "never", "label": "No — I rely on word choice alone to convey tone" }
+    ],
+    "scoring": {
+      "dimensions": ["expressiveness_markers", "formality_baseline", "emotional_expressiveness"],
+      "weights": { "expressiveness_markers": 1.0, "formality_baseline": 0.5, "emotional_expressiveness": 0.6 },
+      "scoring_map": {
+        "freely": { "expressiveness_markers": 5, "formality_baseline": 1, "emotional_expressiveness": 5 },
+        "selectively": { "expressiveness_markers": 3, "formality_baseline": 3, "emotional_expressiveness": 3 },
+        "never": { "expressiveness_markers": 1, "formality_baseline": 5, "emotional_expressiveness": 2 }
+      }
+    },
+    "metadata": {
+      "self_reportability_tier": 1,
+      "finding_refs": ["EF-003"],
+      "bias_mitigation": "All approaches framed as intentional communication choices",
+      "branching": { "required_branches": ["*"] },
+      "position": { "module_sequence": 11, "funnel_stage": "specific" },
+      "estimated_seconds": 15,
+      "format_category": "forced_choice"
+    }
+  },
+  {
+    "question_id": "M04-Q12",
+    "module_id": "M04",
+    "module_name": "Emotional Expression & Tone",
+    "text": "Describe how you'd narrate an experience that moved you emotionally. Write 2-4 sentences about something that made you feel strongly — it can be anything — using your natural writing voice.",
+    "type": "writing_sample",
+    "scoring": {
+      "dimensions": ["emotional_expressiveness", "emotional_vocabulary", "vulnerability_comfort", "narrative_style"],
+      "weights": { "emotional_expressiveness": 1.0, "emotional_vocabulary": 0.9, "vulnerability_comfort": 0.7, "narrative_style": 0.5 }
+    },
+    "metadata": {
+      "self_reportability_tier": 4,
+      "finding_refs": ["EF-003", "PL-011"],
+      "bias_mitigation": "Behavioral measurement; emotionally evocative prompt reveals natural expression patterns",
+      "branching": { "required_branches": ["*"] },
+      "position": { "module_sequence": 12, "funnel_stage": "probing" },
+      "estimated_seconds": 120,
+      "format_category": "writing_sample"
+    }
+  }
+]

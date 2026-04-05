@@ -1,0 +1,46 @@
+{
+  "schema_version": "1.0.0",
+  "description": "Covert consistency check pairs embedded across modules. These verify response validity without alerting the respondent to the presence of attention checks.",
+  "consistency_checks": [
+    {
+      "check_id": "AC-01",
+      "item_pair": ["M03-Q06", "M07-Q02"],
+      "expected_relationship": "convergent",
+      "validation_method": "numeric_tolerance",
+      "tolerance": 2,
+      "description": "Formality self-assessment (M03-Q06) should converge with audience formality calibration (M07-Q02). Both measure the respondent's formality orientation from different angles.",
+      "flag_condition": "absolute_difference > 2 on matched 1-7 scale",
+      "severity": "warning"
+    },
+    {
+      "check_id": "AC-02",
+      "item_pair": ["M04-Q09", "M11-Q01"],
+      "expected_relationship": "semantic_consistency",
+      "validation_method": "semantic_similarity",
+      "description": "Emotional expressiveness preference (M04-Q09) should be semantically consistent with contextual emotional adaptation (M11-Q01). Both probe the respondent's comfort with emotional content in writing.",
+      "flag_condition": "semantic_contradiction_detected",
+      "severity": "warning"
+    },
+    {
+      "check_id": "AC-03",
+      "item_pair": ["M02-Q10", "M09-Q09"],
+      "expected_relationship": "positive_correlation",
+      "validation_method": "correlation_check",
+      "expected_direction": "positive",
+      "description": "Risk tolerance in voice experimentation (M02-Q10) should positively correlate with preference for Germanic/Anglo-Saxon precision vocabulary (M09-Q09). Writers who take creative risks tend to favor direct, concrete word choices.",
+      "flag_condition": "correlation_direction_reversed",
+      "severity": "informational"
+    }
+  ],
+  "global_settings": {
+    "min_checks_passed": 2,
+    "action_on_all_failed": "flag_session_for_review",
+    "action_on_single_failure": "note_in_confidence_score",
+    "confidence_penalty_per_failure": 0.1
+  },
+  "notes": {
+    "covert_design": "These checks are embedded within their respective modules and are indistinguishable from regular questions to the respondent.",
+    "timing": "Check pairs are separated by multiple modules to prevent proximity-based consistency gaming.",
+    "severity_levels": "warning = reduce dimension confidence score; informational = log but do not penalize"
+  }
+}

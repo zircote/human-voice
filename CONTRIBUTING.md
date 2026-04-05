@@ -20,8 +20,8 @@ Run the plugin locally against your changes:
 claude --plugin-dir /path/to/human-voice
 
 # Test specific commands
-/human-voice:review test-content/
-/human-voice:fix test-content/ --dry-run
+/human-voice:voice-review test-content/
+/human-voice:voice-fix test-content/ --dry-run
 ```
 
 ### File Structure

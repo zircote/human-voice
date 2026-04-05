@@ -1,0 +1,93 @@
+{
+  "schema_version": "1.0.0",
+  "description": "Module sequencing for the voice elicitation engine. Defines the 6-phase administration sequence with timing targets and engagement resets.",
+  "total_estimated_minutes": 35,
+  "phases": [
+    {
+      "phase": 1,
+      "name": "Orientation",
+      "estimated_minutes": {
+        "start": 0,
+        "end": 5
+      },
+      "modules": ["M01"],
+      "description": "Warm-up and screening. Establishes writer context, experience level, and triggers branch selection.",
+      "engagement_reset_points": []
+    },
+    {
+      "phase": 2,
+      "name": "Deep Exploration",
+      "estimated_minutes": {
+        "start": 5,
+        "end": 15
+      },
+      "modules": ["M02", "M03", "M04"],
+      "description": "Core voice dimensions: personality/identity (M02), formality/register (M03), emotional tone/affect (M04).",
+      "engagement_reset_points": [
+        {
+          "position": "between_M03_M04",
+          "type": "engagement_reset",
+          "description": "Reset between formality and emotional tone modules to prevent fatigue carryover"
+        }
+      ]
+    },
+    {
+      "phase": 3,
+      "name": "Cognitive & Structural",
+      "estimated_minutes": {
+        "start": 15,
+        "end": 22
+      },
+      "modules": ["M05", "M06", "SD"],
+      "description": "Narrativity/rhetoric (M05) and complexity/structure (M06), followed by the semantic differential section (SD).",
+      "engagement_reset_points": [
+        {
+          "position": "after_M06",
+          "type": "midpoint_reset",
+          "description": "Midpoint engagement reset before semantic differential section. Marks the transition from open-ended exploration to structured rating scales."
+        }
+      ],
+      "notes": "Semantic differential (SD) section is administered after M06 as part of this phase"
+    },
+    {
+      "phase": 4,
+      "name": "Contextual",
+      "estimated_minutes": {
+        "start": 22,
+        "end": 28
+      },
+      "modules": ["M07", "M08"],
+      "description": "Audience awareness (M07) and authority/register (M08). Branch-activated modules may be skipped if not in the respondent's path.",
+      "engagement_reset_points": []
+    },
+    {
+      "phase": 5,
+      "name": "Mechanics & Process",
+      "estimated_minutes": {
+        "start": 28,
+        "end": 32
+      },
+      "modules": ["M09", "M10"],
+      "description": "Writing mechanics/precision (M09) and process/revision habits (M10). Branch-activated modules may be skipped if not in the respondent's path.",
+      "engagement_reset_points": []
+    },
+    {
+      "phase": 6,
+      "name": "Synthesis & Calibration",
+      "estimated_minutes": {
+        "start": 32,
+        "end": 35
+      },
+      "modules": ["M11", "M12"],
+      "description": "Contextual adaptation (M11) and final synthesis/calibration (M12). Closes the session with cross-validation and self-assessment.",
+      "engagement_reset_points": []
+    }
+  ],
+  "core_modules": ["M01", "M02", "M03", "M04", "M09", "M12", "SD"],
+  "branch_activated_modules": ["M05", "M06", "M07", "M08", "M10", "M11"],
+  "notes": {
+    "module_skip_logic": "Branch-activated modules not in the respondent's path are skipped entirely. Core modules are always administered.",
+    "timing": "Estimated minutes are targets, not hard limits. The engine should pace adaptively based on respondent engagement.",
+    "engagement_resets": "Brief palate-cleansers (e.g., open-ended warm-up question, progress indicator) to reduce satisficing between cognitively demanding sections."
+  }
+}

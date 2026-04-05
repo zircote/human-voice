@@ -17,7 +17,7 @@ This is a Claude Code plugin that detects and prevents AI-generated writing patt
 ```
 .claude-plugin/plugin.json  # Plugin manifest
 skills/human-voice/         # Skill with references, examples, scripts
-commands/                   # Slash commands (review, fix, setup)
+commands/                   # Slash commands (voice-review, voice-fix, voice-setup)
 agents/                     # Subagents (voice-reviewer)
 templates/                  # Configuration templates
 ```
@@ -36,7 +36,7 @@ claude --plugin-dir .
 ```
 
 Then test:
-- `/human-voice:review` command
-- `/human-voice:fix` command
-- `/human-voice:setup` command
+- `/human-voice:voice-review` command
+- `/human-voice:voice-fix` command
+- `/human-voice:voice-setup` command
 - Agent triggering after content edits
