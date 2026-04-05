@@ -1,0 +1,47 @@
+{
+  "expectations": [
+    {
+      "text": "Identifies list addiction: two consecutive bullet-list sections where prose would be more effective",
+      "passed": true,
+      "evidence": "Transcript item #1 and report section 3.1 explicitly identify 'List Addiction' at lines 6-11 and 18-22: 'Two sections consist entirely of bullet lists with no connecting prose.' Includes fix suggestion to replace with explanatory prose."
+    },
+    {
+      "text": "Identifies rule of three overuse: three consecutive sentences each with exactly three items",
+      "passed": true,
+      "evidence": "Transcript item #2 and report section 3.2 identify 'Rule of Three Overuse' at lines 26-28 with three quoted examples: 'faster, simpler, and more reliable', 'saves time, reduces errors, and improves quality', 'Learn, practice, and master the technique'. Notes it as 'a strong AI tell'."
+    },
+    {
+      "text": "Identifies 'From X to Y' constructions: 'From beginners to experts', 'From setup to deployment', 'From small teams to large enterprises'",
+      "passed": true,
+      "evidence": "Transcript item #3 and report section 3.3 identify all three exact constructions at lines 30-32: 'From beginners to experts', 'From setup to deployment', 'From small teams to large enterprises'. Called 'one of the most recognizable AI structural patterns'."
+    },
+    {
+      "text": "Identifies monotonous sentence structure: six consecutive 'It [verb]' sentences of similar length",
+      "passed": true,
+      "evidence": "Transcript item #4 and report section 3.4 identify 'Monotonous Sentence Structure' at lines 36-38: 'Six consecutive sentences with identical structure (Subject \"It\" + Verb + Adverb)' with all six sentences quoted. Notes 'Every sentence is roughly the same length'."
+    },
+    {
+      "text": "Identifies over-balanced perspectives: 'On one hand... On the other hand', 'While it has advantages, it also has disadvantages'",
+      "passed": true,
+      "evidence": "Transcript item #5 and report section 3.5 identify 'Over-Balanced Perspectives' at lines 42-45 with exact quotes including 'On one hand, it saves time. On the other hand, it requires initial investment.' and 'While it has advantages, it also has disadvantages.' States 'Real writers pick a position. AI hedges everything into perfect balance.'"
+    },
+    {
+      "text": "Identifies generic/predictable headers: 'Introduction', 'Overview', 'Key Benefits', 'Conclusion'",
+      "passed": true,
+      "evidence": "Report section 3.1 references 'Introduction' and 'Key Benefits' sections by name. Section 4.1 flags the title as 'marketing framing, not content' and identifies 'In conclusion' as 'a textbook AI summarization marker'. The structural checklist and tier 4 voice analysis collectively flag these generic header patterns, though they are distributed across sections rather than called out as a single dedicated finding."
+    }
+  ],
+  "summary": {
+    "passed": 6,
+    "failed": 0,
+    "total": 6,
+    "pass_rate": 1.0
+  },
+  "eval_feedback": {
+    "suggestions": [
+      "The generic/predictable headers finding is spread across multiple sections (3.1 and 4.1) rather than being a single dedicated structural finding. A dedicated 'Generic Headers' finding would make this pattern more explicit and easier to act on.",
+      "The report could benefit from referencing the header names ('Introduction', 'Overview', 'Key Benefits', 'Conclusion') as a grouped pattern rather than mentioning them incidentally within other findings."
+    ],
+    "overall": "Excellent performance. All 6 structural AI patterns were correctly identified with specific line references, quoted examples, and actionable fix suggestions. The multi-tier analysis framework cleanly separated structural issues from character-level and language-level concerns. The only minor gap is that generic headers were addressed implicitly rather than as a standalone finding."
+  }
+}

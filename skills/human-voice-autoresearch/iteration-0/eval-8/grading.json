@@ -1,0 +1,39 @@
+{
+  "expectations": [
+    {
+      "text": "Identifies Tier 2 buzzwords in the inline content: revolutionized, paradigm shift, harness, seamlessly, delve, pivotal, robust, ecosystem, facilitates, holistic, cutting-edge, leverage, innovative, transform",
+      "passed": true,
+      "evidence": "The analysis report lists all 14 buzzwords in a table under 'AI Buzzwords Found': revolutionized, paradigm, harness, seamlessly, delve, pivotal, robust, facilitate, holistic, cutting-edge, leverage, innovative, ecosystem, transform. Each is identified with its paragraph location."
+    },
+    {
+      "text": "Identifies Tier 2 filler/hedging: 'In today's rapidly evolving', 'it's worth noting', 'In this article, we will'",
+      "passed": true,
+      "evidence": "The analysis report identifies 'it's worth noting' and 'rapidly evolving technological landscape' as hedging/filler phrases, and 'In this article, we will delve into' as meta-commentary. All three phrases are explicitly called out."
+    },
+    {
+      "text": "Identifies Tier 3 structural issue: the bullet list could be prose; generic header-style structure",
+      "passed": true,
+      "evidence": "The Tier 3 section flags 'List addiction: The five Docker benefits are presented as a bare bullet list with no explanation or context. Each item is a two-word fragment with no supporting detail.' It also flags 'Generic framing: The opening sets landscape context instead of starting with substance.'"
+    },
+    {
+      "text": "Identifies Tier 2 excessive transitions: 'Furthermore', 'Moreover'",
+      "passed": true,
+      "evidence": "The analysis report has an 'Excessive Transitions Found' table listing 'Furthermore' (Paragraph 3) and 'Moreover' (Paragraph 3) explicitly."
+    },
+    {
+      "text": "Provides a concrete rewritten version or specific rewrite suggestions that use plain language, active voice, and specific details",
+      "passed": true,
+      "evidence": "The rewrite-suggestion.md contains a complete rewritten version that uses plain language ('Containers fixed the works on my machine problem'), active voice ('Docker gives you five things'), and specific details (90-second deploys, 14 containers on an 8-core server, naming tools like Kubernetes, Prometheus, Grafana). A 'What Changed' table maps each original problem to the fix applied."
+    }
+  ],
+  "summary": {
+    "passed": 5,
+    "failed": 0,
+    "total": 5,
+    "pass_rate": 1.0
+  },
+  "eval_feedback": {
+    "suggestions": [],
+    "overall": "Excellent execution. All tiers of analysis were performed thoroughly. Buzzwords, filler phrases, transitions, and structural issues were all explicitly identified and cataloged. The rewrite is concrete, uses plain language with specific numbers, and includes a detailed change mapping table explaining each fix."
+  }
+}

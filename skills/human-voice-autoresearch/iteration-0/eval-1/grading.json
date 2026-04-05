@@ -1,0 +1,47 @@
+{
+  "expectations": [
+    {
+      "text": "Identifies em dash (U+2014) on line 3 and recommends replacing with colon, comma, semicolon, or period",
+      "passed": true,
+      "evidence": "tier1-char-violations.md line 10: '| 3 | 22 | Em Dash | U+2014 `—` | Replace with colon, comma, semicolon, or period |'. Also confirmed in tier1-validation.txt: 'Em Dash (U+2014) found: \"—\" Replace with: colon (:), comma (,), semicolon (;), or period (.)' at line 3:22."
+    },
+    {
+      "text": "Identifies smart double quotes (U+201C/U+201D) on line 5 and recommends replacing with straight quotes",
+      "passed": true,
+      "evidence": "tier1-char-violations.md lines 11-12: '| 5 | 1 | Left Double Quote | U+201C | Replace with straight quote `\"` |' and '| 5 | 30 | Right Double Quote | U+201D | Replace with straight quote `\"` |'. Both U+201C and U+201D identified on line 5 with straight quote replacement."
+    },
+    {
+      "text": "Identifies smart single quotes (U+2018/U+2019) on line 5 and recommends replacing with straight apostrophes",
+      "passed": true,
+      "evidence": "tier1-char-violations.md lines 13-14: '| 5 | 52 | Left Single Quote | U+2018 | Replace with straight apostrophe |' and '| 5 | 70 | Right Single Quote | U+2019 | Replace with straight apostrophe |'. Both U+2018 and U+2019 identified on line 5."
+    },
+    {
+      "text": "Identifies horizontal ellipsis (U+2026) on line 7 and recommends replacing with three periods",
+      "passed": true,
+      "evidence": "tier1-char-violations.md line 15: '| 7 | 29 | Horizontal Ellipsis | U+2026 | Replace with three periods `...` |'. Also confirmed in tier1-validation.txt: 'Horizontal Ellipsis (U+2026) found' at line 7:29."
+    },
+    {
+      "text": "Identifies bullet characters (U+2022) on lines 9-11 and recommends replacing with markdown list dashes",
+      "passed": true,
+      "evidence": "tier1-char-violations.md lines 16-18: three entries for Bullet Character U+2022 on lines 9, 10, and 11, each with fix 'Replace with markdown list `-`'. Summary.md also notes '3 bullet characters (lines 9-11)'."
+    },
+    {
+      "text": "Identifies emoji characters on line 15 and recommends removing them entirely",
+      "passed": true,
+      "evidence": "tier1-char-violations.md lines 19-20: two Emoji entries on line 15 (cols 12 and 31) with fix 'Remove entirely'. tier1-validation.txt confirms specific emojis found: U+1F389 and U+1F680 on line 15."
+    }
+  ],
+  "summary": {
+    "passed": 6,
+    "failed": 0,
+    "total": 6,
+    "pass_rate": 1.0
+  },
+  "eval_feedback": {
+    "suggestions": [
+      "The skill performed well on this character-level violation fixture. Consider adding an eval with violations embedded in more realistic prose to test detection in context.",
+      "The validation script output includes ANSI color codes in tier1-validation.txt; stripping these would improve readability of raw output artifacts."
+    ],
+    "overall": "All 6 expectations passed. The skill correctly identified every character-level violation type at the expected line numbers and provided appropriate replacement recommendations for each. Both the structured report (tier1-char-violations.md) and raw validation output (tier1-validation.txt) contain clear, specific evidence for each finding."
+  }
+}

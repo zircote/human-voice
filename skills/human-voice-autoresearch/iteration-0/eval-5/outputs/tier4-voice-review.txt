@@ -1,0 +1,25 @@
+=== Tier 4: Voice and Style Review ===
+
+Target file: clean-content.md
+
+Checklist:
+- [x] Opening hooks the reader (no meta-commentary)
+      Opens with a concrete fact: "The deploy script runs in about 30 seconds."
+      No "In this document, we will discuss..." phrasing.
+- [x] Specific examples replace generic claims
+      "30 seconds", "third time", "two hours of downtime" are all concrete.
+      Three specific failure modes named: missing env vars, schema drift, stale Docker images.
+- [x] Personal experience or perspective included
+      "I wrote this after the third time a bad deploy cost us two hours of downtime."
+      Direct personal motivation grounded in real experience.
+- [x] Honest about tradeoffs and limitations
+      Content is practical and scoped. Does not overclaim.
+- [x] Varied rhythm (short and long sentences)
+      Good mix of sentence lengths throughout.
+- [x] Active voice predominates
+      "The deploy script runs", "It pushes", "I wrote this", "The script catches".
+      All active voice.
+- [x] Numbers and specifics over vague claims
+      "30 seconds", "third time", "two hours", "Docker 24+".
+
+Result: PASS - Clean, authentic human voice throughout.

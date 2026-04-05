@@ -1,0 +1,126 @@
+[1m
+=== Character Restriction Validation ===
+[0m
+[1mFound 22 violations [0m([31m20 errors[0m, [33m2 warnings[0m)
+
+[1mskills/human-voice-autoresearch/candidate/evals/fixtures/char-violations.md (13 violations):[0m
+  [31mERROR[0m [36mskills/human-voice-autoresearch/candidate/evals/fixtures/char-violations.md[0m:3:22
+    [1mEm Dash[0m (U+2014) found: "—"
+    Replace with: colon (:), comma (,), semicolon (;), or period (.)
+    Context: ...he tool is powerful — it handles everyth...
+
+  [31mERROR[0m [36mskills/human-voice-autoresearch/candidate/evals/fixtures/char-violations.md[0m:5:1
+    [1mLeft Double Quote[0m (U+201C) found: "“"
+    Replace with: straight quote (")
+    Context: ...“Smart quotes are ev...
+
+  [31mERROR[0m [36mskills/human-voice-autoresearch/candidate/evals/fixtures/char-violations.md[0m:5:30
+    [1mRight Double Quote[0m (U+201D) found: "”"
+    Replace with: straight quote (")
+    Context: ...otes are everywhere,” said the developer...
+
+  [31mERROR[0m [36mskills/human-voice-autoresearch/candidate/evals/fixtures/char-violations.md[0m:5:52
+    [1mLeft Single Quote[0m (U+2018) found: "‘"
+    Replace with: straight apostrophe (')
+    Context: ...said the developer. ‘Even single ones.’...
+
+  [31mERROR[0m [36mskills/human-voice-autoresearch/candidate/evals/fixtures/char-violations.md[0m:5:70
+    [1mRight Single Quote[0m (U+2019) found: "’"
+    Replace with: straight apostrophe (')
+    Context: .... ‘Even single ones.’...
+
+  [31mERROR[0m [36mskills/human-voice-autoresearch/candidate/evals/fixtures/char-violations.md[0m:7:29
+    [1mHorizontal Ellipsis[0m (U+2026) found: "…"
+    Replace with: three periods (...)
+    Context: ...hat you need to know…...
+
+  [31mERROR[0m [36mskills/human-voice-autoresearch/candidate/evals/fixtures/char-violations.md[0m:9:1
+    [1mBullet Character[0m (U+2022) found: "•"
+    Replace with: markdown list (-)
+    Context: ...• Feature one...
+
+  [31mERROR[0m [36mskills/human-voice-autoresearch/candidate/evals/fixtures/char-violations.md[0m:10:1
+    [1mBullet Character[0m (U+2022) found: "•"
+    Replace with: markdown list (-)
+    Context: ...• Feature two...
+
+  [31mERROR[0m [36mskills/human-voice-autoresearch/candidate/evals/fixtures/char-violations.md[0m:11:1
+    [1mBullet Character[0m (U+2022) found: "•"
+    Replace with: markdown list (-)
+    Context: ...• Feature three...
+
+  [33mWARN[0m [36mskills/human-voice-autoresearch/candidate/evals/fixtures/char-violations.md[0m:13:41
+    [1mArrow Character[0m (U+2190-21FF) found: "→"
+    Replace with: ASCII arrow (->)
+    Context: ...ke this: write code → test → deploy....
+
+  [33mWARN[0m [36mskills/human-voice-autoresearch/candidate/evals/fixtures/char-violations.md[0m:13:48
+    [1mArrow Character[0m (U+2190-21FF) found: "→"
+    Replace with: ASCII arrow (->)
+    Context: ...: write code → test → deploy....
+
+  [31mERROR[0m [36mskills/human-voice-autoresearch/candidate/evals/fixtures/char-violations.md[0m:15:12
+    [1mEmoji[0m (Various) found: "🎉"
+    Replace with: remove entirely
+    Context: ...Great job! 🎉 You're all set! �...
+
+  [31mERROR[0m [36mskills/human-voice-autoresearch/candidate/evals/fixtures/char-violations.md[0m:15:31
+    [1mEmoji[0m (Various) found: "🚀"
+    Replace with: remove entirely
+    Context: ...🎉 You're all set! 🚀...
+
+[1mskills/human-voice-autoresearch/candidate/evals/fixtures/mixed-issues.md (6 violations):[0m
+  [31mERROR[0m [36mskills/human-voice-autoresearch/candidate/evals/fixtures/mixed-issues.md[0m:1:17
+    [1mEm Dash[0m (U+2014) found: "—"
+    Replace with: colon (:), comma (,), semicolon (;), or period (.)
+    Context: ...# Release Notes — v3.0...
+
+  [31mERROR[0m [36mskills/human-voice-autoresearch/candidate/evals/fixtures/mixed-issues.md[0m:3:55
+    [1mEmoji[0m (Various) found: "🎉"
+    Replace with: remove entirely
+    Context: ...e-changing release! 🎉...
+
+  [31mERROR[0m [36mskills/human-voice-autoresearch/candidate/evals/fixtures/mixed-issues.md[0m:10:46
+    [1mEm Dash[0m (U+2014) found: "—"
+    Replace with: colon (:), comma (,), semicolon (;), or period (.)
+    Context: ...mpletely redesigned — leveraging cutting...
+
+  [31mERROR[0m [36mskills/human-voice-autoresearch/candidate/evals/fixtures/mixed-issues.md[0m:28:28
+    [1mHorizontal Ellipsis[0m (U+2026) found: "…"
+    Replace with: three periods (...)
+    Context: ...ive into the details…...
+
+  [31mERROR[0m [36mskills/human-voice-autoresearch/candidate/evals/fixtures/mixed-issues.md[0m:30:1
+    [1mLeft Double Quote[0m (U+201C) found: "“"
+    Replace with: straight quote (")
+    Context: ...“The new caching lay...
+
+  [31mERROR[0m [36mskills/human-voice-autoresearch/candidate/evals/fixtures/mixed-issues.md[0m:30:42
+    [1mRight Double Quote[0m (U+201D) found: "”"
+    Replace with: straight quote (")
+    Context: ...r is transformative,” noted one develope...
+
+[1mskills/human-voice-autoresearch/candidate/evals/fixtures/partial-char-violations.md (3 violations):[0m
+  [31mERROR[0m [36mskills/human-voice-autoresearch/candidate/evals/fixtures/partial-char-violations.md[0m:13:22
+    [1mEm Dash[0m (U+2014) found: "—"
+    Replace with: colon (:), comma (,), semicolon (;), or period (.)
+    Context: ...he tool is powerful — it handles everyth...
+
+  [31mERROR[0m [36mskills/human-voice-autoresearch/candidate/evals/fixtures/partial-char-violations.md[0m:14:20
+    [1mEm Dash[0m (U+2014) found: "—"
+    Replace with: colon (:), comma (,), semicolon (;), or period (.)
+    Context: ...The setup is quick — about two minutes....
+
+  [31mERROR[0m [36mskills/human-voice-autoresearch/candidate/evals/fixtures/partial-char-violations.md[0m:15:20
+    [1mEm Dash[0m (U+2014) found: "—"
+    Replace with: colon (:), comma (,), semicolon (;), or period (.)
+    Context: ...The docs are clear — no ambiguity....
+
+[1m=== Summary ===[0m
+  Files checked: 7
+  Files with violations: 3
+  Total violations: 22
+  Errors: 20
+  Warnings: 2
+
+Run fix script to auto-correct: node fix-character-restrictions.js skills/human-voice-autoresearch/candidate/evals/fixtures/

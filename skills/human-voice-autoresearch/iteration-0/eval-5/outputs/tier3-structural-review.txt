@@ -1,0 +1,22 @@
+=== Tier 3: Structural Patterns Review ===
+
+Target file: clean-content.md
+
+Checklist:
+- [x] Content doesn't over-rely on bullet lists
+      The file uses a short 3-item bullet list for requirements, which is appropriate.
+      The main content is written in prose paragraphs.
+- [x] Sentence lengths vary naturally
+      Ranges from short ("Pass `--dry-run` to see what would happen without actually deploying.")
+      to longer explanatory sentences about what the script catches.
+- [x] No "rule of three" in every paragraph
+      The three-item list in the requirements section is functional, not rhetorical.
+      The mention of "three most common mistakes" is concrete and specific, not a rhetorical pattern.
+- [x] Perspectives aren't artificially balanced
+      The content takes a direct, opinionated stance. No "on one hand... on the other" hedging.
+- [x] No "From X to Y" constructions
+      None found.
+- [x] Paragraphs vary in length
+      First paragraph is 2 sentences, second is 2 sentences, usage section is brief, requirements is a list.
+
+Result: PASS - No structural AI patterns detected.

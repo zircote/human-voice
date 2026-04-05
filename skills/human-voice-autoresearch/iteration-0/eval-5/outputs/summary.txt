@@ -1,0 +1,17 @@
+=== Human Voice Check Summary ===
+
+Target file: clean-content.md
+
+Overall Result: PASS - All tiers clean.
+
+Tier 1 (Character-Level Patterns):  PASS - No violations
+Tier 2 (Language-Level Patterns):   PASS - No AI buzzwords, hedging, filler, or excessive transitions
+Tier 3 (Structural Patterns):       PASS - Natural structure, appropriate list usage, varied paragraphs
+Tier 4 (Voice and Style):           PASS - Active voice, specific numbers, personal experience, no meta-commentary
+
+This file is an example of clean, authentic human writing. It demonstrates:
+- Direct opening with concrete facts (30 seconds)
+- Personal motivation grounded in real experience (third time, two hours downtime)
+- Specific technical details (env vars, schema drift, stale Docker images)
+- Active voice throughout
+- No AI-telltale characters or language patterns

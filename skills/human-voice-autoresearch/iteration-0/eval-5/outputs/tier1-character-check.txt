@@ -1,0 +1,11 @@
+=== Tier 1: Character-Level Patterns (Automated) ===
+
+Target file: clean-content.md
+
+Result: PASS - No character violations detected.
+
+The validate-character-restrictions.js script was run against the fixtures directory.
+clean-content.md was not listed among files with violations.
+All 22 violations found were in other fixture files (char-violations.md, mixed-issues.md, partial-char-violations.md).
+
+No em dashes, en dashes, smart quotes, horizontal ellipsis, bullet characters, emojis, or special Unicode characters found.

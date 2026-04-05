@@ -1,0 +1,47 @@
+{
+  "expectations": [
+    {
+      "text": "Identifies passive voice overuse: 'was implemented', 'were run', 'was completed', 'was discovered', 'was applied' and suggests active voice rewrites",
+      "passed": true,
+      "evidence": "Review report lines 41 and 28 identify all five passive constructions ('was implemented,' 'were run,' 'was completed,' 'was discovered,' 'was applied') and line 62 suggests active voice rewrites: 'The team implemented OAuth2 login. CI runs tests on every push. We deployed to staging on Tuesday.'"
+    },
+    {
+      "text": "Identifies generic analogies: 'Swiss Army knife for developers', 'GPS for your codebase', 'bridge between frontend and backend'",
+      "passed": true,
+      "evidence": "Review report line 42 explicitly lists all three: '\"Like a Swiss Army knife for developers,\" \"Think of it as a GPS for your codebase,\" \"Consider it a bridge between frontend and backend\"' categorized as 'Generic analogies'."
+    },
+    {
+      "text": "Identifies meta-commentary: 'In this tutorial, we will discuss', 'Let's explore'",
+      "passed": true,
+      "evidence": "Review report lines 39-40 identify both: '\"In this tutorial, we will discuss\" -- meta-commentary opening' and '\"Let\u2019s explore the various options available\" -- more meta-commentary with no substance'."
+    },
+    {
+      "text": "Identifies shallow insights: 'significantly improves developer productivity by streamlining common workflows' contains no specific facts",
+      "passed": true,
+      "evidence": "Review report line 43 flags lines 13-15 as 'Vague corporate language with no specifics. What tool? What workflows? How much improvement?' categorized as 'Perfect grammar, shallow insight'. Tier 2 also flags 'streamlining' as an AI buzzword. Recommended fix #4 says 'Replace buzzwords with specifics: name the tool, state actual performance numbers, describe the real workflow improvement.'"
+    },
+    {
+      "text": "Identifies false enthusiasm: 'thrilled to announce', 'exciting new feature', 'How amazing is that?' with excessive exclamation marks",
+      "passed": true,
+      "evidence": "Review report line 44 identifies '\"We\u2019re thrilled to announce,\" \"exciting new feature,\" \"You\u2019re going to love,\" \"How amazing is that?\" -- excessive enthusiasm with no substance' categorized as 'Artificial enthusiasm / hype'. Recommended fix #5 says 'Remove hype... without exclamation marks or enthusiasm markers.'"
+    },
+    {
+      "text": "Identifies excessive hedging: 'may potentially', 'some users', 'certain situations', 'somewhat better', 'in many cases'",
+      "passed": true,
+      "evidence": "Review report line 45 lists all hedging phrases: '\"may potentially,\" \"some users,\" \"certain situations,\" \"somewhat better,\" \"many cases,\" \"depending on\"' categorized as 'Excessive hedging'. Tier 3 analysis also calls out the hedging paragraph separately."
+    }
+  ],
+  "summary": {
+    "passed": 6,
+    "failed": 0,
+    "total": 6,
+    "pass_rate": 1.0
+  },
+  "eval_feedback": {
+    "suggestions": [
+      "The review could quote the exact source text more completely when flagging shallow insights (e.g., include the full sentence 'significantly improves developer productivity by streamlining common workflows').",
+      "Consider adding severity ratings to each finding to help prioritize fixes."
+    ],
+    "overall": "Excellent performance. The skill identified all six categories of AI writing anti-patterns with specific line references, quoted examples, and actionable fix recommendations. The multi-tier analysis framework provided thorough coverage from character-level through voice-level review."
+  }
+}

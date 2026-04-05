@@ -1,0 +1,37 @@
+{
+  "expectations": [
+    {
+      "text": "Reports zero or near-zero character-level violations from the validation script",
+      "passed": true,
+      "evidence": "Tier 1 result: 'clean-content.md was NOT listed among files with violations. The script found 22 violations across 3 other fixture files but zero in clean-content.md.' Output confirms: 'PASS - No character violations detected.'"
+    },
+    {
+      "text": "Does NOT flag false positives for normal technical terms or standard markdown formatting",
+      "passed": true,
+      "evidence": "No false positives were flagged. Technical terms like 'Docker 24+', 'AWS CLI', 'env vars', 'schema drift', bash code blocks, and standard markdown headings/lists all passed without being flagged. All four tiers returned PASS."
+    },
+    {
+      "text": "Does NOT flag the bullet list in the Requirements section as list addiction (reference material is an appropriate use of lists)",
+      "passed": true,
+      "evidence": "Tier 3 structural review explicitly addresses this: 'The file uses a short 3-item bullet list for requirements, which is appropriate. The main content is written in prose paragraphs.' and 'Content doesn't over-rely on bullet lists' is checked as passing."
+    },
+    {
+      "text": "Recognizes positive human voice markers: specific numbers ('30 seconds', 'two hours'), personal experience ('I wrote this after'), direct language",
+      "passed": true,
+      "evidence": "Tier 4 voice review explicitly calls out all requested markers: '30 seconds', 'third time', 'two hours of downtime' as concrete specifics; 'I wrote this after the third time a bad deploy cost us two hours of downtime' as personal experience; active voice examples like 'The deploy script runs', 'It pushes', 'I wrote this'. Summary also highlights these as demonstrations of authentic human writing."
+    }
+  ],
+  "summary": {
+    "passed": 4,
+    "failed": 0,
+    "total": 4,
+    "pass_rate": 1.0
+  },
+  "eval_feedback": {
+    "suggestions": [
+      "The skill could explicitly label positive markers in a dedicated section rather than embedding them only in the tier 4 checklist, making the 'what went right' more prominent in the summary output.",
+      "Consider adding a confidence score or signal strength indicator for the overall human voice assessment, not just pass/fail."
+    ],
+    "overall": "Excellent performance on the clean-content fixture. The skill correctly identified zero violations across all four tiers, avoided false positives on technical terms and appropriate list usage, and explicitly recognized positive human voice markers including specific numbers, personal experience, and direct active language. The structured tier-by-tier output is clear and well-documented."
+  }
+}

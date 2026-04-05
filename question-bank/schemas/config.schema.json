@@ -1,0 +1,533 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://human-voice.zircote.com/schemas/config.schema.json",
+  "title": "Human Voice Plugin Configuration",
+  "description": "Unified configuration for the human-voice plugin, covering AI writing pattern detection settings and mivoca voice elicitation interview settings. Stored at ~/.human-voice/config.json.",
+  "type": "object",
+  "properties": {
+    "$schema": {
+      "type": "string",
+      "description": "JSON Schema reference URI for editor validation and autocompletion."
+    },
+
+    "detection": {
+      "type": "object",
+      "description": "AI writing pattern detection settings. Controls which file types are scanned, which patterns are flagged, and how results are reported.",
+      "properties": {
+        "extensions": {
+          "type": "array",
+          "items": { "type": "string" },
+          "default": [".md", ".mdx", ".txt"],
+          "description": "File extensions to include when scanning for AI writing patterns. Each entry should include the leading dot."
+        },
+        "content_directories": {
+          "type": "array",
+          "items": { "type": "string" },
+          "default": [],
+          "description": "Directories to scan for content files. When empty, the plugin scans the current working directory recursively."
+        },
+        "ignore": {
+          "type": "array",
+          "items": { "type": "string" },
+          "default": [],
+          "description": "Glob patterns for files and directories to exclude from scanning (e.g., 'node_modules/**', 'vendor/**')."
+        },
+        "character_patterns": {
+          "type": "object",
+          "description": "Settings for detecting non-ASCII character substitutions commonly introduced by AI writing tools (smart punctuation, emoji injection, etc.).",
+          "properties": {
+            "enabled": {
+              "type": "boolean",
+              "default": true,
+              "description": "Master toggle for all character-level pattern detection. When false, all character pattern checks are skipped."
+            },
+            "em_dash": {
+              "type": "boolean",
+              "default": true,
+              "description": "Detect em dash characters (U+2014) that AI models frequently substitute for hyphens or double-hyphens."
+            },
+            "en_dash": {
+              "type": "boolean",
+              "default": true,
+              "description": "Detect en dash characters (U+2013) inserted by AI in place of plain hyphens in ranges and compounds."
+            },
+            "smart_quotes": {
+              "type": "boolean",
+              "default": true,
+              "description": "Detect curly/smart quote characters (U+2018, U+2019, U+201C, U+201D) substituted for straight ASCII quotes."
+            },
+            "ellipsis": {
+              "type": "boolean",
+              "default": true,
+              "description": "Detect the Unicode horizontal ellipsis character (U+2026) used in place of three consecutive periods."
+            },
+            "emojis": {
+              "type": "boolean",
+              "default": true,
+              "description": "Detect emoji characters inserted by AI models, which are uncommon in most human-authored prose and documentation."
+            }
+          },
+          "additionalProperties": false
+        },
+        "language_patterns": {
+          "type": "object",
+          "description": "Settings for detecting AI-characteristic language choices: overused buzzwords, hedging phrases, filler expressions, and meta-commentary.",
+          "properties": {
+            "enabled": {
+              "type": "boolean",
+              "default": true,
+              "description": "Master toggle for all language pattern detection. When false, all language pattern checks are skipped."
+            },
+            "buzzwords": {
+              "type": "boolean",
+              "default": true,
+              "description": "Detect AI-favored buzzwords and cliches such as 'delve', 'leverage', 'tapestry', 'landscape', 'robust', 'comprehensive'."
+            },
+            "hedging": {
+              "type": "boolean",
+              "default": true,
+              "description": "Detect excessive hedging language ('it's worth noting', 'it's important to remember', 'arguably') that AI uses to appear balanced."
+            },
+            "filler": {
+              "type": "boolean",
+              "default": true,
+              "description": "Detect filler phrases ('in today's world', 'at the end of the day', 'when it comes to') that pad AI-generated text."
+            },
+            "meta_commentary": {
+              "type": "boolean",
+              "default": true,
+              "description": "Detect self-referential meta-commentary ('as an AI', 'let me explain', 'in this article we will explore') characteristic of AI output."
+            }
+          },
+          "additionalProperties": false
+        },
+        "structural_patterns": {
+          "type": "object",
+          "description": "Settings for detecting AI-characteristic document structures: excessive lists, formulaic groupings, and parallel constructions.",
+          "properties": {
+            "enabled": {
+              "type": "boolean",
+              "default": true,
+              "description": "Master toggle for all structural pattern detection. When false, all structural pattern checks are skipped."
+            },
+            "list_addiction": {
+              "type": "boolean",
+              "default": true,
+              "description": "Detect over-reliance on bulleted and numbered lists where prose would be more natural and appropriate."
+            },
+            "rule_of_three": {
+              "type": "boolean",
+              "default": true,
+              "description": "Detect the AI tendency to group ideas in exactly three items (three bullet points, three examples, three adjectives)."
+            },
+            "from_x_to_y": {
+              "type": "boolean",
+              "default": true,
+              "description": "Detect the 'from X to Y' parallel construction pattern ('from planning to execution', 'from novice to expert') favored by AI."
+            }
+          },
+          "additionalProperties": false
+        },
+        "voice_patterns": {
+          "type": "object",
+          "description": "Settings for detecting AI-characteristic voice and style markers: passive constructions, generic analogies, and unnaturally perfect grammar.",
+          "properties": {
+            "enabled": {
+              "type": "boolean",
+              "default": true,
+              "description": "Master toggle for all voice pattern detection. When false, all voice pattern checks are skipped."
+            },
+            "passive_voice": {
+              "type": "boolean",
+              "default": true,
+              "description": "Detect excessive passive voice constructions that AI models default to for a formal, detached tone."
+            },
+            "generic_analogies": {
+              "type": "boolean",
+              "default": true,
+              "description": "Detect generic, overused analogies and metaphors ('like a well-oiled machine', 'the tip of the iceberg') common in AI writing."
+            },
+            "perfect_grammar": {
+              "type": "boolean",
+              "default": true,
+              "description": "Detect unnaturally flawless grammar and sentence construction that lacks the minor imperfections of authentic human writing."
+            }
+          },
+          "additionalProperties": false
+        },
+        "fix": {
+          "type": "object",
+          "description": "Settings that control the auto-fix behavior when the plugin corrects detected AI patterns in content files.",
+          "properties": {
+            "dry_run_by_default": {
+              "type": "boolean",
+              "default": true,
+              "description": "When true, the fix command previews changes without modifying files unless --apply is explicitly passed."
+            },
+            "backup_files": {
+              "type": "boolean",
+              "default": false,
+              "description": "When true, create a .bak copy of each file before applying fixes. Useful as a safety net when dry_run_by_default is disabled."
+            },
+            "report_format": {
+              "type": "string",
+              "enum": ["minimal", "normal", "detailed"],
+              "default": "normal",
+              "description": "Level of detail in the fix report. 'minimal' shows only counts, 'normal' shows each replacement, 'detailed' includes surrounding context."
+            }
+          },
+          "additionalProperties": false
+        },
+        "output": {
+          "type": "object",
+          "description": "Settings that control the format and verbosity of detection scan output.",
+          "properties": {
+            "verbosity": {
+              "type": "string",
+              "enum": ["minimal", "normal", "detailed"],
+              "default": "normal",
+              "description": "Output verbosity level. 'minimal' shows summary counts only, 'normal' lists each finding, 'detailed' adds context snippets and explanations."
+            },
+            "format": {
+              "type": "string",
+              "enum": ["markdown", "json"],
+              "default": "markdown",
+              "description": "Output format for scan results. 'markdown' produces human-readable reports, 'json' produces machine-parseable structured output."
+            },
+            "show_line_numbers": {
+              "type": "boolean",
+              "default": true,
+              "description": "Include line numbers in scan output to help locate findings in source files."
+            },
+            "max_results_per_tier": {
+              "type": "integer",
+              "minimum": 1,
+              "default": 50,
+              "description": "Maximum number of findings to report per severity tier. Prevents output overload on files with many detections."
+            }
+          },
+          "additionalProperties": false
+        }
+      },
+      "additionalProperties": false
+    },
+
+    "interview": {
+      "type": "object",
+      "description": "Mivoca voice elicitation interview settings. Controls session parameters, quality gates, scoring algorithms, deep-dive limits, and profile output paths.",
+      "properties": {
+        "session_storage": {
+          "type": "string",
+          "default": "~/.human-voice/sessions",
+          "description": "Directory path where interview session state files are persisted. Supports tilde expansion for the home directory."
+        },
+        "total_estimated_minutes": {
+          "type": "integer",
+          "minimum": 10,
+          "maximum": 120,
+          "default": 35,
+          "description": "Estimated total duration of the interview in minutes. Used for pacing questions and progress indicators."
+        },
+        "estimated_questions": {
+          "type": "integer",
+          "minimum": 20,
+          "maximum": 200,
+          "default": 70,
+          "description": "Target number of questions for a complete interview session. The engine adapts based on respondent engagement and branch depth."
+        },
+        "format_streak_limit": {
+          "type": "integer",
+          "minimum": 2,
+          "maximum": 20,
+          "default": 5,
+          "description": "Maximum consecutive questions of the same format (e.g., Likert scale) before the engine forces a format change to maintain engagement."
+        },
+        "default_branch": {
+          "type": "string",
+          "enum": [
+            "creative_literary",
+            "business_professional",
+            "academic_technical",
+            "personal_journalistic"
+          ],
+          "default": "personal_journalistic",
+          "description": "The initial writing domain branch used to seed the interview. Determines the starting question set and vocabulary calibration context."
+        },
+
+        "quality": {
+          "type": "object",
+          "description": "Response quality monitoring thresholds. These gates detect low-effort or inattentive responses and trigger engagement resets or session invalidation.",
+          "properties": {
+            "straightlining_threshold": {
+              "type": "integer",
+              "minimum": 3,
+              "maximum": 10,
+              "default": 5,
+              "description": "Number of consecutive identical responses on scaled questions before flagging as straightlining (respondent selecting the same value repeatedly)."
+            },
+            "speed_threshold_ms": {
+              "type": "integer",
+              "minimum": 500,
+              "maximum": 10000,
+              "default": 2000,
+              "description": "Minimum response time in milliseconds. Responses faster than this threshold on qualifying questions are flagged as speed-rushing."
+            },
+            "speed_exempt_below_seconds": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 30,
+              "default": 5,
+              "description": "Questions with expected reading time below this many seconds are exempt from speed-rushing checks (e.g., simple binary choices)."
+            },
+            "speed_applies_above_seconds": {
+              "type": "integer",
+              "minimum": 5,
+              "maximum": 60,
+              "default": 10,
+              "description": "Speed-rushing detection only applies to questions with expected reading time above this many seconds (longer, more complex prompts)."
+            },
+            "alternation_threshold": {
+              "type": "integer",
+              "minimum": 3,
+              "maximum": 10,
+              "default": 4,
+              "description": "Number of consecutive alternating extreme-value responses (e.g., 1-7-1-7) before flagging as pattern alternation."
+            },
+            "alternation_extreme_values": {
+              "type": "array",
+              "items": { "type": "integer" },
+              "default": [1, 7],
+              "description": "Scale endpoint values considered 'extreme' for alternation detection. Typically the min and max of the Likert scale."
+            },
+            "engagement_reset_min_flags": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 10,
+              "default": 2,
+              "description": "Minimum number of quality flags required within a rolling window before triggering an engagement reset prompt."
+            },
+            "engagement_reset_max_per_session": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 10,
+              "default": 3,
+              "description": "Maximum number of engagement resets allowed per session. Exceeding this limit contributes to session invalidation."
+            },
+            "session_invalid_threshold": {
+              "type": "integer",
+              "minimum": 3,
+              "maximum": 20,
+              "default": 8,
+              "description": "Total number of quality flags that triggers automatic session invalidation, discarding results as unreliable."
+            },
+            "confidence_penalty_per_flag": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 0.5,
+              "default": 0.05,
+              "description": "Confidence score reduction applied for each quality flag. Accumulates across all flag types during the session."
+            }
+          },
+          "additionalProperties": false
+        },
+
+        "attention_checks": {
+          "type": "object",
+          "description": "Attention check question settings. Embedded trap questions verify the respondent is reading and engaging with each prompt.",
+          "properties": {
+            "min_checks_passed": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 3,
+              "default": 2,
+              "description": "Minimum number of attention checks that must be passed for the session to be considered valid."
+            },
+            "confidence_penalty_per_failure": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 0.5,
+              "default": 0.1,
+              "description": "Confidence score reduction applied for each failed attention check. Larger than per-flag penalties because attention failures are more serious."
+            }
+          },
+          "additionalProperties": false
+        },
+
+        "scoring": {
+          "type": "object",
+          "description": "Voice dimension scoring algorithm parameters. Controls how self-report and observed measurements are weighted and how reliability is assessed.",
+          "properties": {
+            "dimension_sd_weight": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 1,
+              "default": 0.7,
+              "description": "Weight given to the semantic differential score within each dimension's composite calculation. The remainder goes to the normalized raw score."
+            },
+            "sd_normalized_weight": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 1,
+              "default": 0.3,
+              "description": "Weight given to the normalized standard deviation component. Complements dimension_sd_weight; the two should sum to 1.0."
+            },
+            "min_cronbach_alpha": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 1,
+              "default": 0.60,
+              "description": "Minimum acceptable Cronbach's alpha for internal consistency reliability. Dimensions scoring below this threshold are flagged as unreliable."
+            },
+            "reliability_tiers": {
+              "type": "object",
+              "description": "Grouping of voice dimensions into reliability assessment tiers. Tier 1 dimensions have more redundant items and are expected to achieve higher alpha values.",
+              "properties": {
+                "tier_1": {
+                  "type": "array",
+                  "items": { "type": "string" },
+                  "default": ["formality", "emotional_tone", "audience_awareness", "narrativity", "humor"],
+                  "description": "Tier 1 voice dimensions with the highest item redundancy and expected reliability. These dimensions drive the core voice profile."
+                },
+                "tier_2": {
+                  "type": "array",
+                  "items": { "type": "string" },
+                  "default": ["personality", "complexity", "authority"],
+                  "description": "Tier 2 voice dimensions with fewer redundant items. These dimensions supplement the profile but may have wider confidence intervals."
+                }
+              },
+              "additionalProperties": false
+            }
+          },
+          "additionalProperties": false
+        },
+
+        "elicitation": {
+          "type": "object",
+          "description": "Adaptive elicitation settings. Controls when and how the interviewer probes thin or vague responses to extract richer voice data. Probes are follow-up questions asked by the agent before advancing to the next sequencer question.",
+          "properties": {
+            "enabled": {
+              "type": "boolean",
+              "default": true,
+              "description": "Master toggle for adaptive elicitation. When false, the interviewer never probes — it accepts every response as-is and advances."
+            },
+            "max_probes_per_question": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 5,
+              "default": 2,
+              "description": "Maximum follow-up probes the interviewer may ask for a single question before accepting the response and moving on."
+            },
+            "eligible_types": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "enum": [
+                  "open_ended",
+                  "writing_sample",
+                  "process_narration",
+                  "scenario",
+                  "projective",
+                  "calibration",
+                  "behavioral"
+                ]
+              },
+              "default": ["open_ended", "writing_sample", "process_narration", "scenario", "projective"],
+              "description": "Question types eligible for adaptive probing. Scale-based types (likert, forced_choice, semantic_differential, select) are never probed since their responses are structurally complete."
+            },
+            "min_words_open_ended": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 100,
+              "default": 15,
+              "description": "Minimum word count for an open_ended response to be considered adequate. Responses below this threshold are candidates for probing."
+            },
+            "min_words_writing_sample": {
+              "type": "integer",
+              "minimum": 10,
+              "maximum": 500,
+              "default": 40,
+              "description": "Minimum word count for a writing_sample response. The question's target word count takes precedence when specified; this is the fallback floor."
+            },
+            "min_words_scenario": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 100,
+              "default": 20,
+              "description": "Minimum word count for scenario and projective responses to be considered adequate."
+            },
+            "vagueness_indicators": {
+              "type": "array",
+              "items": { "type": "string" },
+              "default": ["I don't know", "not sure", "it depends", "maybe", "I guess", "hard to say", "no preference"],
+              "description": "Phrases that signal a vague or non-committal response. When detected in eligible question types, the interviewer probes for specifics. Case-insensitive matching."
+            }
+          },
+          "additionalProperties": false
+        },
+
+        "deep_dives": {
+          "type": "object",
+          "description": "Deep-dive follow-up settings. Deep dives are extended question sequences that probe a specific dimension in greater detail when initial responses suggest complexity.",
+          "properties": {
+            "max_per_session": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 20,
+              "default": 5,
+              "description": "Maximum number of deep-dive sequences allowed per interview session. Set to 0 to disable deep dives entirely."
+            },
+            "time_budget_minutes": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 15,
+              "default": 3,
+              "description": "Time budget in minutes allocated per deep-dive sequence. The engine uses this to limit follow-up question count."
+            }
+          },
+          "additionalProperties": false
+        },
+
+        "profile": {
+          "type": "object",
+          "description": "Profile generation and output settings. Controls where the final voice profile and prompt injection artifacts are written.",
+          "properties": {
+            "publish_to": {
+              "type": "string",
+              "default": "~/.human-voice/profile.json",
+              "description": "File path where the completed voice profile JSON is written after a successful interview. Supports tilde expansion."
+            },
+            "injection_to": {
+              "type": "string",
+              "default": "~/.human-voice/voice-prompt.txt",
+              "description": "File path where the generated voice prompt injection text is written. This file is designed to be included in AI system prompts to guide writing style."
+            },
+            "population_means": {
+              "type": "object",
+              "description": "Population baseline statistics (mean and standard deviation) for each voice dimension, used to compute distinctive-feature z-scores and identify where a writer diverges from the norm.",
+              "additionalProperties": {
+                "type": "object",
+                "description": "Baseline statistics for a single voice dimension.",
+                "properties": {
+                  "mean": {
+                    "type": "number",
+                    "description": "Population mean score for this voice dimension on the measurement scale."
+                  },
+                  "sd": {
+                    "type": "number",
+                    "minimum": 0,
+                    "description": "Population standard deviation for this voice dimension. Must be non-negative."
+                  }
+                },
+                "required": ["mean", "sd"],
+                "additionalProperties": false
+              }
+            }
+          },
+          "additionalProperties": false
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": false
+}
