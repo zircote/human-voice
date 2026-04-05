@@ -248,6 +248,27 @@ human-voice/
 └── README.md
 ```
 
+## Voice Elicitation (Mivoca)
+
+Mivoca is a voice elicitation system that captures a writer's authentic voice through a 67-question adaptive interview, computational NLP analysis of writing samples, and automated profile synthesis. It produces two independent profiles per writer: a self-reported profile (what the writer believes about their voice) and a computationally observed profile (what their writing exhibits). A calibration layer identifies where these profiles agree and where they diverge.
+
+### CLI Tools
+
+| Tool | Purpose |
+|------|---------|
+| `mivoca-session` | Session lifecycle: create, load, list, pause, resume |
+| `mivoca-scoring` | Score a completed session and produce dimension profiles |
+| `mivoca-nlp` | Run the stylometric NLP analysis pipeline on writing samples |
+| `mivoca-branching` | Evaluate interview routing and module sequencing |
+| `mivoca-sequencer` | Determine the next question based on session state |
+| `mivoca-quality` | Detect satisficing and response quality issues |
+
+### Getting Started
+
+See the [Getting Started tutorial](docs/tutorials/getting-started.md) for a complete walkthrough of running your first voice elicitation session.
+
+See the [CLI Reference](docs/reference/cli.md) for detailed documentation of all commands, options and output formats.
+
 ## Research Sources
 
 Pattern detection based on:

@@ -213,7 +213,30 @@ Scoring engine. Delegates to `mivoca_scoring`.
 
 | Subcommand | Options | Description |
 |---|---|---|
-| `score` | `--session-dir PATH` | Run the full scoring pipeline on a session directory. Reads `responses.jsonl` and question-bank metadata. |
+| `score` | `--session-dir PATH [--metadata-dir PATH]` | Run the full scoring pipeline on a session directory. Reads `responses.jsonl` and question-bank metadata. |
+
+#### Options
+
+| Option | Required | Description |
+|---|---|---|
+| `--session-dir PATH` | Yes | Path to the session directory containing `responses.jsonl`. |
+| `--metadata-dir PATH` | No | Path to a question-bank directory containing scoring metadata (`dimension-item-mapping.json`, `scoring-weights.json`). Overrides automatic discovery. |
+
+#### Environment Variables
+
+| Variable | Description |
+|---|---|
+| `MIVOCA_QUESTION_BANK` | Path to the question-bank directory. Serves the same purpose as `--metadata-dir`. The explicit flag takes precedence over this variable. |
+
+#### Metadata Discovery Order
+
+The scoring engine locates question-bank metadata files in the following order. It uses the first directory that contains the required files.
+
+1. Explicit `--metadata-dir` flag value
+2. `MIVOCA_QUESTION_BANK` environment variable
+3. Session-local `metadata/` subdirectory
+4. Parent directory walk from the session directory (up to 5 levels), looking for a `question-bank/` directory
+5. Well-known fallback: `~/.human-voice/question-bank/`
 
 #### Pipeline Stages
 
@@ -258,7 +281,7 @@ Start a new voice elicitation interview session.
 | **Tools used** | Read, Write, Bash, Glob, AskUserQuestion, Agent |
 | **Creates** | Session directory at `~/.human-voice/sessions/{session_id}/` |
 | **Initializes** | `state.json`, `responses.json`, `scores.json` |
-| **Behavior** | Generates a session ID, creates the session directory, loads the question bank, and spawns an interview conductor agent that presents questions one at a time, records responses, applies branching logic, rotates question formats, and updates scores. The participant may type `pause` at any time. |
+| **Behavior** | Creates a new session directory, then begins an interactive voice elicitation interview. Questions are presented one at a time in conversational format. The participant types responses directly and may type `pause` at any time to suspend the session. On completion, scoring results are written to the session's `scores/` directory. |
 
 ### /mivoca:resume
 

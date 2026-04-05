@@ -7,13 +7,13 @@ diataxis_topic: Mivoca system architecture, design rationale, and research basis
 
 Mivoca is built on a counterintuitive premise: the features of writing that best distinguish one writer from another are precisely the features that writers cannot describe about themselves. This document explains why the system is designed the way it is, what trade-offs were made, and how the research literature shaped every major architectural decision.
 
-This is not a guide to using Mivoca or a reference for its data schemas. It is a place to develop a deeper understanding of the system's reasoning --- the "why" behind each component and the connections between them.
+This is not a guide to using Mivoca or a reference for its data schemas. It is a place to develop a deeper understanding of the system's reasoning: the "why" behind each component and the connections between them.
 
 ## The Conscious/Unconscious Divide
 
-The founding problem Mivoca addresses is a gap in how we understand writing voice. Ask a writer to describe their style, and they will talk about things like tone, audience, and maybe formality. They will rarely mention their ratio of function words to content words, their characteristic distribution of sentence lengths, or their preference for particular character-level n-gram patterns. Yet these unconscious features --- function word distributions (CS-020), character n-grams (CS-021), punctuation rhythms --- are among the most powerful discriminators in computational stylistics. They are what make one writer's prose statistically distinguishable from another's.
+The founding problem Mivoca addresses is a gap in how we understand writing voice. Ask a writer to describe their style, and they will talk about things like tone, audience, and maybe formality. They will rarely mention their ratio of function words to content words, their characteristic distribution of sentence lengths, or their preference for particular character-level n-gram patterns. Yet these unconscious features (function word distributions (CS-020), character n-grams (CS-021), punctuation rhythms) are among the most powerful discriminators in computational stylistics. They are what make one writer's prose statistically distinguishable from another's.
 
-This is not a minor inconvenience; it is a structural problem. Across 98 research findings drawn from computational stylistics, psycholinguistics, and survey methodology, a consistent pattern emerges: **self-report reliability correlates inversely with discrimination power** (LT-003). The features a writer can most accurately report --- "I write formally" or "I use humor" --- tend to be the least distinctive across a population of writers. The features that make a writer's voice truly unique --- their unconscious lexical and syntactic habits --- are invisible to introspection.
+This is not a minor inconvenience; it is a structural problem. Across 98 research findings drawn from computational stylistics, psycholinguistics, and survey methodology, a consistent pattern emerges: **self-report reliability correlates inversely with discrimination power** (LT-003). The features a writer can most accurately report ("I write formally" or "I use humor") tend to be the least distinctive across a population of writers. The features that make a writer's voice truly unique --- their unconscious lexical and syntactic habits --- are invisible to introspection.
 
 This creates a dilemma for any system that wants to capture writing voice. Pure self-report misses the most distinctive features. Pure computational analysis misses the writer's conscious intentions, preferences, and aspirations. Mivoca exists because neither approach alone is sufficient, and a thoughtful combination of both requires an architecture designed around the boundary between what writers know and what they do not.
 
@@ -125,6 +125,6 @@ The boundaries between these components are not arbitrary. Each one corresponds 
 
 ## Further Reading
 
-- **Tutorials**: [Getting started with a voice elicitation session](../tutorial/) --- walk through your first session from start to finished profile
-- **How-to guides**: [How to resume a paused session](../how-to/), [How to interpret calibration results](../how-to/) --- task-oriented instructions for specific goals
-- **Reference**: [Question bank schema reference](../reference/), [Voice profile schema reference](../reference/), [Scoring weights reference](../reference/) --- precise specifications for all data formats and configuration
+- **Tutorials**: [Getting started with a voice elicitation session](../tutorials/getting-started.md). Walk through your first session from start to finished profile.
+- **How-to guides**: [How to resume a paused session](../guides/resuming-sessions.md), [How to interpret calibration results](../guides/interpreting-calibration.md). Task-oriented instructions for specific goals.
+- **Reference**: [Question bank schema reference](../reference/schemas.md), [Voice profile dimensions reference](../reference/dimensions.md), [CLI reference](../reference/cli.md). Precise specifications for all data formats and configuration.

@@ -56,6 +56,58 @@ allowed-tools:
 ---
 ```
 
+## Mivoca Development
+
+### Running Scoring Tests
+
+The scoring engine has a dedicated test suite under `scoring/tests/`. Run all tests with:
+
+```bash
+python3 -m pytest scoring/tests/ -v
+```
+
+Individual test modules cover calibration, profile building and self-report scoring. The `conftest.py` file provides shared fixtures for session data and question bank metadata.
+
+### Working with the Question Bank
+
+Question bank modules are JSON files in `question-bank/modules/` following the naming pattern `Mxx-<slug>.json` (e.g., `M02-voice-personality.json`). Each file contains an array of question definition objects.
+
+Requirements for question definitions:
+
+- Every question must have a unique `question_id` matching the pattern `Mxx-Qyy`
+- Questions that contribute to dimension scoring must include a `scoring_map` object mapping response values to numeric scores
+- Dimension keys in `scoring_map` must match keys defined in `question-bank/scoring/dimension-item-mapping.json`
+- See the [Adding Questions guide](docs/guides/adding-questions.md) for step-by-step instructions
+
+### NLP Pipeline Development
+
+The NLP pipeline depends on spaCy and the `en_core_web_sm` language model. Install dependencies:
+
+```bash
+pip install spacy
+python3 -m spacy download en_core_web_sm
+```
+
+Run NLP analysis on a session:
+
+```bash
+mivoca-nlp analyze-session --session-dir ~/.human-voice/sessions/{id}/
+```
+
+Analysis output files are written as `*.analysis.json` alongside the source writing samples.
+
+### Scoring Engine Architecture
+
+The scoring pipeline follows a linear five-stage flow implemented in `scoring/src/mivoca_scoring/cli.py`:
+
+1. `run_quality_checks` validates response data for satisficing patterns
+2. `normalize_semantic_differentials` converts raw bipolar ratings to dimension scores
+3. `score_self_report` computes per-dimension self-report scores using weighted item means
+4. `calibrate` compares self-report scores against observed NLP scores (when available)
+5. `build_profile` merges all scores into the final voice profile
+
+Each stage is a pure function that accepts data and returns results. The CLI orchestrates the pipeline and handles file I/O.
+
 ## Pull Request Guidelines
 
 1. Create a feature branch from `main`
