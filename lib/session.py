@@ -26,7 +26,9 @@ from typing import Any
 
 def _sessions_root() -> Path:
     """Return the root directory for all sessions, creating it if needed."""
-    root = Path.home() / ".human-voice" / "sessions"
+    from lib.config import get
+    storage = get("interview.session_storage", "~/.human-voice/sessions")
+    root = Path(storage).expanduser()
     root.mkdir(parents=True, exist_ok=True)
     return root
 
@@ -56,6 +58,7 @@ def _atomic_write_json(path: Path, data: dict) -> None:
 
 def _initial_state(session_id: str) -> dict:
     """Return a fresh session-state dict conforming to session-state.schema.json."""
+    from lib.config import get
     now = _now_iso()
     return {
         "session_id": session_id,
@@ -67,7 +70,7 @@ def _initial_state(session_id: str) -> dict:
         "current_module": None,
         "current_question_index": 0,
         "questions_answered": 0,
-        "questions_remaining_estimate": 70,
+        "questions_remaining_estimate": get("interview.estimated_questions", 70),
         "elapsed_seconds": 0,
         "format_streak": {"current_type": None, "count": 0},
         "quality_flags": {
@@ -254,9 +257,13 @@ def record_response(session_id: str, response: dict) -> None:
     elif resp_qf.get("straightline_sequence", 0) >= 3:
         qf["straightline_count"] += 1
 
-    state["questions_answered"] = state.get("questions_answered", 0) + 1
-    if state["questions_remaining_estimate"] > 0:
-        state["questions_remaining_estimate"] -= 1
+    # Probe responses supplement a parent question — they don't count as new
+    # questions answered and don't decrement the remaining estimate.
+    is_probe = response.get("probe_of") is not None
+    if not is_probe:
+        state["questions_answered"] = state.get("questions_answered", 0) + 1
+        if state["questions_remaining_estimate"] > 0:
+            state["questions_remaining_estimate"] -= 1
 
     save_session(session_id, state)
 

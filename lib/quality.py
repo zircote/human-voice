@@ -59,6 +59,37 @@ def _is_scale_response(response: dict) -> bool:
     return q_type in ("likert_scale", "semantic_differential")
 
 
+def _quality_config() -> dict:
+    """Load quality-specific config values with defaults."""
+    try:
+        from lib.config import get
+        return {
+            "straightlining_threshold": get("interview.quality.straightlining_threshold", 5),
+            "speed_threshold_ms": get("interview.quality.speed_threshold_ms", 2000),
+            "speed_exempt_below_seconds": get("interview.quality.speed_exempt_below_seconds", 5),
+            "speed_applies_above_seconds": get("interview.quality.speed_applies_above_seconds", 10),
+            "alternation_threshold": get("interview.quality.alternation_threshold", 4),
+            "alternation_extreme_values": get("interview.quality.alternation_extreme_values", [1, 7]),
+            "engagement_reset_min_flags": get("interview.quality.engagement_reset_min_flags", 2),
+            "engagement_reset_max_per_session": get("interview.quality.engagement_reset_max_per_session", 3),
+            "session_invalid_threshold": get("interview.quality.session_invalid_threshold", 8),
+            "confidence_penalty_per_flag": get("interview.quality.confidence_penalty_per_flag", 0.05),
+        }
+    except ImportError:
+        return {
+            "straightlining_threshold": 5,
+            "speed_threshold_ms": 2000,
+            "speed_exempt_below_seconds": 5,
+            "speed_applies_above_seconds": 10,
+            "alternation_threshold": 4,
+            "alternation_extreme_values": [1, 7],
+            "engagement_reset_min_flags": 2,
+            "engagement_reset_max_per_session": 3,
+            "session_invalid_threshold": 8,
+            "confidence_penalty_per_flag": 0.05,
+        }
+
+
 def _get_scale_value(response: dict) -> int | None:
     """Extract numeric scale value from a response, returning None if not applicable."""
     val = response.get("value")
@@ -108,11 +139,12 @@ def detect_speed_flag(response: dict, question: dict) -> bool:
     Returns:
         True if speed flag should be raised.
     """
+    qc = _quality_config()
     estimated = question.get("estimated_seconds")
-    if estimated is None or estimated <= 5:
+    if estimated is None or estimated <= qc["speed_exempt_below_seconds"]:
         return False
 
-    if estimated <= 10:
+    if estimated <= qc["speed_applies_above_seconds"]:
         return False
 
     # Support both nested (schema-compliant) and flat formats
@@ -123,7 +155,7 @@ def detect_speed_flag(response: dict, question: dict) -> bool:
     if duration_ms is None:
         return False
 
-    return duration_ms < 2000
+    return duration_ms < qc["speed_threshold_ms"]
 
 
 def detect_alternation(recent_responses: list[dict], threshold: int = 4) -> bool:

@@ -21,9 +21,19 @@ from pathlib import Path
 from typing import Any
 
 
-ACTIVE_PROFILE_DIR = Path.home() / ".human-voice"
-ACTIVE_PROFILE_PATH = ACTIVE_PROFILE_DIR / "profile.json"
-ACTIVE_INJECTION_PATH = ACTIVE_PROFILE_DIR / "voice-prompt.txt"
+def _resolve_paths() -> tuple[Path, Path, Path]:
+    """Resolve profile publish paths from config."""
+    try:
+        from lib.config import get
+        pub = Path(get("interview.profile.publish_to", "~/.human-voice/profile.json")).expanduser()
+        inj = Path(get("interview.profile.injection_to", "~/.human-voice/voice-prompt.txt")).expanduser()
+    except ImportError:
+        pub = Path.home() / ".human-voice" / "profile.json"
+        inj = Path.home() / ".human-voice" / "voice-prompt.txt"
+    return pub.parent, pub, inj
+
+
+ACTIVE_PROFILE_DIR, ACTIVE_PROFILE_PATH, ACTIVE_INJECTION_PATH = _resolve_paths()
 
 
 def publish_active_profile(profile: dict[str, Any]) -> Path:

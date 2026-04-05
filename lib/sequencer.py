@@ -84,7 +84,12 @@ def _check_format_streak(state: dict[str, Any], question: dict[str, Any]) -> boo
     count = streak.get("count", 0)
     question_type = question.get("type", "")
 
-    if current_type == question_type and count >= 5:
+    try:
+        from lib.config import get
+        limit = get("interview.format_streak_limit", 5)
+    except ImportError:
+        limit = 5
+    if current_type == question_type and count >= limit:
         return True
     return False
 

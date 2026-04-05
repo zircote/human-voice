@@ -43,9 +43,9 @@ DEFAULT_DIMENSION_TIERS: dict[str, int] = {
     "humor": 1,
 }
 
-# Hardcoded initial population estimates (mean, sd) for distinctive-feature detection.
-# These are bootstrapping values; real population stats should replace them.
-POPULATION_MEANS: dict[str, tuple[float, float]] = {
+# Default population estimates (mean, sd) for distinctive-feature detection.
+# Overridable via config at interview.profile.population_means.
+_DEFAULT_POPULATION_MEANS: dict[str, tuple[float, float]] = {
     "formality_f_score": (55.0, 10.0),
     "flesch_kincaid_grade": (10.0, 3.0),
     "liwc_clout": (55.0, 18.0),
@@ -57,6 +57,24 @@ POPULATION_MEANS: dict[str, tuple[float, float]] = {
     "passive_voice_rate": (0.08, 0.05),
     "contraction_rate": (0.04, 0.03),
 }
+
+
+def _load_population_means() -> dict[str, tuple[float, float]]:
+    """Load population means from config, falling back to defaults."""
+    means = dict(_DEFAULT_POPULATION_MEANS)
+    try:
+        from lib.config import get
+        config_means = get("interview.profile.population_means", {})
+        if isinstance(config_means, dict):
+            for metric, vals in config_means.items():
+                if isinstance(vals, dict) and "mean" in vals and "sd" in vals:
+                    means[metric] = (float(vals["mean"]), float(vals["sd"]))
+    except ImportError:
+        pass
+    return means
+
+
+POPULATION_MEANS = _load_population_means()
 
 # Stability threshold: variance below this is considered stable.
 STABILITY_VARIANCE_THRESHOLD = 150.0  # On 0-100 scale, var < 150 ~ SD < ~12.

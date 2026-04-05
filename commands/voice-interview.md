@@ -11,19 +11,25 @@ Start a new mivoca voice elicitation interview session.
 
 ## Procedure
 
-1. **Create session**: Run `bin/mivoca-session create` to generate a new session. This creates `~/.human-voice/sessions/{session_id}/` with `state.json` and `responses.jsonl`.
+1. **Create session**: Run `bin/mivoca-session create` to generate a new session. This creates `~/.human-voice/sessions/{session_id}/` with `state.json` and `responses.jsonl`. Capture the session_id and session_dir path from the output.
 
-2. **Load question bank**: Read question bank modules from `question-bank/modules/` to verify they are present.
+2. **Load question bank**: Verify question bank modules exist in `question-bank/modules/`.
 
-3. **Launch interview conductor**: Spawn the `interview-conductor` agent with the session ID. The conductor:
-   - Presents questions conversationally using `AskUserQuestion`
-   - Records each response via `bin/mivoca-session` (appends to `responses.jsonl` with timing)
-   - Updates `state.json` after each response (increments `questions_answered`, advances `current_module` and `current_question_index`)
-   - Evaluates branching logic via `bin/mivoca-branching` after screening questions
-   - Tracks format streak and injects engagement resets per `bin/mivoca-sequencer`
-   - Monitors quality flags via `bin/mivoca-quality`
-   - Handles pause requests (sets state to `paused`)
-   - On completion: runs `bin/mivoca-nlp analyze-session`, then `bin/mivoca-scoring score`, then spawns `profile-synthesizer` agent
+3. **Launch interview conductor**: Spawn the `interview-conductor` agent with this prompt:
+
+   > You are conducting a new mivoca voice elicitation interview.
+   >
+   > Session ID: {session_id}
+   > Session directory: {session_dir}
+   > Project root: {project_root}
+   >
+   > Run the FULL interview loop as described in your instructions. Use `bin/mivoca-sequencer next-question` to get each question, present it via AskUserQuestion, record the response, update state, and loop. Do NOT exit after a single question — continue the loop until the interview is complete or the user pauses.
+   >
+   > Start by getting the first question from the sequencer and presenting it.
+
+   **IMPORTANT**: The agent must stay alive for the entire interview. It loops through all ~70 questions in a single agent session. It only exits when:
+   - The sequencer returns `action: "interview_complete"`
+   - The user requests a pause
 
 ## Session States
 

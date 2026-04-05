@@ -105,6 +105,27 @@
       },
       "additionalProperties": false
     },
+    "probe_of": {
+      "description": "If this response is a follow-up probe elicited by the interviewer, this field contains the question_id of the parent question that triggered the probe. Null or absent for primary responses.",
+      "oneOf": [
+        { "type": "string" },
+        { "type": "null" }
+      ]
+    },
+    "probe_prompt": {
+      "description": "The follow-up question the interviewer asked to elicit this probe response. Null or absent for primary responses.",
+      "oneOf": [
+        { "type": "string" },
+        { "type": "null" }
+      ]
+    },
+    "probe_index": {
+      "description": "Sequential index of this probe within the parent question's probe chain (1-based). Null or absent for primary responses.",
+      "oneOf": [
+        { "type": "integer", "minimum": 1 },
+        { "type": "null" }
+      ]
+    },
     "quality_flags": {
       "type": "object",
       "description": "Automated quality indicators for detecting low-effort or patterned responding.",

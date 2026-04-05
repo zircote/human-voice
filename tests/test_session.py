@@ -191,6 +191,47 @@ def test_record_response_quality_flags() -> None:
     assert updated["quality_flags"]["straightline_count"] == 1
 
 
+def test_record_probe_response_does_not_increment_counter() -> None:
+    """Probe responses (with probe_of set) should not increment questions_answered."""
+    state = session.create_session()
+    sid = state["session_id"]
+
+    # Record a primary response first
+    primary = {
+        "question_id": "M01-Q01",
+        "value": "I write professionally",
+        "duration_ms": 5000,
+        "quality_flags": {},
+    }
+    session.record_response(sid, primary)
+
+    updated = session.load_session(sid)
+    assert updated["questions_answered"] == 1
+    assert updated["questions_remaining_estimate"] == 69
+
+    # Record a probe response for the same question
+    probe = {
+        "question_id": "M01-Q01",
+        "probe_of": "M01-Q01",
+        "probe_prompt": "Could you say more about that?",
+        "probe_index": 1,
+        "value": "I write technical documentation and internal memos",
+        "raw_text": "I write technical documentation and internal memos",
+        "duration_ms": 8000,
+        "quality_flags": {},
+    }
+    session.record_response(sid, probe)
+
+    updated = session.load_session(sid)
+    assert updated["questions_answered"] == 1, "Probe should not increment questions_answered"
+    assert updated["questions_remaining_estimate"] == 69, "Probe should not decrement remaining"
+
+    # Both responses should be in responses.jsonl
+    responses = session.load_responses(sid)
+    assert len(responses) == 2
+    assert responses[1]["probe_of"] == "M01-Q01"
+
+
 # ---- save_writing_sample -----------------------------------------------------
 
 

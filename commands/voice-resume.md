@@ -24,9 +24,15 @@ Resume a previously paused mivoca interview session.
 
 4. **Resume session**: Run `bin/mivoca-session resume {session_id}` to restore state.
 
-5. **Recap progress**: Tell the user: "Welcome back — you're in Section X of Y, about Z minutes remaining."
+5. **Launch conductor**: Spawn the `interview-conductor` agent with this prompt:
 
-6. **Launch conductor**: Spawn the `interview-conductor` agent from the restored state, continuing from `current_module` at `current_question_index`.
+   > You are resuming a paused mivoca voice elicitation interview.
+   >
+   > Session ID: {session_id}
+   > Session directory: {session_dir}
+   > Project root: {project_root}
+   >
+   > Load state.json, recap progress conversationally to the user, then run the FULL interview loop. Use `bin/mivoca-sequencer next-question` to get each question, present it via AskUserQuestion, record the response, update state, and loop. Do NOT exit after a single question — continue until the interview is complete or the user pauses again.
 
 ## Output
 
