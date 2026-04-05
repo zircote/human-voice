@@ -386,10 +386,12 @@ def assemble_voice_profile(
     for dim, data in merged.items():
         if isinstance(data, dict):
             gold_standard[dim] = {
-                "score": data.get("composite", data.get("score", 0)),
-                "self_report": data.get("self_report", 0),
-                "observed": data.get("observed", 0),
-                "confidence": data.get("confidence", 0.5),
+                "score": data.get("merged_score", 0),
+                "self_report": data.get("self_report_score", 0),
+                "observed": data.get("observed_score", 0),
+                "tier": data.get("tier"),
+                "weight_sr": data.get("weight_sr"),
+                "weight_obs": data.get("weight_obs"),
             }
 
     # Convert gap dimensions to schema format
@@ -426,8 +428,15 @@ def assemble_voice_profile(
         "calibration": calibration_report or {},
         "distinctive_features": distinctive_strings,
         "voice_stability_map": {
-            "stable_across_contexts": stability.get("stable_across_contexts", []),
-            "adapts_by_context": stability.get("adapts_by_context", []),
+            "stable_across_contexts": [
+                dim for dim, info in stability.items()
+                if isinstance(info, dict) and info.get("classification") == "stable_across_contexts"
+            ],
+            "adapts_by_context": [
+                dim for dim, info in stability.items()
+                if isinstance(info, dict) and info.get("classification") == "adapts_by_context"
+            ],
+            "per_dimension": stability,
         },
         "writing_sample_analysis": writing_sample_analysis or {},
         "metadata": session_metadata or {},

@@ -12,11 +12,13 @@ import json
 from pathlib import Path
 
 from mivoca_scoring.cli import _flatten_dimension_mapping, _flatten_scoring_weights, _load_question_bank
+from mivoca_scoring.profile_builder import assemble_voice_profile, compute_voice_stability
 from mivoca_scoring.self_report import (
     _build_response_lookup,
     _infer_question_type,
     _resolve_scoring_map_value,
     _scoring_map_range,
+    normalize_response,
     score_self_report,
 )
 
@@ -647,3 +649,133 @@ class TestFlattenScoringWeights:
         }
         flat = _flatten_scoring_weights(raw)
         assert flat["formality"] == {}
+
+
+# ---------- normalize_response for calibration/projective types ----------
+
+
+class TestNormalizeCalibrationProjective:
+    """Tests for calibration and projective type normalization."""
+
+    def test_calibration_type_normalizes(self):
+        """Calibration type normalizes as forced_choice."""
+        result = normalize_response(3, "calibration", n_options=7)
+        assert result is not None
+        assert result == pytest.approx(33.33, abs=0.1)
+
+    def test_projective_type_normalizes(self):
+        """Projective type normalizes as forced_choice."""
+        result = normalize_response(2, "projective", n_options=5)
+        assert result is not None
+        assert result == pytest.approx(25.0, abs=0.1)
+
+    def test_calibration_extremes(self):
+        """Calibration type at endpoints: 1/7 -> 0.0, 7/7 -> 100.0."""
+        low = normalize_response(1, "calibration", n_options=7)
+        high = normalize_response(7, "calibration", n_options=7)
+        assert low == pytest.approx(0.0)
+        assert high == pytest.approx(100.0)
+
+
+# ---------- assemble_voice_profile ----------
+
+
+class TestAssembleVoiceProfile:
+    """Tests for the profile assembly function."""
+
+    def _make_result(self, **overrides):
+        """Build a minimal build_result dict with overrides."""
+        base = {
+            "merged_dimensions": {},
+            "gap_dimensions": {},
+            "distinctive_features": [],
+            "voice_stability": {},
+        }
+        base.update(overrides)
+        return base
+
+    def _assemble(self, build_result):
+        """Call assemble_voice_profile with required args."""
+        return assemble_voice_profile(
+            build_result,
+            session_id="test-session",
+            writer_type="personal_journalistic",
+            identity_summary="Test voice.",
+        )
+
+    def test_gold_dimensions_use_correct_keys(self):
+        """Gold standard dimensions extract merged_score, self_report_score, observed_score."""
+        build_result = self._make_result(
+            merged_dimensions={
+                "formality": {
+                    "merged_score": 65.0,
+                    "self_report_score": 60.0,
+                    "observed_score": 75.0,
+                    "tier": 1,
+                    "weight_sr": 0.7,
+                    "weight_obs": 0.3,
+                }
+            },
+        )
+        result = self._assemble(build_result)
+        gold = result["gold_standard_dimensions"]
+        assert "formality" in gold
+        assert gold["formality"]["score"] == 65.0
+        assert gold["formality"]["self_report"] == 60.0
+        assert gold["formality"]["observed"] == 75.0
+        assert gold["formality"]["tier"] == 1
+
+    def test_stability_map_classifies_dimensions(self):
+        """Voice stability map correctly classifies dimensions."""
+        build_result = self._make_result(
+            voice_stability={
+                "formality": {
+                    "classification": "stable_across_contexts",
+                    "module_count": 2,
+                    "variance": 5.0,
+                },
+                "authority": {
+                    "classification": "adapts_by_context",
+                    "module_count": 3,
+                    "variance": 250.0,
+                },
+            },
+        )
+        result = self._assemble(build_result)
+        vsm = result["voice_stability_map"]
+        assert "formality" in vsm["stable_across_contexts"]
+        assert "authority" in vsm["adapts_by_context"]
+        assert "formality" not in vsm["adapts_by_context"]
+        assert vsm["per_dimension"]["formality"]["classification"] == "stable_across_contexts"
+
+    def test_distinctive_features_to_strings(self):
+        """Distinctive features convert dict entries to description strings."""
+        build_result = self._make_result(
+            distinctive_features=[
+                {"description": "High vocabulary richness"},
+                {"metric": "hedge_density", "value": 2.1, "z_score": -2.5},
+            ],
+        )
+        result = self._assemble(build_result)
+        feats = result["distinctive_features"]
+        assert feats[0] == "High vocabulary richness"
+        assert "hedge_density" in feats[1]
+
+
+# ---------- compute_voice_stability ----------
+
+
+class TestComputeVoiceStabilityWithEnvelope:
+    """Tests for voice stability with answer envelope format."""
+
+    def test_envelope_responses_processed(self):
+        """Responses in answer envelope format are unwrapped for stability computation."""
+        responses = [
+            {"question_id": "M03-Q01", "answer": {"value": 3}},
+            {"question_id": "M06-Q01", "answer": {"value": 4}},
+        ]
+        dimension_mapping = {"formality": ["M03-Q01", "M06-Q01"]}
+        result = compute_voice_stability(responses, dimension_mapping)
+        # Both items are in different modules (M03, M06) -> 2 modules
+        assert "formality" in result
+        assert result["formality"]["module_count"] == 2

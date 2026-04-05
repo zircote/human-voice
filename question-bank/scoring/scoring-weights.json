@@ -143,11 +143,10 @@
       "self_reportability_tier": 2
     },
     "contextual_flexibility": {
-      "items": {
-        "M11-Q06": 1.0
-      },
+      "items": {},
       "sd_pairs": {},
-      "self_reportability_tier": 2
+      "self_reportability_tier": 2,
+      "note": "NLP-only dimension. M11-Q06 is a projective question targeting voice_aspiration, not contextual_flexibility. No self-report items contribute."
     },
     "risk_tolerance": {
       "items": {
