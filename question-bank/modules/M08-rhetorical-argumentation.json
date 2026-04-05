@@ -79,10 +79,10 @@
       "dimensions": ["authority"],
       "weights": { "authority": 0.8 },
       "scoring_map": {
-        "logical": { "authority": 5 },
-        "emotional": { "authority": 3 },
-        "credibility": { "authority": 6 },
-        "blend": { "authority": 4 }
+        "logical": { "authority": 5, "genre_awareness": 4 },
+        "emotional": { "authority": 3, "genre_awareness": 2 },
+        "credibility": { "authority": 6, "genre_awareness": 5 },
+        "blend": { "authority": 4, "genre_awareness": 4 }
       }
     },
     "metadata": {

@@ -33,18 +33,18 @@ GOLD_DIMENSIONS = [
     "humor",
 ]
 
-# Gap dimensions derived from self-report comparisons.
+# Gap dimensions from dimension-item-mapping.json gap_dimensions section.
 GAP_DIMENSIONS = [
-    "formality_gap",
-    "emotional_tone_gap",
-    "personality_gap",
-    "complexity_gap",
-    "audience_awareness_gap",
-    "authority_gap",
-    "narrativity_gap",
-    "humor_gap",
-    "self_awareness_gap",
-    "adaptability_gap",
+    "precision",
+    "revision_orientation",
+    "contextual_flexibility",
+    "risk_tolerance",
+    "self_awareness",
+    "consistency",
+    "influence_absorption",
+    "vocabulary_range",
+    "sentence_rhythm",
+    "genre_awareness",
 ]
 
 
@@ -374,7 +374,13 @@ def score_self_report(
 
             qdef = question_bank.get(qid)
             qtype = _infer_question_type(resp, question_def=qdef)
-            raw_value = resp.get("scale_value") or resp.get("semantic_differential_value") or resp.get("value")
+            # Use first non-None value. Explicit None checks avoid treating
+            # 0 or empty string as missing.
+            raw_value = resp.get("scale_value")
+            if raw_value is None:
+                raw_value = resp.get("semantic_differential_value")
+            if raw_value is None:
+                raw_value = resp.get("value")
 
             # For categorical string values, resolve via scoring_map.
             scoring_map_used = False

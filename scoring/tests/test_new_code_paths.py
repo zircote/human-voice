@@ -11,7 +11,7 @@ import pytest
 import json
 from pathlib import Path
 
-from mivoca_scoring.cli import _load_question_bank
+from mivoca_scoring.cli import _flatten_dimension_mapping, _flatten_scoring_weights, _load_question_bank
 from mivoca_scoring.self_report import (
     _build_response_lookup,
     _infer_question_type,
@@ -515,3 +515,135 @@ class TestLoadQuestionBank:
         fake = tmp_path / "does_not_exist"
         lookup = _load_question_bank([fake])
         assert lookup == {}
+
+
+# ---------- Gap dimension routing ----------
+
+
+class TestGapDimensionRouting:
+    """Tests that gap dimensions route to results['gap_dimensions']."""
+
+    def test_gap_dimension_routed_correctly(self):
+        """Dimensions in GAP_DIMENSIONS list appear in gap_dimensions, not dimensions."""
+        responses = [
+            {"question_id": "Q01", "scale_value": 3},
+        ]
+        dimension_mapping = {"precision": ["Q01"]}
+        scoring_weights = {"precision": {"Q01": 1.0}}
+
+        result = score_self_report(responses, dimension_mapping, scoring_weights)
+
+        assert "precision" in result["gap_dimensions"]
+        assert "precision" not in result["dimensions"]
+        assert result["gap_dimensions"]["precision"]["score"] is not None
+
+    def test_gold_dimension_not_in_gap(self):
+        """Gold standard dimensions appear in dimensions, not gap_dimensions."""
+        responses = [
+            {"question_id": "Q01", "scale_value": 5},
+        ]
+        dimension_mapping = {"formality": ["Q01"]}
+        scoring_weights = {"formality": {"Q01": 1.0}}
+
+        result = score_self_report(responses, dimension_mapping, scoring_weights)
+
+        assert "formality" in result["dimensions"]
+        assert "formality" not in result["gap_dimensions"]
+
+    def test_multiple_gap_dimensions(self):
+        """Multiple gap dimensions all route correctly."""
+        responses = [
+            {"question_id": "Q01", "scale_value": 4},
+            {"question_id": "Q02", "scale_value": 2},
+        ]
+        dimension_mapping = {
+            "precision": ["Q01"],
+            "risk_tolerance": ["Q02"],
+        }
+        scoring_weights = {}
+
+        result = score_self_report(responses, dimension_mapping, scoring_weights)
+
+        assert "precision" in result["gap_dimensions"]
+        assert "risk_tolerance" in result["gap_dimensions"]
+        assert result["gap_dimensions"]["precision"]["score"] is not None
+        assert result["gap_dimensions"]["risk_tolerance"]["score"] is not None
+
+
+# ---------- _flatten_dimension_mapping and _flatten_scoring_weights ----------
+
+
+class TestFlattenDimensionMapping:
+    """Tests for dimension mapping flattening."""
+
+    def test_flattens_gold_and_gap(self):
+        """Extracts question IDs from both gold_standard and gap sections."""
+        raw = {
+            "gold_standard_dimensions": {
+                "formality": {
+                    "contributing_items": {
+                        "M03": ["M03-Q01", "M03-Q02"],
+                        "SD": ["formal_casual"],
+                    }
+                }
+            },
+            "gap_dimensions": {
+                "precision": {
+                    "contributing_items": {
+                        "M09": ["M09-Q01", "M09-Q03"],
+                    }
+                }
+            },
+        }
+        flat = _flatten_dimension_mapping(raw)
+        assert flat["formality"] == ["M03-Q01", "M03-Q02", "formal_casual"]
+        assert flat["precision"] == ["M09-Q01", "M09-Q03"]
+
+    def test_empty_mapping(self):
+        """Empty input returns empty dict."""
+        assert _flatten_dimension_mapping({}) == {}
+
+    def test_skips_non_list_items(self):
+        """Non-list contributing_items values are skipped."""
+        raw = {
+            "gold_standard_dimensions": {
+                "formality": {
+                    "contributing_items": {
+                        "M03": "not_a_list",
+                    }
+                }
+            }
+        }
+        flat = _flatten_dimension_mapping(raw)
+        assert flat["formality"] == []
+
+
+class TestFlattenScoringWeights:
+    """Tests for scoring weights flattening."""
+
+    def test_flattens_weights(self):
+        """Extracts per-item weights from nested structure."""
+        raw = {
+            "dimension_weights": {
+                "formality": {
+                    "items": {"M03-Q01": 1.0, "M03-Q02": 0.8},
+                    "sd_pairs": {"formal_casual": 1.0},
+                }
+            }
+        }
+        flat = _flatten_scoring_weights(raw)
+        assert flat["formality"] == {"M03-Q01": 1.0, "M03-Q02": 0.8}
+
+    def test_empty_weights(self):
+        """Empty input returns empty dict."""
+        assert _flatten_scoring_weights({}) == {}
+
+    def test_missing_items_key(self):
+        """Dimension without items key returns empty dict for that dimension."""
+        raw = {
+            "dimension_weights": {
+                "formality": {"sd_pairs": {"formal_casual": 1.0}}
+            }
+        }
+        flat = _flatten_scoring_weights(raw)
+        assert flat["formality"] == {}
