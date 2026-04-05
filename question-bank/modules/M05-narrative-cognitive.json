@@ -14,9 +14,9 @@
       "dimensions": ["explanation_style", "narrative_preference", "abstraction_level"],
       "weights": { "explanation_style": 1.0, "narrative_preference": 0.7, "abstraction_level": 0.5 },
       "scoring_map": {
-        "analogy": { "explanation_style": 1, "narrative_preference": 4, "abstraction_level": 4 },
-        "steps": { "explanation_style": 2, "narrative_preference": 2, "abstraction_level": 3 },
-        "example": { "explanation_style": 3, "narrative_preference": 3, "abstraction_level": 2 }
+        "analogy": { "explanation_style": 1, "narrative_preference": 4, "abstraction_level": 4, "narrativity": 4 },
+        "steps": { "explanation_style": 2, "narrative_preference": 2, "abstraction_level": 3, "narrativity": 2 },
+        "example": { "explanation_style": 3, "narrative_preference": 3, "abstraction_level": 2, "narrativity": 3 }
       }
     },
     "metadata": {
@@ -64,9 +64,9 @@
       "dimensions": ["argument_structure", "cognitive_organization", "audience_awareness"],
       "weights": { "argument_structure": 1.0, "cognitive_organization": 0.8, "audience_awareness": 0.4 },
       "scoring_map": {
-        "bottom_line_first": { "argument_structure": 1, "cognitive_organization": 4, "audience_awareness": 3 },
-        "build_up": { "argument_structure": 5, "cognitive_organization": 3, "audience_awareness": 3 },
-        "depends": { "argument_structure": 3, "cognitive_organization": 3, "audience_awareness": 5 }
+        "bottom_line_first": { "argument_structure": 1, "cognitive_organization": 4, "audience_awareness": 3, "narrativity": 2 },
+        "build_up": { "argument_structure": 5, "cognitive_organization": 3, "audience_awareness": 3, "narrativity": 5 },
+        "depends": { "argument_structure": 3, "cognitive_organization": 3, "audience_awareness": 5, "narrativity": 3 }
       }
     },
     "metadata": {
@@ -96,11 +96,11 @@
       "dimensions": ["figurative_language_usage", "narrative_preference", "abstraction_level"],
       "weights": { "figurative_language_usage": 1.0, "narrative_preference": 0.6, "abstraction_level": 0.5 },
       "scoring_map": {
-        "1": { "figurative_language_usage": 1, "narrative_preference": 1, "abstraction_level": 1 },
-        "2": { "figurative_language_usage": 2, "narrative_preference": 2, "abstraction_level": 2 },
-        "3": { "figurative_language_usage": 3, "narrative_preference": 3, "abstraction_level": 3 },
-        "4": { "figurative_language_usage": 4, "narrative_preference": 4, "abstraction_level": 4 },
-        "5": { "figurative_language_usage": 5, "narrative_preference": 5, "abstraction_level": 5 }
+        "1": { "figurative_language_usage": 1, "narrative_preference": 1, "abstraction_level": 1, "narrativity": 1, "risk_tolerance": 1 },
+        "2": { "figurative_language_usage": 2, "narrative_preference": 2, "abstraction_level": 2, "narrativity": 2, "risk_tolerance": 2 },
+        "3": { "figurative_language_usage": 3, "narrative_preference": 3, "abstraction_level": 3, "narrativity": 3, "risk_tolerance": 3 },
+        "4": { "figurative_language_usage": 4, "narrative_preference": 4, "abstraction_level": 4, "narrativity": 4, "risk_tolerance": 4 },
+        "5": { "figurative_language_usage": 5, "narrative_preference": 5, "abstraction_level": 5, "narrativity": 5, "risk_tolerance": 5 }
       }
     },
     "metadata": {
@@ -130,11 +130,11 @@
       "dimensions": ["cognitive_style", "narrative_preference", "structural_thinking"],
       "weights": { "cognitive_style": 1.0, "narrative_preference": 0.9, "structural_thinking": 0.8 },
       "scoring_map": {
-        "1": { "cognitive_style": 1, "narrative_preference": 5, "structural_thinking": 1 },
-        "2": { "cognitive_style": 2, "narrative_preference": 4, "structural_thinking": 2 },
-        "3": { "cognitive_style": 3, "narrative_preference": 3, "structural_thinking": 3 },
-        "4": { "cognitive_style": 4, "narrative_preference": 2, "structural_thinking": 4 },
-        "5": { "cognitive_style": 5, "narrative_preference": 1, "structural_thinking": 5 }
+        "1": { "cognitive_style": 1, "narrative_preference": 5, "structural_thinking": 1, "narrativity": 5 },
+        "2": { "cognitive_style": 2, "narrative_preference": 4, "structural_thinking": 2, "narrativity": 4 },
+        "3": { "cognitive_style": 3, "narrative_preference": 3, "structural_thinking": 3, "narrativity": 3 },
+        "4": { "cognitive_style": 4, "narrative_preference": 2, "structural_thinking": 4, "narrativity": 2 },
+        "5": { "cognitive_style": 5, "narrative_preference": 1, "structural_thinking": 5, "narrativity": 1 }
       }
     },
     "metadata": {

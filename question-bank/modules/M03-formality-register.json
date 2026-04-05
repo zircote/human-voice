@@ -112,9 +112,9 @@
       "dimensions": ["audience_awareness", "precision_preference", "accessibility_priority"],
       "weights": { "audience_awareness": 0.8, "precision_preference": 0.7, "accessibility_priority": 0.9 },
       "scoring_map": {
-        "avoid": { "audience_awareness": 5, "precision_preference": 2, "accessibility_priority": 5 },
-        "use_explain": { "audience_awareness": 4, "precision_preference": 4, "accessibility_priority": 4 },
-        "assume": { "audience_awareness": 2, "precision_preference": 5, "accessibility_priority": 1 }
+        "avoid": { "audience_awareness": 5, "precision_preference": 2, "accessibility_priority": 5, "formality": 2 },
+        "use_explain": { "audience_awareness": 4, "precision_preference": 4, "accessibility_priority": 4, "formality": 3 },
+        "assume": { "audience_awareness": 2, "precision_preference": 5, "accessibility_priority": 1, "formality": 5 }
       }
     },
     "metadata": {

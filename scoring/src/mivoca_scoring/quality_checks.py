@@ -16,6 +16,24 @@ from __future__ import annotations
 from typing import Any
 
 
+def _extract_value(r: dict[str, Any]) -> Any:
+    """Extract the primary response value, handling the answer envelope format."""
+    val = r.get("scale_value")
+    if val is None:
+        val = r.get("semantic_differential_value")
+    if val is None:
+        val = r.get("value")
+    if val is None:
+        answer = r.get("answer")
+        if isinstance(answer, dict):
+            val = answer.get("scale_value")
+            if val is None:
+                val = answer.get("semantic_differential_value")
+            if val is None:
+                val = answer.get("value")
+    return val
+
+
 # Non-trivial question types where speed check applies.
 _NONTRIVIAL_TYPES = {
     "likert",
@@ -49,7 +67,7 @@ def detect_straightlining(
     run_count = 0
 
     for i, r in enumerate(responses):
-        val = r.get("scale_value") or r.get("semantic_differential_value") or r.get("value")
+        val = _extract_value(r)
         if val is not None and val == run_value:
             run_count += 1
         else:
@@ -108,7 +126,7 @@ def detect_speed_flags(
             continue
         # Without metadata, flag all responses with numeric value (assumed non-trivial).
         if nontrivial_ids is None:
-            val = r.get("scale_value") or r.get("semantic_differential_value") or r.get("value")
+            val = _extract_value(r)
             if not isinstance(val, (int, float)):
                 continue
 
@@ -139,7 +157,7 @@ def detect_alternating_extremes(
     expected_next: float | None = None
 
     for i, r in enumerate(responses):
-        val = r.get("scale_value") or r.get("semantic_differential_value") or r.get("value")
+        val = _extract_value(r)
         if not isinstance(val, (int, float)):
             # Break in scale values resets the run.
             if run_count >= min_run and run_start is not None:

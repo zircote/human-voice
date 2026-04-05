@@ -212,7 +212,7 @@ def _load_question_bank(candidates: list[Path]) -> dict[str, dict[str, Any]]:
         if not modules_dir.is_dir():
             # Also check if base itself contains module files.
             modules_dir = base
-        for fpath in sorted(modules_dir.glob("M*.json")):
+        for fpath in sorted(list(modules_dir.glob("M*.json")) + list(modules_dir.glob("SD*.json"))):
             try:
                 questions = _load_json(fpath)
             except (json.JSONDecodeError, OSError):

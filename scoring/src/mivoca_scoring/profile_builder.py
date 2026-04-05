@@ -221,7 +221,18 @@ def compute_voice_stability(
     for r in responses:
         qid = r.get("question_id")
         if qid:
-            resp_lookup[qid] = r
+            # Unwrap answer envelope if present.
+            answer = r.get("answer")
+            if isinstance(answer, dict):
+                flat = {**r}
+                for key in ("value", "raw", "scale_value", "selected_options",
+                            "semantic_differential_value", "raw_text"):
+                    if key not in flat or flat[key] is None:
+                        if key in answer:
+                            flat[key] = answer[key]
+                resp_lookup[qid] = flat
+            else:
+                resp_lookup[qid] = r
 
     for dim, item_ids in dimension_mapping.items():
         if not isinstance(item_ids, list):
@@ -233,7 +244,11 @@ def compute_voice_stability(
             # Extract module from question_id (e.g. "M03-Q06" -> "M03").
             module = qid.split("-")[0] if "-" in qid else "unknown"
             qtype = _infer_question_type(resp)
-            raw = resp.get("scale_value") or resp.get("semantic_differential_value") or resp.get("value")
+            raw = resp.get("scale_value")
+            if raw is None:
+                raw = resp.get("semantic_differential_value")
+            if raw is None:
+                raw = resp.get("value")
             norm = normalize_response(raw, qtype)
             if norm is None:
                 continue

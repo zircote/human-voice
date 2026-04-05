@@ -101,7 +101,11 @@ def normalize_response(
         return _normalize_forced_choice(num, n_options)
     if question_type == "scenario":
         return _normalize_scenario(num, n_options)
-    # Non-scorable types (open_ended, writing_sample, etc.)
+    if question_type in ("calibration", "projective"):
+        # Treat as forced_choice when a numeric value is available
+        # (typically via scoring_map resolution).
+        return _normalize_forced_choice(num, n_options)
+    # Non-scorable types (open_ended, writing_sample, process_narration, etc.)
     return None
 
 
@@ -382,20 +386,28 @@ def score_self_report(
             if raw_value is None:
                 raw_value = resp.get("value")
 
-            # For categorical string values, resolve via scoring_map.
+            # Always attempt scoring_map resolution first (for both string
+            # and numeric values). This ensures dimension-specific scores
+            # from the scoring_map take precedence over raw normalization.
             scoring_map_used = False
-            if raw_value is not None and isinstance(raw_value, str):
-                try:
-                    # Try numeric conversion first (e.g., "3" -> 3.0).
-                    raw_value = float(raw_value)
-                except ValueError:
-                    # Categorical string: resolve through scoring_map.
-                    resolved = _resolve_scoring_map_value(raw_value, qdef, dim)
-                    if resolved is not None:
-                        raw_value = resolved
-                        scoring_map_used = True
-                    else:
-                        # Cannot resolve; skip this item.
+            if raw_value is not None and qdef is not None:
+                # For string values, try numeric conversion first.
+                resolve_value = raw_value
+                if isinstance(raw_value, str):
+                    try:
+                        resolve_value = float(raw_value)
+                    except ValueError:
+                        pass  # Keep as string for scoring_map lookup.
+
+                resolved = _resolve_scoring_map_value(resolve_value, qdef, dim)
+                if resolved is not None:
+                    raw_value = resolved
+                    scoring_map_used = True
+                elif isinstance(raw_value, str):
+                    # String value with no scoring_map resolution: skip.
+                    try:
+                        raw_value = float(raw_value)
+                    except ValueError:
                         skipped_items += 1
                         continue
 
@@ -414,7 +426,6 @@ def score_self_report(
                     options = qdef.get("options", [])
                     if options:
                         n_options = len(options)
-                        # For Likert scales, extract min/max from option values.
                         if qtype == "likert":
                             opt_vals = [o.get("value") for o in options if isinstance(o.get("value"), (int, float))]
                             if opt_vals:

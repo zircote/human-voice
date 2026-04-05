@@ -44,9 +44,9 @@
       "dimensions": ["complexity"],
       "weights": { "complexity": 1.0 },
       "scoring_map": {
-        "multiple": { "complexity": 2 },
-        "elaborate": { "complexity": 5 },
-        "depends": { "complexity": 3 }
+        "multiple": { "complexity": 2, "vocabulary_range": 2 },
+        "elaborate": { "complexity": 5, "vocabulary_range": 5 },
+        "depends": { "complexity": 3, "vocabulary_range": 3 }
       }
     },
     "metadata": {
@@ -104,9 +104,9 @@
       "dimensions": ["complexity"],
       "weights": { "complexity": 1.0 },
       "scoring_map": {
-        "active": { "complexity": 2 },
-        "passive": { "complexity": 4 },
-        "either": { "complexity": 3 }
+        "active": { "complexity": 2, "sentence_rhythm": 4 },
+        "passive": { "complexity": 4, "sentence_rhythm": 2 },
+        "either": { "complexity": 3, "sentence_rhythm": 3 }
       }
     },
     "metadata": {

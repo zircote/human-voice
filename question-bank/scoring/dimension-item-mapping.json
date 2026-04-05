@@ -1,41 +1,41 @@
 {
   "schema_version": "1.0.0",
-  "description": "Maps each voice dimension to its contributing question items and semantic differential pairs. Gold standard dimensions are the primary output; gap dimensions capture additional voice characteristics. Only self-report scorable items (likert, forced_choice, select, scenario with scoring_map) are included; open_ended, writing_sample, and process_narration items are scored via the NLP pipeline.",
+  "description": "Maps each voice dimension to its contributing self-report question items. SD cross-validation is handled separately via sd-dimension-mapping.json and the semantic_differential normalizer. Only self-report scorable items are included; non-scorable types are scored via the NLP pipeline.",
   "gold_standard_dimensions": {
     "formality": {
       "contributing_items": {
-        "M03": ["M03-Q01", "M03-Q02", "M03-Q03", "M03-Q04", "M03-Q05", "M03-Q06"],
-        "SD": ["formal_casual", "accessible_specialized"]
+        "M03": ["M03-Q01", "M03-Q02", "M03-Q03", "M03-Q04", "M03-Q05", "M03-Q06"]
       },
-      "total_items": 8,
-      "min_items_for_score": 5,
+      "total_items": 6,
+      "min_items_for_score": 4,
+      "sd_pairs": ["formal_casual", "accessible_specialized"],
       "description": "Degree of formality in writing voice, from highly formal/specialized to casual/accessible"
     },
     "emotional_tone": {
       "contributing_items": {
-        "M04": ["M04-Q01", "M04-Q02", "M04-Q03", "M04-Q05", "M04-Q06", "M04-Q07"],
-        "SD": ["emotional_analytical", "warm_detached"]
+        "M04": ["M04-Q01", "M04-Q02", "M04-Q03", "M04-Q05", "M04-Q06", "M04-Q07"]
       },
-      "total_items": 8,
-      "min_items_for_score": 5,
+      "total_items": 6,
+      "min_items_for_score": 4,
+      "sd_pairs": ["emotional_analytical", "warm_detached"],
       "description": "Emotional coloring of writing voice, from warm/emotional to detached/analytical"
     },
     "personality": {
       "contributing_items": {
-        "M02": ["M02-Q01", "M02-Q02", "M02-Q03", "M02-Q04", "M02-Q05"],
-        "SD": ["personal_impersonal", "earnest_ironic"]
+        "M02": ["M02-Q01", "M02-Q02", "M02-Q03", "M02-Q04", "M02-Q05"]
       },
-      "total_items": 7,
-      "min_items_for_score": 4,
+      "total_items": 5,
+      "min_items_for_score": 3,
+      "sd_pairs": ["personal_impersonal", "earnest_ironic"],
       "description": "Distinctive personality expressed through writing, from earnest/personal to ironic/impersonal"
     },
     "complexity": {
       "contributing_items": {
-        "M06": ["M06-Q01", "M06-Q02", "M06-Q03", "M06-Q04", "M06-Q05"],
-        "SD": ["elaborate_minimalist", "concise_expansive"]
+        "M06": ["M06-Q01", "M06-Q02", "M06-Q03", "M06-Q04", "M06-Q05"]
       },
-      "total_items": 7,
-      "min_items_for_score": 4,
+      "total_items": 5,
+      "min_items_for_score": 3,
+      "sd_pairs": ["elaborate_minimalist", "concise_expansive"],
       "description": "Structural and linguistic complexity, from minimalist/concise to elaborate/expansive"
     },
     "audience_awareness": {
@@ -44,34 +44,35 @@
       },
       "total_items": 3,
       "min_items_for_score": 2,
+      "sd_pairs": [],
       "description": "Degree to which writing voice adapts to and accounts for the intended audience"
     },
     "authority": {
       "contributing_items": {
         "M08": ["M08-Q01", "M08-Q02", "M08-Q03", "M08-Q04"],
-        "M02": ["M02-Q07"],
-        "SD": ["assertive_tentative", "authoritative_collaborative"]
+        "M02": ["M02-Q07"]
       },
-      "total_items": 7,
-      "min_items_for_score": 4,
+      "total_items": 5,
+      "min_items_for_score": 3,
+      "sd_pairs": ["assertive_tentative", "authoritative_collaborative"],
       "description": "Stance of authority in writing, from collaborative/tentative to assertive/authoritative"
     },
     "narrativity": {
       "contributing_items": {
-        "M05": ["M05-Q01", "M05-Q03", "M05-Q04", "M05-Q05"],
-        "SD": ["narrative_expository"]
+        "M05": ["M05-Q01", "M05-Q03", "M05-Q04", "M05-Q05"]
       },
-      "total_items": 5,
+      "total_items": 4,
       "min_items_for_score": 3,
+      "sd_pairs": ["narrative_expository"],
       "description": "Tendency toward narrative vs. expository modes in writing"
     },
     "humor": {
       "contributing_items": {
-        "M02": ["M02-Q05", "M02-Q08"],
-        "SD": ["serious_playful"]
+        "M02": ["M02-Q05", "M02-Q08"]
       },
-      "total_items": 3,
+      "total_items": 2,
       "min_items_for_score": 2,
+      "sd_pairs": ["serious_playful"],
       "description": "Use of humor, wit, and playfulness in writing voice"
     }
   },
@@ -80,6 +81,7 @@
       "contributing_items": {
         "M09": ["M09-Q01", "M09-Q02", "M09-Q03", "M09-Q04"]
       },
+      "total_items": 4,
       "min_items_for_score": 2,
       "description": "Attention to grammatical precision, word choice exactness, and mechanical correctness"
     },
@@ -87,21 +89,22 @@
       "contributing_items": {
         "M10": ["M10-Q01", "M10-Q02", "M10-Q04"]
       },
+      "total_items": 3,
       "min_items_for_score": 2,
       "description": "Approach to revision and editing in the writing process"
     },
     "contextual_flexibility": {
-      "contributing_items": {
-        "M11": ["M11-Q06"]
-      },
-      "min_items_for_score": 1,
-      "description": "Ability and willingness to shift voice across different writing contexts"
+      "contributing_items": {},
+      "total_items": 0,
+      "min_items_for_score": 0,
+      "description": "Ability and willingness to shift voice across different writing contexts. No self-report items; scored via NLP cross-context analysis."
     },
     "risk_tolerance": {
       "contributing_items": {
         "M02": ["M02-Q10"],
         "M05": ["M05-Q04"]
       },
+      "total_items": 2,
       "min_items_for_score": 1,
       "description": "Willingness to take creative risks and experiment with unconventional voice choices"
     },
@@ -109,11 +112,13 @@
       "contributing_items": {
         "M12": ["M12-Q01"]
       },
+      "total_items": 1,
       "min_items_for_score": 1,
       "description": "Metacognitive awareness of one's own writing voice and its effects"
     },
     "consistency": {
       "contributing_items": {},
+      "total_items": 0,
       "min_items_for_score": 0,
       "description": "Consistency of voice across writing sessions and pieces. No self-report items; scored exclusively via NLP pipeline cross-sample variance analysis."
     },
@@ -121,6 +126,7 @@
       "contributing_items": {
         "M02": ["M02-Q03"]
       },
+      "total_items": 1,
       "min_items_for_score": 1,
       "description": "Tendency to absorb and integrate influences from other writers"
     },
@@ -129,6 +135,7 @@
         "M06": ["M06-Q02"],
         "M09": ["M09-Q03"]
       },
+      "total_items": 2,
       "min_items_for_score": 1,
       "description": "Breadth and register range of vocabulary usage"
     },
@@ -137,6 +144,7 @@
         "M06": ["M06-Q04"],
         "M09": ["M09-Q06"]
       },
+      "total_items": 2,
       "min_items_for_score": 1,
       "description": "Characteristic sentence length patterns and rhythmic variation"
     },
@@ -144,6 +152,7 @@
       "contributing_items": {
         "M08": ["M08-Q03"]
       },
+      "total_items": 1,
       "min_items_for_score": 1,
       "description": "Awareness of and adherence to genre-specific voice conventions"
     }

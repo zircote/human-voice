@@ -16,11 +16,11 @@
       "dimensions": ["emotional_expressiveness", "tone_warmth"],
       "weights": { "emotional_expressiveness": 1.0, "tone_warmth": 0.6 },
       "scoring_map": {
-        "1": { "emotional_expressiveness": 1, "tone_warmth": 2 },
-        "2": { "emotional_expressiveness": 2, "tone_warmth": 2 },
-        "3": { "emotional_expressiveness": 3, "tone_warmth": 3 },
-        "4": { "emotional_expressiveness": 4, "tone_warmth": 4 },
-        "5": { "emotional_expressiveness": 5, "tone_warmth": 5 }
+        "1": { "emotional_expressiveness": 1, "tone_warmth": 2, "emotional_tone": 1 },
+        "2": { "emotional_expressiveness": 2, "tone_warmth": 2, "emotional_tone": 2 },
+        "3": { "emotional_expressiveness": 3, "tone_warmth": 3, "emotional_tone": 3 },
+        "4": { "emotional_expressiveness": 4, "tone_warmth": 4, "emotional_tone": 4 },
+        "5": { "emotional_expressiveness": 5, "tone_warmth": 5, "emotional_tone": 5 }
       }
     },
     "metadata": {
@@ -48,9 +48,9 @@
       "dimensions": ["emotional_expressiveness", "enthusiasm_display", "emotional_regulation"],
       "weights": { "emotional_expressiveness": 0.8, "enthusiasm_display": 1.0, "emotional_regulation": 0.6 },
       "scoring_map": {
-        "visible": { "emotional_expressiveness": 5, "enthusiasm_display": 5, "emotional_regulation": 1 },
-        "subtle": { "emotional_expressiveness": 3, "enthusiasm_display": 3, "emotional_regulation": 3 },
-        "controlled": { "emotional_expressiveness": 1, "enthusiasm_display": 2, "emotional_regulation": 5 }
+        "visible": { "emotional_expressiveness": 5, "enthusiasm_display": 5, "emotional_regulation": 1, "emotional_tone": 5 },
+        "subtle": { "emotional_expressiveness": 3, "enthusiasm_display": 3, "emotional_regulation": 3, "emotional_tone": 3 },
+        "controlled": { "emotional_expressiveness": 1, "enthusiasm_display": 2, "emotional_regulation": 5, "emotional_tone": 1 }
       }
     },
     "metadata": {
@@ -80,11 +80,11 @@
       "dimensions": ["emotional_expressiveness", "punctuation_expressiveness", "formality_baseline"],
       "weights": { "emotional_expressiveness": 0.7, "punctuation_expressiveness": 1.0, "formality_baseline": 0.4 },
       "scoring_map": {
-        "1": { "emotional_expressiveness": 1, "punctuation_expressiveness": 1, "formality_baseline": 5 },
-        "2": { "emotional_expressiveness": 2, "punctuation_expressiveness": 2, "formality_baseline": 4 },
-        "3": { "emotional_expressiveness": 3, "punctuation_expressiveness": 3, "formality_baseline": 3 },
-        "4": { "emotional_expressiveness": 4, "punctuation_expressiveness": 4, "formality_baseline": 2 },
-        "5": { "emotional_expressiveness": 5, "punctuation_expressiveness": 5, "formality_baseline": 1 }
+        "1": { "emotional_expressiveness": 1, "punctuation_expressiveness": 1, "formality_baseline": 5, "emotional_tone": 1 },
+        "2": { "emotional_expressiveness": 2, "punctuation_expressiveness": 2, "formality_baseline": 4, "emotional_tone": 2 },
+        "3": { "emotional_expressiveness": 3, "punctuation_expressiveness": 3, "formality_baseline": 3, "emotional_tone": 3 },
+        "4": { "emotional_expressiveness": 4, "punctuation_expressiveness": 4, "formality_baseline": 2, "emotional_tone": 4 },
+        "5": { "emotional_expressiveness": 5, "punctuation_expressiveness": 5, "formality_baseline": 1, "emotional_tone": 5 }
       }
     },
     "metadata": {
@@ -132,9 +132,9 @@
       "dimensions": ["emotional_regulation", "emotional_expressiveness", "directness"],
       "weights": { "emotional_regulation": 0.9, "emotional_expressiveness": 0.7, "directness": 0.5 },
       "scoring_map": {
-        "channel": { "emotional_regulation": 1, "emotional_expressiveness": 5, "directness": 5 },
-        "temper": { "emotional_regulation": 3, "emotional_expressiveness": 3, "directness": 3 },
-        "remove": { "emotional_regulation": 5, "emotional_expressiveness": 1, "directness": 2 }
+        "channel": { "emotional_regulation": 1, "emotional_expressiveness": 5, "directness": 5, "emotional_tone": 5 },
+        "temper": { "emotional_regulation": 3, "emotional_expressiveness": 3, "directness": 3, "emotional_tone": 3 },
+        "remove": { "emotional_regulation": 5, "emotional_expressiveness": 1, "directness": 2, "emotional_tone": 1 }
       }
     },
     "metadata": {
@@ -166,13 +166,13 @@
       "dimensions": ["tone_archetype", "tone_warmth", "energy_level"],
       "weights": { "tone_archetype": 1.0, "tone_warmth": 0.7, "energy_level": 0.6 },
       "scoring_map": {
-        "warm_encouraging": { "tone_archetype": 1, "tone_warmth": 5, "energy_level": 3 },
-        "cool_analytical": { "tone_archetype": 2, "tone_warmth": 1, "energy_level": 2 },
-        "energetic_enthusiastic": { "tone_archetype": 3, "tone_warmth": 4, "energy_level": 5 },
-        "measured_thoughtful": { "tone_archetype": 4, "tone_warmth": 3, "energy_level": 2 },
-        "witty_irreverent": { "tone_archetype": 5, "tone_warmth": 3, "energy_level": 4 },
-        "earnest_sincere": { "tone_archetype": 6, "tone_warmth": 4, "energy_level": 3 },
-        "neutral_balanced": { "tone_archetype": 7, "tone_warmth": 3, "energy_level": 2 }
+        "warm_encouraging": { "tone_archetype": 1, "tone_warmth": 5, "energy_level": 3, "emotional_tone": 5 },
+        "cool_analytical": { "tone_archetype": 2, "tone_warmth": 1, "energy_level": 2, "emotional_tone": 1 },
+        "energetic_enthusiastic": { "tone_archetype": 3, "tone_warmth": 4, "energy_level": 5, "emotional_tone": 4 },
+        "measured_thoughtful": { "tone_archetype": 4, "tone_warmth": 3, "energy_level": 2, "emotional_tone": 3 },
+        "witty_irreverent": { "tone_archetype": 5, "tone_warmth": 3, "energy_level": 4, "emotional_tone": 3 },
+        "earnest_sincere": { "tone_archetype": 6, "tone_warmth": 4, "energy_level": 3, "emotional_tone": 4 },
+        "neutral_balanced": { "tone_archetype": 7, "tone_warmth": 3, "energy_level": 2, "emotional_tone": 3 }
       }
     },
     "metadata": {
@@ -202,11 +202,11 @@
       "dimensions": ["tone_sensitivity", "emotional_awareness"],
       "weights": { "tone_sensitivity": 1.0, "emotional_awareness": 0.7 },
       "scoring_map": {
-        "1": { "tone_sensitivity": 1, "emotional_awareness": 2 },
-        "2": { "tone_sensitivity": 2, "emotional_awareness": 3 },
-        "3": { "tone_sensitivity": 3, "emotional_awareness": 3 },
-        "4": { "tone_sensitivity": 4, "emotional_awareness": 4 },
-        "5": { "tone_sensitivity": 5, "emotional_awareness": 5 }
+        "1": { "tone_sensitivity": 1, "emotional_awareness": 2, "emotional_tone": 1 },
+        "2": { "tone_sensitivity": 2, "emotional_awareness": 3, "emotional_tone": 2 },
+        "3": { "tone_sensitivity": 3, "emotional_awareness": 3, "emotional_tone": 3 },
+        "4": { "tone_sensitivity": 4, "emotional_awareness": 4, "emotional_tone": 4 },
+        "5": { "tone_sensitivity": 5, "emotional_awareness": 5, "emotional_tone": 5 }
       }
     },
     "metadata": {

@@ -14,9 +14,9 @@
       "dimensions": ["voice_values", "communication_priority"],
       "weights": { "voice_values": 0.9, "communication_priority": 0.8 },
       "scoring_map": {
-        "clarity": { "voice_values": 3, "communication_priority": 5 },
-        "authenticity": { "voice_values": 5, "communication_priority": 3 },
-        "persuasion": { "voice_values": 4, "communication_priority": 4 }
+        "clarity": { "voice_values": 3, "communication_priority": 5, "personality": 3 },
+        "authenticity": { "voice_values": 5, "communication_priority": 3, "personality": 5 },
+        "persuasion": { "voice_values": 4, "communication_priority": 4, "personality": 4 }
       }
     },
     "metadata": {
@@ -78,9 +78,9 @@
       "dimensions": ["formality_preference", "tone_warmth", "adaptability"],
       "weights": { "formality_preference": 0.6, "tone_warmth": 0.8, "adaptability": 0.5 },
       "scoring_map": {
-        "loosen": { "formality_preference": 2, "tone_warmth": 5, "adaptability": 4 },
-        "keep": { "formality_preference": 5, "tone_warmth": 2, "adaptability": 2 },
-        "split": { "formality_preference": 3, "tone_warmth": 4, "adaptability": 5 }
+        "loosen": { "formality_preference": 2, "tone_warmth": 5, "adaptability": 4, "personality": 4, "influence_absorption": 4 },
+        "keep": { "formality_preference": 5, "tone_warmth": 2, "adaptability": 2, "personality": 2, "influence_absorption": 2 },
+        "split": { "formality_preference": 3, "tone_warmth": 4, "adaptability": 5, "personality": 3, "influence_absorption": 5 }
       }
     },
     "metadata": {
@@ -110,11 +110,11 @@
       "dimensions": ["voice_archetype", "tone_warmth", "energy_level"],
       "weights": { "voice_archetype": 1.0, "tone_warmth": 0.6, "energy_level": 0.5 },
       "scoring_map": {
-        "storyteller": { "voice_archetype": 1, "tone_warmth": 4, "energy_level": 5 },
-        "listener": { "voice_archetype": 2, "tone_warmth": 3, "energy_level": 2 },
-        "debater": { "voice_archetype": 3, "tone_warmth": 2, "energy_level": 5 },
-        "host": { "voice_archetype": 4, "tone_warmth": 5, "energy_level": 3 },
-        "observer": { "voice_archetype": 5, "tone_warmth": 3, "energy_level": 1 }
+        "storyteller": { "voice_archetype": 1, "tone_warmth": 4, "energy_level": 5, "personality": 4 },
+        "listener": { "voice_archetype": 2, "tone_warmth": 3, "energy_level": 2, "personality": 3 },
+        "debater": { "voice_archetype": 3, "tone_warmth": 2, "energy_level": 5, "personality": 3 },
+        "host": { "voice_archetype": 4, "tone_warmth": 5, "energy_level": 3, "personality": 4 },
+        "observer": { "voice_archetype": 5, "tone_warmth": 3, "energy_level": 1, "personality": 2 }
       }
     },
     "metadata": {
@@ -205,9 +205,9 @@
       "dimensions": ["directness", "tone_warmth", "empathy_expression"],
       "weights": { "directness": 0.9, "tone_warmth": 0.6, "empathy_expression": 0.7 },
       "scoring_map": {
-        "direct": { "directness": 5, "tone_warmth": 2, "empathy_expression": 2 },
-        "diplomatic": { "directness": 2, "tone_warmth": 4, "empathy_expression": 5 },
-        "constructive": { "directness": 3, "tone_warmth": 4, "empathy_expression": 4 }
+        "direct": { "directness": 5, "tone_warmth": 2, "empathy_expression": 2, "authority": 5 },
+        "diplomatic": { "directness": 2, "tone_warmth": 4, "empathy_expression": 5, "authority": 2 },
+        "constructive": { "directness": 3, "tone_warmth": 4, "empathy_expression": 4, "authority": 3 }
       }
     },
     "metadata": {
@@ -237,11 +237,11 @@
       "dimensions": ["personality_expression", "formality_preference", "authenticity_drive"],
       "weights": { "personality_expression": 0.7, "formality_preference": 0.6, "authenticity_drive": 0.8 },
       "scoring_map": {
-        "1": { "personality_expression": 1, "formality_preference": 5, "authenticity_drive": 2 },
-        "2": { "personality_expression": 2, "formality_preference": 4, "authenticity_drive": 3 },
-        "3": { "personality_expression": 3, "formality_preference": 3, "authenticity_drive": 3 },
-        "4": { "personality_expression": 4, "formality_preference": 2, "authenticity_drive": 4 },
-        "5": { "personality_expression": 5, "formality_preference": 1, "authenticity_drive": 5 }
+        "1": { "personality_expression": 1, "formality_preference": 5, "authenticity_drive": 2, "humor": 1 },
+        "2": { "personality_expression": 2, "formality_preference": 4, "authenticity_drive": 3, "humor": 2 },
+        "3": { "personality_expression": 3, "formality_preference": 3, "authenticity_drive": 3, "humor": 3 },
+        "4": { "personality_expression": 4, "formality_preference": 2, "authenticity_drive": 4, "humor": 4 },
+        "5": { "personality_expression": 5, "formality_preference": 1, "authenticity_drive": 5, "humor": 5 }
       }
     },
     "metadata": {
@@ -291,11 +291,11 @@
       "dimensions": ["vulnerability_comfort", "emotional_openness", "authenticity_drive"],
       "weights": { "vulnerability_comfort": 1.0, "emotional_openness": 0.8, "authenticity_drive": 0.6 },
       "scoring_map": {
-        "1": { "vulnerability_comfort": 1, "emotional_openness": 1, "authenticity_drive": 2 },
-        "2": { "vulnerability_comfort": 2, "emotional_openness": 2, "authenticity_drive": 3 },
-        "3": { "vulnerability_comfort": 3, "emotional_openness": 3, "authenticity_drive": 3 },
-        "4": { "vulnerability_comfort": 4, "emotional_openness": 4, "authenticity_drive": 4 },
-        "5": { "vulnerability_comfort": 5, "emotional_openness": 5, "authenticity_drive": 5 }
+        "1": { "vulnerability_comfort": 1, "emotional_openness": 1, "authenticity_drive": 2, "risk_tolerance": 1 },
+        "2": { "vulnerability_comfort": 2, "emotional_openness": 2, "authenticity_drive": 3, "risk_tolerance": 2 },
+        "3": { "vulnerability_comfort": 3, "emotional_openness": 3, "authenticity_drive": 3, "risk_tolerance": 3 },
+        "4": { "vulnerability_comfort": 4, "emotional_openness": 4, "authenticity_drive": 4, "risk_tolerance": 4 },
+        "5": { "vulnerability_comfort": 5, "emotional_openness": 5, "authenticity_drive": 5, "risk_tolerance": 5 }
       }
     },
     "metadata": {
