@@ -44,7 +44,14 @@
     ],
     "scoring": {
       "dimensions": ["authority"],
-      "weights": { "authority": 0.9 }
+      "weights": { "authority": 0.9 },
+      "scoring_map": {
+        "acknowledge_refute": { "authority": 4 },
+        "integrate": { "authority": 3 },
+        "ignore": { "authority": 5 },
+        "preempt": { "authority": 5 },
+        "concede_partially": { "authority": 2 }
+      }
     },
     "metadata": {
       "self_reportability_tier": 2,

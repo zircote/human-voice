@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0.0",
-  "description": "Per-item scoring weights by dimension and semantic differential integration formula. Items within a subscale carry equal weight (1.0) unless otherwise noted.",
+  "description": "Per-item scoring weights by dimension and semantic differential integration formula. Items within a subscale carry equal weight (1.0) unless otherwise noted. Only self-report scorable items are included; non-scorable types (open_ended, writing_sample, process_narration) are handled by the NLP pipeline.",
   "integration_formula": {
     "description": "Final dimension score combines module item scores and semantic differential scores using a weighted blend",
     "dimension_weight": 0.7,
@@ -10,12 +10,12 @@
   "self_reportability_tiers": {
     "tier_1_high": {
       "dimensions": ["formality", "emotional_tone", "audience_awareness", "narrativity", "humor"],
-      "description": "High self-reportability — respondents can accurately self-assess these dimensions. Self-report items are weighted at full value.",
+      "description": "High self-reportability -- respondents can accurately self-assess these dimensions. Self-report items are weighted at full value.",
       "self_report_reliability": "high"
     },
     "tier_2_moderate": {
       "dimensions": ["personality", "complexity", "authority"],
-      "description": "Moderate self-reportability — respondents have partial insight. Projective and behavioral items should be weighted more heavily when available.",
+      "description": "Moderate self-reportability -- respondents have partial insight. Projective and behavioral items should be weighted more heavily when available.",
       "self_report_reliability": "moderate"
     }
   },
@@ -40,9 +40,9 @@
         "M04-Q01": 1.0,
         "M04-Q02": 1.0,
         "M04-Q03": 1.0,
-        "M04-Q04": 1.0,
         "M04-Q05": 1.0,
-        "M04-Q06": 1.0
+        "M04-Q06": 1.0,
+        "M04-Q07": 1.0
       },
       "sd_pairs": {
         "emotional_analytical": 1.0,
@@ -56,10 +56,7 @@
         "M02-Q02": 1.0,
         "M02-Q03": 1.0,
         "M02-Q04": 1.0,
-        "M02-Q05": 1.0,
-        "M11-Q01": 1.0,
-        "M11-Q02": 1.0,
-        "M11-Q03": 1.0
+        "M02-Q05": 1.0
       },
       "sd_pairs": {
         "personal_impersonal": 1.0,
@@ -83,10 +80,8 @@
     },
     "audience_awareness": {
       "items": {
-        "M07-Q01": 1.0,
         "M07-Q02": 1.0,
         "M07-Q03": 1.0,
-        "M07-Q04": 1.0,
         "M07-Q05": 1.0
       },
       "sd_pairs": {},
@@ -98,7 +93,6 @@
         "M08-Q02": 1.0,
         "M08-Q03": 1.0,
         "M08-Q04": 1.0,
-        "M02-Q06": 1.0,
         "M02-Q07": 1.0
       },
       "sd_pairs": {
@@ -110,7 +104,6 @@
     "narrativity": {
       "items": {
         "M05-Q01": 1.0,
-        "M05-Q02": 1.0,
         "M05-Q03": 1.0,
         "M05-Q04": 1.0,
         "M05-Q05": 1.0
@@ -122,10 +115,8 @@
     },
     "humor": {
       "items": {
-        "M04-Q07": 1.0,
-        "M04-Q08": 1.0,
-        "M02-Q08": 1.0,
-        "M02-Q09": 1.0
+        "M02-Q05": 1.0,
+        "M02-Q08": 1.0
       },
       "sd_pairs": {
         "serious_playful": 1.0
@@ -137,6 +128,7 @@
     "equal_weighting": "All items within a dimension carry equal weight (1.0). This reflects the psychometric design where each item was calibrated to contribute equally to its target dimension.",
     "sd_normalization": "Semantic differential scores are on a 1-7 scale. Normalize to 0-100 before applying the integration formula: normalized = ((raw - 1) / 6) * 100",
     "module_items_mean": "Compute mean across all answered module items for the dimension. Missing items are excluded (not zero-filled) provided min_items_for_score is met.",
-    "tier_2_adjustment": "For Tier 2 (moderate self-reportability) dimensions, consider applying projective item preference when self-report and projective scores diverge significantly (see deep-dive-triggers.json self_perception_divergence)."
+    "tier_2_adjustment": "For Tier 2 (moderate self-reportability) dimensions, consider applying projective item preference when self-report and projective scores diverge significantly (see deep-dive-triggers.json self_perception_divergence).",
+    "non_scorable_exclusion": "Items of type open_ended, writing_sample, and process_narration are excluded from self-report scoring. They are scored computationally by the NLP pipeline (mivoca-nlp analyze-session) and contribute to observed scores in the calibration step."
   }
 }

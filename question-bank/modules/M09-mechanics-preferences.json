@@ -14,7 +14,14 @@
     ],
     "scoring": {
       "dimensions": ["punctuation_style", "formality_baseline"],
-      "weights": { "punctuation_style": 0.8, "formality_baseline": 0.4 }
+      "weights": { "punctuation_style": 0.8, "formality_baseline": 0.4 },
+      "scoring_map": {
+        "love": { "punctuation_style": 5, "formality_baseline": 5 },
+        "occasional": { "punctuation_style": 3, "formality_baseline": 3 },
+        "avoid": { "punctuation_style": 2, "formality_baseline": 2 },
+        "never": { "punctuation_style": 1, "formality_baseline": 1 },
+        "unsure": { "punctuation_style": 1, "formality_baseline": 1 }
+      }
     },
     "metadata": {
       "self_reportability_tier": 1,
@@ -40,7 +47,13 @@
     ],
     "scoring": {
       "dimensions": ["punctuation_style"],
-      "weights": { "punctuation_style": 0.9 }
+      "weights": { "punctuation_style": 0.9 },
+      "scoring_map": {
+        "em_dashes": { "punctuation_style": 4 },
+        "parentheses": { "punctuation_style": 3 },
+        "commas": { "punctuation_style": 2 },
+        "varies": { "punctuation_style": 3 }
+      }
     },
     "metadata": {
       "self_reportability_tier": 1,
@@ -100,7 +113,13 @@
     ],
     "scoring": {
       "dimensions": ["punctuation_style"],
-      "weights": { "punctuation_style": 0.6 }
+      "weights": { "punctuation_style": 0.6 },
+      "scoring_map": {
+        "always": { "punctuation_style": 5 },
+        "never": { "punctuation_style": 2 },
+        "depends": { "punctuation_style": 3 },
+        "no_opinion": { "punctuation_style": 3 }
+      }
     },
     "metadata": {
       "self_reportability_tier": 1,

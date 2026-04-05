@@ -36,7 +36,47 @@ def _load_json(path: Path) -> Any:
         return json.load(fh)
 
 
-def _load_metadata(session_dir: Path) -> dict[str, Any]:
+def _find_question_bank_dirs(session_dir: Path, metadata_dir: Path | None = None) -> list[Path]:
+    """Build the list of candidate directories for question-bank discovery.
+
+    Used by both ``_load_metadata`` (for scoring config files) and
+    ``_load_question_bank`` (for question module JSON files).
+
+    Search order:
+      1. Explicit metadata_dir (from --metadata-dir flag)
+      2. MIVOCA_QUESTION_BANK environment variable
+      3. Walk up from session_dir looking for question-bank/
+      4. Well-known fallback: ~/.human-voice/question-bank/
+    """
+    import os
+
+    candidates: list[Path] = []
+
+    if metadata_dir is not None:
+        candidates.append(Path(metadata_dir).resolve())
+
+    env_qb = os.environ.get("MIVOCA_QUESTION_BANK")
+    if env_qb:
+        candidates.append(Path(env_qb).resolve())
+
+    # Walk up from session_dir looking for question-bank/.
+    project_root = session_dir
+    for _ in range(5):
+        project_root = project_root.parent
+        qb = project_root / "question-bank"
+        if qb.is_dir():
+            candidates.append(qb)
+            break
+
+    # Well-known fallback.
+    home_qb = Path.home() / ".human-voice" / "question-bank"
+    if home_qb.is_dir():
+        candidates.append(home_qb)
+
+    return candidates
+
+
+def _load_metadata(session_dir: Path, metadata_dir: Path | None = None) -> dict[str, Any]:
     """Load question-bank metadata files from the session directory or project root.
 
     Looks for:
@@ -45,24 +85,20 @@ def _load_metadata(session_dir: Path) -> dict[str, Any]:
       - sd-dimension-mapping.json  (optional)
       - population-means.json      (optional)
 
-    Search order: session_dir/metadata/, session_dir/, project-root/question-bank/.
+    Uses ``_find_question_bank_dirs`` for discovery, plus session-local
+    directories and ``scoring/`` subdirectories of each candidate.
     """
+    # Build search candidates: session-local first, then shared discovery.
     candidates = [
         session_dir / "metadata",
         session_dir,
     ]
-    # Try to locate the project-level question-bank directory.
-    project_root = session_dir
-    for _ in range(5):
-        project_root = project_root.parent
-        qb = project_root / "question-bank"
-        if qb.is_dir():
-            candidates.append(qb)
-            # Scoring config lives under question-bank/scoring/
-            qb_scoring = qb / "scoring"
-            if qb_scoring.is_dir():
-                candidates.append(qb_scoring)
-            break
+    qb_dirs = _find_question_bank_dirs(session_dir, metadata_dir=metadata_dir)
+    for qb in qb_dirs:
+        candidates.append(qb)
+        qb_scoring = qb / "scoring"
+        if qb_scoring.is_dir():
+            candidates.append(qb_scoring)
 
     required = ["dimension-item-mapping.json", "scoring-weights.json"]
     optional = ["sd-dimension-mapping.json", "population-means.json"]
@@ -76,7 +112,14 @@ def _load_metadata(session_dir: Path) -> dict[str, Any]:
                 break
         else:
             if name in required:
-                print(f"ERROR: required metadata file '{name}' not found.", file=sys.stderr)
+                searched = [str(c) for c in candidates]
+                print(
+                    f"ERROR: required metadata file '{name}' not found.\n"
+                    f"Searched: {searched}\n"
+                    f"Hint: set MIVOCA_QUESTION_BANK=/path/to/question-bank "
+                    f"or use --metadata-dir.",
+                    file=sys.stderr,
+                )
                 sys.exit(1)
 
     return meta
@@ -154,27 +197,69 @@ def _flatten_scoring_weights(raw: dict[str, Any]) -> dict[str, dict[str, float]]
     return flat
 
 
+def _load_question_bank(candidates: list[Path]) -> dict[str, dict[str, Any]]:
+    """Load question bank modules and build a {question_id: question_def} lookup.
+
+    Searches candidate directories for a ``modules/`` subdirectory containing
+    JSON question bank files (M01-*.json, M02-*.json, etc.).
+
+    Returns a mapping from question_id to the full question definition dict,
+    which includes ``type``, ``options``, and ``scoring_map``.
+    """
+    lookup: dict[str, dict[str, Any]] = {}
+    for base in candidates:
+        modules_dir = base / "modules"
+        if not modules_dir.is_dir():
+            # Also check if base itself contains module files.
+            modules_dir = base
+        for fpath in sorted(modules_dir.glob("M*.json")):
+            try:
+                questions = _load_json(fpath)
+            except (json.JSONDecodeError, OSError):
+                continue
+            if isinstance(questions, list):
+                for q in questions:
+                    qid = q.get("question_id")
+                    if qid:
+                        lookup[qid] = q
+    return lookup
+
+
 def cmd_score(args: argparse.Namespace) -> None:
     """Execute the full scoring pipeline for a session directory."""
     session_dir = Path(args.session_dir).resolve()
+    metadata_dir = getattr(args, "metadata_dir", None)
+    if metadata_dir is not None:
+        metadata_dir = Path(metadata_dir).resolve()
+
     responses_path = session_dir / "responses.jsonl"
     if not responses_path.exists():
         print(f"ERROR: {responses_path} not found.", file=sys.stderr)
         sys.exit(1)
 
     responses = _load_jsonl(responses_path)
-    metadata = _load_metadata(session_dir)
+    metadata = _load_metadata(session_dir, metadata_dir=metadata_dir)
 
     dim_mapping = _flatten_dimension_mapping(metadata["dimension-item-mapping.json"])
     weights = _flatten_scoring_weights(metadata["scoring-weights.json"])
     sd_mapping = metadata.get("sd-dimension-mapping.json")
     pop_means = metadata.get("population-means.json")
 
-    # Load question bank if available (for question metadata / types).
+    # Load question bank for question metadata (type, options, scoring_map).
+    # First try session-local questions.json, then load from question-bank modules.
     questions_path = session_dir / "questions.json"
     questions: list[dict[str, Any]] | None = None
+    question_lookup: dict[str, dict[str, Any]] = {}
     if questions_path.exists():
         questions = _load_json(questions_path)
+        if isinstance(questions, list):
+            for q in questions:
+                qid = q.get("question_id")
+                if qid:
+                    question_lookup[qid] = q
+    if not question_lookup:
+        qb_dirs = _find_question_bank_dirs(session_dir, metadata_dir=metadata_dir)
+        question_lookup = _load_question_bank(qb_dirs)
 
     # Load observed computational scores.
     # First try pre-aggregated scores/observed.json; if absent, aggregate
@@ -198,6 +283,7 @@ def cmd_score(args: argparse.Namespace) -> None:
         dimension_mapping=dim_mapping,
         scoring_weights=weights,
         sd_scores=sd_scores,
+        question_bank=question_lookup,
     )
 
     # 4. Calibration (if observed scores available)
@@ -250,6 +336,13 @@ def main(argv: list[str] | None = None) -> None:
         "--session-dir",
         required=True,
         help="Path to the session directory containing responses.jsonl.",
+    )
+    score_parser.add_argument(
+        "--metadata-dir",
+        default=None,
+        help="Path to question-bank directory containing scoring metadata. "
+        "Overrides automatic discovery. Can also be set via "
+        "MIVOCA_QUESTION_BANK environment variable.",
     )
 
     args = parser.parse_args(argv)

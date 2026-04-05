@@ -159,17 +159,53 @@ def cronbachs_alpha(item_scores: list[list[float]]) -> float | None:
 
 
 def _build_response_lookup(responses: list[dict[str, Any]]) -> dict[str, dict[str, Any]]:
-    """Build a question_id → response mapping."""
+    """Build a question_id -> response mapping.
+
+    Handles two response formats:
+
+    1. Schema-compliant (top-level keys): ``{"question_id": "...", "value": 3, "scale_value": 3}``
+    2. Interview-conductor format (nested answer): ``{"question_id": "...", "answer": {"value": 3, "raw": "3"}}``
+
+    For format 2, the ``answer`` dict is flattened into top-level keys so
+    downstream code can use ``resp.get("value")`` regardless of format.
+    """
     lookup: dict[str, dict[str, Any]] = {}
     for r in responses:
         qid = r.get("question_id")
         if qid:
-            lookup[qid] = r
+            # Unwrap nested answer envelope if present.
+            answer = r.get("answer")
+            if isinstance(answer, dict):
+                flat = {**r}
+                # Promote answer keys to top level without overwriting
+                # existing top-level keys (schema fields take precedence).
+                for key in ("value", "raw"):
+                    if key not in flat or flat[key] is None:
+                        if key in answer:
+                            flat[key] = answer[key]
+                lookup[qid] = flat
+            else:
+                lookup[qid] = r
     return lookup
 
 
-def _infer_question_type(response: dict[str, Any]) -> str:
-    """Best-effort inference of question type from response data."""
+def _infer_question_type(
+    response: dict[str, Any],
+    question_def: dict[str, Any] | None = None,
+) -> str:
+    """Determine question type from question bank metadata or response data.
+
+    When a question definition is available (from the question bank), its
+    ``type`` field is authoritative. Otherwise falls back to best-effort
+    inference from response data shape.
+    """
+    # Prefer authoritative type from question bank.
+    if question_def is not None:
+        qtype = question_def.get("type")
+        if qtype:
+            return str(qtype)
+
+    # Fallback: infer from response fields.
     if response.get("semantic_differential_value") is not None:
         return "semantic_differential"
     if response.get("scale_value") is not None:
@@ -185,11 +221,106 @@ def _infer_question_type(response: dict[str, Any]) -> str:
     return "unknown"
 
 
+def _resolve_scoring_map_value(
+    value: Any,
+    question_def: dict[str, Any] | None,
+    dimension: str,
+) -> float | None:
+    """Resolve a categorical response value to a numeric score via scoring_map.
+
+    For questions with string values (forced_choice, select, scenario, projective),
+    the question definition's ``scoring_map`` maps each option value to per-dimension
+    numeric scores.  This function looks up the value in the scoring_map and returns
+    the score for the requested dimension.
+
+    Returns None if no scoring_map exists or the value/dimension is not found.
+    """
+    if question_def is None:
+        return None
+    scoring = question_def.get("scoring", {})
+    scoring_map = scoring.get("scoring_map", {})
+    if not scoring_map:
+        return None
+
+    # scoring_map keys may be strings even for numeric values.
+    str_value = str(value)
+    entry = scoring_map.get(value) or scoring_map.get(str_value)
+    if not isinstance(entry, dict):
+        return None
+
+    # The scoring_map contains per-dimension scores using sub-dimension
+    # names (e.g., "formality_baseline" for the "formality" dimension).
+    # Try exact match first, then prefix match in both directions.
+    if dimension in entry:
+        return float(entry[dimension])
+
+    # Prefix match: "formality" matches "formality_baseline".
+    for key, val in entry.items():
+        if isinstance(val, (int, float)) and key.startswith(dimension):
+            return float(val)
+
+    # Reverse prefix: "formality_baseline" dimension matches "formality" key.
+    for key, val in entry.items():
+        if isinstance(val, (int, float)) and dimension.startswith(key):
+            return float(val)
+
+    # No match found. Do not fabricate a score by averaging unrelated
+    # sub-dimensions; return None so the item is skipped transparently.
+    return None
+
+
+def _scoring_map_range(
+    question_def: dict[str, Any] | None,
+    dimension: str,
+) -> tuple[int, int]:
+    """Determine the min/max score range from a question's scoring_map.
+
+    Examines all entries in the scoring_map for the values associated with
+    the target dimension (using the same prefix-matching logic as
+    ``_resolve_scoring_map_value``).  Returns (min, max) of found values.
+
+    Falls back to (1, 5) if no matching values are found, since the
+    question bank predominantly uses 1-5 scoring scales.
+    """
+    if question_def is None:
+        return (1, 5)
+
+    scoring_map = question_def.get("scoring", {}).get("scoring_map", {})
+    if not scoring_map:
+        return (1, 5)
+
+    matched_values: list[float] = []
+    for entry in scoring_map.values():
+        if not isinstance(entry, dict):
+            continue
+        # Exact match.
+        if dimension in entry and isinstance(entry[dimension], (int, float)):
+            matched_values.append(float(entry[dimension]))
+            continue
+        # Prefix match: "formality" matches "formality_baseline".
+        for key, val in entry.items():
+            if isinstance(val, (int, float)) and key.startswith(dimension):
+                matched_values.append(float(val))
+                break
+        else:
+            # Reverse prefix.
+            for key, val in entry.items():
+                if isinstance(val, (int, float)) and dimension.startswith(key):
+                    matched_values.append(float(val))
+                    break
+
+    if not matched_values:
+        return (1, 5)
+
+    return (int(min(matched_values)), int(max(matched_values)))
+
+
 def score_self_report(
     responses: list[dict[str, Any]],
     dimension_mapping: dict[str, Any],
     scoring_weights: dict[str, Any],
     sd_scores: dict[str, float] | None = None,
+    question_bank: dict[str, dict[str, Any]] | None = None,
 ) -> dict[str, Any]:
     """Score all self-report dimensions.
 
@@ -205,11 +336,18 @@ def score_self_report(
         Format: ``{"formality": {"M01-Q01": 0.8, ...}, ...}``
     sd_scores:
         Optional normalized semantic-differential scores keyed by dimension.
+    question_bank:
+        Optional mapping from question_id to question definition dicts
+        (loaded from question-bank modules). Provides authoritative question
+        type, option count, and scoring_map for categorical value resolution.
 
     Returns
     -------
     Dict with per-dimension score entries and gap dimension scores.
     """
+    if question_bank is None:
+        question_bank = {}
+
     resp_lookup = _build_response_lookup(responses)
     results: dict[str, Any] = {"dimensions": {}, "gap_dimensions": {}}
 
@@ -222,16 +360,60 @@ def score_self_report(
         normalized_values: list[float] = []
         weighted_values: list[float] = []
         weight_sum = 0.0
+        skipped_items = 0
 
         for qid in item_ids:
             resp = resp_lookup.get(qid)
             if resp is None:
+                skipped_items += 1
                 continue
 
-            qtype = _infer_question_type(resp)
+            qdef = question_bank.get(qid)
+            qtype = _infer_question_type(resp, question_def=qdef)
             raw_value = resp.get("scale_value") or resp.get("semantic_differential_value") or resp.get("value")
-            norm = normalize_response(raw_value, qtype)
+
+            # For categorical string values, resolve via scoring_map.
+            scoring_map_used = False
+            if raw_value is not None and isinstance(raw_value, str):
+                try:
+                    # Try numeric conversion first (e.g., "3" -> 3.0).
+                    raw_value = float(raw_value)
+                except ValueError:
+                    # Categorical string: resolve through scoring_map.
+                    resolved = _resolve_scoring_map_value(raw_value, qdef, dim)
+                    if resolved is not None:
+                        raw_value = resolved
+                        scoring_map_used = True
+                    else:
+                        # Cannot resolve; skip this item.
+                        skipped_items += 1
+                        continue
+
+            # When a scoring_map was used, the resolved value is already on
+            # a meaningful numeric scale. Determine the actual scale range
+            # from the scoring_map entries rather than assuming 1-7.
+            if scoring_map_used and raw_value is not None:
+                smap_min, smap_max = _scoring_map_range(qdef, dim)
+                norm = _normalize_likert(float(raw_value), scale_min=smap_min, scale_max=smap_max)
+            else:
+                # Determine n_options and scale bounds from question definition.
+                n_options = 7  # default
+                scale_min = 1
+                scale_max = 7
+                if qdef is not None:
+                    options = qdef.get("options", [])
+                    if options:
+                        n_options = len(options)
+                        # For Likert scales, extract min/max from option values.
+                        if qtype == "likert":
+                            opt_vals = [o.get("value") for o in options if isinstance(o.get("value"), (int, float))]
+                            if opt_vals:
+                                scale_min = int(min(opt_vals))
+                                scale_max = int(max(opt_vals))
+
+                norm = normalize_response(raw_value, qtype, n_options=n_options, scale_min=scale_min, scale_max=scale_max)
             if norm is None:
+                skipped_items += 1
                 continue
 
             w = dim_weights.get(qid, 1.0)
@@ -270,6 +452,8 @@ def score_self_report(
             "score": round(final_score, 2) if final_score is not None else None,
             "raw_weighted_mean": round(dimension_score, 2) if dimension_score is not None else None,
             "item_count": len(normalized_values),
+            "total_items": len(item_ids),
+            "skipped_items": skipped_items,
             "cronbachs_alpha": round(alpha, 3) if alpha is not None else None,
             "alpha_flag": alpha_flag,
             "sd_cross_validated": sd_used,
