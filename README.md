@@ -7,7 +7,9 @@
 [![Node.js](https://img.shields.io/badge/Node.js-18+-339933?logo=nodedotjs&logoColor=white)](https://nodejs.org)
 [![GitHub Stars](https://img.shields.io/github/stars/zircote/human-voice?style=social)](https://github.com/zircote/human-voice)
 
-A Claude Code plugin that detects and prevents AI-generated writing patterns to ensure authentic, professional human voice in all content.
+A Claude Code plugin that detects AI-generated writing patterns and builds voice profiles through adaptive interviews and computational stylistics.
+
+> **Experimental.** This project is a research prototype. The scoring pipeline, dimension mapping, and NLP analysis have not been validated against external benchmarks or peer-reviewed psychometric standards. The voice profiles it produces are plausible but unproven. Treat the output as a starting point for editorial guidance, not as a validated instrument. The question bank, scoring weights, and dimension definitions will change as the system matures. Use it, break it, report what does not work.
 
 ![Human Voice Plugin - 4-tier analysis flow](.github/infographic.jpg)
 
@@ -250,7 +252,9 @@ human-voice/
 
 ## Voice Elicitation (Mivoca)
 
-Mivoca is a voice elicitation system that captures a writer's authentic voice through a 67-question adaptive interview, computational NLP analysis of writing samples, and automated profile synthesis. It produces two independent profiles per writer: a self-reported profile (what the writer believes about their voice) and a computationally observed profile (what their writing exhibits). A calibration layer identifies where these profiles agree and where they diverge.
+Mivoca is an experimental voice elicitation system that captures a writer's voice through a 67-question adaptive interview, computational NLP analysis of writing samples, and automated profile synthesis. It produces two independent profiles per writer: a self-reported profile (what the writer believes about their voice) and a computationally observed profile (what their writing exhibits). A calibration layer identifies where these profiles agree and where they diverge.
+
+> **Status**: The scoring pipeline produces numeric dimension scores but these scores have not been validated against external psychometric instruments. The NLP analysis uses standard stylometric measures (type-token ratio, Flesch-Kincaid, hedge density, etc.) but the mapping from NLP metrics to voice dimensions is hand-authored and unvalidated. The question bank is based on published findings in voice elicitation research but the specific item-to-dimension mappings are untested for reliability (Cronbach alpha) across a population. This is a functional prototype, not a finished measurement tool.
 
 ### CLI Tools
 
