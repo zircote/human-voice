@@ -2,7 +2,9 @@
 # Branching evaluator CLI — evaluate-route, module-sequence, check-triggers
 set -euo pipefail
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
-cd "$SCRIPT_DIR"
-PYTHON="${SCRIPT_DIR}/.venv/bin/python3"
+PLUGIN_ROOT="${CLAUDE_PLUGIN_ROOT:-$SCRIPT_DIR}"
+cd "$PLUGIN_ROOT"
+export PYTHONPATH="${PLUGIN_ROOT}:${PLUGIN_ROOT}/scoring/src:${PLUGIN_ROOT}/nlp/src${PYTHONPATH:+:$PYTHONPATH}"
+PYTHON="${PLUGIN_ROOT}/.venv/bin/python3"
 [ -x "$PYTHON" ] || PYTHON="python3"
 exec "$PYTHON" -m lib.branching "$@"
