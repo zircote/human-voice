@@ -14,9 +14,9 @@
       "dimensions": ["revision_style", "process_approach"],
       "weights": { "revision_style": 0.9, "process_approach": 0.7 },
       "scoring_map": {
-        "quick_revise": { "revision_style": 6, "process_approach": 2 },
-        "slow_careful": { "revision_style": 2, "process_approach": 6 },
-        "depends_stakes": { "revision_style": 4, "process_approach": 4 }
+        "quick_revise": { "revision_style": 6, "process_approach": 2, "revision_orientation": 5 },
+        "slow_careful": { "revision_style": 2, "process_approach": 6, "revision_orientation": 2 },
+        "depends_stakes": { "revision_style": 4, "process_approach": 4, "revision_orientation": 3 }
       }
     },
     "metadata": {
@@ -44,9 +44,9 @@
       "dimensions": ["revision_style"],
       "weights": { "revision_style": 0.8 },
       "scoring_map": {
-        "restructuring": { "revision_style": 2 },
-        "refining_tone": { "revision_style": 6 },
-        "equal": { "revision_style": 4 }
+        "restructuring": { "revision_style": 2, "revision_orientation": 2 },
+        "refining_tone": { "revision_style": 6, "revision_orientation": 5 },
+        "equal": { "revision_style": 4, "revision_orientation": 3 }
       }
     },
     "metadata": {
@@ -95,10 +95,10 @@
       "dimensions": ["revision_style"],
       "weights": { "revision_style": 0.7 },
       "scoring_map": {
-        "accuracy": { "revision_style": 2 },
-        "experience": { "revision_style": 6 },
-        "both": { "revision_style": 4 },
-        "separate_passes": { "revision_style": 5 }
+        "accuracy": { "revision_style": 2, "revision_orientation": 2 },
+        "experience": { "revision_style": 6, "revision_orientation": 5 },
+        "both": { "revision_style": 4, "revision_orientation": 3 },
+        "separate_passes": { "revision_style": 5, "revision_orientation": 4 }
       }
     },
     "metadata": {

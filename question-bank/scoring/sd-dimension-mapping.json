@@ -1,0 +1,26 @@
+{
+  "schema_version": "1.0.0",
+  "description": "Maps semantic differential question IDs to their target voice dimensions. Each SD item may contribute to one or more dimensions.",
+  "mapping": {
+    "SD-01": ["formality"],
+    "SD-02": ["humor"],
+    "SD-03": ["complexity"],
+    "SD-04": ["authority"],
+    "SD-05": ["emotional_tone"],
+    "SD-06": ["complexity", "narrativity"],
+    "SD-07": ["complexity"],
+    "SD-08": ["authority", "audience_awareness"],
+    "SD-09": ["formality", "audience_awareness"],
+    "SD-10": ["emotional_tone", "narrativity"],
+    "SD-11": ["authority"],
+    "SD-12": ["personality"],
+    "SD-13": ["personality", "complexity"],
+    "SD-14": ["complexity"],
+    "SD-15": ["personality", "formality"],
+    "SD-16": ["humor", "personality"],
+    "SD-17": ["authority", "personality"],
+    "SD-18": ["narrativity"],
+    "SD-19": ["audience_awareness"],
+    "SD-20": ["personality"]
+  }
+}

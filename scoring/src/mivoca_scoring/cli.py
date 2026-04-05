@@ -242,7 +242,8 @@ def cmd_score(args: argparse.Namespace) -> None:
 
     dim_mapping = _flatten_dimension_mapping(metadata["dimension-item-mapping.json"])
     weights = _flatten_scoring_weights(metadata["scoring-weights.json"])
-    sd_mapping = metadata.get("sd-dimension-mapping.json")
+    sd_mapping_raw = metadata.get("sd-dimension-mapping.json")
+    sd_mapping = sd_mapping_raw.get("mapping", sd_mapping_raw) if isinstance(sd_mapping_raw, dict) else sd_mapping_raw
     pop_means = metadata.get("population-means.json")
 
     # Load question bank for question metadata (type, options, scoring_map).

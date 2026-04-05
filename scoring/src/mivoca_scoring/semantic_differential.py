@@ -36,9 +36,22 @@ def normalize_semantic_differentials(
     Dict mapping dimension names (or question_ids) to normalized 0-100 scores.
     """
     # Collect SD responses.
+    # Handle both schema-compliant format (top-level semantic_differential_value)
+    # and interview-conductor format (answer.value with SD question type).
     sd_responses: dict[str, float] = {}
     for r in responses:
         sd_val = r.get("semantic_differential_value")
+        if sd_val is None:
+            # Check answer envelope.
+            answer = r.get("answer")
+            if isinstance(answer, dict):
+                sd_val = answer.get("semantic_differential_value")
+                # SD items recorded by the conductor use answer.value directly
+                # when the question type is semantic_differential.
+                if sd_val is None:
+                    qid = r.get("question_id", "")
+                    if qid.startswith("SD-"):
+                        sd_val = answer.get("value")
         if sd_val is not None:
             qid = r.get("question_id", "")
             try:
