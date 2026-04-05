@@ -32,4 +32,5 @@ dev = [
 packages = ["lib"]
 
 [tool.pytest.ini_options]
-testpaths = ["tests"]
+testpaths = ["tests", "scoring/tests"]
+pythonpath = ["scoring/src"]

@@ -315,7 +315,8 @@ def _scoring_map_range(
     if not matched_values:
         return (1, 5)
 
-    return (round(min(matched_values)), round(max(matched_values)))
+    import math
+    return (math.floor(min(matched_values)), math.ceil(max(matched_values)))
 
 
 def score_self_report(

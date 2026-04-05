@@ -8,6 +8,10 @@ from __future__ import annotations
 
 import pytest
 
+import json
+from pathlib import Path
+
+from mivoca_scoring.cli import _load_question_bank
 from mivoca_scoring.self_report import (
     _build_response_lookup,
     _infer_question_type,
@@ -72,6 +76,22 @@ class TestBuildResponseLookup:
         ]
         lookup = _build_response_lookup(responses)
         assert lookup["Q01"]["scale_value"] == 5
+
+    def test_promotes_selected_options_from_envelope(self):
+        """selected_options in answer envelope is promoted to top level."""
+        responses = [
+            {"question_id": "Q01", "answer": {"selected_options": ["a", "b"], "value": "a,b"}},
+        ]
+        lookup = _build_response_lookup(responses)
+        assert lookup["Q01"]["selected_options"] == ["a", "b"]
+
+    def test_promotes_raw_text_from_envelope(self):
+        """raw_text in answer envelope is promoted to top level."""
+        responses = [
+            {"question_id": "Q01", "answer": {"raw_text": "some free text", "value": "some free text"}},
+        ]
+        lookup = _build_response_lookup(responses)
+        assert lookup["Q01"]["raw_text"] == "some free text"
 
     def test_missing_question_id_skipped(self):
         """Responses without question_id are not included."""
@@ -264,8 +284,8 @@ class TestScoringMapRange:
         qdef = {"scoring": {"scoring_map": {}}}
         assert _scoring_map_range(qdef, "formality") == (1, 5)
 
-    def test_rounding_not_truncation(self):
-        """Fractional values are rounded, not truncated."""
+    def test_fractional_values_use_enclosing_range(self):
+        """Fractional values use floor/ceil to produce enclosing bounds."""
         qdef = {
             "scoring": {
                 "scoring_map": {
@@ -275,8 +295,8 @@ class TestScoringMapRange:
             }
         }
         lo, hi = _scoring_map_range(qdef, "formality")
-        assert lo == 2  # round(1.6) = 2, not int(1.6) = 1
-        assert hi == 4  # round(4.5) = 4 (banker's rounding)
+        assert lo == 1  # floor(1.6) = 1
+        assert hi == 5  # ceil(4.5) = 5
 
 
 # ---------- End-to-end: score_self_report with question_bank ----------
@@ -435,3 +455,63 @@ class TestScoreSelfReportWithQuestionBank:
         formality = result["dimensions"]["formality"]
         assert formality["skipped_items"] == 3  # Q01 missing, Q02 unresolvable, Q03 missing
         assert formality["item_count"] == 0
+
+
+# ---------- _load_question_bank ----------
+
+
+class TestLoadQuestionBank:
+    """Tests for question bank module loading from filesystem."""
+
+    def test_loads_modules_from_directory(self, tmp_path):
+        """Loads question definitions from M*.json files in modules/ subdir."""
+        modules_dir = tmp_path / "modules"
+        modules_dir.mkdir()
+        module_data = [
+            {"question_id": "M01-Q01", "type": "likert", "text": "Test question"},
+            {"question_id": "M01-Q02", "type": "forced_choice", "text": "Another"},
+        ]
+        (modules_dir / "M01-test.json").write_text(json.dumps(module_data))
+
+        lookup = _load_question_bank([tmp_path])
+        assert "M01-Q01" in lookup
+        assert "M01-Q02" in lookup
+        assert lookup["M01-Q01"]["type"] == "likert"
+
+    def test_first_writer_wins(self, tmp_path):
+        """Higher-priority candidate directory wins on duplicate question_ids."""
+        high_priority = tmp_path / "high"
+        low_priority = tmp_path / "low"
+        for d in (high_priority, low_priority):
+            modules = d / "modules"
+            modules.mkdir(parents=True)
+
+        high_data = [{"question_id": "Q01", "type": "likert", "source": "high"}]
+        low_data = [{"question_id": "Q01", "type": "forced_choice", "source": "low"}]
+        (high_priority / "modules" / "M01.json").write_text(json.dumps(high_data))
+        (low_priority / "modules" / "M01.json").write_text(json.dumps(low_data))
+
+        lookup = _load_question_bank([high_priority, low_priority])
+        assert lookup["Q01"]["source"] == "high"
+
+    def test_skips_invalid_json(self, tmp_path):
+        """Malformed JSON files are skipped without crashing."""
+        modules_dir = tmp_path / "modules"
+        modules_dir.mkdir()
+        (modules_dir / "M01-bad.json").write_text("not valid json{{{")
+        good_data = [{"question_id": "Q01", "type": "likert"}]
+        (modules_dir / "M02-good.json").write_text(json.dumps(good_data))
+
+        lookup = _load_question_bank([tmp_path])
+        assert "Q01" in lookup
+
+    def test_empty_candidates(self):
+        """Empty candidate list returns empty lookup."""
+        lookup = _load_question_bank([])
+        assert lookup == {}
+
+    def test_nonexistent_directory(self, tmp_path):
+        """Non-existent directory is handled gracefully."""
+        fake = tmp_path / "does_not_exist"
+        lookup = _load_question_bank([fake])
+        assert lookup == {}

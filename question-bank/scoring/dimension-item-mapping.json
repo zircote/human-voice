@@ -114,8 +114,8 @@
     },
     "consistency": {
       "contributing_items": {},
-      "min_items_for_score": 1,
-      "description": "Consistency of voice across writing sessions and pieces. Scored via NLP pipeline cross-sample analysis."
+      "min_items_for_score": 0,
+      "description": "Consistency of voice across writing sessions and pieces. No self-report items; scored exclusively via NLP pipeline cross-sample variance analysis."
     },
     "influence_absorption": {
       "contributing_items": {

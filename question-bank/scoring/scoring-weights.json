@@ -122,6 +122,83 @@
         "serious_playful": 1.0
       },
       "self_reportability_tier": 1
+    },
+    "precision": {
+      "items": {
+        "M09-Q01": 1.0,
+        "M09-Q02": 1.0,
+        "M09-Q03": 1.0,
+        "M09-Q04": 1.0
+      },
+      "sd_pairs": {},
+      "self_reportability_tier": 1
+    },
+    "revision_orientation": {
+      "items": {
+        "M10-Q01": 1.0,
+        "M10-Q02": 1.0,
+        "M10-Q04": 1.0
+      },
+      "sd_pairs": {},
+      "self_reportability_tier": 2
+    },
+    "contextual_flexibility": {
+      "items": {
+        "M11-Q06": 1.0
+      },
+      "sd_pairs": {},
+      "self_reportability_tier": 2
+    },
+    "risk_tolerance": {
+      "items": {
+        "M02-Q10": 1.0,
+        "M05-Q04": 1.0
+      },
+      "sd_pairs": {},
+      "self_reportability_tier": 2
+    },
+    "self_awareness": {
+      "items": {
+        "M12-Q01": 1.0
+      },
+      "sd_pairs": {},
+      "self_reportability_tier": 2
+    },
+    "consistency": {
+      "items": {},
+      "sd_pairs": {},
+      "self_reportability_tier": 2,
+      "note": "NLP-only dimension. No self-report items. Scored via cross-sample variance analysis."
+    },
+    "influence_absorption": {
+      "items": {
+        "M02-Q03": 1.0
+      },
+      "sd_pairs": {},
+      "self_reportability_tier": 2
+    },
+    "vocabulary_range": {
+      "items": {
+        "M06-Q02": 1.0,
+        "M09-Q03": 1.0
+      },
+      "sd_pairs": {},
+      "self_reportability_tier": 1
+    },
+    "sentence_rhythm": {
+      "items": {
+        "M06-Q04": 1.0,
+        "M09-Q06": 1.0
+      },
+      "sd_pairs": {},
+      "self_reportability_tier": 1
+    },
+    "genre_awareness": {
+      "items": {
+        "M08-Q03": 1.0
+      },
+      "sd_pairs": {},
+      "self_reportability_tier": 2
     }
   },
   "notes": {
