@@ -1,0 +1,111 @@
+name: Voice Validation
+
+on:
+  pull_request:
+    paths:
+      - 'docs/**/*.md'
+      - 'content/**/*.md'
+      - 'src/content/**/*.md'
+      - '_docs/**/*.md'
+      - 'README.md'
+      - 'CONTRIBUTING.md'
+      - 'CHANGELOG.md'
+
+jobs:
+  character-restrictions:
+    name: Check AI Writing Patterns
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Validate character restrictions
+        run: |
+          SCRIPT="skills/human-voice/scripts/validate-character-restrictions.js"
+          if [ ! -f "$SCRIPT" ]; then
+            echo "Validation script not found at $SCRIPT"
+            exit 1
+          fi
+
+          EXIT_CODE=0
+
+          for dir in docs content src/content _docs; do
+            if [ -d "$dir" ]; then
+              echo "Scanning: $dir/"
+              node "$SCRIPT" "$dir" || EXIT_CODE=1
+            fi
+          done
+
+          # Check root-level content files
+          for file in README.md CONTRIBUTING.md CHANGELOG.md; do
+            if [ -f "$file" ]; then
+              echo "Scanning: $file"
+              # Create temp dir, copy file, scan
+              TMPDIR=$(mktemp -d)
+              cp "$file" "$TMPDIR/"
+              node "$SCRIPT" "$TMPDIR" || EXIT_CODE=1
+              rm -rf "$TMPDIR"
+            fi
+          done
+
+          exit $EXIT_CODE
+
+      - name: Check for contractions
+        if: always()
+        run: |
+          echo "Checking for contractions in changed content files..."
+          CHANGED=$(git diff --name-only --diff-filter=ACMR origin/${{ github.base_ref }}...HEAD -- '*.md' 2>/dev/null || true)
+          if [ -z "$CHANGED" ]; then
+            echo "No markdown files changed."
+            exit 0
+          fi
+
+          EXIT_CODE=0
+          for file in $CHANGED; do
+            if [ -f "$file" ]; then
+              CONTRACTIONS=$(grep -nE "n't|'re|'ve|'ll|'d | it's| that's| there's| here's| what's| who's| he's| she's| I'm| won't| can't| don't| doesn't| didn't| isn't| aren't| wasn't| weren't| couldn't| wouldn't| shouldn't| haven't| hasn't" "$file" || true)
+              if [ -n "$CONTRACTIONS" ]; then
+                echo "::error file=$file::Contractions found in $file"
+                echo "$CONTRACTIONS"
+                EXIT_CODE=1
+              fi
+            fi
+          done
+
+          if [ $EXIT_CODE -eq 0 ]; then
+            echo "No contractions found."
+          fi
+          exit $EXIT_CODE
+
+      - name: Check for Oxford comma
+        if: always()
+        run: |
+          echo "Checking for Oxford comma patterns in changed content files..."
+          CHANGED=$(git diff --name-only --diff-filter=ACMR origin/${{ github.base_ref }}...HEAD -- '*.md' 2>/dev/null || true)
+          if [ -z "$CHANGED" ]; then
+            echo "No markdown files changed."
+            exit 0
+          fi
+
+          FOUND=0
+          for file in $CHANGED; do
+            if [ -f "$file" ]; then
+              # Pattern: word, word, and word (Oxford comma before "and")
+              MATCHES=$(grep -nP '\w+,\s+\w+,\s+and\s+\w+' "$file" || true)
+              if [ -n "$MATCHES" ]; then
+                echo "::warning file=$file::Possible Oxford comma usage in $file (manual review recommended)"
+                echo "$MATCHES"
+                FOUND=1
+              fi
+            fi
+          done
+
+          if [ $FOUND -eq 0 ]; then
+            echo "No Oxford comma patterns found."
+          fi
+          # Warning only, do not fail the build
+          exit 0
