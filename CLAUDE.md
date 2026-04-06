@@ -1,51 +1,49 @@
 # Human Voice Plugin
 
-A Claude Code plugin for detecting AI-generated writing patterns and building authentic voice profiles through adaptive interviews and computational stylistics.
+A Claude Code plugin for detecting AI-generated writing patterns and building voice profiles through adaptive interviews and computational stylistics.
+
+## Branching Strategy
+
+- **main**: Stable release branch. Only merge from develop when the code is tested and reviewed. Do not commit directly to main.
+- **develop**: Active development branch. All new work goes here. Feature branches merge into develop. When develop is stable and ready for release, merge into main.
 
 ## Project Context
 
-This plugin provides two complementary capabilities:
-
-**AI Pattern Detection:**
-- **Skill**: `human-voice` — Core detection patterns and writing guidelines
-- **Commands**: `/human-voice:voice-setup`, `/human-voice:voice-review`, `/human-voice:voice-fix`
-- **Agent**: `voice-reviewer` — Proactive content review after edits
-
-**Voice Elicitation (Mivoca):**
-- **Skill**: `mivoca` — Adaptive interview engine for voice profiling
-- **Commands**: `/human-voice:voice-interview`, `/human-voice:voice-resume`, `/human-voice:voice-status`, `/human-voice:voice-profile`, `/human-voice:voice-sessions`
-- **Agents**: `interview-conductor` — Conversational interview, `profile-synthesizer` — Profile generation
-- **NLP Pipeline**: spaCy-based writing sample analysis (lexical, syntactic, pragmatic, discourse, composite)
-- **Scoring Engine**: Self-report dimension scoring with calibration
+This plugin provides:
+- **Skills**: `human-voice` (AI pattern detection), `mivoca` (voice elicitation interview)
+- **Commands**: `/human-voice:voice-setup`, `/human-voice:voice-review`, `/human-voice:voice-fix`, `/human-voice:voice-interview`, `/human-voice:voice-profile`, `/human-voice:voice-resume`, `/human-voice:voice-drift`, `/human-voice:voice-sessions`, `/human-voice:voice-status`
+- **Agents**: `interview-conductor`, `profile-synthesizer`, `voice-reviewer`
+- **Scoring**: Self-report scoring pipeline with SD cross-validation
+- **NLP**: Stylometric analysis pipeline (spacy-based)
+- **Observer**: Passive voice observation protocol via SessionStart hook
 
 ## Development Guidelines
 
-- Follow Claude Code plugin standards
+- All development on the `develop` branch
 - Test commands locally with `claude --plugin-dir .`
+- Run scoring tests: `python3 -m pytest scoring/tests/ -v`
+- Validate character restrictions: `node skills/human-voice/scripts/validate-character-restrictions.js docs/`
 - Update CHANGELOG.md for user-facing changes
 - Keep backward compatibility (all features work without optional dependencies)
 
 ## File Structure
 
 ```
-# AI Pattern Detection
-skills/human-voice/SKILL.md     # Core skill with detection patterns
-commands/voice-*.md              # voice-setup, voice-review, voice-fix
-agents/voice-reviewer.md         # Proactive review agent
-skills/human-voice/scripts/      # Node.js validation/fix scripts
-skills/human-voice/references/   # Pattern documentation
-
-# Voice Elicitation (Mivoca)
-skills/mivoca/SKILL.md           # Interview engine skill
-commands/{interview,resume,status,profile,sessions}.md
-agents/{interview-conductor,profile-synthesizer}.md
-question-bank/                   # 130 questions, 13 modules, branching rules, schemas
-lib/                             # Python: session, branching, sequencer, quality, profile
-nlp/                             # Python NLP pipeline (spaCy)
-scoring/                         # Python scoring engine
-bin/                             # CLI executables
-tests/                           # pytest suite (118 tests)
-docs/                            # Diátaxis documentation
+.claude-plugin/plugin.json        # Plugin manifest (hooks registered here)
+skills/human-voice/SKILL.md       # Core skill with detection patterns
+skills/mivoca/SKILL.md            # Voice elicitation interview skill
+commands/*.md                     # Slash commands
+agents/*.md                       # Subagents (interview, synthesizer, reviewer)
+hooks/hooks.json                  # SessionStart hook for observer protocol
+templates/observer-protocol.md    # Observer protocol template
+bin/                              # CLI tools (mivoca-session, mivoca-scoring, etc.)
+question-bank/                    # Interview modules, schemas, scoring config
+scoring/src/mivoca_scoring/       # Self-report scoring engine
+nlp/src/mivoca_nlp/               # NLP stylometric analysis pipeline
+lib/                              # Core library (session, branching, quality, etc.)
+docs/                             # Documentation (Diataxis framework)
+.github/agents/                   # GitHub Copilot custom agents
+.github/workflows/                # CI workflows (validation, voice checks)
 ```
 
 ## Subcog Memory Integration (Optional)
@@ -60,18 +58,7 @@ If Subcog MCP server is available, this plugin can leverage persistent memory fo
 - `patterns`: Recurring voice fixes (e.g., "replace em dashes with colons")
 - `learnings`: Project-specific gotchas discovered during review
 - `config`: Per-project voice configuration settings
-
-### Memory-Aware Workflow (When Available)
-
-**Before analysis:**
-```
-subcog_recall: query="voice patterns OR voice decisions", filter="ns:decisions ns:patterns"
-```
-
-**After significant findings:**
-```
-subcog_capture: namespace=learnings, content="[finding]", tags=[human-voice, voice-pattern]
-```
+- `voice-observations`: Passive voice drift observations from observer protocol
 
 ### Graceful Degradation
 
