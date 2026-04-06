@@ -1,0 +1,26 @@
+{
+  "template_name": "brand-corporate",
+  "display_name": "Brand Corporate",
+  "description": "Professional brand voice: confident, clear, audience-aware. No personal pronouns, no humor, consistent tone. Suitable for marketing copy, brand guidelines, and external communications.",
+  "identity_summary": "A confident, polished corporate voice that speaks with authority and clarity. Audience-aware, adapts complexity to context while maintaining a consistent brand register.",
+  "dimensions": {
+    "formality": {"score": 65},
+    "emotional_tone": {"score": 40},
+    "personality": {"score": 35},
+    "complexity": {"score": 40},
+    "audience_awareness": {"score": 80},
+    "authority": {"score": 65},
+    "narrativity": {"score": 35},
+    "humor": {"score": 15}
+  },
+  "mechanics": {
+    "contractions": "selective",
+    "oxford_comma": true,
+    "semicolons": "rare",
+    "exclamation_marks": "rare",
+    "parenthetical_style": "em-dashes",
+    "active_voice": "preferred",
+    "paragraph_openers": "varied",
+    "list_usage": "moderate"
+  }
+}
