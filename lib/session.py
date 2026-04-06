@@ -4,7 +4,7 @@ Handles the full lifecycle of an interview session including creation,
 persistence, pause/resume, response recording, and writing sample storage.
 
 Session storage layout:
-    ~/.human-voice/sessions/{session_id}/
+    $CLAUDE_PLUGIN_DATA/sessions/{session_id}/
         state.json          -- current session state
         responses.jsonl     -- one JSON object per line, append-only
         writing-samples/    -- individual sample JSON files
@@ -27,7 +27,8 @@ from typing import Any
 def _sessions_root() -> Path:
     """Return the root directory for all sessions, creating it if needed."""
     from lib.config import get
-    storage = get("interview.session_storage", "~/.human-voice/sessions")
+    from lib.config import CONFIG_DIR
+    storage = get("interview.session_storage", str(CONFIG_DIR / "sessions"))
     root = Path(storage).expanduser()
     root.mkdir(parents=True, exist_ok=True)
     return root

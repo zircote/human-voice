@@ -48,7 +48,7 @@ Repository root: /path/to/voice
 [3/7] Installing voice-nlp package with [dev] extras ...
 [4/7] Installing voice-scoring package with [dev] extras ...
 [5/7] Downloading spaCy en_core_web_sm model ...
-[6/7] Creating ~/.human-voice directory ...
+[6/7] Creating ${CLAUDE_PLUGIN_DATA} directory ...
 [7/7] Validating JSON files ...
       Validated 14 JSON files, 0 errors
 
@@ -56,11 +56,11 @@ Repository root: /path/to/voice
   Virtual environment: .venv
   Packages installed:  voice, voice-nlp, voice-scoring
   spaCy model:         en_core_web_sm
-  Config directory:    ~/.human-voice
+  Config directory:    ${CLAUDE_PLUGIN_DATA}
   JSON files:          14 valid, 0 errors
 ```
 
-The important things to confirm: zero JSON errors, all three packages installed, and the `~/.human-voice` config directory created.
+The important things to confirm: zero JSON errors, all three packages installed, and the `${CLAUDE_PLUGIN_DATA}` config directory created.
 
 We have completed the setup. Our environment is ready for interviews.
 
@@ -76,7 +76,7 @@ Voice creates a unique session, initializes its state files, and loads the quest
 
 ```
 Session created: a1b2c3d4-e5f6-7890-abcd-ef1234567890
-Session directory: ~/.human-voice/sessions/a1b2c3d4-e5f6-7890-abcd-ef1234567890/
+Session directory: ${CLAUDE_PLUGIN_DATA}/sessions/a1b2c3d4-e5f6-7890-abcd-ef1234567890/
 
 Beginning voice elicitation interview...
 ```

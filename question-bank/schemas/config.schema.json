@@ -2,7 +2,7 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://human-voice.zircote.com/schemas/config.schema.json",
   "title": "Human Voice Plugin Configuration",
-  "description": "Unified configuration for the human-voice plugin, covering AI writing pattern detection settings and voice elicitation interview settings. Stored at ~/.human-voice/config.json.",
+  "description": "Unified configuration for the human-voice plugin, covering AI writing pattern detection settings and voice elicitation interview settings. Stored at $CLAUDE_PLUGIN_DATA/config.json (or ~/.human-voice/config.json in standalone mode).",
   "type": "object",
   "properties": {
     "$schema": {
@@ -218,8 +218,8 @@
       "properties": {
         "session_storage": {
           "type": "string",
-          "default": "~/.human-voice/sessions",
-          "description": "Directory path where interview session state files are persisted. Supports tilde expansion for the home directory."
+          "default": "$CLAUDE_PLUGIN_DATA/sessions",
+          "description": "Directory path where interview session state files are persisted. Defaults to $CLAUDE_PLUGIN_DATA/sessions when running as a plugin, or ~/.human-voice/sessions in standalone mode."
         },
         "total_estimated_minutes": {
           "type": "integer",
@@ -493,12 +493,12 @@
           "properties": {
             "publish_to": {
               "type": "string",
-              "default": "~/.human-voice/profile.json",
+              "default": "$CLAUDE_PLUGIN_DATA/profile.json",
               "description": "File path where the completed voice profile JSON is written after a successful interview. Supports tilde expansion."
             },
             "injection_to": {
               "type": "string",
-              "default": "~/.human-voice/voice-prompt.txt",
+              "default": "$CLAUDE_PLUGIN_DATA/voice-prompt.txt",
               "description": "File path where the generated voice prompt injection text is written. This file is designed to be included in AI system prompts to guide writing style."
             },
             "population_means": {

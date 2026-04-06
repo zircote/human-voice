@@ -1,6 +1,6 @@
 """Voice profile persistence and formatting.
 
-Manages the active voice profile at ~/.human-voice/profile.json and provides
+Manages the active voice profile at $CLAUDE_PLUGIN_DATA/profile.json and provides
 formatting utilities for system prompt injection.
 
 The active profile is the well-known location that hooks, agents, and other
@@ -8,8 +8,8 @@ tools read to get the user's current voice profile without needing a session
 ID lookup.
 
 Files written:
-    ~/.human-voice/profile.json     — full voice profile JSON
-    ~/.human-voice/voice-prompt.txt — compact injection text for LLM prompts
+    $CLAUDE_PLUGIN_DATA/profile.json     — full voice profile JSON
+    $CLAUDE_PLUGIN_DATA/voice-prompt.txt — compact injection text for LLM prompts
 """
 
 from __future__ import annotations
@@ -24,30 +24,64 @@ from typing import Any
 def _resolve_paths() -> tuple[Path, Path, Path]:
     """Resolve profile publish paths from config."""
     try:
-        from lib.config import get
-        pub = Path(get("interview.profile.publish_to", "~/.human-voice/profile.json")).expanduser()
-        inj = Path(get("interview.profile.injection_to", "~/.human-voice/voice-prompt.txt")).expanduser()
+        from lib.config import get, CONFIG_DIR
+        pub = Path(get("interview.profile.publish_to", str(CONFIG_DIR / "profile.json"))).expanduser()
+        inj = Path(get("interview.profile.injection_to", str(CONFIG_DIR / "voice-prompt.txt"))).expanduser()
     except ImportError:
-        pub = Path.home() / ".human-voice" / "profile.json"
-        inj = Path.home() / ".human-voice" / "voice-prompt.txt"
+        from lib.config import CONFIG_DIR
+        pub = CONFIG_DIR / "profile.json"
+        inj = CONFIG_DIR / "voice-prompt.txt"
     return pub.parent, pub, inj
 
 
 ACTIVE_PROFILE_DIR, ACTIVE_PROFILE_PATH, ACTIVE_INJECTION_PATH = _resolve_paths()
 
 
-def publish_active_profile(profile: dict[str, Any]) -> Path:
-    """Write the voice profile to ~/.human-voice/profile.json.
+def publish_active_profile(
+    profile: dict[str, Any],
+    slug: str | None = None,
+    display_name: str | None = None,
+    origin: str = "interview",
+    tags: list[str] | None = None,
+) -> Path:
+    """Write the voice profile to $CLAUDE_PLUGIN_DATA/profile.json.
+
+    If *slug* is provided, the profile is also stored in the multi-profile
+    registry under that name and activated.  If *slug* is None, the profile
+    is written directly to the top-level path (backward-compatible behavior).
 
     Atomically writes the full profile and a compact voice-prompt.txt
-    for direct system prompt injection.
+    for direct system prompt injection.  Also marks the originating
+    session as ``complete`` so that session-based lookups find it.
 
     Args:
         profile: Complete voice profile dict.
+        slug: Optional profile slug for named storage.
+        display_name: Human-readable name (defaults to slug titlecased).
+        origin: How the profile was created (interview, designed, template, imported).
+        tags: Optional tags for the profile.
 
     Returns:
         Path to the written profile.json.
     """
+    session_id = (profile.get("metadata") or {}).get("session_id")
+
+    # Named profile path: store in registry and activate
+    if slug:
+        from lib.profile_registry import store_profile, activate_profile
+        name = display_name or slug.replace("-", " ").title()
+        store_profile(slug, profile, name, origin, session_id, tags)
+        activate_profile(slug)
+        # Mark session complete
+        if session_id:
+            try:
+                from lib.session import update_state_field
+                update_state_field(session_id, state="complete")
+            except (FileNotFoundError, ImportError):
+                pass
+        return ACTIVE_PROFILE_PATH
+
+    # Legacy path: write directly to top-level
     ACTIVE_PROFILE_DIR.mkdir(parents=True, exist_ok=True)
 
     # Atomic write for profile.json
@@ -71,11 +105,19 @@ def publish_active_profile(profile: dict[str, Any]) -> Path:
         os.unlink(tmp2)
         raise
 
+    # Mark session complete
+    if session_id:
+        try:
+            from lib.session import update_state_field
+            update_state_field(session_id, state="complete")
+        except (FileNotFoundError, ImportError):
+            pass
+
     return ACTIVE_PROFILE_PATH
 
 
 def load_active_profile() -> dict[str, Any] | None:
-    """Load the active voice profile from ~/.human-voice/profile.json.
+    """Load the active voice profile from $CLAUDE_PLUGIN_DATA/profile.json.
 
     Returns None if no profile exists yet.
     """
@@ -86,7 +128,7 @@ def load_active_profile() -> dict[str, Any] | None:
 
 
 def load_active_injection() -> str | None:
-    """Load the compact voice prompt from ~/.human-voice/voice-prompt.txt.
+    """Load the compact voice prompt from $CLAUDE_PLUGIN_DATA/voice-prompt.txt.
 
     Returns None if no profile has been published yet.
     """
@@ -154,7 +196,7 @@ def format_profile_for_injection(
                 feat_strs.append(str(feat))
         parts.append(f"Distinctive: {'; '.join(feat_strs)}")
 
-    calibration = profile.get("calibration", {})
+    calibration = profile.get("calibration") or {}
     blind_spots = calibration.get("blind_spots", [])
     if blind_spots:
         parts.append(f"Blind spots (writer underestimates): {', '.join(blind_spots[:3])}")

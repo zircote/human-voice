@@ -9,7 +9,6 @@
   "repository": "https://github.com/zircote/human-voice",
   "homepage": "https://github.com/zircote/human-voice#readme",
   "license": "MIT",
-  "hooks": "./hooks/hooks.json",
   "keywords": [
     "writing",
     "ai-detection",

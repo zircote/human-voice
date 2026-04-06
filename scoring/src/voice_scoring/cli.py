@@ -46,7 +46,7 @@ def _find_question_bank_dirs(session_dir: Path, metadata_dir: Path | None = None
       1. Explicit metadata_dir (from --metadata-dir flag)
       2. MIVOCA_QUESTION_BANK environment variable
       3. Walk up from session_dir looking for question-bank/
-      4. Well-known fallback: ~/.human-voice/question-bank/
+      4. Well-known fallback: $CLAUDE_PLUGIN_DATA/question-bank/
     """
     import os
 

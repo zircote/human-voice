@@ -196,5 +196,8 @@ When the sequencer returns `action: "interview_complete"`:
 
 1. Invoke the scoring pipeline: `bin/voice-scoring score --session-dir {session_dir}`
 2. Invoke the NLP pipeline: `bin/voice-nlp analyze-session --session-dir {session_dir}`
-3. Inform the user that their voice profile is being generated.
-4. Report back: total questions answered, elapsed time, and the session ID for retrieval via `/human-voice:profile`.
+3. **Name the profile**: Ask the user via AskUserQuestion: "What would you like to name this voice profile? (e.g., 'robert-allen', 'work-voice', 'my-style')" If they decline or provide nothing, auto-generate a slug from writer_type and date (e.g., `business-professional-20260406`).
+4. Pass the slug to the profile-synthesizer agent along with the session directory.
+5. Report back: profile slug, total questions answered, elapsed time, and suggest next steps:
+   - `/human-voice:voice-profiles info {slug}` to view the profile
+   - `/human-voice:voice-profiles export {slug} --to-repo .` to install for Copilot

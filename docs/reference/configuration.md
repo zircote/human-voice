@@ -21,7 +21,7 @@ diataxis_describes: "Environment variables, CLI flags, directory layout, session
 
 ## Directory Layout
 
-### Home directory: `~/.human-voice/`
+### Home directory: `${CLAUDE_PLUGIN_DATA}/`
 
 | Path | Type | Description |
 |---|---|---|
@@ -31,7 +31,7 @@ diataxis_describes: "Environment variables, CLI flags, directory layout, session
 | `profile.json` | File | The most recently completed voice profile. |
 | `voice-prompt.txt` | File | Generated voice prompt derived from the completed profile. |
 
-### Session directory: `~/.human-voice/sessions/{session_id}/`
+### Session directory: `${CLAUDE_PLUGIN_DATA}/sessions/{session_id}/`
 
 | Path | Type | Description |
 |---|---|---|
@@ -93,7 +93,7 @@ When the scoring engine needs question-bank metadata files (`dimension-item-mapp
 2. `MIVOCA_QUESTION_BANK` environment variable
 3. Session-local `metadata/` subdirectory, then the session directory itself
 4. Parent directory walk from the session directory (up to 5 levels), looking for `question-bank/`
-5. `~/.human-voice/question-bank/`
+5. `${CLAUDE_PLUGIN_DATA}/question-bank/`
 
 ## Related documentation
 

@@ -1,6 +1,6 @@
 """Unified configuration loader for the human-voice plugin.
 
-Manages ~/.human-voice/config.json — a single JSON file covering both
+Manages $CLAUDE_PLUGIN_DATA/config.json — a single JSON file covering both
 AI pattern detection and voice interview settings.
 
 Usage as a module::
@@ -27,7 +27,53 @@ import tempfile
 from pathlib import Path
 from typing import Any
 
-CONFIG_DIR = Path.home() / ".human-voice"
+_LEGACY_DIR = Path.home() / ".human-voice"
+
+
+def _resolve_data_dir() -> Path:
+    """Resolve the plugin data directory.
+
+    Prefers ``CLAUDE_PLUGIN_DATA`` (set by Claude Code / Cowork runtime),
+    falls back to ``~/.human-voice`` for standalone / development use.
+    """
+    env = os.environ.get("CLAUDE_PLUGIN_DATA")
+    if env:
+        return Path(env)
+    return _LEGACY_DIR
+
+
+def migrate_legacy_data() -> bool:
+    """Copy data from ~/.human-voice to CLAUDE_PLUGIN_DATA if needed.
+
+    Runs once: if the plugin data dir is not the legacy dir and the legacy
+    dir has data that the plugin data dir lacks, copy it over.
+
+    Returns True if migration occurred.
+    """
+    data_dir = _resolve_data_dir()
+    if data_dir == _LEGACY_DIR:
+        return False
+    if not _LEGACY_DIR.is_dir():
+        return False
+
+    data_dir.mkdir(parents=True, exist_ok=True)
+    migrated = False
+
+    import shutil
+    for item in _LEGACY_DIR.iterdir():
+        target = data_dir / item.name
+        if target.exists():
+            continue
+        if item.is_dir():
+            shutil.copytree(item, target)
+        else:
+            shutil.copy2(item, target)
+        migrated = True
+
+    return migrated
+
+
+CONFIG_DIR = _resolve_data_dir()
 CONFIG_PATH = CONFIG_DIR / "config.json"
 
 
@@ -74,7 +120,7 @@ def get_default_config() -> dict:
             },
         },
         "interview": {
-            "session_storage": "~/.human-voice/sessions",
+            "session_storage": str(CONFIG_DIR / "sessions"),
             "total_estimated_minutes": 35,
             "estimated_questions": 70,
             "format_streak_limit": 5,
@@ -144,8 +190,9 @@ def get_default_config() -> dict:
                 "time_budget_minutes": 3,
             },
             "profile": {
-                "publish_to": "~/.human-voice/profile.json",
-                "injection_to": "~/.human-voice/voice-prompt.txt",
+                "publish_to": str(CONFIG_DIR / "profile.json"),
+                "injection_to": str(CONFIG_DIR / "voice-prompt.txt"),
+                "profiles_dir": str(CONFIG_DIR / "profiles"),
                 "population_means": {
                     "formality_f_score": {"mean": 55.0, "sd": 10.0},
                     "flesch_kincaid_grade": {"mean": 10.0, "sd": 3.0},
@@ -178,7 +225,7 @@ def _deep_merge(base: dict, override: dict) -> dict:
 
 
 def load_config() -> dict:
-    """Load config from ~/.human-voice/config.json, deep-merging with defaults.
+    """Load config from $CLAUDE_PLUGIN_DATA/config.json, deep-merging with defaults.
 
     If config.json doesn't exist, returns defaults.
     If config.json exists but is partial, fills missing keys from defaults.
@@ -193,7 +240,7 @@ def load_config() -> dict:
 
 
 def save_config(config: dict) -> Path:
-    """Write *config* to ~/.human-voice/config.json atomically.
+    """Write *config* to $CLAUDE_PLUGIN_DATA/config.json atomically.
 
     Uses a temporary file in the same directory followed by
     :func:`os.replace` so the write is atomic on POSIX systems.

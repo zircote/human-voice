@@ -17,9 +17,9 @@ Display the full voice profile with dimension scores, calibration, distinctive f
 
 3. **Read profile**: Load `{session_dir}/profile.json`.
 
-4. **Read writing samples**: Load all `{session_dir}/writing-samples/ws-*.json` files (not the `*-analysis.json` files). Extract the `raw_text` and `prompt_type` from each.
+4. **Display formatted profile**:
 
-5. **Display formatted profile**:
+   Do NOT load or display interview writing samples. Interview responses are internal data for the scoring and NLP pipelines. The Example Prose section is always generated fresh from the profile configuration to demonstrate what the plugin produces under this profile's rules.
 
    ```
    ═══════════════════════════════════════════════════
@@ -106,7 +106,7 @@ Display the full voice profile with dimension scores, calibration, distinctive f
 
 ## Display Rules
 
-- **Writing samples**: Show each sample with its `prompt_type` as a section header (SPONTANEOUS, REFLECTIVE, PROFESSIONAL, CREATIVE). Display the `raw_text` as a block quote. These are the user's actual words from the interview — they ARE the voice.
+- **Generated examples (ALWAYS)**: For every profile, regardless of origin, **generate 3-4 prose examples** that demonstrate what writing produced under this profile's rules looks like. Use the dimension scores, mechanics, distinctive features, identity summary, and voice aspirations as constraints. Produce examples across different contexts appropriate to the profile (e.g., a decision email, a code review comment, a postmortem excerpt, a stakeholder explanation, a blog post opening, a meeting decline). The examples prove the profile configuration works — they show the user what the plugin will produce. These are demonstrations of capability, not archive of past writing.
 - **Semantic differential**: Show the top 5 most extreme pairs (furthest from 4.0 neutral). Render as a visual scale using filled/empty circles.
 - **Dimensions**: Show all 8 gold-standard dimensions with self-report, observed, and composite scores. Flag any with calibration delta > 15 with an asterisk.
 - **Calibration**: Show overall self-awareness score, list high-awareness dimensions, blind spots, and aspirational gaps with deltas.
@@ -114,6 +114,6 @@ Display the full voice profile with dimension scores, calibration, distinctive f
 - **Voice stability**: Show stable and adaptive dimensions as comma-separated lists.
 
 ## Edge cases
-- No `profile.json` but state is `complete`: report data integrity issue
-- No writing samples found: skip the Example Prose section
-- No completed sessions: suggest `/voice-interview`
+- No `profile.json` anywhere (not published, not in any session dir): suggest `/voice-interview` or `/voice-design`
+- Session state is not `complete` but profile.json exists: display the profile (state field may be stale)
+- Designed/template profile (no session, no calibration): skip calibration section, generate examples as usual

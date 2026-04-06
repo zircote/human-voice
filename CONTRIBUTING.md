@@ -145,7 +145,7 @@ python3 -m spacy download en_core_web_sm
 Run NLP analysis on a session:
 
 ```bash
-voice-nlp analyze-session --session-dir ~/.human-voice/sessions/{id}/
+voice-nlp analyze-session --session-dir ${CLAUDE_PLUGIN_DATA}/sessions/{id}/
 ```
 
 Analysis output files are written as `*.analysis.json` alongside the source writing samples.

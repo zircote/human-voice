@@ -6,7 +6,7 @@ diataxis_goal: Understand how the passive voice observer works and how to check 
 
 # Continuous Voice Observation
 
-The voice observer protocol runs passively during every Claude Code session. It watches for content you author and silently compares your writing against your voice profile. No manual setup is required beyond having a completed profile at `~/.human-voice/voice-prompt.txt`.
+The voice observer protocol runs passively during every Claude Code session. It watches for content you author and silently compares your writing against your voice profile. No manual setup is required beyond having a completed profile at `${CLAUDE_PLUGIN_DATA}/voice-prompt.txt`.
 
 ## How It Works
 
@@ -59,4 +59,4 @@ recall_memories(query="voice drift observed pattern", namespace="voice-observati
 
 ## Disabling the Observer
 
-The observer is controlled by the SessionStart hook in `hooks/hooks.json`. To disable it, remove or rename the hooks file. The observer reads `~/.human-voice/observer-protocol.md`; deleting that file also disables observation while keeping the voice profile active for content generation.
+The observer is controlled by the SessionStart hook in `hooks/hooks.json`. To disable it, remove or rename the hooks file. The observer reads `${CLAUDE_PLUGIN_DATA}/observer-protocol.md`; deleting that file also disables observation while keeping the voice profile active for content generation.

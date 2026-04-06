@@ -10,7 +10,7 @@ This guide covers how to use the voice profile and validation rules with GitHub 
 
 ## Prerequisites
 
-- A completed voice profile at `~/.human-voice/profile.json`
+- A completed voice profile at `${CLAUDE_PLUGIN_DATA}/profile.json`
 - The human-voice plugin installed
 - GitHub Copilot enabled on the repository
 
@@ -48,7 +48,7 @@ The file `.github/copilot-instructions.md` contains the full voice profile rules
 
 ### Updating After Re-Interview
 
-If you run a new voice interview and the profile changes, update `.github/copilot-instructions.md` with the new rules from `~/.human-voice/voice-prompt.txt`. The voice profile rules in the instructions file are inlined, not referenced by path, so they require manual synchronization.
+If you run a new voice interview and the profile changes, update `.github/copilot-instructions.md` with the new rules from `${CLAUDE_PLUGIN_DATA}/voice-prompt.txt`. The voice profile rules in the instructions file are inlined, not referenced by path, so they require manual synchronization.
 
 ## CI Validation
 

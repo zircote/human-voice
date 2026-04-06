@@ -79,22 +79,24 @@ The profile JSON must include:
 
 Validate the output against `voice-profile.schema.json` before writing. If validation fails, fix the output and retry.
 
-## 7. Publish Active Profile
+## 7. Publish Named Profile
 
-After writing `profile.json` to the session directory, publish it as the active profile:
+After writing `profile.json` to the session directory, publish it as a named profile. The **slug** is provided by the interview conductor (the user chose it at the end of the interview).
 
 ```bash
 python3 -c "
 from lib.profile import publish_active_profile
 import json
 profile = json.load(open('{session_dir}/profile.json'))
-path = publish_active_profile(profile)
-print(f'Active profile published to {path}')
+path = publish_active_profile(profile, slug='{slug}', display_name='{display_name}', origin='interview')
+print(f'Profile published as {slug} -> {path}')
 "
 ```
 
-This writes two files:
-- `~/.human-voice/profile.json` — full voice profile (read by hooks and agents)
-- `~/.human-voice/voice-prompt.txt` — compact injection text for LLM system prompts
+This stores the profile under `$CLAUDE_PLUGIN_DATA/profiles/{slug}/` and activates it, which copies to the top-level well-known locations:
+- `$CLAUDE_PLUGIN_DATA/profile.json` — full voice profile (read by hooks and agents)
+- `$CLAUDE_PLUGIN_DATA/voice-prompt.txt` — compact injection text for LLM system prompts
 
-These are the well-known locations that the voice-reviewer agent, SessionStart hooks, and other tools read to passively apply the user's voice profile.
+The session is also marked as `complete` automatically.
+
+If for any reason you need to publish without a slug (legacy path), omit the slug parameter and it falls back to writing directly to the top-level files.

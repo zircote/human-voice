@@ -19,7 +19,7 @@ Generate a drift report comparing accumulated voice observations against the cur
    recall_memories(query="voice drift observed pattern writing", namespace="voice-observations", mode="hybrid")
    ```
 
-2. **Load profile**: Read `~/.human-voice/profile.json` for current dimension scores. Extract the score for each dimension from the `dimensions` object. Do not use hardcoded values; every user's profile is different.
+2. **Load profile**: Read `${CLAUDE_PLUGIN_DATA}/profile.json` for current dimension scores. Extract the score for each dimension from the `dimensions` object. Do not use hardcoded values; every user's profile is different.
 
 3. **Compare**: For each observation, compare against the dimension scores loaded from the profile in step 2. Cover all gold standard dimensions (formality, emotional_tone, personality, complexity, audience_awareness, authority, narrativity, humor) and all gap dimensions that have scores. Also compare mechanics observations (contractions, Oxford comma, punctuation style) against the `mechanics` section of the profile.
 

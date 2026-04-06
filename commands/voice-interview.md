@@ -11,7 +11,7 @@ Start a new voice elicitation interview session.
 
 ## Procedure
 
-1. **Create session**: Run `bin/voice-session create` to generate a new session. This creates `~/.human-voice/sessions/{session_id}/` with `state.json` and `responses.jsonl`. Capture the session_id and session_dir path from the output.
+1. **Create session**: Run `bin/voice-session create` to generate a new session. This creates `${CLAUDE_PLUGIN_DATA}/sessions/{session_id}/` with `state.json` and `responses.jsonl`. Capture the session_id and session_dir path from the output.
 
 2. **Load question bank**: Verify question bank modules exist in `question-bank/modules/`.
 

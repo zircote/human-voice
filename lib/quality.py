@@ -594,7 +594,7 @@ def main() -> None:
     cs.add_argument(
         "--session-dir",
         required=True,
-        help="Path to session directory (e.g. ~/.human-voice/sessions/{id}/)",
+        help="Path to session directory (e.g. $CLAUDE_PLUGIN_DATA/sessions/{id}/)",
     )
     cs.set_defaults(func=_cli_check_session)
 

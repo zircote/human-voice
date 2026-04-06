@@ -257,7 +257,7 @@ All skill functionality works without Subcog. Memory integration is additive:
 
 This protocol runs passively via the SessionStart hook. It does not require manual invocation.
 
-When the user authors content during a session, silently observe their writing and compare against the voice profile at `~/.human-voice/voice-prompt.txt`. Only observe text the user composed (not pasted external text, not AI-generated text). See `~/.human-voice/observer-protocol.md` for the full observation rules.
+When the user authors content during a session, silently observe their writing and compare against the voice profile at `${CLAUDE_PLUGIN_DATA}/voice-prompt.txt`. Only observe text the user composed (not pasted external text, not AI-generated text). See `${CLAUDE_PLUGIN_DATA}/observer-protocol.md` for the full observation rules.
 
 Use `/human-voice:voice-drift` to report accumulated observations and drift from the profile.
 
