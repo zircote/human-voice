@@ -7,11 +7,11 @@ allowed-tools: Read, Bash(python3:*), Bash(source:*), Glob
 
 # /sessions — List All Interview Sessions
 
-Display a summary of all mivoca interview sessions stored locally.
+Display a summary of all voice interview sessions stored locally.
 
 ## Procedure
 
-1. **List sessions**: Run `bin/mivoca-session list` to get all sessions as JSON.
+1. **List sessions**: Run `bin/voice-session list` to get all sessions as JSON.
 
 2. **Display table**: Format as:
    ```

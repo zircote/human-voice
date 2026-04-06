@@ -9,11 +9,11 @@ All schemas use JSON Schema Draft 2020-12. Schema files are located in `question
 
 | Schema | File | ID |
 |---|---|---|
-| [Question](#question) | `question.schema.json` | `https://mivoca.zircote.com/schemas/question.schema.json` |
-| [Response](#response) | `response.schema.json` | `https://mivoca.zircote.com/schemas/response.schema.json` |
-| [Session State](#session-state) | `session-state.schema.json` | `https://mivoca.zircote.com/schemas/session-state.schema.json` |
-| [Voice Profile](#voice-profile) | `voice-profile.schema.json` | `https://mivoca.zircote.com/schemas/voice-profile.schema.json` |
-| [Writing Analysis](#writing-analysis) | `writing-analysis.schema.json` | `https://mivoca.zircote.com/schemas/writing-analysis.schema.json` |
+| [Question](#question) | `question.schema.json` | `https://voice.zircote.com/schemas/question.schema.json` |
+| [Response](#response) | `response.schema.json` | `https://voice.zircote.com/schemas/response.schema.json` |
+| [Session State](#session-state) | `session-state.schema.json` | `https://voice.zircote.com/schemas/session-state.schema.json` |
+| [Voice Profile](#voice-profile) | `voice-profile.schema.json` | `https://voice.zircote.com/schemas/voice-profile.schema.json` |
+| [Writing Analysis](#writing-analysis) | `writing-analysis.schema.json` | `https://voice.zircote.com/schemas/writing-analysis.schema.json` |
 
 ---
 

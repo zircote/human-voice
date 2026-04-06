@@ -1,4 +1,4 @@
-"""Branching evaluator for the mivoca voice elicitation engine.
+"""Branching evaluator for the voice elicitation engine.
 
 Determines interview routing based on screening question responses,
 manages module sequencing by writer type, and evaluates deep-dive
@@ -350,7 +350,7 @@ def _extract_after_module(position: str, phase_modules: list[str]) -> str:
 def _build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(
         prog="python -m lib.branching",
-        description="Branching evaluator for the mivoca voice elicitation engine.",
+        description="Branching evaluator for the voice elicitation engine.",
     )
     sub = parser.add_subparsers(dest="command", required=True)
 

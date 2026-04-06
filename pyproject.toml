@@ -3,7 +3,7 @@ requires = ["hatchling"]
 build-backend = "hatchling.build"
 
 [project]
-name = "mivoca"
+name = "voice"
 version = "0.1.0"
 description = "Adaptive interview engine for writing style and voice elicitation"
 requires-python = ">=3.10"
@@ -20,7 +20,7 @@ scoring = [
     "numpy>=1.24",
 ]
 all = [
-    "mivoca[nlp,scoring]",
+    "voice[nlp,scoring]",
 ]
 dev = [
     "pytest>=7.0",

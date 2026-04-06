@@ -15,7 +15,7 @@ Each executable is a thin bash wrapper that delegates to a Python module via the
 
 ---
 
-### mivoca-session
+### voice-session
 
 Session lifecycle management. Delegates to `lib.session`.
 
@@ -36,22 +36,22 @@ All subcommands return JSON. `create`, `load`, `pause`, and `resume` return the 
 #### Example
 
 ```bash
-mivoca-session create
+voice-session create
 # {"session_id": "a1b2c3d4-...", "state": "init", ...}
 
-mivoca-session load a1b2c3d4-e5f6-7890-abcd-ef1234567890
+voice-session load a1b2c3d4-e5f6-7890-abcd-ef1234567890
 # {"session_id": "a1b2c3d4-...", "state": "in_progress", ...}
 
-mivoca-session list
+voice-session list
 # [{"id": "a1b2c3d4-...", "state": "paused", ...}, ...]
 
-mivoca-session pause a1b2c3d4-e5f6-7890-abcd-ef1234567890
-mivoca-session resume a1b2c3d4-e5f6-7890-abcd-ef1234567890
+voice-session pause a1b2c3d4-e5f6-7890-abcd-ef1234567890
+voice-session resume a1b2c3d4-e5f6-7890-abcd-ef1234567890
 ```
 
 ---
 
-### mivoca-branching
+### voice-branching
 
 Interview routing evaluator. Delegates to `lib.branching`.
 
@@ -74,12 +74,12 @@ Interview routing evaluator. Delegates to `lib.branching`.
 #### Example
 
 ```bash
-mivoca-branching evaluate-route \
+voice-branching evaluate-route \
   --responses '{"M01-Q05": "business", "M01-Q10": 5}'
 
-mivoca-branching module-sequence --writer-type business_professional
+voice-branching module-sequence --writer-type business_professional
 
-mivoca-branching check-triggers \
+voice-branching check-triggers \
   --module M03 \
   --state ~/.human-voice/sessions/abc123/state.json \
   --responses ~/.human-voice/sessions/abc123/responses.jsonl
@@ -87,7 +87,7 @@ mivoca-branching check-triggers \
 
 ---
 
-### mivoca-sequencer
+### voice-sequencer
 
 Question sequencing engine. Delegates to `lib.sequencer`.
 
@@ -115,16 +115,16 @@ Question sequencing engine. Delegates to `lib.sequencer`.
 #### Example
 
 ```bash
-mivoca-sequencer next-question \
+voice-sequencer next-question \
   --state ~/.human-voice/sessions/abc123/state.json \
   --responses ~/.human-voice/sessions/abc123/responses.jsonl
 
-mivoca-sequencer active-modules --writer-type academic_technical
+voice-sequencer active-modules --writer-type academic_technical
 ```
 
 ---
 
-### mivoca-quality
+### voice-quality
 
 Satisficing and quality detection. Delegates to `lib.quality`.
 
@@ -160,20 +160,20 @@ Satisficing and quality detection. Delegates to `lib.quality`.
 #### Example
 
 ```bash
-mivoca-quality check-response \
+voice-quality check-response \
   --response '{"value": 3, "duration_ms": 800, "question_type": "likert_scale"}' \
   --recent '[...]' \
   --question '{"estimated_seconds": 15}'
 
-mivoca-quality check-session \
+voice-quality check-session \
   --session-dir ~/.human-voice/sessions/a1b2c3d4/
 ```
 
 ---
 
-### mivoca-nlp
+### voice-nlp
 
-Stylometric NLP analysis pipeline. Delegates to `mivoca_nlp`.
+Stylometric NLP analysis pipeline. Delegates to `voice_nlp`.
 
 #### Global Options
 
@@ -195,19 +195,19 @@ Each analysis produces a JSON file conforming to `writing-analysis.schema.json`.
 #### Example
 
 ```bash
-mivoca-nlp analyze \
+voice-nlp analyze \
   --input ~/.human-voice/sessions/abc123/writing-samples/sample-01.json \
   --output analysis.json
 
-mivoca-nlp analyze-session \
+voice-nlp analyze-session \
   --session-dir ~/.human-voice/sessions/abc123/
 ```
 
 ---
 
-### mivoca-scoring
+### voice-scoring
 
-Scoring engine. Delegates to `mivoca_scoring`.
+Scoring engine. Delegates to `voice_scoring`.
 
 #### Subcommands
 
@@ -262,7 +262,7 @@ Writes results to `{session-dir}/scores/self-report.json` containing:
 #### Example
 
 ```bash
-mivoca-scoring score \
+voice-scoring score \
   --session-dir ~/.human-voice/sessions/a1b2c3d4/
 ```
 
@@ -272,7 +272,7 @@ mivoca-scoring score \
 
 Slash commands are Claude Code custom commands defined in `commands/`. They orchestrate multi-step interview workflows using the bin/ executables and direct file operations.
 
-### /mivoca:interview
+### /voice:interview
 
 Start a new voice elicitation interview session.
 
@@ -283,7 +283,7 @@ Start a new voice elicitation interview session.
 | **Initializes** | `state.json`, `responses.json`, `scores.json` |
 | **Behavior** | Creates a new session directory, then begins an interactive voice elicitation interview. Questions are presented one at a time in conversational format. The participant types responses directly and may type `pause` at any time to suspend the session. On completion, scoring results are written to the session's `scores/` directory. |
 
-### /mivoca:resume
+### /voice:resume
 
 Resume a paused or interrupted interview session.
 
@@ -293,7 +293,7 @@ Resume a paused or interrupted interview session.
 | **Arguments** | Optional session ID (prompts for selection if omitted) |
 | **Behavior** | Scans `~/.human-voice/sessions/` for sessions with status `paused` or `in_progress`, presents a selection table, validates session integrity, then resumes the interview conductor from the exact pause point. |
 
-### /mivoca:status
+### /voice:status
 
 Display progress and status of an interview session.
 
@@ -303,7 +303,7 @@ Display progress and status of an interview session.
 | **Arguments** | Optional session ID (defaults to most recently updated) |
 | **Output** | Session metadata, questions answered vs. estimated total, modules completed, current position, estimated time remaining, and provisional dimension scores. |
 
-### /mivoca:profile
+### /voice:profile
 
 View a completed voice profile.
 
@@ -314,7 +314,7 @@ View a completed voice profile.
 | **Requires** | Session status `complete` and `profile.json` present |
 | **Output** | Formatted display of writer type, dimension scores (self-report, computed, delta), calibration summary, distinctive features, and recommendations. |
 
-### /mivoca:sessions
+### /voice:sessions
 
 List all interview sessions.
 

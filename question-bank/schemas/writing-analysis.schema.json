@@ -1,7 +1,7 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://mivoca.zircote.com/schemas/writing-analysis.schema.json",
-  "title": "Mivoca Writing Analysis",
+  "$id": "https://voice.zircote.com/schemas/writing-analysis.schema.json",
+  "title": "Voice Writing Analysis",
   "description": "Output of the NLP analysis pipeline for a single writing sample. Contains comprehensive lexical, syntactic, pragmatic, discourse, and formatting features extracted from the participant's text, along with readability scores and LIWC-equivalent psycholinguistic markers.",
   "type": "object",
   "required": [

@@ -1,6 +1,6 @@
 ---
 diataxis_type: how-to
-diataxis_goal: Add new questions, modules, or branching rules to the mivoca question bank
+diataxis_goal: Add new questions, modules, or branching rules to the voice question bank
 ---
 
 # Adding Questions to the Question Bank

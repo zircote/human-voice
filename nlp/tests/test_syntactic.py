@@ -5,8 +5,8 @@ from __future__ import annotations
 import spacy
 from spacy.tokens import Doc
 
-from mivoca_nlp.stages.tokenizer import tokenize
-from mivoca_nlp.stages.syntactic import analyze_syntactic
+from voice_nlp.stages.tokenizer import tokenize
+from voice_nlp.stages.syntactic import analyze_syntactic
 
 
 class TestMeanSentenceLength:

@@ -12,26 +12,26 @@ diataxis_goal: "Pause and resume a voice elicitation interview session"
 
 ## Check session state
 
-3. Run `mivoca-session list` to view all sessions. The output includes status, question count and last updated timestamp for each session.
+3. Run `voice-session list` to view all sessions. The output includes status, question count and last updated timestamp for each session.
 
 ```bash
-mivoca-session list
+voice-session list
 ```
 
 4. Locate the paused session in the output. Confirm its status shows `paused`.
 
 ## Resume a paused session
 
-5. Use the `/mivoca:resume` slash command in Claude Code. If you have a single paused session, it resumes automatically. If you have multiple paused sessions, the command presents a selection table.
+5. Use the `/voice:resume` slash command in Claude Code. If you have a single paused session, it resumes automatically. If you have multiple paused sessions, the command presents a selection table.
 
 ```
-/mivoca:resume
+/voice:resume
 ```
 
 6. Alternatively, specify the session ID directly:
 
 ```
-/mivoca:resume a1b2c3d4-e5f6-7890-abcd-ef1234567890
+/voice:resume a1b2c3d4-e5f6-7890-abcd-ef1234567890
 ```
 
 7. The interview continues from the exact question where you paused. Previously recorded responses remain intact and are not re-asked.
@@ -44,5 +44,5 @@ Session state (current module, branch path, quality flags) is stored in `state.j
 
 ## Related documentation
 
-- [CLI Reference](../reference/cli.md) for `mivoca-session` subcommands
+- [CLI Reference](../reference/cli.md) for `voice-session` subcommands
 - [Getting Started tutorial](../tutorials/getting-started.md) for running a complete session

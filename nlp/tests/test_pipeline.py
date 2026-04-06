@@ -1,10 +1,10 @@
-"""Integration tests for the mivoca NLP pipeline."""
+"""Integration tests for the voice NLP pipeline."""
 
 from __future__ import annotations
 
 import spacy
 
-from mivoca_nlp.pipeline import run_pipeline
+from voice_nlp.pipeline import run_pipeline
 
 
 class TestRunPipelineReturnsSections:

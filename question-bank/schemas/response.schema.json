@@ -1,7 +1,7 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://mivoca.zircote.com/schemas/response.schema.json",
-  "title": "Mivoca Response",
+  "$id": "https://voice.zircote.com/schemas/response.schema.json",
+  "title": "Voice Response",
   "description": "Captures a single participant response to a question during a voice elicitation session. Includes the raw and structured answer, precise timing telemetry, and quality flags for satisficing detection.",
   "type": "object",
   "required": [

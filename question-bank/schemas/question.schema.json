@@ -1,7 +1,7 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://mivoca.zircote.com/schemas/question.schema.json",
-  "title": "Mivoca Question",
+  "$id": "https://voice.zircote.com/schemas/question.schema.json",
+  "title": "Voice Question",
   "description": "Defines a single question in the voice elicitation interview engine. Each question belongs to a module, has a specific type, optional response options, follow-up branching logic, scoring rules, and rich metadata for sequencing and bias mitigation.",
   "type": "object",
   "required": [

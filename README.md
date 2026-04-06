@@ -250,9 +250,9 @@ human-voice/
 └── README.md
 ```
 
-## Voice Elicitation (Mivoca)
+## Voice Elicitation (Voice)
 
-Mivoca is an experimental voice elicitation system that captures a writer's voice through a 67-question adaptive interview, computational NLP analysis of writing samples, and automated profile synthesis. It produces two independent profiles per writer: a self-reported profile (what the writer believes about their voice) and a computationally observed profile (what their writing exhibits). A calibration layer identifies where these profiles agree and where they diverge.
+Voice is an experimental voice elicitation system that captures a writer's voice through a 67-question adaptive interview, computational NLP analysis of writing samples, and automated profile synthesis. It produces two independent profiles per writer: a self-reported profile (what the writer believes about their voice) and a computationally observed profile (what their writing exhibits). A calibration layer identifies where these profiles agree and where they diverge.
 
 > **Status**: The scoring pipeline produces numeric dimension scores but these scores have not been validated against external psychometric instruments. The NLP analysis uses standard stylometric measures (type-token ratio, Flesch-Kincaid, hedge density, etc.) but the mapping from NLP metrics to voice dimensions is hand-authored and unvalidated. The question bank is based on published findings in voice elicitation research but the specific item-to-dimension mappings are untested for reliability (Cronbach alpha) across a population. This is a functional prototype, not a finished measurement tool.
 
@@ -260,12 +260,12 @@ Mivoca is an experimental voice elicitation system that captures a writer's voic
 
 | Tool | Purpose |
 |------|---------|
-| `mivoca-session` | Session lifecycle: create, load, list, pause, resume |
-| `mivoca-scoring` | Score a completed session and produce dimension profiles |
-| `mivoca-nlp` | Run the stylometric NLP analysis pipeline on writing samples |
-| `mivoca-branching` | Evaluate interview routing and module sequencing |
-| `mivoca-sequencer` | Determine the next question based on session state |
-| `mivoca-quality` | Detect satisficing and response quality issues |
+| `voice-session` | Session lifecycle: create, load, list, pause, resume |
+| `voice-scoring` | Score a completed session and produce dimension profiles |
+| `voice-nlp` | Run the stylometric NLP analysis pipeline on writing samples |
+| `voice-branching` | Evaluate interview routing and module sequencing |
+| `voice-sequencer` | Determine the next question based on session state |
+| `voice-quality` | Detect satisficing and response quality issues |
 
 ### Getting Started
 

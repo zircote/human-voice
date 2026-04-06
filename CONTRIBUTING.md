@@ -41,14 +41,14 @@ node skills/human-voice/scripts/validate-character-restrictions.js docs/
 | Directory | Purpose |
 |-----------|---------|
 | `skills/human-voice/` | Core skill and detection patterns |
-| `skills/mivoca/` | Voice elicitation interview skill |
+| `skills/voice/` | Voice elicitation interview skill |
 | `commands/` | Slash command definitions |
 | `agents/` | Agent configurations (interview, synthesizer, reviewer) |
 | `hooks/` | Plugin hooks (SessionStart observer) |
-| `bin/` | CLI tools (mivoca-session, mivoca-scoring, etc.) |
+| `bin/` | CLI tools (voice-session, voice-scoring, etc.) |
 | `question-bank/` | Interview modules, schemas, scoring config |
-| `scoring/src/mivoca_scoring/` | Self-report scoring engine |
-| `nlp/src/mivoca_nlp/` | NLP stylometric analysis pipeline |
+| `scoring/src/voice_scoring/` | Self-report scoring engine |
+| `nlp/src/voice_nlp/` | NLP stylometric analysis pipeline |
 | `lib/` | Core library (session, branching, quality, config) |
 | `docs/` | Documentation (Diataxis framework) |
 | `.github/agents/` | GitHub Copilot custom agents |
@@ -56,7 +56,7 @@ node skills/human-voice/scripts/validate-character-restrictions.js docs/
 
 ### Working with the Scoring Engine
 
-The scoring pipeline is at `scoring/src/mivoca_scoring/`. Key files:
+The scoring pipeline is at `scoring/src/voice_scoring/`. Key files:
 
 - `cli.py`: CLI entry point, metadata discovery, question bank loading
 - `self_report.py`: Per-dimension subscale scoring, scoring_map resolution
@@ -110,7 +110,7 @@ allowed-tools:
 ---
 ```
 
-## Mivoca Development
+## Voice Development
 
 ### Running Scoring Tests
 
@@ -145,14 +145,14 @@ python3 -m spacy download en_core_web_sm
 Run NLP analysis on a session:
 
 ```bash
-mivoca-nlp analyze-session --session-dir ~/.human-voice/sessions/{id}/
+voice-nlp analyze-session --session-dir ~/.human-voice/sessions/{id}/
 ```
 
 Analysis output files are written as `*.analysis.json` alongside the source writing samples.
 
 ### Scoring Engine Architecture
 
-The scoring pipeline follows a linear five-stage flow implemented in `scoring/src/mivoca_scoring/cli.py`:
+The scoring pipeline follows a linear five-stage flow implemented in `scoring/src/voice_scoring/cli.py`:
 
 1. `run_quality_checks` validates response data for satisficing patterns
 2. `normalize_semantic_differentials` converts raw bipolar ratings to dimension scores

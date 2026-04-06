@@ -1,10 +1,10 @@
-"""Tests for mivoca_scoring.profile_builder module."""
+"""Tests for voice_scoring.profile_builder module."""
 
 from __future__ import annotations
 
 import pytest
 
-from mivoca_scoring.profile_builder import (
+from voice_scoring.profile_builder import (
     build_profile,
     compute_voice_stability,
     detect_distinctive_features,
@@ -139,7 +139,7 @@ class TestBuildProfile:
 
     def test_basic_profile(self, mock_responses, mock_dimension_mapping, mock_scoring_weights):
         """Build profile returns expected top-level keys."""
-        from mivoca_scoring.self_report import score_self_report
+        from voice_scoring.self_report import score_self_report
 
         sr_scores = score_self_report(
             mock_responses, mock_dimension_mapping, mock_scoring_weights
@@ -152,7 +152,7 @@ class TestBuildProfile:
 
     def test_profile_with_observed(self, mock_responses, mock_dimension_mapping, mock_scoring_weights):
         """Profile merges SR and observed scores using tier weights."""
-        from mivoca_scoring.self_report import score_self_report
+        from voice_scoring.self_report import score_self_report
 
         sr_scores = score_self_report(
             mock_responses, mock_dimension_mapping, mock_scoring_weights
@@ -170,7 +170,7 @@ class TestBuildProfile:
 
     def test_profile_stability_included(self, mock_responses, mock_dimension_mapping, mock_scoring_weights):
         """Profile includes voice stability when responses and mapping provided."""
-        from mivoca_scoring.self_report import score_self_report
+        from voice_scoring.self_report import score_self_report
 
         sr_scores = score_self_report(
             mock_responses, mock_dimension_mapping, mock_scoring_weights

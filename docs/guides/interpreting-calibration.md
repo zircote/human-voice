@@ -7,12 +7,12 @@ diataxis_goal: "Interpret scoring results and calibration data from a completed 
 
 ## Prerequisites
 
-- A completed Mivoca session with scoring results in `scores/self-report.json`
+- A completed Voice session with scoring results in `scores/self-report.json`
 - Familiarity with the [Dimensions Reference](../reference/dimensions.md)
 
 ## Open the scoring output
 
-1. Locate your session directory. Run `mivoca-session list` to find the session ID.
+1. Locate your session directory. Run `voice-session list` to find the session ID.
 2. Open `~/.human-voice/sessions/{session_id}/scores/self-report.json` in a text editor or pipe it through `python3 -m json.tool` for formatted output.
 
 ## Read the self_report_scores section
@@ -74,7 +74,7 @@ Re-interview when any of the following conditions apply:
 - SD (semantic differential) cross-validation shows divergence exceeding 30 points on more than three dimensions, suggesting the writer may have been performing rather than responding naturally
 - The writer requests a re-interview after reviewing their profile
 
-To start a new session, run `mivoca-session create` and begin the interview again with `/mivoca:interview`.
+To start a new session, run `voice-session create` and begin the interview again with `/voice:interview`.
 
 ## Related documentation
 

@@ -1,4 +1,4 @@
-"""Tests for mivoca_scoring.self_report module."""
+"""Tests for voice_scoring.self_report module."""
 
 from __future__ import annotations
 
@@ -7,7 +7,7 @@ import random
 import numpy as np
 import pytest
 
-from mivoca_scoring.self_report import cronbachs_alpha, normalize_response, score_self_report
+from voice_scoring.self_report import cronbachs_alpha, normalize_response, score_self_report
 
 
 # ---------- normalize_response ----------

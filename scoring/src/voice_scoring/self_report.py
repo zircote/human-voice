@@ -1,6 +1,6 @@
 """Per-dimension subscale scoring for self-report responses.
 
-Implements the mivoca scoring algorithm:
+Implements the voice scoring algorithm:
 
 1. Get contributing items per dimension from dimension-item-mapping.
 2. Normalize each response to 0-100 scale based on question type.

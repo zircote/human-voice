@@ -1,4 +1,4 @@
-"""Question sequencer for the mivoca voice elicitation engine.
+"""Question sequencer for the voice elicitation engine.
 
 Given the current session state, question bank, and branching rules, determines
 the next question to present. Handles module transitions, format alternation
@@ -361,7 +361,7 @@ def _get_module_transition_message(module_id: str) -> str:
 
 def main() -> None:
     parser = argparse.ArgumentParser(
-        description="Mivoca question sequencer — determine the next question."
+        description="Voice question sequencer — determine the next question."
     )
     sub = parser.add_subparsers(dest="command")
 

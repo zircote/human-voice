@@ -5,8 +5,8 @@ from __future__ import annotations
 import spacy
 from spacy.tokens import Doc
 
-from mivoca_nlp.stages.composite import analyze_composite
-from mivoca_nlp.pipeline import run_pipeline
+from voice_nlp.stages.composite import analyze_composite
+from voice_nlp.pipeline import run_pipeline
 
 
 class TestFormalityFScore:

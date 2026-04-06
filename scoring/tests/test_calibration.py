@@ -1,10 +1,10 @@
-"""Tests for mivoca_scoring.calibration module."""
+"""Tests for voice_scoring.calibration module."""
 
 from __future__ import annotations
 
 import pytest
 
-from mivoca_scoring.calibration import calibrate
+from voice_scoring.calibration import calibrate
 
 
 def _make_sr_scores(dim: str, score: float) -> dict:

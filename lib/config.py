@@ -1,7 +1,7 @@
 """Unified configuration loader for the human-voice plugin.
 
 Manages ~/.human-voice/config.json — a single JSON file covering both
-AI pattern detection and mivoca interview settings.
+AI pattern detection and voice interview settings.
 
 Usage as a module::
 

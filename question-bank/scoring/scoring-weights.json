@@ -205,6 +205,6 @@
     "sd_normalization": "Semantic differential scores are on a 1-7 scale. Normalize to 0-100 before applying the integration formula: normalized = ((raw - 1) / 6) * 100",
     "module_items_mean": "Compute mean across all answered module items for the dimension. Missing items are excluded (not zero-filled) provided min_items_for_score is met.",
     "tier_2_adjustment": "For Tier 2 (moderate self-reportability) dimensions, consider applying projective item preference when self-report and projective scores diverge significantly (see deep-dive-triggers.json self_perception_divergence).",
-    "non_scorable_exclusion": "Items of type open_ended, writing_sample, and process_narration are excluded from self-report scoring. They are scored computationally by the NLP pipeline (mivoca-nlp analyze-session) and contribute to observed scores in the calibration step."
+    "non_scorable_exclusion": "Items of type open_ended, writing_sample, and process_narration are excluded from self-report scoring. They are scored computationally by the NLP pipeline (voice-nlp analyze-session) and contribute to observed scores in the calibration step."
   }
 }

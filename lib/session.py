@@ -1,4 +1,4 @@
-"""Session management for the Mivoca voice elicitation engine.
+"""Session management for the Voice elicitation engine.
 
 Handles the full lifecycle of an interview session including creation,
 persistence, pause/resume, response recording, and writing sample storage.
@@ -317,7 +317,7 @@ def update_state_field(session_id: str, **kwargs: Any) -> dict:
 def _build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(
         prog="python -m lib.session",
-        description="Mivoca session management CLI",
+        description="Voice session management CLI",
     )
     sub = parser.add_subparsers(dest="command", required=True)
 

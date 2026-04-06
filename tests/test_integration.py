@@ -16,10 +16,10 @@ spacy = pytest.importorskip("spacy", reason="spacy required for integration test
 
 from lib.session import create_session, record_response, save_writing_sample, save_session
 from lib.branching import evaluate_primary_route
-from mivoca_nlp.pipeline import run_pipeline
-from mivoca_scoring.self_report import normalize_response, cronbachs_alpha
-from mivoca_scoring.calibration import calibrate
-from mivoca_scoring.profile_builder import build_profile, detect_distinctive_features
+from voice_nlp.pipeline import run_pipeline
+from voice_scoring.self_report import normalize_response, cronbachs_alpha
+from voice_scoring.calibration import calibrate
+from voice_scoring.profile_builder import build_profile, detect_distinctive_features
 
 
 PROJECT_ROOT = Path(__file__).resolve().parent.parent

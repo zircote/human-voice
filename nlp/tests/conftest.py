@@ -1,4 +1,4 @@
-"""Shared pytest fixtures for mivoca NLP pipeline tests."""
+"""Shared pytest fixtures for voice NLP pipeline tests."""
 
 from __future__ import annotations
 

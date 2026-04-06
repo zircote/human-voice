@@ -15,9 +15,9 @@ diataxis_describes: "Environment variables, CLI flags, directory layout, session
 
 | Flag | Command | Purpose |
 |---|---|---|
-| `--session-dir PATH` | `mivoca-scoring score`, `mivoca-nlp analyze-session`, `mivoca-quality check-session` | Path to a session directory. Required for all session-scoped operations. |
-| `--metadata-dir PATH` | `mivoca-scoring score` | Path to question-bank directory containing scoring metadata. Overrides automatic discovery and the `MIVOCA_QUESTION_BANK` environment variable. |
-| `--model NAME` | `mivoca-nlp` | spaCy language model to use. Defaults to `en_core_web_sm`. |
+| `--session-dir PATH` | `voice-scoring score`, `voice-nlp analyze-session`, `voice-quality check-session` | Path to a session directory. Required for all session-scoped operations. |
+| `--metadata-dir PATH` | `voice-scoring score` | Path to question-bank directory containing scoring metadata. Overrides automatic discovery and the `MIVOCA_QUESTION_BANK` environment variable. |
+| `--model NAME` | `voice-nlp` | spaCy language model to use. Defaults to `en_core_web_sm`. |
 
 ## Directory Layout
 
@@ -25,7 +25,7 @@ diataxis_describes: "Environment variables, CLI flags, directory layout, session
 
 | Path | Type | Description |
 |---|---|---|
-| `config.json` | File | Global Mivoca configuration. |
+| `config.json` | File | Global Voice configuration. |
 | `sessions/` | Directory | Contains all session directories, keyed by UUID. |
 | `question-bank/` | Directory | Default location for question bank data. Used as a fallback during metadata discovery. |
 | `profile.json` | File | The most recently completed voice profile. |
@@ -79,7 +79,7 @@ JSON object containing session state.
 
 ### scores/self-report.json
 
-JSON object containing the full scoring pipeline output. See the [CLI Reference](cli.md) `mivoca-scoring score` output section for field descriptions.
+JSON object containing the full scoring pipeline output. See the [CLI Reference](cli.md) `voice-scoring score` output section for field descriptions.
 
 ### Writing sample files
 

@@ -1,4 +1,4 @@
-"""CLI entry point for the mivoca scoring engine.
+"""CLI entry point for the voice scoring engine.
 
 Provides the ``score`` command which reads a completed session directory,
 runs the full scoring pipeline, and writes results to scores/self-report.json.
@@ -12,11 +12,11 @@ import sys
 from pathlib import Path
 from typing import Any
 
-from mivoca_scoring.self_report import score_self_report
-from mivoca_scoring.semantic_differential import normalize_semantic_differentials
-from mivoca_scoring.quality_checks import run_quality_checks
-from mivoca_scoring.calibration import calibrate
-from mivoca_scoring.profile_builder import build_profile
+from voice_scoring.self_report import score_self_report
+from voice_scoring.semantic_differential import normalize_semantic_differentials
+from voice_scoring.quality_checks import run_quality_checks
+from voice_scoring.calibration import calibrate
+from voice_scoring.profile_builder import build_profile
 
 
 def _load_jsonl(path: Path) -> list[dict[str, Any]]:
@@ -327,8 +327,8 @@ def cmd_score(args: argparse.Namespace) -> None:
 def main(argv: list[str] | None = None) -> None:
     """CLI main entry point."""
     parser = argparse.ArgumentParser(
-        prog="mivoca-scoring",
-        description="Score mivoca self-report interview sessions.",
+        prog="voice-scoring",
+        description="Score voice self-report interview sessions.",
     )
     subparsers = parser.add_subparsers(dest="command")
 

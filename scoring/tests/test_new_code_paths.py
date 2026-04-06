@@ -11,9 +11,9 @@ import pytest
 import json
 from pathlib import Path
 
-from mivoca_scoring.cli import _flatten_dimension_mapping, _flatten_scoring_weights, _load_question_bank
-from mivoca_scoring.profile_builder import assemble_voice_profile, compute_voice_stability
-from mivoca_scoring.self_report import (
+from voice_scoring.cli import _flatten_dimension_mapping, _flatten_scoring_weights, _load_question_bank
+from voice_scoring.profile_builder import assemble_voice_profile, compute_voice_stability
+from voice_scoring.self_report import (
     _build_response_lookup,
     _infer_question_type,
     _resolve_scoring_map_value,

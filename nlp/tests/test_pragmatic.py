@@ -4,7 +4,7 @@ from __future__ import annotations
 
 from spacy.tokens import Doc
 
-from mivoca_nlp.stages.pragmatic import analyze_pragmatic
+from voice_nlp.stages.pragmatic import analyze_pragmatic
 
 
 class TestHedgeCount:

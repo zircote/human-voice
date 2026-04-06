@@ -1,7 +1,7 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://mivoca.zircote.com/schemas/session-state.schema.json",
-  "title": "Mivoca Session State",
+  "$id": "https://voice.zircote.com/schemas/session-state.schema.json",
+  "title": "Voice Session State",
   "description": "Represents the complete state of a voice elicitation interview session at any point in time. Tracks progress through modules, branching decisions, quality metrics, and deep dive triggers to enable pause/resume and adaptive interview flow.",
   "type": "object",
   "required": [

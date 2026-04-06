@@ -9,7 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
-- **Mivoca Voice Elicitation Engine**: Adaptive interview system for building multi-dimensional voice profiles
+- **Voice Elicitation Engine**: Adaptive interview system for building multi-dimensional voice profiles
   - 130 questions across 12 thematic modules + 20 semantic differential pairs
   - 4 writer-type branches (Creative, Business, Academic, Personal)
   - Dual-output architecture: self-reported preferences + computational observation
@@ -20,7 +20,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Active profile published to `~/.human-voice/profile.json` for cross-session use
 - **New Commands**: `interview`, `resume`, `status`, `profile`, `sessions`
 - **New Agents**: `interview-conductor`, `profile-synthesizer`
-- **New Skill**: `mivoca` for voice elicitation
+- **New Skill**: `voice` for voice elicitation
 - **Documentation**: Diátaxis-structured docs (tutorial, how-to, reference, explanation)
 - **Tests**: 118 pytest tests covering session, branching, sequencing, quality, NLP, scoring, integration
 - **CLI Tools**: 6 bin/ executables for session, branching, sequencer, quality, NLP, scoring

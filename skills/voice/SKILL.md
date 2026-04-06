@@ -1,5 +1,5 @@
 ---
-name: mivoca
+name: voice
 description: This skill should be used when the user asks to start a voice interview, elicit writing style, build a voice profile, analyze writing voice, capture writing style, run voice elicitation, understand my writing style, profile my voice, or needs to conduct an adaptive interview that produces a multi-dimensional voice coordinate profile.
 allowed-tools:
   - Read
@@ -11,9 +11,9 @@ allowed-tools:
   - Agent
 ---
 
-# Mivoca — Voice Elicitation Interview Engine
+# Voice — Voice Elicitation Interview Engine
 
-Mivoca is an adaptive voice elicitation interview engine that builds a comprehensive written-voice profile through a structured conversational interview. The engine administers 60-80 questions across 12 thematic modules, adapting its path based on the participant's responses and detected writer type.
+Voice is an adaptive voice elicitation interview engine that builds a comprehensive written-voice profile through a structured conversational interview. The engine administers 60-80 questions across 12 thematic modules, adapting its path based on the participant's responses and detected writer type.
 
 ## Architecture Overview
 
@@ -45,7 +45,7 @@ The interview spans 12 modules plus a screening/demographic preamble (SD). Modul
 
 ## Profile Output
 
-Mivoca produces a dual-output voice profile stored as `profile.json` in the session directory:
+Voice produces a dual-output voice profile stored as `profile.json` in the session directory:
 
 - **Self-Report Layer**: Direct preference scores derived from likert, forced_choice, and semantic_differential responses. These capture what the participant believes about their own voice.
 - **Computational Analysis Layer**: Scores derived from NLP analysis of open_ended, writing_sample, and process_narration responses. These capture what the participant actually does in practice.

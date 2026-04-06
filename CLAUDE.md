@@ -10,7 +10,7 @@ A Claude Code plugin for detecting AI-generated writing patterns and building vo
 ## Project Context
 
 This plugin provides:
-- **Skills**: `human-voice` (AI pattern detection), `mivoca` (voice elicitation interview)
+- **Skills**: `human-voice` (AI pattern detection), `voice` (voice elicitation interview)
 - **Commands**: `/human-voice:voice-setup`, `/human-voice:voice-review`, `/human-voice:voice-fix`, `/human-voice:voice-interview`, `/human-voice:voice-profile`, `/human-voice:voice-resume`, `/human-voice:voice-drift`, `/human-voice:voice-sessions`, `/human-voice:voice-status`
 - **Agents**: `interview-conductor`, `profile-synthesizer`, `voice-reviewer`
 - **Scoring**: Self-report scoring pipeline with SD cross-validation
@@ -31,15 +31,15 @@ This plugin provides:
 ```
 .claude-plugin/plugin.json        # Plugin manifest (hooks registered here)
 skills/human-voice/SKILL.md       # Core skill with detection patterns
-skills/mivoca/SKILL.md            # Voice elicitation interview skill
+skills/voice/SKILL.md            # Voice elicitation interview skill
 commands/*.md                     # Slash commands
 agents/*.md                       # Subagents (interview, synthesizer, reviewer)
 hooks/hooks.json                  # SessionStart hook for observer protocol
 templates/observer-protocol.md    # Observer protocol template
-bin/                              # CLI tools (mivoca-session, mivoca-scoring, etc.)
+bin/                              # CLI tools (voice-session, voice-scoring, etc.)
 question-bank/                    # Interview modules, schemas, scoring config
-scoring/src/mivoca_scoring/       # Self-report scoring engine
-nlp/src/mivoca_nlp/               # NLP stylometric analysis pipeline
+scoring/src/voice_scoring/       # Self-report scoring engine
+nlp/src/voice_nlp/               # NLP stylometric analysis pipeline
 lib/                              # Core library (session, branching, quality, etc.)
 docs/                             # Documentation (Diataxis framework)
 .github/agents/                   # GitHub Copilot custom agents

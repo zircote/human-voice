@@ -7,23 +7,23 @@ allowed-tools: Read, Write, Bash(python3:*), Bash(source:*), Glob, AskUserQuesti
 
 # /interview — Start a New Voice Elicitation Interview
 
-Start a new mivoca voice elicitation interview session.
+Start a new voice elicitation interview session.
 
 ## Procedure
 
-1. **Create session**: Run `bin/mivoca-session create` to generate a new session. This creates `~/.human-voice/sessions/{session_id}/` with `state.json` and `responses.jsonl`. Capture the session_id and session_dir path from the output.
+1. **Create session**: Run `bin/voice-session create` to generate a new session. This creates `~/.human-voice/sessions/{session_id}/` with `state.json` and `responses.jsonl`. Capture the session_id and session_dir path from the output.
 
 2. **Load question bank**: Verify question bank modules exist in `question-bank/modules/`.
 
 3. **Launch interview conductor**: Spawn the `interview-conductor` agent with this prompt:
 
-   > You are conducting a new mivoca voice elicitation interview.
+   > You are conducting a new voice elicitation interview.
    >
    > Session ID: {session_id}
    > Session directory: {session_dir}
    > Project root: {project_root}
    >
-   > Run the FULL interview loop as described in your instructions. Use `bin/mivoca-sequencer next-question` to get each question, present it via AskUserQuestion, record the response, update state, and loop. Do NOT exit after a single question — continue the loop until the interview is complete or the user pauses.
+   > Run the FULL interview loop as described in your instructions. Use `bin/voice-sequencer next-question` to get each question, present it via AskUserQuestion, record the response, update state, and loop. Do NOT exit after a single question — continue the loop until the interview is complete or the user pauses.
    >
    > Start by getting the first question from the sequencer and presenting it.
 

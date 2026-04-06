@@ -46,11 +46,11 @@ When generating or editing markdown content, documentation, blog posts, or any p
 ## Key Components
 
 - **Skills**: `skills/human-voice/SKILL.md` - Core AI pattern detection
-- **Skills**: `skills/mivoca/SKILL.md` - Voice elicitation interview engine
+- **Skills**: `skills/voice/SKILL.md` - Voice elicitation interview engine
 - **Commands**: `commands/*.md` - User-invocable slash commands
 - **Agents**: `agents/*.md` - Subagents (interview conductor, profile synthesizer, voice reviewer)
-- **Scoring**: `scoring/src/mivoca_scoring/` - Self-report scoring pipeline
-- **NLP**: `nlp/src/mivoca_nlp/` - Stylometric analysis pipeline
+- **Scoring**: `scoring/src/voice_scoring/` - Self-report scoring pipeline
+- **NLP**: `nlp/src/voice_nlp/` - Stylometric analysis pipeline
 - **Question Bank**: `question-bank/modules/` - Interview question modules (M01-M12, SD)
 - **Scoring Config**: `question-bank/scoring/` - Dimension mapping and scoring weights
 
@@ -58,10 +58,10 @@ When generating or editing markdown content, documentation, blog posts, or any p
 
 ```
 .claude-plugin/plugin.json    # Plugin manifest
-skills/                       # Agent skills (human-voice, mivoca)
+skills/                       # Agent skills (human-voice, voice)
 commands/                     # Slash commands (voice-review, voice-fix, voice-setup, etc.)
 agents/                       # Subagents (interview-conductor, profile-synthesizer, voice-reviewer)
-bin/                          # CLI tools (mivoca-session, mivoca-scoring, mivoca-nlp, etc.)
+bin/                          # CLI tools (voice-session, voice-scoring, voice-nlp, etc.)
 question-bank/                # Interview modules, schemas, scoring config
 scoring/                      # Self-report scoring engine
 nlp/                          # NLP stylometric analysis

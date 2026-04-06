@@ -2,7 +2,7 @@
 
 ## Summary
 
-`mivoca-scoring score` completes without error (after metadata is found) but returns null scores for every dimension. Two root causes combine to produce this failure.
+`voice-scoring score` completes without error (after metadata is found) but returns null scores for every dimension. Two root causes combine to produce this failure.
 
 ## Environment
 
@@ -13,7 +13,7 @@
 
 ## Root Cause 1: Metadata file discovery fails from default session path
 
-**File**: `scoring/src/mivoca_scoring/cli.py`, lines 50-65
+**File**: `scoring/src/voice_scoring/cli.py`, lines 50-65
 
 `_load_metadata()` walks up 5 parent directories from the session directory looking for a `question-bank/` directory. When sessions are stored at the default location (`~/.human-voice/sessions/{session_id}/`), the walk visits:
 
@@ -39,13 +39,13 @@ Add the config-derived or well-known plugin paths to the candidate list. Options
 1. Read `~/.human-voice/config.json` to find the plugin base directory, then append `{base}/question-bank/scoring/` to candidates.
 2. Check `~/.human-voice/question-bank/` as a fallback (two levels up from sessions/{id}/ already lands at `~/.human-voice/`, so this should work if the walker depth is increased by 1 or the starting candidates include `session_dir.parent.parent`).
 3. Accept a `--metadata-dir` CLI flag as an explicit override.
-4. Bundle the metadata files into the session directory at creation time (`mivoca-session create` copies them).
+4. Bundle the metadata files into the session directory at creation time (`voice-session create` copies them).
 
 Option 4 is the most robust: it makes sessions self-contained and eliminates the discovery problem entirely.
 
 ## Root Cause 2: Response value extraction does not match response schema
 
-**File**: `scoring/src/mivoca_scoring/self_report.py`, lines 171-185 and 226-233
+**File**: `scoring/src/voice_scoring/self_report.py`, lines 171-185 and 226-233
 
 `_infer_question_type()` checks for top-level keys: `scale_value`, `semantic_differential_value`, `selected_options`, `raw_text`, or `value`.
 
@@ -54,7 +54,7 @@ Option 4 is the most robust: it makes sessions self-contained and eliminates the
 raw_value = resp.get("scale_value") or resp.get("semantic_differential_value") or resp.get("value")
 ```
 
-The actual response records written by `mivoca-session` and the interview conductor use a nested structure:
+The actual response records written by `voice-session` and the interview conductor use a nested structure:
 
 ```json
 {
@@ -97,7 +97,7 @@ Additionally, `_infer_question_type()` falls back to checking `isinstance(v, (in
    - Map categorical `value` strings to their numeric score via `scoring_map`
 3. This eliminates both the type inference problem and the categorical-to-numeric conversion problem.
 
-The `questions.json` path (line 175 of cli.py) exists for this purpose but is never populated by `mivoca-session create`.
+The `questions.json` path (line 175 of cli.py) exists for this purpose but is never populated by `voice-session create`.
 
 ## Impact
 
@@ -107,19 +107,19 @@ Every session scored with the default configuration produces a profile with 100%
 
 ```bash
 # 1. Create a session (default storage)
-bin/mivoca-session create
+bin/voice-session create
 
 # 2. Record responses through interview conductor (any responses)
 
 # 3. Attempt scoring
-bin/mivoca-scoring score --session-dir ~/.human-voice/sessions/{session_id}
+bin/voice-scoring score --session-dir ~/.human-voice/sessions/{session_id}
 # ERROR: required metadata file 'dimension-item-mapping.json' not found.
 
 # 4. Symlink metadata workaround
 ln -s /path/to/plugin/question-bank ~/.human-voice/sessions/question-bank
 
 # 5. Re-run scoring
-bin/mivoca-scoring score --session-dir ~/.human-voice/sessions/{session_id}
+bin/voice-scoring score --session-dir ~/.human-voice/sessions/{session_id}
 # Scores written, but all dimensions are null
 ```
 

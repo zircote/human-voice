@@ -7,13 +7,13 @@ allowed-tools: Read, Bash(python3:*), Bash(source:*), Glob
 
 # /status — Show Interview Session Progress
 
-Display the current progress of an active or recent mivoca interview session.
+Display the current progress of an active or recent voice interview session.
 
 ## Procedure
 
-1. **Identify session**: If a session ID argument is provided, use it. Otherwise, run `bin/mivoca-session list` and select the most recently updated session.
+1. **Identify session**: If a session ID argument is provided, use it. Otherwise, run `bin/voice-session list` and select the most recently updated session.
 
-2. **Load state**: Run `bin/mivoca-session load {session_id}` to get the session state as JSON.
+2. **Load state**: Run `bin/voice-session load {session_id}` to get the session state as JSON.
 
 3. **Display progress**:
    ```

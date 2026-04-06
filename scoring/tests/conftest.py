@@ -1,4 +1,4 @@
-"""Shared fixtures for mivoca scoring tests."""
+"""Shared fixtures for voice scoring tests."""
 
 from __future__ import annotations
 

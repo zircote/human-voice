@@ -1,7 +1,7 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://mivoca.zircote.com/schemas/voice-profile.schema.json",
-  "title": "Mivoca Voice Profile",
+  "$id": "https://voice.zircote.com/schemas/voice-profile.schema.json",
+  "title": "Voice Profile",
   "description": "The primary output artifact of the voice elicitation engine. A comprehensive, quantified representation of a writer's voice across gold-standard dimensions, gap dimensions, semantic differentials, calibration data, and distinctive features.",
   "type": "object",
   "required": [

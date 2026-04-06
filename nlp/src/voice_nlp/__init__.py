@@ -1,4 +1,4 @@
-"""mivoca-nlp: NLP pipeline for writing sample stylometric analysis.
+"""voice-nlp: NLP pipeline for writing sample stylometric analysis.
 
 Analyzes writing samples to extract lexical, syntactic, pragmatic,
 discourse, and composite stylometric features for voice elicitation.

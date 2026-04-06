@@ -5,7 +5,7 @@ diataxis_describes: Voice profile dimensions, scoring tiers, and semantic differ
 
 # Dimensions Reference
 
-The mivoca voice profile measures writing voice across 8 gold standard dimensions, 10 gap dimensions, and 20 semantic differential pairs. Dimension scores range from 0-100. Semantic differential ratings range from 1.0-7.0.
+The voice profile measures writing voice across 8 gold standard dimensions, 10 gap dimensions, and 20 semantic differential pairs. Dimension scores range from 0-100. Semantic differential ratings range from 1.0-7.0.
 
 Configuration files:
 
@@ -193,7 +193,7 @@ For Tier 2 (moderate self-reportability) dimensions, projective item scores are 
 
 ## Computational Validators
 
-The NLP pipeline (`mivoca-nlp`) produces observed scores that serve as computational validators for self-report data. The mapping from writing analysis features to gold standard dimensions:
+The NLP pipeline (`voice-nlp`) produces observed scores that serve as computational validators for self-report data. The mapping from writing analysis features to gold standard dimensions:
 
 | Dimension | Key NLP Features |
 |---|---|
@@ -208,4 +208,4 @@ The NLP pipeline (`mivoca-nlp`) produces observed scores that serve as computati
 
 ### Calibration
 
-When both self-report and observed scores are available, the scoring engine (`mivoca-scoring score`) produces a calibration report comparing the two. Dimensions where self-report and observed scores diverge by more than a threshold are flagged as blind spots or aspirational gaps in the voice profile's `calibration` section.
+When both self-report and observed scores are available, the scoring engine (`voice-scoring score`) produces a calibration report comparing the two. Dimensions where self-report and observed scores diverge by more than a threshold are flagged as blind spots or aspirational gaps in the voice profile's `calibration` section.

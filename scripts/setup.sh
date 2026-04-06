@@ -4,7 +4,7 @@ set -euo pipefail
 REPO_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 cd "$REPO_ROOT"
 
-echo "=== mivoca setup ==="
+echo "=== voice setup ==="
 echo "Repository root: $REPO_ROOT"
 echo ""
 
@@ -23,17 +23,17 @@ echo "      Using Python: $(python3 --version) at $(which python3)"
 echo ""
 
 # 2. Install root package with all extras
-echo "[2/7] Installing mivoca root package with [all,dev] extras ..."
+echo "[2/7] Installing voice root package with [all,dev] extras ..."
 pip install -e ".[all,dev]"
 echo ""
 
 # 3. Install NLP sub-package
-echo "[3/7] Installing mivoca-nlp package with [dev] extras ..."
+echo "[3/7] Installing voice-nlp package with [dev] extras ..."
 pip install -e "./nlp[dev]"
 echo ""
 
 # 4. Install scoring sub-package
-echo "[4/7] Installing mivoca-scoring package with [dev] extras ..."
+echo "[4/7] Installing voice-scoring package with [dev] extras ..."
 pip install -e "./scoring[dev]"
 echo ""
 
@@ -69,7 +69,7 @@ echo ""
 # Summary
 echo "=== Setup complete ==="
 echo "  Virtual environment: .venv"
-echo "  Packages installed:  mivoca, mivoca-nlp, mivoca-scoring"
+echo "  Packages installed:  voice, voice-nlp, voice-scoring"
 echo "  spaCy model:         en_core_web_sm"
 echo "  Config directory:    ~/.human-voice"
 echo "  JSON files:          $JSON_COUNT valid, $JSON_ERRORS errors"

@@ -3,9 +3,9 @@ requires = ["hatchling"]
 build-backend = "hatchling.build"
 
 [project]
-name = "mivoca-nlp"
+name = "voice-nlp"
 version = "0.1.0"
-description = "NLP pipeline for writing sample analysis in mivoca voice elicitation"
+description = "NLP pipeline for writing sample analysis in voice elicitation"
 requires-python = ">=3.10"
 license = "MIT"
 dependencies = [
@@ -21,4 +21,4 @@ dev = [
 ]
 
 [tool.hatch.build.targets.wheel]
-packages = ["src/mivoca_nlp"]
+packages = ["src/voice_nlp"]

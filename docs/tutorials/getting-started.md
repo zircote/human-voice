@@ -1,14 +1,14 @@
 ---
 diataxis_type: tutorial
 diataxis_learning_goals:
-  - Set up mivoca and its dependencies
+  - Set up voice and its dependencies
   - Run a complete voice elicitation interview
   - View and interpret a voice profile
 ---
 
-# Getting Started with Mivoca
+# Getting Started with Voice
 
-In this tutorial, we will set up mivoca, run a voice elicitation interview from start to finish, and view the resulting voice profile. By the end, we will have a multi-dimensional map of our writing voice based on both self-reported preferences and computationally observed features.
+In this tutorial, we will set up voice, run a voice elicitation interview from start to finish, and view the resulting voice profile. By the end, we will have a multi-dimensional map of our writing voice based on both self-reported preferences and computationally observed features.
 
 The full interview takes 30--45 minutes. We can pause and resume at any point, so there is no need to complete it in one sitting.
 
@@ -18,7 +18,7 @@ Before we begin, we need the following installed on our machine:
 
 - **Python 3.10 or later** -- verify with `python3 --version`
 - **Git** -- verify with `git --version`
-- **Claude Code** -- the mivoca interview engine runs as a Claude Code agent
+- **Claude Code** -- the voice interview engine runs as a Claude Code agent
 
 ## Step 1: Clone and set up the project
 
@@ -38,15 +38,15 @@ bash scripts/setup.sh
 We should see output that progresses through seven steps:
 
 ```
-=== mivoca setup ===
-Repository root: /path/to/mivoca
+=== voice setup ===
+Repository root: /path/to/voice
 
 [1/7] Creating virtual environment at .venv ...
-      Using Python: Python 3.12.4 at /path/to/mivoca/.venv/bin/python3
+      Using Python: Python 3.12.4 at /path/to/voice/.venv/bin/python3
 
-[2/7] Installing mivoca root package with [all,dev] extras ...
-[3/7] Installing mivoca-nlp package with [dev] extras ...
-[4/7] Installing mivoca-scoring package with [dev] extras ...
+[2/7] Installing voice root package with [all,dev] extras ...
+[3/7] Installing voice-nlp package with [dev] extras ...
+[4/7] Installing voice-scoring package with [dev] extras ...
 [5/7] Downloading spaCy en_core_web_sm model ...
 [6/7] Creating ~/.human-voice directory ...
 [7/7] Validating JSON files ...
@@ -54,7 +54,7 @@ Repository root: /path/to/mivoca
 
 === Setup complete ===
   Virtual environment: .venv
-  Packages installed:  mivoca, mivoca-nlp, mivoca-scoring
+  Packages installed:  voice, voice-nlp, voice-scoring
   spaCy model:         en_core_web_sm
   Config directory:    ~/.human-voice
   JSON files:          14 valid, 0 errors
@@ -66,13 +66,13 @@ We have completed the setup. Our environment is ready for interviews.
 
 ## Step 2: Start an interview
 
-With Claude Code open in the mivoca project directory, we start a new voice elicitation session:
+With Claude Code open in the voice project directory, we start a new voice elicitation session:
 
 ```
-/mivoca:interview
+/voice:interview
 ```
 
-Mivoca creates a unique session, initializes its state files, and loads the question bank. We will see a confirmation like this:
+Voice creates a unique session, initializes its state files, and loads the question bank. We will see a confirmation like this:
 
 ```
 Session created: a1b2c3d4-e5f6-7890-abcd-ef1234567890
@@ -133,15 +133,15 @@ how you feel about having a distinct 'voice'?
 3) I'm still figuring out what my writing voice is
 ```
 
-Notice how the question format changes -- selections, multi-selects, and forced choices are interleaved to keep the experience varied. This is by design; mivoca rotates formats to prevent monotony.
+Notice how the question format changes -- selections, multi-selects, and forced choices are interleaved to keep the experience varied. This is by design; voice rotates formats to prevent monotony.
 
 We continue answering through the remaining M01 questions, which cover our audience, writing evolution, and a brief reflective prompt. There are 10 questions in this module.
 
-We have completed the screening module. Mivoca now knows enough about our writing context to route us into the right interview path.
+We have completed the screening module. Voice now knows enough about our writing context to route us into the right interview path.
 
 ## Step 4: Experience the branching
 
-After the screening questions, mivoca classifies our writer type and selects a branching path. Based on our answers about writing role, audience, and context, the system routes us into one of four paths:
+After the screening questions, voice classifies our writer type and selects a branching path. Based on our answers about writing role, audience, and context, the system routes us into one of four paths:
 
 - **Creative/Literary** -- for fiction, poetry, and creative nonfiction writers
 - **Business/Professional** -- for corporate, marketing, and business writers
@@ -205,7 +205,7 @@ We are making steady progress through the interview. Each module builds a richer
 
 ## Step 6: Provide writing samples (M12)
 
-In the final phase, mivoca asks us to produce short writing samples. These are the most valuable part of the interview -- they provide behavioral data that the NLP pipeline analyzes computationally, independent of our self-reported preferences.
+In the final phase, voice asks us to produce short writing samples. These are the most valuable part of the interview -- they provide behavioral data that the NLP pipeline analyzes computationally, independent of our self-reported preferences.
 
 The conductor sets up the writing sample section:
 
@@ -243,14 +243,14 @@ How well do your answers capture your actual vs. idealized style?
 7) Highly accurate -- this is genuinely how I write
 ```
 
-We are nearly done. The writing samples and calibration data give mivoca the signal it needs to compare what we said against what we do.
+We are nearly done. The writing samples and calibration data give voice the signal it needs to compare what we said against what we do.
 
 ## Step 7: Check progress mid-interview
 
 At any point during the interview, we can check our progress without leaving the session. Run:
 
 ```
-/mivoca:status
+/voice:status
 ```
 
 This displays a summary of where we stand:
@@ -298,13 +298,13 @@ Session ID: a1b2c3d4-e5f6-7890-abcd-ef1234567890
 Progress:   42 / ~68 questions answered
 Module:     M07 — Audience Adaptation
 
-To resume later, run: /mivoca:resume
+To resume later, run: /voice:resume
 ```
 
 When we return, we resume exactly where we left off:
 
 ```
-/mivoca:resume
+/voice:resume
 ```
 
 The conductor loads our saved state and picks up naturally:
@@ -322,12 +322,12 @@ Our session state is durable. We can pause and resume across days or even weeks 
 
 ## Step 9: View our voice profile
 
-Once we have answered all questions and provided writing samples, the interview completes automatically. Mivoca runs the scoring engine and NLP pipeline, then generates our voice profile.
+Once we have answered all questions and provided writing samples, the interview completes automatically. Voice runs the scoring engine and NLP pipeline, then generates our voice profile.
 
 To view the finished profile:
 
 ```
-/mivoca:profile
+/voice:profile
 ```
 
 The output is a comprehensive voice profile:
@@ -385,7 +385,7 @@ vocabulary than you believe. This is not a weakness — it
 suggests strong audience awareness in practice.
 ```
 
-We now have a complete voice profile. This is the primary output of the mivoca interview.
+We now have a complete voice profile. This is the primary output of the voice interview.
 
 ## Step 10: Interpret the output
 
@@ -408,12 +408,12 @@ For a deeper understanding of what each dimension measures and how calibration w
 
 In this tutorial, we:
 
-- Installed mivoca and verified all dependencies
+- Installed voice and verified all dependencies
 - Started a voice elicitation interview session
 - Answered screening questions and saw the adaptive branching in action
 - Worked through multiple question formats across core modules
 - Provided writing samples for computational analysis
-- Checked progress mid-interview with `/mivoca:status`
+- Checked progress mid-interview with `/voice:status`
 - Paused and resumed the interview without losing progress
 - Viewed a completed voice profile with dual self-report and computed scores
 - Understood the basics of dimension scores, deltas, and calibration

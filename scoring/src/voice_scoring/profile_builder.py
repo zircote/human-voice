@@ -213,7 +213,7 @@ def compute_voice_stability(
 
     Returns a dict mapping dimension to stability classification and stats.
     """
-    from mivoca_scoring.self_report import normalize_response, _infer_question_type
+    from voice_scoring.self_report import normalize_response, _infer_question_type
 
     # Group items by dimension and module.
     dim_module_scores: dict[str, dict[str, list[float]]] = {}
@@ -319,7 +319,7 @@ def build_profile(
     -------
     Complete voice profile dict.
     """
-    from mivoca_scoring.calibration import CROSS_REFERENCE_MAP, _normalize_observed, INVERTED_METRICS
+    from voice_scoring.calibration import CROSS_REFERENCE_MAP, _normalize_observed, INVERTED_METRICS
 
     dimensions_sr = sr_scores.get("dimensions", {})
     merged_dimensions: dict[str, Any] = {}

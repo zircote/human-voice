@@ -1,4 +1,4 @@
-"""CLI entry point for mivoca-nlp pipeline."""
+"""CLI entry point for voice-nlp pipeline."""
 
 from __future__ import annotations
 
@@ -9,7 +9,7 @@ from pathlib import Path
 
 import spacy
 
-from mivoca_nlp.pipeline import run_pipeline
+from voice_nlp.pipeline import run_pipeline
 
 
 def _load_model(model_name: str = "en_core_web_sm") -> spacy.language.Language:
@@ -108,7 +108,7 @@ def cmd_analyze_session(args: argparse.Namespace) -> None:
 def main(argv: list[str] | None = None) -> None:
     """Parse arguments and dispatch to subcommands."""
     parser = argparse.ArgumentParser(
-        prog="mivoca-nlp",
+        prog="voice-nlp",
         description="Stylometric analysis pipeline for writing samples.",
     )
     parser.add_argument(

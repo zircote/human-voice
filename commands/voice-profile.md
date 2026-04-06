@@ -11,9 +11,9 @@ Display the full voice profile with dimension scores, calibration, distinctive f
 
 ## Procedure
 
-1. **Identify session**: If a session ID argument is provided, use it. Otherwise, find the most recent session with `state` of `complete` via `bin/mivoca-session list`.
+1. **Identify session**: If a session ID argument is provided, use it. Otherwise, find the most recent session with `state` of `complete` via `bin/voice-session list`.
 
-2. **Validate**: Load `state.json` via `bin/mivoca-session load {session_id}`. If state is not `complete`, inform the user and suggest `/voice-resume`.
+2. **Validate**: Load `state.json` via `bin/voice-session load {session_id}`. If state is not `complete`, inform the user and suggest `/voice-resume`.
 
 3. **Read profile**: Load `{session_dir}/profile.json`.
 

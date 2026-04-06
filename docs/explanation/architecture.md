@@ -1,27 +1,27 @@
 ---
 diataxis_type: explanation
-diataxis_topic: Mivoca system architecture, design rationale, and research basis
+diataxis_topic: Voice system architecture, design rationale, and research basis
 ---
 
-# Understanding the Mivoca Architecture
+# Understanding the Voice Architecture
 
-Mivoca is built on a counterintuitive premise: the features of writing that best distinguish one writer from another are precisely the features that writers cannot describe about themselves. This document explains why the system is designed the way it is, what trade-offs were made, and how the research literature shaped every major architectural decision.
+Voice is built on a counterintuitive premise: the features of writing that best distinguish one writer from another are precisely the features that writers cannot describe about themselves. This document explains why the system is designed the way it is, what trade-offs were made, and how the research literature shaped every major architectural decision.
 
-This is not a guide to using Mivoca or a reference for its data schemas. It is a place to develop a deeper understanding of the system's reasoning: the "why" behind each component and the connections between them.
+This is not a guide to using Voice or a reference for its data schemas. It is a place to develop a deeper understanding of the system's reasoning: the "why" behind each component and the connections between them.
 
 ## The Conscious/Unconscious Divide
 
-The founding problem Mivoca addresses is a gap in how we understand writing voice. Ask a writer to describe their style, and they will talk about things like tone, audience, and maybe formality. They will rarely mention their ratio of function words to content words, their characteristic distribution of sentence lengths, or their preference for particular character-level n-gram patterns. Yet these unconscious features (function word distributions (CS-020), character n-grams (CS-021), punctuation rhythms) are among the most powerful discriminators in computational stylistics. They are what make one writer's prose statistically distinguishable from another's.
+The founding problem Voice addresses is a gap in how we understand writing voice. Ask a writer to describe their style, and they will talk about things like tone, audience, and maybe formality. They will rarely mention their ratio of function words to content words, their characteristic distribution of sentence lengths, or their preference for particular character-level n-gram patterns. Yet these unconscious features (function word distributions (CS-020), character n-grams (CS-021), punctuation rhythms) are among the most powerful discriminators in computational stylistics. They are what make one writer's prose statistically distinguishable from another's.
 
 This is not a minor inconvenience; it is a structural problem. Across 98 research findings drawn from computational stylistics, psycholinguistics, and survey methodology, a consistent pattern emerges: **self-report reliability correlates inversely with discrimination power** (LT-003). The features a writer can most accurately report ("I write formally" or "I use humor") tend to be the least distinctive across a population of writers. The features that make a writer's voice truly unique --- their unconscious lexical and syntactic habits --- are invisible to introspection.
 
-This creates a dilemma for any system that wants to capture writing voice. Pure self-report misses the most distinctive features. Pure computational analysis misses the writer's conscious intentions, preferences, and aspirations. Mivoca exists because neither approach alone is sufficient, and a thoughtful combination of both requires an architecture designed around the boundary between what writers know and what they do not.
+This creates a dilemma for any system that wants to capture writing voice. Pure self-report misses the most distinctive features. Pure computational analysis misses the writer's conscious intentions, preferences, and aspirations. Voice exists because neither approach alone is sufficient, and a thoughtful combination of both requires an architecture designed around the boundary between what writers know and what they do not.
 
 ## Dual-Output Architecture
 
-Given the conscious/unconscious divide, Mivoca could have taken the simpler path: blend self-report and computational scores into a single number per dimension and present that. Many psychometric instruments do exactly this. Mivoca deliberately does not.
+Given the conscious/unconscious divide, Voice could have taken the simpler path: blend self-report and computational scores into a single number per dimension and present that. Many psychometric instruments do exactly this. Voice deliberately does not.
 
-The system produces two independent profiles for every writer: a **self-reported profile** (what the writer believes about their voice) and a **computationally observed profile** (what their writing actually exhibits). The research basis for keeping these separate is the low implicit-explicit correlation. Across the style dimensions Mivoca measures, the correlation between what writers say and what they do ranges from roughly r=0.14 to r=0.27 (EM-002). This is not measurement error --- it reflects a genuine divergence between conscious preference and unconscious habit.
+The system produces two independent profiles for every writer: a **self-reported profile** (what the writer believes about their voice) and a **computationally observed profile** (what their writing actually exhibits). The research basis for keeping these separate is the low implicit-explicit correlation. Across the style dimensions Voice measures, the correlation between what writers say and what they do ranges from roughly r=0.14 to r=0.27 (EM-002). This is not measurement error --- it reflects a genuine divergence between conscious preference and unconscious habit.
 
 Both profiles are independently valid. The self-report profile captures something real: how the writer thinks about their craft, what they value, what they aspire to. A writer who reports high formality may be someone who cares deeply about register even if their unedited prose occasionally drifts casual. The observed profile captures something equally real: the statistical fingerprint of how they actually write when they are not thinking about it.
 
@@ -29,7 +29,7 @@ Collapsing these two views into a single number would destroy information. It wo
 
 ## The Calibration Model
 
-The distance between the self-reported and observed profiles is where much of Mivoca's value lives. In a simpler system, a large gap between what someone says and what they do would be treated as noise --- evidence that one measurement is wrong. Mivoca treats this gap as a **signal**.
+The distance between the self-reported and observed profiles is where much of Voice's value lives. In a simpler system, a large gap between what someone says and what they do would be treated as noise --- evidence that one measurement is wrong. Voice treats this gap as a **signal**.
 
 The calibration layer classifies the delta between self-report and observation for each dimension into three categories:
 
@@ -45,7 +45,7 @@ During the session itself, the self-perception divergence trigger fires whenever
 
 ## Tier-Weighted Merging
 
-When Mivoca does need to produce a single composite score per dimension --- for applications that require one number rather than two --- it cannot simply average the self-report and observed scores equally. The reason is that different voice dimensions have fundamentally different self-reportability characteristics.
+When Voice does need to produce a single composite score per dimension --- for applications that require one number rather than two --- it cannot simply average the self-report and observed scores equally. The reason is that different voice dimensions have fundamentally different self-reportability characteristics.
 
 The tier system, grounded in the research findings, assigns each dimension a self-reportability level:
 
@@ -63,7 +63,7 @@ The integration formula for dimensions that include semantic differential rating
 
 The question bank contains over 120 items across 12 modules plus a semantic differential section. At an estimated 30-60 seconds per item, administering every question to every writer would require 60-120 minutes. Research on survey methodology is unambiguous: sessions exceeding 25 minutes lose roughly three times as many respondents as shorter sessions (SM-008). Satisficing --- the tendency to give minimally acceptable rather than thoughtful answers --- increases sharply after the 20-minute mark.
 
-Mivoca's branching system addresses this by dividing modules into two categories: **core modules** that every writer receives (M01, M02, M03, M04, M09, M12, and the semantic differential section) and **branch-activated modules** that are administered only when relevant (M05, M06, M07, M08, M10, M11).
+Voice's branching system addresses this by dividing modules into two categories: **core modules** that every writer receives (M01, M02, M03, M04, M09, M12, and the semantic differential section) and **branch-activated modules** that are administered only when relevant (M05, M06, M07, M08, M10, M11).
 
 Branch selection happens during the orientation phase based on screening questions in M01. The system evaluates the writer's context --- creative/literary, business/professional, academic/technical, or personal/journalistic --- and activates a subset of three additional modules relevant to that context. A fiction writer gets narrativity (M05), authority/register (M08), and writing process (M10). A business writer gets audience awareness (M07), authority/register (M08), and contextual adaptation (M11). This reduces the typical session to 60-80 items administered over approximately 35 minutes.
 
@@ -75,17 +75,17 @@ An engagement detector monitors response timing. When three or more consecutive 
 
 ## Question Type Diversity
 
-Mivoca uses eight distinct question types: **select** (single-choice), **select_multiple**, **forced_choice** (binary or ternary), **likert** (scaled agreement), **scenario** (behavioral vignette), **projective** (indirect elicitation), **open_ended** (free text), and **writing_sample** (compositional prompt). There is also the **semantic_differential** section, which uses bipolar adjective pairs on a 7-point scale.
+Voice uses eight distinct question types: **select** (single-choice), **select_multiple**, **forced_choice** (binary or ternary), **likert** (scaled agreement), **scenario** (behavioral vignette), **projective** (indirect elicitation), **open_ended** (free text), and **writing_sample** (compositional prompt). There is also the **semantic_differential** section, which uses bipolar adjective pairs on a 7-point scale.
 
 The rationale for this diversity traces directly to the self-reportability tier system. Tier 1 features work well with direct questioning --- Likert scales, select menus, semantic differentials. A writer can tell you how formal they are, and a straightforward scale captures it. But as you move toward Tier 2 and Tier 3, direct questioning becomes less reliable. A writer cannot accurately rate their own authority stance on a 1-7 scale because they lack the introspective access to do so reliably.
 
-For these harder-to-self-report dimensions, Mivoca uses indirect techniques. **Scenario questions** present a writing situation and ask what the writer would do, revealing preferences through simulated behavior rather than abstract self-assessment. **Projective questions** --- adapted from projective techniques in psychology --- ask writers to react to or evaluate someone else's writing, which surfaces attitudes they might not articulate about their own practice. The M02 module, for example, includes a projective item where the writer evaluates voice samples, and their evaluative criteria reveal their own values.
+For these harder-to-self-report dimensions, Voice uses indirect techniques. **Scenario questions** present a writing situation and ask what the writer would do, revealing preferences through simulated behavior rather than abstract self-assessment. **Projective questions** --- adapted from projective techniques in psychology --- ask writers to react to or evaluate someone else's writing, which surfaces attitudes they might not articulate about their own practice. The M02 module, for example, includes a projective item where the writer evaluates voice samples, and their evaluative criteria reveal their own values.
 
 Format alternation also serves a pragmatic purpose: combating survey fatigue. Research on questionnaire design (SM-012) shows that monotonous formats --- page after page of Likert scales --- increase satisficing and decrease thoughtful engagement. Alternating between question types creates novelty that maintains attention. The module sequence is designed so that cognitively demanding formats (scenarios, open-ended, writing samples) are interspersed with lighter formats (select, forced choice), with explicit engagement reset points between phases.
 
 ## The NLP Pipeline
 
-The computational observation side of Mivoca's dual-output architecture is implemented as a stateless NLP pipeline. When a writer provides a writing sample, the pipeline analyzes it and produces a structured feature vector. This pipeline is the system's "ear" --- it listens to the writing the way a trained stylometrist would, but systematically and at scale.
+The computational observation side of Voice's dual-output architecture is implemented as a stateless NLP pipeline. When a writer provides a writing sample, the pipeline analyzes it and produces a structured feature vector. This pipeline is the system's "ear" --- it listens to the writing the way a trained stylometrist would, but systematically and at scale.
 
 The pipeline operates in five stages that correspond to the stylometric feature hierarchy established in the research literature:
 
@@ -105,7 +105,7 @@ The pipeline is implemented in Python using spaCy for core NLP and is deliberate
 
 ## Component Architecture
 
-Mivoca is divided into six major components, each with a distinct concern and execution model:
+Voice is divided into six major components, each with a distinct concern and execution model:
 
 **The Interview Conductor** is an LLM agent that manages the conversational interface. It presents questions naturally, handles branching decisions, monitors engagement quality, and manages session flow. It is the only component that interacts directly with the writer. The conductor is stateful within a session but does not perform scoring or analysis --- it delegates those responsibilities downstream.
 

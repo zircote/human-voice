@@ -1,4 +1,4 @@
-"""Quality monitoring module for the mivoca voice elicitation engine.
+"""Quality monitoring module for the voice elicitation engine.
 
 Detects satisficing behavior in real-time during the interview by checking
 for straightlining, speed flags, alternation patterns, and covert attention
@@ -572,7 +572,7 @@ def main() -> None:
     """CLI entry point."""
     parser = argparse.ArgumentParser(
         prog="quality",
-        description="Mivoca quality monitoring — detect satisficing behavior",
+        description="Voice quality monitoring — detect satisficing behavior",
     )
     subparsers = parser.add_subparsers(dest="command", required=True)
 

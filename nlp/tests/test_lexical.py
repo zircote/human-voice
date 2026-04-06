@@ -4,7 +4,7 @@ from __future__ import annotations
 
 from spacy.tokens import Doc
 
-from mivoca_nlp.stages.lexical import analyze_lexical
+from voice_nlp.stages.lexical import analyze_lexical
 
 
 class TestMTLD:

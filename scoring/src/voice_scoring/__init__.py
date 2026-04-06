@@ -1,6 +1,6 @@
-"""Mivoca Scoring Engine.
+"""Voice Scoring Engine.
 
-Self-report scoring engine for mivoca voice elicitation interviews.
+Self-report scoring engine for voice elicitation interviews.
 Scores interview responses into dimension scores and produces calibration reports.
 """
 
