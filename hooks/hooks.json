@@ -1,0 +1,18 @@
+{
+  "hooks": {
+    "SessionStart": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "mkdir -p ~/.human-voice && [ -f ~/.human-voice/observer-protocol.md ] || cp \"${CLAUDE_PLUGIN_ROOT}/templates/observer-protocol.md\" ~/.human-voice/observer-protocol.md 2>/dev/null; true"
+          },
+          {
+            "type": "prompt",
+            "prompt": "Read ~/.human-voice/voice-prompt.txt and ~/.human-voice/observer-protocol.md if they exist. The first defines the user's voice profile rules for content generation. The second defines a passive observation protocol: silently note patterns in the user's own writing (not pasted text, not AI output) and compare against the profile. Follow both silently. Do not announce that you loaded them. $ARGUMENTS"
+          }
+        ]
+      }
+    ]
+  }
+}
