@@ -1,8 +1,0 @@
-
-=== Character Restriction Validation ===
-
-Ignoring categories: Em Dash
-
-No character restriction violations found.
-  Checked 1 files in: /var/folders/z3/r4rldvxs403gngvp8rkjz1280000gn/T/tmp.Nr3UNFjT3v
-EXIT_CODE=0
