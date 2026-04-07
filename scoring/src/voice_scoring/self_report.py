@@ -19,6 +19,8 @@ from typing import Any
 
 import numpy as np
 
+from lib.response import build_response_lookup
+
 
 # ---------- Gold-standard dimensions ----------
 
@@ -155,38 +157,6 @@ def cronbachs_alpha(item_scores: list[list[float]]) -> float | None:
 
 
 # ---------- Main scoring entry point ----------
-
-
-def _build_response_lookup(responses: list[dict[str, Any]]) -> dict[str, dict[str, Any]]:
-    """Build a question_id -> response mapping.
-
-    Handles two response formats:
-
-    1. Schema-compliant (top-level keys): ``{"question_id": "...", "value": 3, "scale_value": 3}``
-    2. Interview-conductor format (nested answer): ``{"question_id": "...", "answer": {"value": 3, "raw": "3"}}``
-
-    For format 2, the ``answer`` dict is flattened into top-level keys so
-    downstream code can use ``resp.get("value")`` regardless of format.
-    """
-    lookup: dict[str, dict[str, Any]] = {}
-    for r in responses:
-        qid = r.get("question_id")
-        if qid:
-            # Unwrap nested answer envelope if present.
-            answer = r.get("answer")
-            if isinstance(answer, dict):
-                flat = {**r}
-                # Promote answer keys to top level without overwriting
-                # existing top-level keys (schema fields take precedence).
-                for key in ("value", "raw", "scale_value", "selected_options",
-                            "semantic_differential_value", "raw_text"):
-                    if key not in flat or flat[key] is None:
-                        if key in answer:
-                            flat[key] = answer[key]
-                lookup[qid] = flat
-            else:
-                lookup[qid] = r
-    return lookup
 
 
 def _infer_question_type(
@@ -351,7 +321,7 @@ def score_self_report(
     if question_bank is None:
         question_bank = {}
 
-    resp_lookup = _build_response_lookup(responses)
+    resp_lookup = build_response_lookup(responses)
     results: dict[str, Any] = {"dimensions": {}, "gap_dimensions": {}}
 
     # Score gold-standard dimensions.

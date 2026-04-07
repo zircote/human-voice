@@ -44,7 +44,7 @@ def _find_question_bank_dirs(session_dir: Path, metadata_dir: Path | None = None
 
     Search order:
       1. Explicit metadata_dir (from --metadata-dir flag)
-      2. MIVOCA_QUESTION_BANK environment variable
+      2. VOICE_QUESTION_BANK environment variable (or legacy MIVOCA_QUESTION_BANK)
       3. Walk up from session_dir looking for question-bank/
       4. Well-known fallback: $CLAUDE_PLUGIN_DATA/question-bank/
     """
@@ -55,7 +55,7 @@ def _find_question_bank_dirs(session_dir: Path, metadata_dir: Path | None = None
     if metadata_dir is not None:
         candidates.append(Path(metadata_dir).resolve())
 
-    env_qb = os.environ.get("MIVOCA_QUESTION_BANK")
+    env_qb = os.environ.get("VOICE_QUESTION_BANK") or os.environ.get("MIVOCA_QUESTION_BANK")
     if env_qb:
         candidates.append(Path(env_qb).resolve())
 
@@ -116,7 +116,7 @@ def _load_metadata(session_dir: Path, metadata_dir: Path | None = None) -> dict[
                 print(
                     f"ERROR: required metadata file '{name}' not found.\n"
                     f"Searched: {searched}\n"
-                    f"Hint: set MIVOCA_QUESTION_BANK=/path/to/question-bank "
+                    f"Hint: set VOICE_QUESTION_BANK=/path/to/question-bank "
                     f"or use --metadata-dir.",
                     file=sys.stderr,
                 )
@@ -343,7 +343,7 @@ def main(argv: list[str] | None = None) -> None:
         default=None,
         help="Path to question-bank directory containing scoring metadata. "
         "Overrides automatic discovery. Can also be set via "
-        "MIVOCA_QUESTION_BANK environment variable.",
+        "VOICE_QUESTION_BANK environment variable.",
     )
 
     args = parser.parse_args(argv)

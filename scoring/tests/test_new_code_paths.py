@@ -13,8 +13,8 @@ from pathlib import Path
 
 from voice_scoring.cli import _flatten_dimension_mapping, _flatten_scoring_weights, _load_question_bank
 from voice_scoring.profile_builder import assemble_voice_profile, compute_voice_stability
+from lib.response import build_response_lookup
 from voice_scoring.self_report import (
-    _build_response_lookup,
     _infer_question_type,
     _resolve_scoring_map_value,
     _scoring_map_range,
@@ -23,7 +23,7 @@ from voice_scoring.self_report import (
 )
 
 
-# ---------- _build_response_lookup ----------
+# ---------- build_response_lookup ----------
 
 
 class TestBuildResponseLookup:
@@ -34,7 +34,7 @@ class TestBuildResponseLookup:
         responses = [
             {"question_id": "Q01", "scale_value": 5, "value": 5},
         ]
-        lookup = _build_response_lookup(responses)
+        lookup = build_response_lookup(responses)
         assert lookup["Q01"]["scale_value"] == 5
         assert lookup["Q01"]["value"] == 5
 
@@ -43,7 +43,7 @@ class TestBuildResponseLookup:
         responses = [
             {"question_id": "Q01", "answer": {"value": 3, "raw": "3"}},
         ]
-        lookup = _build_response_lookup(responses)
+        lookup = build_response_lookup(responses)
         assert lookup["Q01"]["value"] == 3
         assert lookup["Q01"]["raw"] == "3"
 
@@ -52,7 +52,7 @@ class TestBuildResponseLookup:
         responses = [
             {"question_id": "Q01", "value": 5, "answer": {"value": 3, "raw": "3"}},
         ]
-        lookup = _build_response_lookup(responses)
+        lookup = build_response_lookup(responses)
         assert lookup["Q01"]["value"] == 5
 
     def test_none_top_level_overwritten(self):
@@ -60,7 +60,7 @@ class TestBuildResponseLookup:
         responses = [
             {"question_id": "Q01", "value": None, "answer": {"value": 3}},
         ]
-        lookup = _build_response_lookup(responses)
+        lookup = build_response_lookup(responses)
         assert lookup["Q01"]["value"] == 3
 
     def test_no_answer_key(self):
@@ -68,7 +68,7 @@ class TestBuildResponseLookup:
         responses = [
             {"question_id": "Q01", "value": 4},
         ]
-        lookup = _build_response_lookup(responses)
+        lookup = build_response_lookup(responses)
         assert lookup["Q01"]["value"] == 4
 
     def test_promotes_scale_value_from_envelope(self):
@@ -76,7 +76,7 @@ class TestBuildResponseLookup:
         responses = [
             {"question_id": "Q01", "answer": {"scale_value": 5, "value": 5}},
         ]
-        lookup = _build_response_lookup(responses)
+        lookup = build_response_lookup(responses)
         assert lookup["Q01"]["scale_value"] == 5
 
     def test_promotes_selected_options_from_envelope(self):
@@ -84,7 +84,7 @@ class TestBuildResponseLookup:
         responses = [
             {"question_id": "Q01", "answer": {"selected_options": ["a", "b"], "value": "a,b"}},
         ]
-        lookup = _build_response_lookup(responses)
+        lookup = build_response_lookup(responses)
         assert lookup["Q01"]["selected_options"] == ["a", "b"]
 
     def test_promotes_raw_text_from_envelope(self):
@@ -92,7 +92,7 @@ class TestBuildResponseLookup:
         responses = [
             {"question_id": "Q01", "answer": {"raw_text": "some free text", "value": "some free text"}},
         ]
-        lookup = _build_response_lookup(responses)
+        lookup = build_response_lookup(responses)
         assert lookup["Q01"]["raw_text"] == "some free text"
 
     def test_missing_question_id_skipped(self):
@@ -101,7 +101,7 @@ class TestBuildResponseLookup:
             {"value": 3},
             {"question_id": "Q01", "value": 5},
         ]
-        lookup = _build_response_lookup(responses)
+        lookup = build_response_lookup(responses)
         assert len(lookup) == 1
         assert "Q01" in lookup
 

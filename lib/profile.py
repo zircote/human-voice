@@ -34,7 +34,31 @@ def _resolve_paths() -> tuple[Path, Path, Path]:
     return pub.parent, pub, inj
 
 
-ACTIVE_PROFILE_DIR, ACTIVE_PROFILE_PATH, ACTIVE_INJECTION_PATH = _resolve_paths()
+_ACTIVE_PATHS_CACHED: tuple[Path, Path, Path] | None = None
+
+
+def _active_paths() -> tuple[Path, Path, Path]:
+    """Lazily resolve and cache active profile paths.
+
+    Previously computed at import time via ``_resolve_paths()``.
+    Lazy resolution avoids import-time side effects and improves testability.
+    """
+    global _ACTIVE_PATHS_CACHED
+    if _ACTIVE_PATHS_CACHED is None:
+        _ACTIVE_PATHS_CACHED = _resolve_paths()
+    return _ACTIVE_PATHS_CACHED
+
+
+def __getattr__(name: str):
+    """Lazy resolution of ACTIVE_PROFILE_DIR/PATH/INJECTION_PATH for external consumers."""
+    mapping = {
+        "ACTIVE_PROFILE_DIR": 0,
+        "ACTIVE_PROFILE_PATH": 1,
+        "ACTIVE_INJECTION_PATH": 2,
+    }
+    if name in mapping:
+        return _active_paths()[mapping[name]]
+    raise AttributeError(f"module {__name__!r} has no attribute {name!r}")
 
 
 def publish_active_profile(
@@ -79,28 +103,29 @@ def publish_active_profile(
                 update_state_field(session_id, state="complete")
             except (FileNotFoundError, ImportError):
                 pass
-        return ACTIVE_PROFILE_PATH
+        return _active_paths()[1]
 
     # Legacy path: write directly to top-level
-    ACTIVE_PROFILE_DIR.mkdir(parents=True, exist_ok=True)
+    profile_dir, profile_path, injection_path = _active_paths()
+    profile_dir.mkdir(parents=True, exist_ok=True)
 
     # Atomic write for profile.json
-    fd, tmp = tempfile.mkstemp(dir=ACTIVE_PROFILE_DIR, suffix=".json")
+    fd, tmp = tempfile.mkstemp(dir=profile_dir, suffix=".json")
     try:
         with os.fdopen(fd, "w", encoding="utf-8") as f:
             json.dump(profile, f, indent=2, ensure_ascii=False)
-        os.replace(tmp, ACTIVE_PROFILE_PATH)
+        os.replace(tmp, profile_path)
     except BaseException:
         os.unlink(tmp)
         raise
 
     # Also write the compact injection text
     injection = format_profile_for_injection(profile)
-    fd2, tmp2 = tempfile.mkstemp(dir=ACTIVE_PROFILE_DIR, suffix=".txt")
+    fd2, tmp2 = tempfile.mkstemp(dir=profile_dir, suffix=".txt")
     try:
         with os.fdopen(fd2, "w", encoding="utf-8") as f:
             f.write(injection)
-        os.replace(tmp2, ACTIVE_INJECTION_PATH)
+        os.replace(tmp2, injection_path)
     except BaseException:
         os.unlink(tmp2)
         raise
@@ -113,7 +138,7 @@ def publish_active_profile(
         except (FileNotFoundError, ImportError):
             pass
 
-    return ACTIVE_PROFILE_PATH
+    return profile_path
 
 
 def load_active_profile() -> dict[str, Any] | None:
@@ -121,8 +146,9 @@ def load_active_profile() -> dict[str, Any] | None:
 
     Returns None if no profile exists yet.
     """
-    if ACTIVE_PROFILE_PATH.exists():
-        with open(ACTIVE_PROFILE_PATH, "r", encoding="utf-8") as f:
+    profile_path = _active_paths()[1]
+    if profile_path.exists():
+        with open(profile_path, "r", encoding="utf-8") as f:
             return json.load(f)
     return None
 
@@ -132,8 +158,9 @@ def load_active_injection() -> str | None:
 
     Returns None if no profile has been published yet.
     """
-    if ACTIVE_INJECTION_PATH.exists():
-        return ACTIVE_INJECTION_PATH.read_text(encoding="utf-8")
+    injection_path = _active_paths()[2]
+    if injection_path.exists():
+        return injection_path.read_text(encoding="utf-8")
     return None
 
 

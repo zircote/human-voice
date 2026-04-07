@@ -13,17 +13,7 @@ import sys
 from pathlib import Path
 from typing import Any
 
-
-def _find_project_root() -> Path:
-    """Locate the project root by walking up from this file looking for question-bank/."""
-    current = Path(__file__).resolve().parent
-    for ancestor in [current, *current.parents]:
-        if (ancestor / "question-bank").is_dir():
-            return ancestor
-    raise FileNotFoundError(
-        "Cannot locate project root: no 'question-bank' directory found "
-        f"in ancestors of {Path(__file__).resolve()}"
-    )
+from lib.paths import find_project_root
 
 
 def load_branching_config() -> dict[str, Any]:
@@ -34,7 +24,7 @@ def load_branching_config() -> dict[str, Any]:
         'deep_dive_triggers' - trigger rules for injecting deep-dive questions
         'module_sequence'    - phase ordering, core/branch module lists, resets
     """
-    root = _find_project_root()
+    root = find_project_root()
     branching_dir = root / "question-bank" / "branching"
 
     config: dict[str, Any] = {}

@@ -18,15 +18,7 @@ from lib.branching import (
     check_deep_dive_triggers,
     get_engagement_reset_points,
 )
-
-
-def _find_project_root() -> Path:
-    """Walk up from this file to find the project root containing question-bank/."""
-    current = Path(__file__).resolve().parent
-    for ancestor in [current, *current.parents]:
-        if (ancestor / "question-bank").is_dir():
-            return ancestor
-    raise FileNotFoundError("Cannot find project root with question-bank/ directory")
+from lib.paths import find_project_root
 
 
 _MODULE_CACHE: dict[str, list[dict[str, Any]]] = {}
@@ -37,7 +29,7 @@ def _load_module_questions(module_id: str) -> list[dict[str, Any]]:
     if module_id in _MODULE_CACHE:
         return _MODULE_CACHE[module_id]
 
-    root = _find_project_root()
+    root = find_project_root()
     modules_dir = root / "question-bank" / "modules"
 
     # Find the file matching this module_id

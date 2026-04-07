@@ -19,8 +19,9 @@ import re
 import shutil
 import sys
 import tempfile
-from datetime import datetime, timezone
 from pathlib import Path
+
+from lib.io import atomic_write_json, now_iso
 
 
 _SLUG_RE = re.compile(r"^[a-z0-9][a-z0-9-]{0,46}[a-z0-9]$")
@@ -44,25 +45,6 @@ def _profiles_dir() -> Path:
 
 def _registry_path() -> Path:
     return _profiles_dir() / "registry.json"
-
-
-def _atomic_write_json(path: Path, data: dict) -> None:
-    fd, tmp = tempfile.mkstemp(dir=path.parent, suffix=".tmp")
-    try:
-        with os.fdopen(fd, "w") as f:
-            json.dump(data, f, indent=2)
-            f.write("\n")
-        os.replace(tmp, path)
-    except BaseException:
-        try:
-            os.unlink(tmp)
-        except OSError:
-            pass
-        raise
-
-
-def _now_iso() -> str:
-    return datetime.now(timezone.utc).isoformat()
 
 
 # ---------------------------------------------------------------------------
@@ -104,7 +86,7 @@ def load_registry() -> dict:
         if migrated:
             return json.loads(path.read_text())
         reg = _empty_registry()
-        _atomic_write_json(path, reg)
+        atomic_write_json(path, reg)
         return reg
     return json.loads(path.read_text())
 
@@ -112,7 +94,7 @@ def load_registry() -> dict:
 def save_registry(registry: dict) -> Path:
     """Write the registry atomically."""
     path = _registry_path()
-    _atomic_write_json(path, registry)
+    atomic_write_json(path, registry)
     return path
 
 
@@ -160,7 +142,7 @@ def migrate_single_to_multi() -> str | None:
         shutil.copy2(prompt_path, prof_dir / "voice-prompt.txt")
 
     # Build registry
-    now = _now_iso()
+    now = now_iso()
     registry = {
         "active": slug,
         "directory_overrides": {},
@@ -176,7 +158,7 @@ def migrate_single_to_multi() -> str | None:
             }
         },
     }
-    _atomic_write_json(registry_path, registry)
+    atomic_write_json(registry_path, registry)
     return slug
 
 
@@ -241,7 +223,7 @@ def store_profile(
     prof_dir = _profiles_dir() / slug
     prof_dir.mkdir(parents=True, exist_ok=True)
 
-    _atomic_write_json(prof_dir / "profile.json", profile)
+    atomic_write_json(prof_dir / "profile.json", profile)
 
     # Generate and write voice-prompt.txt
     injection = format_profile_for_injection(profile)
@@ -260,20 +242,18 @@ def store_profile(
 
     # Update registry
     reg = load_registry()
-    now = _now_iso()
+    now = now_iso()
+    # Read existing entry BEFORE overwriting so we can preserve created_at
+    existing = reg["profiles"].get(slug)
     reg["profiles"][slug] = {
         "slug": slug,
         "display_name": display_name,
         "origin": origin,
         "session_id": session_id,
         "tags": tags or [],
-        "created_at": now,
+        "created_at": existing["created_at"] if existing and existing.get("created_at") else now,
         "updated_at": now,
     }
-    # Preserve created_at if entry already existed
-    existing = reg["profiles"].get(slug)
-    if existing and existing.get("created_at"):
-        reg["profiles"][slug]["created_at"] = existing["created_at"]
 
     save_registry(reg)
     return prof_dir
@@ -325,7 +305,7 @@ def rename_profile(old_slug: str, new_slug: str) -> bool:
     # Update registry entry
     entry = reg["profiles"].pop(old_slug)
     entry["slug"] = new_slug
-    entry["updated_at"] = _now_iso()
+    entry["updated_at"] = now_iso()
     reg["profiles"][new_slug] = entry
 
     # Update active pointer

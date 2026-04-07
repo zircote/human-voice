@@ -23,9 +23,10 @@ import argparse
 import json
 import os
 import sys
-import tempfile
 from pathlib import Path
 from typing import Any
+
+from lib.io import atomic_write_json
 
 _LEGACY_DIR = Path.home() / ".human-voice"
 
@@ -73,8 +74,34 @@ def migrate_legacy_data() -> bool:
     return migrated
 
 
-CONFIG_DIR = _resolve_data_dir()
-CONFIG_PATH = CONFIG_DIR / "config.json"
+def _config_dir() -> Path:
+    """Return the plugin data directory, resolving lazily and caching in globals.
+
+    Previously computed at import time. Lazy resolution allows tests to set
+    ``CLAUDE_PLUGIN_DATA`` before first access.
+    """
+    d = globals().get("_CONFIG_DIR_CACHED")
+    if d is None:
+        d = _resolve_data_dir()
+        globals()["_CONFIG_DIR_CACHED"] = d
+    return d
+
+
+def _config_path() -> Path:
+    """Return the config.json path, resolving lazily."""
+    return _config_dir() / "config.json"
+
+
+def __getattr__(name: str):
+    """Lazy resolution of CONFIG_DIR and CONFIG_PATH for external consumers.
+
+    Supports ``from lib.config import CONFIG_DIR`` without import-time side effects.
+    """
+    if name == "CONFIG_DIR":
+        return _config_dir()
+    if name == "CONFIG_PATH":
+        return _config_path()
+    raise AttributeError(f"module {__name__!r} has no attribute {name!r}")
 
 
 def get_default_config() -> dict:
@@ -120,7 +147,7 @@ def get_default_config() -> dict:
             },
         },
         "interview": {
-            "session_storage": str(CONFIG_DIR / "sessions"),
+            "session_storage": str(_config_dir() / "sessions"),
             "total_estimated_minutes": 35,
             "estimated_questions": 70,
             "format_streak_limit": 5,
@@ -190,9 +217,9 @@ def get_default_config() -> dict:
                 "time_budget_minutes": 3,
             },
             "profile": {
-                "publish_to": str(CONFIG_DIR / "profile.json"),
-                "injection_to": str(CONFIG_DIR / "voice-prompt.txt"),
-                "profiles_dir": str(CONFIG_DIR / "profiles"),
+                "publish_to": str(_config_dir() / "profile.json"),
+                "injection_to": str(_config_dir() / "voice-prompt.txt"),
+                "profiles_dir": str(_config_dir() / "profiles"),
                 "population_means": {
                     "formality_f_score": {"mean": 55.0, "sd": 10.0},
                     "flesch_kincaid_grade": {"mean": 10.0, "sd": 3.0},
@@ -232,9 +259,9 @@ def load_config() -> dict:
     Uses deep merge — nested dicts merge recursively, not overwrite.
     """
     defaults = get_default_config()
-    if not CONFIG_PATH.is_file():
+    if not _config_path().is_file():
         return defaults
-    with CONFIG_PATH.open("r", encoding="utf-8") as fh:
+    with _config_path().open("r", encoding="utf-8") as fh:
         user_cfg = json.load(fh)
     return _deep_merge(defaults, user_cfg)
 
@@ -242,28 +269,11 @@ def load_config() -> dict:
 def save_config(config: dict) -> Path:
     """Write *config* to $CLAUDE_PLUGIN_DATA/config.json atomically.
 
-    Uses a temporary file in the same directory followed by
-    :func:`os.replace` so the write is atomic on POSIX systems.
-
     Returns the path written.
     """
-    CONFIG_DIR.mkdir(parents=True, exist_ok=True)
-    fd, tmp_path = tempfile.mkstemp(
-        dir=CONFIG_DIR, prefix=".config-", suffix=".tmp"
-    )
-    try:
-        with os.fdopen(fd, "w", encoding="utf-8") as fh:
-            json.dump(config, fh, indent=2, ensure_ascii=False)
-            fh.write("\n")
-        os.replace(tmp_path, CONFIG_PATH)
-    except BaseException:
-        # Clean up the temp file on any failure.
-        try:
-            os.unlink(tmp_path)
-        except OSError:
-            pass
-        raise
-    return CONFIG_PATH
+    _config_dir().mkdir(parents=True, exist_ok=True)
+    atomic_write_json(_config_path(), config)
+    return _config_path()
 
 
 def get(key_path: str, default: Any = None) -> Any:

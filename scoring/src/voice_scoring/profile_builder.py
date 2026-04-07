@@ -20,6 +20,8 @@ from __future__ import annotations
 import math
 from typing import Any
 
+from lib.response import build_response_lookup
+
 
 # ---------- Tier weights ----------
 
@@ -218,22 +220,7 @@ def compute_voice_stability(
     # Group items by dimension and module.
     dim_module_scores: dict[str, dict[str, list[float]]] = {}
 
-    resp_lookup: dict[str, dict[str, Any]] = {}
-    for r in responses:
-        qid = r.get("question_id")
-        if qid:
-            # Unwrap answer envelope if present.
-            answer = r.get("answer")
-            if isinstance(answer, dict):
-                flat = {**r}
-                for key in ("value", "raw", "scale_value", "selected_options",
-                            "semantic_differential_value", "raw_text"):
-                    if key not in flat or flat[key] is None:
-                        if key in answer:
-                            flat[key] = answer[key]
-                resp_lookup[qid] = flat
-            else:
-                resp_lookup[qid] = r
+    resp_lookup = build_response_lookup(responses)
 
     for dim, item_ids in dimension_mapping.items():
         if not isinstance(item_ids, list):

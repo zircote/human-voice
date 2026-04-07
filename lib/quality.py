@@ -13,16 +13,8 @@ import sys
 from pathlib import Path
 from typing import Any
 
-
-def _find_project_root() -> Path:
-    """Walk up from this file to find the project root containing question-bank/."""
-    current = Path(__file__).resolve().parent
-    for ancestor in [current, *current.parents]:
-        if (ancestor / "question-bank").is_dir():
-            return ancestor
-    raise FileNotFoundError(
-        "Cannot locate project root: no ancestor directory contains question-bank/"
-    )
+from lib.paths import find_project_root
+from lib.response import extract_scale_value
 
 
 def load_quality_config() -> dict:
@@ -31,7 +23,7 @@ def load_quality_config() -> dict:
     Returns:
         dict with keys: 'satisficing_rules', 'attention_checks'.
     """
-    root = _find_project_root()
+    root = find_project_root()
     scoring_dir = root / "question-bank" / "scoring"
 
     satisficing_path = scoring_dir / "satisficing-rules.json"
@@ -76,7 +68,7 @@ def _is_scale_response(response: dict, question: dict | None = None) -> bool:
 
     # No type information at all: infer from value.
     if not q_type:
-        val = _get_scale_value(response)
+        val = extract_scale_value(response)
         return val is not None
 
     return False
@@ -113,36 +105,6 @@ def _quality_config() -> dict:
         }
 
 
-def _get_scale_value(response: dict) -> int | None:
-    """Extract numeric scale value from a response, handling the answer envelope.
-
-    Supports both schema-compliant format (top-level value/scale_value) and
-    interview-conductor format (nested answer.value).
-    """
-    # Try top-level scale_value first.
-    val = response.get("scale_value")
-    if val is None:
-        val = response.get("semantic_differential_value")
-    if val is None:
-        val = response.get("value")
-    # Unwrap answer envelope if present.
-    if val is None or isinstance(val, dict):
-        answer = response.get("answer")
-        if isinstance(answer, dict):
-            val = answer.get("scale_value")
-            if val is None:
-                val = answer.get("value")
-    if isinstance(val, (int, float)):
-        return int(val)
-    # Try numeric string conversion.
-    if isinstance(val, str):
-        try:
-            return int(float(val))
-        except ValueError:
-            pass
-    return None
-
-
 def detect_straightlining(recent_responses: list[dict], threshold: int = 5) -> bool:
     """Check if the last `threshold` scale responses have identical values.
 
@@ -158,7 +120,7 @@ def detect_straightlining(recent_responses: list[dict], threshold: int = 5) -> b
     scale_values: list[int] = []
     for resp in recent_responses:
         if _is_scale_response(resp):
-            val = _get_scale_value(resp)
+            val = extract_scale_value(resp)
             if val is not None:
                 scale_values.append(val)
 
@@ -167,9 +129,6 @@ def detect_straightlining(recent_responses: list[dict], threshold: int = 5) -> b
 
     tail = scale_values[-threshold:]
     return len(set(tail)) == 1
-
-
-# Keep the old signature working but also support question-aware calls.
 
 
 def detect_speed_flag(response: dict, question: dict) -> bool:
@@ -224,7 +183,7 @@ def detect_alternation(recent_responses: list[dict], threshold: int = 4) -> bool
     scale_values: list[int] = []
     for resp in recent_responses:
         if _is_scale_response(resp):
-            val = _get_scale_value(resp)
+            val = extract_scale_value(resp)
             if val is not None:
                 scale_values.append(val)
 
@@ -343,8 +302,8 @@ def evaluate_attention_checks(responses: list[dict]) -> dict:
             })
             continue
 
-        val_a = _get_scale_value(resp_a)
-        val_b = _get_scale_value(resp_b)
+        val_a = extract_scale_value(resp_a)
+        val_b = extract_scale_value(resp_b)
 
         if method == "numeric_tolerance":
             tolerance = check_def.get("tolerance", 2)

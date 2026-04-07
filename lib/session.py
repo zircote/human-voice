@@ -15,13 +15,12 @@ from __future__ import annotations
 
 import argparse
 import json
-import os
 import sys
-import tempfile
 import uuid
-from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
+
+from lib.io import atomic_write_json, now_iso
 
 
 def _sessions_root() -> Path:
@@ -34,33 +33,10 @@ def _sessions_root() -> Path:
     return root
 
 
-def _now_iso() -> str:
-    """Return the current time as an ISO-8601 string in UTC."""
-    return datetime.now(timezone.utc).isoformat()
-
-
-def _atomic_write_json(path: Path, data: dict) -> None:
-    """Write *data* as JSON to *path* atomically via temp-file + rename."""
-    # Write to a temp file in the same directory so os.replace is atomic
-    fd, tmp = tempfile.mkstemp(dir=path.parent, suffix=".tmp")
-    try:
-        with os.fdopen(fd, "w") as f:
-            json.dump(data, f, indent=2)
-            f.write("\n")
-        os.replace(tmp, path)
-    except BaseException:
-        # Clean up the temp file on any failure
-        try:
-            os.unlink(tmp)
-        except OSError:
-            pass
-        raise
-
-
 def _initial_state(session_id: str) -> dict:
     """Return a fresh session-state dict conforming to session-state.schema.json."""
     from lib.config import get
-    now = _now_iso()
+    now = now_iso()
     return {
         "session_id": session_id,
         "created_at": now,
@@ -114,7 +90,7 @@ def create_session() -> dict:
     (session_dir / "scores").mkdir(exist_ok=True)
 
     state = _initial_state(session_id)
-    _atomic_write_json(session_dir / "state.json", state)
+    atomic_write_json(session_dir / "state.json", state)
 
     # Create an empty responses file
     (session_dir / "responses.jsonl").touch()
@@ -143,8 +119,8 @@ def save_session(session_id: str, state: dict) -> None:
 
     The ``updated_at`` timestamp is refreshed automatically.
     """
-    state["updated_at"] = _now_iso()
-    _atomic_write_json(get_session_dir(session_id) / "state.json", state)
+    state["updated_at"] = now_iso()
+    atomic_write_json(get_session_dir(session_id) / "state.json", state)
 
 
 def list_sessions() -> list[dict]:
@@ -293,7 +269,7 @@ def save_writing_sample(
     """Save a writing sample to ``writing-samples/{sample_id}.json``."""
     samples_dir = get_session_dir(session_id) / "writing-samples"
     samples_dir.mkdir(parents=True, exist_ok=True)
-    _atomic_write_json(samples_dir / f"{sample_id}.json", sample_data)
+    atomic_write_json(samples_dir / f"{sample_id}.json", sample_data)
 
 
 def update_state_field(session_id: str, **kwargs: Any) -> dict:
@@ -356,11 +332,7 @@ def main(argv: list[str] | None = None) -> None:
         else:
             parser.print_help()
             sys.exit(1)
-    except FileNotFoundError as exc:
-        json.dump({"error": str(exc)}, sys.stdout, indent=2)
-        print()
-        sys.exit(1)
-    except ValueError as exc:
+    except (FileNotFoundError, ValueError) as exc:
         json.dump({"error": str(exc)}, sys.stdout, indent=2)
         print()
         sys.exit(1)

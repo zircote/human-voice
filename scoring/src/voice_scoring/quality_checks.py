@@ -15,23 +15,7 @@ from __future__ import annotations
 
 from typing import Any
 
-
-def _extract_value(r: dict[str, Any]) -> Any:
-    """Extract the primary response value, handling the answer envelope format."""
-    val = r.get("scale_value")
-    if val is None:
-        val = r.get("semantic_differential_value")
-    if val is None:
-        val = r.get("value")
-    if val is None:
-        answer = r.get("answer")
-        if isinstance(answer, dict):
-            val = answer.get("scale_value")
-            if val is None:
-                val = answer.get("semantic_differential_value")
-            if val is None:
-                val = answer.get("value")
-    return val
+from lib.response import extract_value
 
 
 # Non-trivial question types where speed check applies.
@@ -67,7 +51,7 @@ def detect_straightlining(
     run_count = 0
 
     for i, r in enumerate(responses):
-        val = _extract_value(r)
+        val = extract_value(r)
         if val is not None and val == run_value:
             run_count += 1
         else:
@@ -126,7 +110,7 @@ def detect_speed_flags(
             continue
         # Without metadata, flag all responses with numeric value (assumed non-trivial).
         if nontrivial_ids is None:
-            val = _extract_value(r)
+            val = extract_value(r)
             if not isinstance(val, (int, float)):
                 continue
 
@@ -157,7 +141,7 @@ def detect_alternating_extremes(
     expected_next: float | None = None
 
     for i, r in enumerate(responses):
-        val = _extract_value(r)
+        val = extract_value(r)
         if not isinstance(val, (int, float)):
             # Break in scale values resets the run.
             if run_count >= min_run and run_start is not None:
@@ -223,7 +207,13 @@ def detect_alternating_extremes(
 
 
 def _get_scale_value(response: dict[str, Any] | None) -> float | None:
-    """Extract the primary numeric scale value from a response."""
+    """Extract the primary numeric scale value from a response.
+
+    Intentionally separate from lib.response.extract_scale_value: this
+    version is attention-check-specific and only reads top-level keys
+    (no answer-envelope unwrapping) since attention checks always use
+    schema-compliant flat responses.
+    """
     if response is None:
         return None
     for key in ("scale_value", "semantic_differential_value", "value"):
