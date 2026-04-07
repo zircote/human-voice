@@ -21,3 +21,4 @@ htmlcov/
 # Claude Code local settings (user-specific)
 .claude/settings.local.json
 .claude/*.local.md
+.refactor/
