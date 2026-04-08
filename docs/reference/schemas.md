@@ -9,11 +9,25 @@ All schemas use JSON Schema Draft 2020-12. Schema files are located in `question
 
 | Schema | File | ID |
 |---|---|---|
+| [Configuration](#configuration) | `config.schema.json` | `https://human-voice.zircote.com/schemas/config.schema.json` |
 | [Question](#question) | `question.schema.json` | `https://voice.zircote.com/schemas/question.schema.json` |
 | [Response](#response) | `response.schema.json` | `https://voice.zircote.com/schemas/response.schema.json` |
 | [Session State](#session-state) | `session-state.schema.json` | `https://voice.zircote.com/schemas/session-state.schema.json` |
 | [Voice Profile](#voice-profile) | `voice-profile.schema.json` | `https://voice.zircote.com/schemas/voice-profile.schema.json` |
 | [Writing Analysis](#writing-analysis) | `writing-analysis.schema.json` | `https://voice.zircote.com/schemas/writing-analysis.schema.json` |
+
+---
+
+## Configuration
+
+Defines the unified configuration for the human-voice plugin, covering AI writing pattern detection settings and voice elicitation interview settings. Stored at `$CLAUDE_PLUGIN_DATA/config.json`.
+
+The schema contains two top-level sections:
+
+- **detection**: File scanning scope, pattern toggles for character/language/structural/voice patterns, fix behavior, and output formatting
+- **interview**: Session parameters, quality monitoring thresholds, scoring algorithm weights, adaptive elicitation settings, deep-dive limits, and profile output paths
+
+See the [Configuration Reference](configuration.md#configjson-structure) for a full key-by-key breakdown with defaults and descriptions.
 
 ---
 

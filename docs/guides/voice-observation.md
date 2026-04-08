@@ -60,3 +60,9 @@ recall_memories(query="voice drift observed pattern", namespace="voice-observati
 ## Disabling the Observer
 
 The observer is controlled by the SessionStart hook in `hooks/hooks.json`. To disable it, remove or rename the hooks file. The observer reads `${CLAUDE_PLUGIN_DATA}/observer-protocol.md`; deleting that file also disables observation while keeping the voice profile active for content generation.
+
+## Related documentation
+
+- [Architecture explanation](../explanation/architecture.md) for the design rationale behind the observer protocol and dual-output scoring
+- [Interpreting Calibration](interpreting-calibration.md) for understanding how observed patterns compare to self-report scores
+- [CLI Reference](../reference/cli.md) for the `/voice:drift` command syntax

@@ -23,7 +23,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **New Skill**: `voice` for voice elicitation
 - **Documentation**: Diátaxis-structured docs (tutorial, how-to, reference, explanation)
 - **Tests**: 118 pytest tests covering session, branching, sequencing, quality, NLP, scoring, integration
-- **CLI Tools**: 6 bin/ executables for session, branching, sequencer, quality, NLP, scoring
+- **CLI Tools**: 7 bin/ executables for session, branching, sequencer, quality, NLP, scoring, profiles
 
 ## [0.3.0] - 2026-01-23
 

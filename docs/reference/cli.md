@@ -226,17 +226,17 @@ Scoring engine. Delegates to `voice_scoring`.
 
 | Variable | Description |
 |---|---|
-| `MIVOCA_QUESTION_BANK` | Path to the question-bank directory. Serves the same purpose as `--metadata-dir`. The explicit flag takes precedence over this variable. |
+| `VOICE_QUESTION_BANK` | Path to the question-bank directory. Serves the same purpose as `--metadata-dir`. The explicit flag takes precedence over this variable. Legacy name `MIVOCA_QUESTION_BANK` is also accepted as a fallback. |
 
 #### Metadata Discovery Order
 
-The scoring engine locates question-bank metadata files in the following order. It uses the first directory that contains the required files.
+The scoring engine locates question-bank metadata files in the following order. It uses the first directory that contains the required files. For each candidate, the engine also checks a `scoring/` subdirectory.
 
-1. Explicit `--metadata-dir` flag value
-2. `MIVOCA_QUESTION_BANK` environment variable
-3. Session-local `metadata/` subdirectory
+1. Session-local `metadata/` subdirectory, then the session directory itself
+2. Explicit `--metadata-dir` flag value
+3. `VOICE_QUESTION_BANK` environment variable (legacy `MIVOCA_QUESTION_BANK` also accepted)
 4. Parent directory walk from the session directory (up to 5 levels), looking for a `question-bank/` directory
-5. Well-known fallback: `${CLAUDE_PLUGIN_DATA}/question-bank/`
+5. Well-known fallback: `~/.human-voice/question-bank/`
 
 #### Pipeline Stages
 
@@ -264,6 +264,40 @@ Writes results to `{session-dir}/scores/self-report.json` containing:
 ```bash
 voice-scoring score \
   --session-dir ${CLAUDE_PLUGIN_DATA}/sessions/a1b2c3d4/
+```
+
+---
+
+### voice-profiles
+
+Profile registry management. Delegates to `lib.profile_registry`.
+
+#### Subcommands
+
+| Subcommand | Arguments | Description |
+|---|---|---|
+| `list` | _(none)_ | List all registered profiles with active marker, origin, and tags. |
+| `activate` | `SLUG` | Set a profile as the active profile. Copies its `profile.json` and `voice-prompt.txt` to the top-level data directory. |
+| `info` | `SLUG` | Show full registry entry for a profile (JSON output). |
+| `delete` | `SLUG` | Delete a profile permanently. Cannot delete the currently active profile. |
+| `install` | `SLUG [SLUG...] --to-repo PATH [--default SLUG]` | Install one or more profiles into a repository as `.github/copilot-instructions.md` with marker-delimited sections and profile routing logic. |
+| `export` | `SLUG --to-repo PATH` | Install a single profile to a repo (alias for `install` with one slug). |
+| `set-override` | `PATTERN SLUG` | Assign a profile to activate automatically when working in directories matching the glob pattern. |
+| `remove-override` | `PATTERN` | Remove a directory override. |
+| `migrate` | _(none)_ | Migrate a single top-level profile into the multi-profile registry. |
+
+#### Example
+
+```bash
+voice-profiles list
+#  * robert-allen         interview    personal, default
+#    zircote-brand        designed     corporate, brand
+
+voice-profiles activate zircote-brand
+voice-profiles install robert-allen zircote-brand --to-repo ../my-repo --default robert-allen
+voice-profiles set-override "/Users/me/Projects/novel/*" narrator-formal
+voice-profiles remove-override "/Users/me/Projects/novel/*"
+voice-profiles migrate
 ```
 
 ---
@@ -322,3 +356,64 @@ List all interview sessions.
 |---|---|
 | **Tools used** | Read, Bash, Glob |
 | **Output** | Table of all sessions with session ID, status, writer type, questions answered, modules completed, and last updated date. Sorted by most recently active first. |
+
+### /voice:setup
+
+Interactive setup wizard for human-voice configuration.
+
+| Aspect | Detail |
+|---|---|
+| **Tools used** | Read, Write, Bash, Glob, AskUserQuestion |
+| **Creates** | `${CLAUDE_PLUGIN_DATA}/config.json` |
+| **Behavior** | Detects project structure (content directories, file extensions, static site generators), gathers preferences through interactive questions (detection tiers, fix behavior, interview defaults), writes the unified config file, and verifies it. Optionally offers an initial content scan. |
+
+### /voice:review
+
+Review content for AI writing patterns.
+
+| Aspect | Detail |
+|---|---|
+| **Tools used** | Read, Glob, Grep, Bash |
+| **Arguments** | Optional path (file or directory); `--ignore=categories` to skip specific pattern types |
+| **Behavior** | Runs a multi-tier analysis: (1) character-level detection via the validation script, (2) language pattern scan for buzzwords, hedging, and meta-commentary, (3) structural pattern assessment, (4) voice pattern assessment. Reports findings by tier with line numbers, replacements, and priority recommendations. |
+
+### /voice:fix
+
+Auto-fix AI character patterns in content files.
+
+| Aspect | Detail |
+|---|---|
+| **Tools used** | Read, Bash |
+| **Arguments** | Optional path; `--dry-run` to preview; `--ignore=categories` to skip pattern types |
+| **Behavior** | Replaces Tier 1 character-level AI patterns (em dashes, smart quotes, ellipsis, emojis) with human-typical equivalents. Runs in dry-run mode first when `--dry-run` is specified or when unsure. Reports summary of changes and suggests `/voice:review` for comprehensive analysis. Does not fix language, structural, or voice patterns (manual review required). |
+
+### /voice:drift
+
+Report observed voice patterns and drift from the active profile.
+
+| Aspect | Detail |
+|---|---|
+| **Tools used** | Read, Glob, Grep, Bash |
+| **Requires** | A completed voice profile and accumulated voice observations in Atlatl memory |
+| **Output** | Three sections: confirmed patterns (writing matches profile), drift detected (consistent divergence on specific dimensions), and new patterns (characteristics not in the profile). Includes re-interview recommendations based on drift severity. |
+
+### /voice:design
+
+Design a voice profile from a description or template without running an interview.
+
+| Aspect | Detail |
+|---|---|
+| **Tools used** | Read, Write, Bash, Glob, AskUserQuestion |
+| **Arguments** | Optional slug; natural-language description or `--from-template {name}` |
+| **Templates** | `formal-technical`, `casual-conversational`, `academic-prose`, `brand-corporate`, `creative-narrative` |
+| **Behavior** | Generates a complete profile.json from either a natural-language voice description or a starter template. Stores the profile in the registry and activates it. Designed profiles have no calibration data (no self-report vs observed comparison). Origin is `"designed"` or `"template"`. |
+
+### /voice:profiles
+
+Manage multiple named voice profiles.
+
+| Aspect | Detail |
+|---|---|
+| **Tools used** | Read, Write, Bash, Glob, AskUserQuestion |
+| **Subcommands** | `list` (default), `activate {slug}`, `info {slug}`, `delete {slug}`, `rename {old} {new}`, `export {slug} --to-repo path`, `set-override {pattern} {slug}`, `remove-override {pattern}` |
+| **Behavior** | Lists all registered profiles with active marker, activates profiles (copies to top-level data directory), shows full profile details with example prose, deletes/renames profiles, exports to repositories for Copilot consumption, and manages directory-based overrides for automatic profile switching. |

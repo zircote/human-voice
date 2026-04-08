@@ -45,25 +45,25 @@ Each dimension entry in the calibration report includes:
 
 ### Interpret awareness levels
 
-3. Check the `awareness_level` field for each dimension:
+Check the `awareness_level` field for each dimension:
    - **high_awareness** (delta of 10 or fewer): The writer accurately perceives this aspect of their voice. No action needed.
    - **moderate_awareness** (delta between 11 and 25): The writer has partial insight. Review the direction of the gap to determine whether the writer overestimates or underestimates.
    - **blind_spot** (delta exceeding 25): The writer's self-perception diverges substantially from observed behavior. This is the highest-value diagnostic information in the profile.
 
 ### Interpret the SD cross-validation blend
 
-4. When both self-report and observed scores are available, the system produces a blended composite score per dimension. The blend ratio is 0.7 (self-report) and 0.3 (observed) for Tier 1 dimensions (high self-reportability), 0.5/0.5 for Tier 2, and 0.3/0.7 for Tier 3. Tier assignments are documented in the [Dimensions Reference](../reference/dimensions.md).
+When both self-report and observed scores are available, the system produces a blended composite score per dimension. The blend ratio is 0.7 (self-report) and 0.3 (observed) for Tier 1 dimensions (high self-reportability), 0.5/0.5 for Tier 2, and 0.3/0.7 for Tier 3. Tier assignments are documented in the [Dimensions Reference](../reference/dimensions.md).
 
 ## Check the quality section
 
-5. Review the `quality` object at the top level of the scoring output. A `pass` value of `true` indicates all quality checks passed. When `pass` is `false`, review the quality flags:
+Review the `quality` object at the top level of the scoring output. A `pass` value of `true` indicates all quality checks passed. When `pass` is `false`, review the quality flags:
    - `too_fast_count`: Number of responses below the minimum expected time
    - `straightlining_detected`: Whether the writer gave identical scale responses in sequence
    - `attention_check_failures`: Number of failed attention checks
 
 ## Identify skipped items
 
-6. Check for a `skipped_items` field in each dimension's scoring entry. This field lists question IDs that were not answered, either because the writer skipped them or because adaptive branching excluded them. A high skip count for a dimension reduces confidence in that dimension's score.
+Check for a `skipped_items` field in each dimension's scoring entry. This field lists question IDs that were not answered, either because the writer skipped them or because adaptive branching excluded them. A high skip count for a dimension reduces confidence in that dimension's score.
 
 ## Decide whether to re-interview
 

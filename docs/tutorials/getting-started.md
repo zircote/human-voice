@@ -334,7 +334,7 @@ The output is a comprehensive voice profile:
 
 ```
 ═══════════════════════════════════════════════════
-MIVOCA VOICE PROFILE
+VOICE PROFILE
 Session:  a1b2c3d4-e5f6-7890-abcd-ef1234567890
 Completed: 2026-04-04T16:45:00Z
 ═══════════════════════════════════════════════════
@@ -391,7 +391,7 @@ We now have a complete voice profile. This is the primary output of the voice in
 
 The voice profile has four sections worth understanding at a high level.
 
-**Dimension Scores** show 12 voice dimensions, each scored on a 1--10 scale. Every dimension has two scores:
+**Dimension Scores** show voice dimensions scored on a 1--10 scale. The profile includes 8 gold standard dimensions (formality, emotional tone, personality, complexity, audience awareness, authority, narrativity, humor) plus additional gap dimensions that vary by interview path. Every dimension has two scores:
 
 - **Self-Report** -- derived from our interview answers (what we said about our writing)
 - **Computed** -- derived from NLP analysis of our writing samples (what we actually did)
@@ -402,7 +402,7 @@ The voice profile has four sections worth understanding at a high level.
 
 **Distinctive Features** lists specific, observable patterns found in our writing samples -- sentence structure preferences, voice tendencies, vocabulary habits, and rhetorical patterns.
 
-For a deeper understanding of what each dimension measures and how calibration works, see the [explanation docs](../explanation/).
+For a deeper understanding of what each dimension measures and how calibration works, see the [architecture explanation](../explanation/architecture.md).
 
 ## What we have accomplished
 
@@ -421,5 +421,5 @@ In this tutorial, we:
 ## Next steps
 
 - **Customize your interview experience** -- see the [how-to guides](../guides/) for pausing strategies, providing better writing samples, and re-running specific modules
-- **Understand voice dimensions in depth** -- read the [explanation docs](../explanation/) for the research foundation behind each dimension and how calibration accuracy is calculated
+- **Understand voice dimensions in depth** -- read the [architecture explanation](../explanation/architecture.md) for the research foundation behind each dimension and how calibration accuracy is calculated
 - **Work with profile data programmatically** -- consult the [reference docs](../reference/) for the `profile.json` schema and scoring engine API

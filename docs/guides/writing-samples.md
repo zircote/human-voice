@@ -38,15 +38,15 @@ The pipeline analyzes four categories of features from your writing samples:
 
 ## Tips for natural writing
 
-5. Write as you normally would. The pipeline measures your natural habits, not your performance under observation. Attempting to write differently than usual degrades the accuracy of the observed profile.
+- **Write as you normally would.** The pipeline measures your natural habits, not your performance under observation. Attempting to write differently than usual degrades the accuracy of the observed profile.
 
-6. Shorter samples are acceptable. A 100-word paragraph written naturally is more valuable than a 500-word essay written self-consciously. The pipeline extracts features from samples as short as 50 words.
+- **Shorter samples are acceptable.** A 100-word paragraph written naturally is more valuable than a 500-word essay written self-consciously. The pipeline extracts features from samples as short as 50 words.
 
-7. Do not edit extensively. First-draft writing reveals more about unconscious style patterns than polished prose. Light corrections for typos are fine. Restructuring or rewriting defeats the purpose.
+- **Do not edit extensively.** First-draft writing reveals more about unconscious style patterns than polished prose. Light corrections for typos are fine. Restructuring or rewriting defeats the purpose.
 
-8. Choose familiar topics. Writing about something you know well produces more natural prose than writing about an unfamiliar subject. The topic itself does not affect scoring; only the style features matter.
+- **Choose familiar topics.** Writing about something you know well produces more natural prose than writing about an unfamiliar subject. The topic itself does not affect scoring; only the style features matter.
 
-9. Use your typical register. If you normally write formally, write formally. If you normally write casually, write casually. The system measures what you do, not what you think you should do.
+- **Use your typical register.** If you normally write formally, write formally. If you normally write casually, write casually. The system measures what you do, not what you think you should do.
 
 ## Related documentation
 
