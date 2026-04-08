@@ -22,6 +22,29 @@ agents/                     # Subagents (voice-reviewer)
 templates/                  # Configuration templates
 ```
 
+## Voice Profiles
+
+This plugin uses **code-enforced profile routing** instead of text-based instruction routing. Do not embed profile routing logic in this file. Instead, use the resolve-profile.js script to determine which voice profile applies to a given file.
+
+### How It Works
+
+Run the resolver to get profile settings as JSON:
+```bash
+node skills/human-voice/scripts/resolve-profile.js <file-or-dir>
+```
+
+The script resolves profiles by checking (in order):
+1. `voice-profile: <name>` in the file's YAML frontmatter
+2. Path glob matches in `.claude/human-voice.local.md` routing rules
+3. Config default profile
+4. Plugin default profile
+
+Pass the resolved JSON to validation/fix scripts via `--profile=<json>`.
+
+### Preset Profiles
+
+default, strict, lenient, docs, blog, marketing, changelog, academic. See `profiles/` directory for details.
+
 ## Development Guidelines
 
 1. Follow Claude Code plugin standards
@@ -40,3 +63,4 @@ Then test:
 - `/human-voice:fix` command
 - `/human-voice:setup` command
 - Agent triggering after content edits
+- Profile resolution: `node skills/human-voice/scripts/resolve-profile.js <file>`

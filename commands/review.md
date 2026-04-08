@@ -27,15 +27,33 @@ $IF($1,
   !`ls -d _posts content _docs docs 2>/dev/null || echo "No standard content directories found"`
 )
 
+## Step 0: Resolve Voice Profile
+
+Determine the voice profile for the target to adjust detection behavior:
+
+$IF($1,
+  !`node "${CLAUDE_PLUGIN_ROOT}/skills/human-voice/scripts/resolve-profile.js" "$1" --plugin-root="${CLAUDE_PLUGIN_ROOT}" 2>&1 || echo '{"name":"default","source":"fallback","detection":{"character_patterns":{"enabled":true,"ignore":[]},"language_patterns":{"enabled":true},"structural_patterns":{"enabled":true},"voice_patterns":{"enabled":true}},"strictness":"normal"}'`
+,
+  Using default profile (no target specified).
+)
+
+Use the resolved profile to:
+- Pass `--profile` flag to character validation script
+- Skip disabled detection tiers
+- Adjust strictness for language, structural, and voice review
+- Load the profile's markdown body for Tier 2-4 guidance (read from `${CLAUDE_PLUGIN_ROOT}/profiles/<name>.md`)
+
 ## Step 1: Character-Level Detection
 
-Run automated character validation:
+Run automated character validation (pass resolved profile if available):
 
 $IF($1,
   !`node "${CLAUDE_PLUGIN_ROOT}/skills/human-voice/scripts/validate-character-restrictions.js" $ARGS 2>&1 || true`
 ,
   !`for d in _posts content _docs docs; do test -d "$d" && echo "$d"; done | xargs -r node "${CLAUDE_PLUGIN_ROOT}/skills/human-voice/scripts/validate-character-restrictions.js" $ARGS 2>&1 || echo "No content directories found to validate"`
 )
+
+If the profile disables character patterns, skip this step. If the profile specifies ignore categories, include them via `--profile='<resolved-json>'`.
 
 Report any em dashes, smart quotes, emojis, or other AI-telltale characters found.
 
@@ -54,7 +72,11 @@ $IF($1,
   Skipping language scan - no target specified. Run with a directory argument.
 )
 
+**Profile-aware behavior**: If the resolved profile disables language_patterns, skip Step 2 and note "Language patterns: skipped (disabled by profile)". Read the profile's markdown body from `${CLAUDE_PLUGIN_ROOT}/profiles/<name>.md` for tier-specific guidance.
+
 ## Step 3: Manual Review
+
+**Profile-aware behavior**: If the resolved profile disables structural_patterns or voice_patterns, skip those assessments. Use the profile's strictness level (strict/normal/lenient) to calibrate how aggressively you flag issues.
 
 For each file with issues, provide:
 
@@ -67,6 +89,8 @@ For each file with issues, provide:
 
 ```
 === Human Voice Review: [path] ===
+Profile: [name] (source: [frontmatter|route:pattern|config-default|plugin-default])
+Strictness: [strict|normal|lenient]
 
 Tier 1 - Character Issues: [count]
   - [file:line] [character] -> [replacement]

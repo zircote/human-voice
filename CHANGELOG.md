@@ -5,6 +5,33 @@ All notable changes to the Human Voice plugin will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.4.0] - 2026-04-08
+
+### Added
+
+- **Voice Profiles**: Dynamic profile routing with 8 preset profiles
+  - `default` - General-purpose balanced detection
+  - `strict` - Maximum strictness for published content
+  - `lenient` - Relaxed, character-only detection for drafts
+  - `docs` - Documentation profile (structural/voice tiers skipped)
+  - `blog` - Blog profile demanding personal voice and specifics
+  - `marketing` - Marketing profile flagging hype and demanding proof
+  - `changelog` - Minimal detection for release notes
+  - `academic` - Research profile tolerating passive voice
+- **Profile Resolution Script**: `resolve-profile.js` determines the correct profile via:
+  1. `voice-profile` frontmatter label in content files
+  2. Path glob routing rules in `.claude/human-voice.local.md`
+  3. Config default fallback
+- **Custom Profiles**: User-defined profiles in `.claude/profiles/<name>.md`
+- **Profile Flag**: `--profile` flag on validate and fix scripts to apply profile settings
+
+### Changed
+
+- **Commands**: `review.md` and `fix.md` now resolve voice profiles before running detection
+- **Scripts**: `validate-character-restrictions.js` and `fix-character-restrictions.js` accept `--profile` flag
+- **Copilot Instructions**: Replaced text-based routing with reference to resolve-profile.js
+- **Config Template**: Added profile routing configuration section
+
 ## [0.3.0] - 2026-01-23
 
 ### Added
@@ -72,6 +99,7 @@ Pattern detection based on:
 - [The Field Guide to AI Slop](https://www.ignorance.ai/p/the-field-guide-to-ai-slop)
 - [Common AI Words - Grammarly](https://www.grammarly.com/blog/ai/common-ai-words/)
 
+[0.4.0]: https://github.com/zircote/human-voice/compare/v0.3.0...v0.4.0
 [0.3.0]: https://github.com/zircote/human-voice/compare/v0.2.0...v0.3.0
 [0.2.0]: https://github.com/zircote/human-voice/compare/v0.1.0...v0.2.0
 [0.1.0]: https://github.com/zircote/human-voice/releases/tag/v0.1.0

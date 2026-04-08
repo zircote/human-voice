@@ -64,6 +64,29 @@ fix:
   backup_files: false          # Create .bak files before modifying
   report_format: detailed      # minimal, normal, detailed
 
+# Voice profile routing
+# Profiles control which detection tiers and strictness apply to different content
+# Resolution order: file frontmatter > path match > default
+profiles:
+  default: default                # Fallback profile when no route matches
+  routes:
+    - match: "_posts/**"          # Blog posts get strict voice analysis
+      profile: blog
+    - match: "docs/**"            # API docs skip structural/voice tiers
+      profile: docs
+    - match: "content/marketing/**"  # Marketing copy demands proof for claims
+      profile: marketing
+    - match: "CHANGELOG.md"       # Changelogs only get character cleanup
+      profile: changelog
+    - match: "README.md"          # READMEs get lenient treatment
+      profile: lenient
+    - match: "papers/**"          # Academic writing tolerates passive voice
+      profile: academic
+
+# Available preset profiles: default, strict, lenient, docs, blog, marketing, changelog, academic
+# Custom profiles: create .claude/profiles/<name>.md with YAML frontmatter
+# Set per-file: add `voice-profile: <name>` to file's YAML frontmatter
+
 # Output preferences
 output:
   verbosity: normal            # minimal, normal, detailed

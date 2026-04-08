@@ -28,6 +28,18 @@ $IF($1,
   !`ls -d _posts content _docs docs 2>/dev/null || echo "No standard content directories found"`
 )
 
+## Step 0: Resolve Voice Profile
+
+Determine the voice profile for the target to adjust fix behavior:
+
+$IF($1,
+  !`node "${CLAUDE_PLUGIN_ROOT}/skills/human-voice/scripts/resolve-profile.js" "$1" --plugin-root="${CLAUDE_PLUGIN_ROOT}" 2>&1 || echo '{"name":"default","source":"fallback","detection":{"character_patterns":{"enabled":true,"ignore":[]},"language_patterns":{"enabled":true},"structural_patterns":{"enabled":true},"voice_patterns":{"enabled":true}},"strictness":"normal"}'`
+,
+  Using default profile (no target specified).
+)
+
+If the profile disables character patterns, report that fixing is skipped and exit. If the profile specifies ignore categories, pass them to the fix script via `--profile='<resolved-json>'`.
+
 ## Dry Run First
 
 When --dry-run is specified or when unsure, show what would change without modifying files:

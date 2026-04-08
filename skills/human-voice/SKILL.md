@@ -175,6 +175,73 @@ MANDATORY CONSTRAINTS:
 - Start with the content, not context-setting
 ```
 
+## Voice Profiles
+
+Voice profiles let you apply different detection settings to different content. Instead of one-size-fits-all, a blog post gets strict voice analysis while a changelog gets minimal character cleanup.
+
+### Preset Profiles
+
+| Profile | Focus | Use Case |
+|---------|-------|----------|
+| default | All tiers, normal strictness | General content |
+| strict | All tiers, zero tolerance | Published content, brand-facing |
+| lenient | Characters only (no emojis/arrows) | Drafts, internal notes |
+| docs | Characters + language, no structural/voice | API docs, reference material |
+| blog | All tiers, strict, personal voice emphasis | Blog posts |
+| marketing | All tiers, strict, hype word detection | Marketing copy |
+| changelog | Smart quotes + em dashes only | Release notes |
+| academic | All tiers, passive voice tolerated | Research writing |
+
+### Profile Resolution
+
+Profiles are resolved by `resolve-profile.js` in this order (highest priority first):
+
+1. **Frontmatter label**: Add `voice-profile: <name>` to a file's YAML frontmatter
+2. **Path glob match**: Routing rules in `.claude/human-voice.local.md`
+3. **Config default**: `profiles.default` setting in config
+4. **Plugin default**: Falls back to the `default` profile
+
+### Setting a Profile in Frontmatter
+
+Add `voice-profile` to any content file:
+
+```yaml
+---
+title: My Blog Post
+voice-profile: blog
+---
+```
+
+### Routing Rules in Config
+
+Define path-based routing in `.claude/human-voice.local.md`:
+
+```yaml
+---
+profiles:
+  default: default
+  routes:
+    - match: "_posts/**"
+      profile: blog
+    - match: "docs/**"
+      profile: docs
+    - match: "CHANGELOG.md"
+      profile: changelog
+---
+```
+
+### Custom Profiles
+
+Create custom profiles in `.claude/profiles/<name>.md` with YAML frontmatter defining detection settings. Custom profiles override plugin presets with the same name.
+
+### Resolve Profile Script
+
+```bash
+node ${CLAUDE_PLUGIN_ROOT}/skills/human-voice/scripts/resolve-profile.js <file-or-dir> --plugin-root=${CLAUDE_PLUGIN_ROOT}
+```
+
+Outputs JSON with the resolved profile settings, which can be passed to validate/fix scripts via `--profile`.
+
 ## Configuration
 
 Create `.claude/human-voice.local.md` to configure file extensions:

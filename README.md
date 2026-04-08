@@ -3,7 +3,7 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
 [![Claude Code Plugin](https://img.shields.io/badge/Claude_Code-Plugin-blueviolet)](https://github.com/anthropics/claude-code)
 [![CI](https://github.com/zircote/human-voice/actions/workflows/ci.yml/badge.svg)](https://github.com/zircote/human-voice/actions/workflows/ci.yml)
-[![Version](https://img.shields.io/badge/version-0.2.0-green.svg)](https://github.com/zircote/human-voice/releases)
+[![Version](https://img.shields.io/badge/version-0.4.0-green.svg)](https://github.com/zircote/human-voice/releases)
 [![Node.js](https://img.shields.io/badge/Node.js-18+-339933?logo=nodedotjs&logoColor=white)](https://nodejs.org)
 [![GitHub Stars](https://img.shields.io/github/stars/zircote/human-voice?style=social)](https://github.com/zircote/human-voice)
 
@@ -139,6 +139,59 @@ The `voice-reviewer` agent triggers:
 - Meta-commentary ("In this article...")
 - Perfect grammar with shallow insights
 
+## Voice Profiles
+
+Voice profiles apply different detection settings to different content types. A blog post gets strict voice analysis while a changelog gets minimal character cleanup.
+
+### Preset Profiles
+
+| Profile | Character | Language | Structural | Voice | Use Case |
+|---------|-----------|----------|------------|-------|----------|
+| default | All | All | All | All | General content |
+| strict | All | All | All | All | Published, brand-facing |
+| lenient | Partial | Off | Off | Off | Drafts, internal notes |
+| docs | All | All | Off | Off | API docs, reference |
+| blog | All | All | All | All | Blog posts |
+| marketing | All | All+ | All | All | Marketing copy |
+| changelog | Partial | Off | Off | Off | Release notes |
+| academic | All | All | All | Adjusted | Research writing |
+
+### Profile Resolution
+
+Profiles are resolved automatically by checking (in priority order):
+
+1. **Frontmatter**: `voice-profile: blog` in a file's YAML frontmatter
+2. **Path routing**: Glob patterns in `.claude/human-voice.local.md`
+3. **Config default**: `profiles.default` in config
+4. **Plugin default**: Falls back to `default`
+
+### Setting Profiles
+
+**Per-file** (frontmatter):
+```yaml
+---
+title: My Post
+voice-profile: blog
+---
+```
+
+**Per-directory** (routing rules in `.claude/human-voice.local.md`):
+```yaml
+---
+profiles:
+  default: default
+  routes:
+    - match: "_posts/**"
+      profile: blog
+    - match: "docs/**"
+      profile: docs
+    - match: "CHANGELOG.md"
+      profile: changelog
+---
+```
+
+**Custom profiles**: Create `.claude/profiles/<name>.md` with YAML frontmatter to override presets or define new profiles.
+
 ## Configuration
 
 Run `/human-voice:setup` for interactive configuration, or create `.claude/human-voice.local.md` manually.
@@ -228,11 +281,21 @@ human-voice/
 │   ├── fix.md
 │   ├── review.md
 │   └── setup.md
+├── profiles/
+│   ├── default.md
+│   ├── strict.md
+│   ├── lenient.md
+│   ├── docs.md
+│   ├── blog.md
+│   ├── marketing.md
+│   ├── changelog.md
+│   └── academic.md
 ├── skills/
 │   └── human-voice/
 │       ├── SKILL.md
 │       ├── scripts/
 │       │   ├── fix-character-restrictions.js
+│       │   ├── resolve-profile.js
 │       │   └── validate-character-restrictions.js
 │       ├── references/
 │       │   ├── character-patterns.md

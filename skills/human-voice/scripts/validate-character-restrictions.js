@@ -12,6 +12,8 @@
  * Options:
  *   --ignore=categories  Comma-separated list of categories to ignore:
  *                        emojis, em-dash, en-dash, smart-quotes, ellipsis, bullet, arrow
+ *   --profile=<json>     JSON string or file path with profile settings from resolve-profile.js
+ *                        Profile ignore categories are merged with --ignore flag
  *
  * Exit codes:
  *   0 - No violations found
@@ -147,6 +149,51 @@ function parseIgnoreCategories(args) {
   return ignoredNames;
 }
 
+// Parse --profile flag and return { enabled, ignoredNames }
+function parseProfileArg(args) {
+  const profileArg = args.find((arg) => arg.startsWith("--profile="));
+  if (!profileArg) return { enabled: true, ignoredNames: new Set() };
+
+  let profile;
+  const value = profileArg.substring(10);
+
+  try {
+    // Try parsing as inline JSON
+    profile = JSON.parse(value);
+  } catch (_e) {
+    // Try reading as file path
+    try {
+      const content = require("fs").readFileSync(value, "utf8");
+      profile = JSON.parse(content);
+    } catch (_e2) {
+      console.warn(
+        colorize("Warning: Could not parse --profile value, ignoring", "yellow"),
+      );
+      return { enabled: true, ignoredNames: new Set() };
+    }
+  }
+
+  const charConfig =
+    profile.detection && profile.detection.character_patterns;
+  if (!charConfig) return { enabled: true, ignoredNames: new Set() };
+
+  if (charConfig.enabled === false) {
+    return { enabled: false, ignoredNames: new Set() };
+  }
+
+  const ignoredNames = new Set();
+  if (charConfig.ignore && Array.isArray(charConfig.ignore)) {
+    charConfig.ignore.forEach((cat) => {
+      const normalizedCat = cat.trim().toLowerCase();
+      if (CATEGORY_MAP[normalizedCat]) {
+        CATEGORY_MAP[normalizedCat].forEach((name) => ignoredNames.add(name));
+      }
+    });
+  }
+
+  return { enabled: true, ignoredNames };
+}
+
 // Colors for terminal output
 const colors = {
   red: "\x1b[31m",
@@ -242,8 +289,21 @@ function printViolation(v) {
 function main() {
   const args = process.argv.slice(2);
 
-  // Parse --ignore flag
+  // Parse --profile flag (from resolve-profile.js)
+  const profileResult = parseProfileArg(args);
+  if (!profileResult.enabled) {
+    console.log(
+      colorize(
+        "\nCharacter pattern validation skipped (disabled by profile).\n",
+        "yellow",
+      ),
+    );
+    process.exit(0);
+  }
+
+  // Parse --ignore flag and merge with profile ignores
   const ignoredNames = parseIgnoreCategories(args);
+  profileResult.ignoredNames.forEach((name) => ignoredNames.add(name));
 
   // Filter out flag arguments to get directories
   const directories = args.filter((arg) => !arg.startsWith("--"));
