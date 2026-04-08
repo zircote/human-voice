@@ -53,6 +53,10 @@ Voice produces a dual-output voice profile stored as `profile.json` in the sessi
 
 The final profile includes per-dimension scores, a composite writer-type classification, distinctive features, and calibration annotations.
 
+## Data Directory
+
+`${CLAUDE_PLUGIN_DATA}` defaults to `~/.human-voice` when not set. **All profiles, sessions, and config live under `~/.human-voice/` in standalone/development mode.** When referencing `${CLAUDE_PLUGIN_DATA}` below, substitute `~/.human-voice` if the environment variable is unset.
+
 ## Session Storage
 
 All session data is stored under `${CLAUDE_PLUGIN_DATA}/sessions/{session_id}/`:

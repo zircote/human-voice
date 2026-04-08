@@ -65,6 +65,6 @@ If Subcog MCP server is available, this plugin can leverage persistent memory fo
 All plugin functionality works without Subcog:
 - Commands execute normally without memory context
 - Agent performs full analysis without recall
-- Configuration via `.claude/human-voice.local.md` always works
+- Configuration via `config.json` always works
 
 Memory integration is additive - it enhances but never blocks core functionality.

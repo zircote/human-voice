@@ -87,7 +87,7 @@ The skill loads automatically when you say:
 /human-voice:voice-setup
 ```
 
-Detects project structure, content directories, and creates `.claude/human-voice.local.md` with your preferences.
+Detects project structure, content directories, and creates `config.json` with your preferences.
 
 **Review content for AI patterns:**
 ```
@@ -143,70 +143,9 @@ The `voice-reviewer` agent triggers:
 
 ## Configuration
 
-Run `/human-voice:voice-setup` for interactive configuration, or create `.claude/human-voice.local.md` manually.
+Run `/human-voice:voice-setup` for interactive configuration, or edit `config.json` directly.
 
-See `templates/human-voice.local.md.example` for a complete example.
-
-### Basic Configuration
-
-```yaml
----
-extensions:
-  - .md
-  - .mdx
-  - .txt
-content_directories:
-  - _posts
-  - content
-  - docs
----
-```
-
-### Full Configuration Options
-
-```yaml
----
-extensions:
-  - .md
-  - .mdx
-  - .txt
-
-content_directories:
-  - _posts
-  - content
-  - docs
-
-ignore:
-  - "**/node_modules/**"
-  - "**/vendor/**"
-  - "CHANGELOG.md"
-
-detection:
-  character_patterns:
-    enabled: true
-    em_dash: true
-    smart_quotes: true
-    emojis: true
-  language_patterns:
-    enabled: true
-  structural_patterns:
-    enabled: true
-  voice_patterns:
-    enabled: true
-
-fix:
-  dry_run_by_default: true
-  report_format: detailed
-
-output:
-  verbosity: normal
-  format: markdown
----
-
-# Project Voice Notes
-
-Add project-specific voice guidelines here.
-```
+Configuration is stored at `$CLAUDE_PLUGIN_DATA/config.json` (defaults to `~/.human-voice/config.json` in standalone mode). Use `python -m lib.config show` to view the effective config, or `python -m lib.config reset` to write defaults.
 
 ## Memory Integration (Optional)
 
@@ -244,7 +183,7 @@ human-voice/
 │       └── examples/
 │           └── before-after.md
 ├── templates/
-│   └── human-voice.local.md.example
+│   └── observer-protocol.md
 ├── LICENSE
 ├── CHANGELOG.md
 └── README.md

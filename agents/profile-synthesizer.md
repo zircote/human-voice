@@ -97,6 +97,8 @@ This stores the profile under `$CLAUDE_PLUGIN_DATA/profiles/{slug}/` and activat
 - `$CLAUDE_PLUGIN_DATA/profile.json` — full voice profile (read by hooks and agents)
 - `$CLAUDE_PLUGIN_DATA/voice-prompt.txt` — compact injection text for LLM system prompts
 
+**IMPORTANT**: When `$CLAUDE_PLUGIN_DATA` is not set, the data directory defaults to `~/.human-voice`. All profiles, sessions, and config live under `~/.human-voice/` in standalone/development mode. When looking for existing profiles, always check `~/.human-voice/profiles/` and `~/.human-voice/profile.json` as the canonical fallback locations.
+
 The session is also marked as `complete` automatically.
 
 If for any reason you need to publish without a slug (legacy path), omit the slug parameter and it falls back to writing directly to the top-level files.

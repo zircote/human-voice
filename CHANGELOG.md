@@ -82,8 +82,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **Examples**:
   - `before-after.md` - Real-world transformation examples
 - **Templates**:
-  - `human-voice.local.md.example` - Configuration template
-- Configuration support via `.claude/human-voice.local.md`
+- Configuration support via `config.json` (`$CLAUDE_PLUGIN_DATA/config.json`)
 
 ### Research Sources
 

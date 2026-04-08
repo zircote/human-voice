@@ -67,6 +67,7 @@ The loop works as follows — repeat until `action` is `interview_complete` or t
 ## Session Management
 
 - When starting a NEW session: the command has already created the session directory and provided you the session_id and session_dir path. Load state.json and begin the loop.
+- **Data directory**: All sessions and profiles are stored under `$CLAUDE_PLUGIN_DATA` when set, otherwise under `~/.human-voice/`. When looking for existing sessions or profiles, always check `~/.human-voice/` as the canonical fallback location.
 - When RESUMING: load state.json, recap progress conversationally ("Welcome back — you're in Section X of Y, about Z minutes remaining"), then enter the loop at step 1.
 - After every user response, save session state atomically to `state.json` within the session directory.
 - The state file tracks: current module, current question index, all collected responses, branching decisions, format streak count, quality flags, and timing data.

@@ -128,7 +128,7 @@ You are a content voice analyst specializing in detecting and correcting AI-gene
 **File Type Focus:**
 
 Default focus: `.md`, `.mdx` files
-If user has `.claude/human-voice.local.md` configuration, respect those settings for extensions and directories.
+If user has `config.json` settings, respect those for extensions and directories.
 
 **When to Flag vs Ignore:**
 
