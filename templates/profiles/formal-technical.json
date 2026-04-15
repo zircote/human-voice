@@ -1,0 +1,26 @@
+{
+  "template_name": "formal-technical",
+  "display_name": "Formal Technical",
+  "description": "Precise, structured, formal register. Active voice, no contractions, no humor. Suitable for API docs, technical specs, and engineering communication.",
+  "identity_summary": "A formal, precise technical voice that leads with conclusions and supports them with data. Writes in structured, medium-length sentences with minimal ornamentation.",
+  "dimensions": {
+    "formality": {"score": 75},
+    "emotional_tone": {"score": 25},
+    "personality": {"score": 30},
+    "complexity": {"score": 55},
+    "audience_awareness": {"score": 60},
+    "authority": {"score": 70},
+    "narrativity": {"score": 20},
+    "humor": {"score": 5}
+  },
+  "mechanics": {
+    "contractions": "never",
+    "oxford_comma": true,
+    "semicolons": "occasional",
+    "exclamation_marks": "never",
+    "parenthetical_style": "parentheses",
+    "active_voice": "preferred",
+    "paragraph_openers": "topic-sentence",
+    "list_usage": "frequent"
+  }
+}

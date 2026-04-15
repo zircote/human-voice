@@ -1,0 +1,59 @@
+{
+  "schema_version": "1.0.0",
+  "description": "Deep-dive trigger rules that inject additional questions when specific response patterns are detected during the elicitation session.",
+  "triggers": {
+    "extreme_formality": {
+      "source_module": "M03",
+      "condition": {
+        "metric": "semantic_differential",
+        "sd_pair": "formal_casual",
+        "operator": ">",
+        "threshold": 6.0
+      },
+      "injected_items": ["M03-DD01", "M03-DD02", "M03-DD03"],
+      "description": "When the formal/casual semantic differential exceeds 6.0, inject three deep-dive items probing the extremity of formality preference",
+      "injection_point": "after_M03"
+    },
+    "high_narrative_tendency": {
+      "source_module": "M05",
+      "condition": {
+        "metric": "narrativity_score",
+        "operator": ">",
+        "threshold": 75
+      },
+      "injected_items": ["M05-DD01", "M05-DD02"],
+      "description": "When narrativity score exceeds 75 (out of 100), inject two deep-dive items exploring narrative voice characteristics",
+      "injection_point": "after_M05"
+    },
+    "self_perception_divergence": {
+      "source_module": "any",
+      "condition": {
+        "metric": "self_report_projective_delta",
+        "operator": ">",
+        "threshold": 25,
+        "comparison": "absolute_difference",
+        "operands": ["self_report_score", "projective_score"]
+      },
+      "injected_items": ["calibration_question"],
+      "description": "When the absolute difference between self-reported and projective scores exceeds 25 points on any dimension, inject a calibration question to resolve the divergence",
+      "injection_point": "immediate",
+      "applies_to_dimensions": "all"
+    },
+    "low_engagement_detector": {
+      "source_module": "any",
+      "condition": {
+        "metric": "consecutive_too_fast_responses",
+        "operator": ">=",
+        "threshold": 3
+      },
+      "injected_items": ["engagement_reset"],
+      "description": "When 3 or more consecutive responses fall below the minimum expected time threshold, inject an engagement reset prompt to re-engage the respondent",
+      "injection_point": "immediate"
+    }
+  },
+  "notes": {
+    "injection_priority": "If multiple triggers fire simultaneously, process in order: low_engagement_detector > self_perception_divergence > extreme_formality > high_narrative_tendency",
+    "max_deep_dives_per_session": 5,
+    "deep_dive_time_budget_minutes": 3
+  }
+}

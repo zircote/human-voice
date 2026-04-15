@@ -1,0 +1,26 @@
+{
+  "template_name": "creative-narrative",
+  "display_name": "Creative Narrative",
+  "description": "Literary, expressive, varied rhythm. Figurative language, sensory detail, emotional range. Suitable for fiction, creative nonfiction, and personal essays.",
+  "identity_summary": "An expressive narrative voice with varied sentence rhythm and rich sensory detail. Uses figurative language, emotional range, and structural variety to create immersive prose.",
+  "dimensions": {
+    "formality": {"score": 35},
+    "emotional_tone": {"score": 75},
+    "personality": {"score": 80},
+    "complexity": {"score": 60},
+    "audience_awareness": {"score": 50},
+    "authority": {"score": 30},
+    "narrativity": {"score": 85},
+    "humor": {"score": 40}
+  },
+  "mechanics": {
+    "contractions": "natural",
+    "oxford_comma": false,
+    "semicolons": "occasional",
+    "exclamation_marks": "occasional",
+    "parenthetical_style": "em-dashes",
+    "active_voice": "mixed",
+    "paragraph_openers": "varied",
+    "list_usage": "rare"
+  }
+}

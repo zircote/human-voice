@@ -1,0 +1,274 @@
+[
+  {
+    "question_id": "M01-Q01",
+    "module_id": "M01",
+    "module_name": "Writing Identity & Context",
+    "text": "How would you describe your primary role as a writer? (e.g., professional communicator, creative writer, academic, technical writer, casual/personal)",
+    "type": "select",
+    "options": [
+      { "value": "professional", "label": "Professional communicator (emails, reports, proposals)" },
+      { "value": "creative", "label": "Creative writer (fiction, poetry, essays)" },
+      { "value": "academic", "label": "Academic or researcher" },
+      { "value": "technical", "label": "Technical writer (documentation, specifications)" },
+      { "value": "casual", "label": "Casual or personal writer (social media, blogs, journals)" },
+      { "value": "mixed", "label": "A mix of several roles" }
+    ],
+    "scoring": {
+      "dimensions": ["writing_context", "formality_baseline"],
+      "weights": { "writing_context": 0.8, "formality_baseline": 0.5 }
+    },
+    "metadata": {
+      "self_reportability_tier": 1,
+      "finding_refs": ["LT-002", "PL-004"],
+      "bias_mitigation": "Evaluatively neutral labels; no option framed as superior",
+      "branching": { "required_branches": ["*"] },
+      "position": { "module_sequence": 1, "funnel_stage": "screening" },
+      "estimated_seconds": 15,
+      "format_category": "select"
+    }
+  },
+  {
+    "question_id": "M01-Q02",
+    "module_id": "M01",
+    "module_name": "Writing Identity & Context",
+    "text": "What types of writing do you do most frequently? Select all that apply.",
+    "type": "select_multiple",
+    "options": [
+      { "value": "email", "label": "Emails and business correspondence" },
+      { "value": "reports", "label": "Reports and analyses" },
+      { "value": "social", "label": "Social media posts" },
+      { "value": "blog", "label": "Blog posts or articles" },
+      { "value": "creative", "label": "Creative writing (stories, poetry)" },
+      { "value": "academic", "label": "Academic papers or research" },
+      { "value": "technical", "label": "Technical documentation" },
+      { "value": "personal", "label": "Personal journals or notes" },
+      { "value": "marketing", "label": "Marketing and promotional copy" }
+    ],
+    "scoring": {
+      "dimensions": ["writing_context", "genre_range"],
+      "weights": { "writing_context": 0.7, "genre_range": 0.6 }
+    },
+    "metadata": {
+      "self_reportability_tier": 1,
+      "finding_refs": ["LT-002"],
+      "bias_mitigation": "Comprehensive list to avoid anchoring on any single genre",
+      "branching": { "required_branches": ["*"] },
+      "position": { "module_sequence": 2, "funnel_stage": "screening" },
+      "estimated_seconds": 20,
+      "format_category": "select_multiple"
+    }
+  },
+  {
+    "question_id": "M01-Q03",
+    "module_id": "M01",
+    "module_name": "Writing Identity & Context",
+    "text": "When you think about your writing, which statement best describes how you feel about having a distinct 'voice'?",
+    "type": "forced_choice",
+    "options": [
+      { "value": "strong_identity", "label": "I have a strong sense of my writing voice and it stays consistent" },
+      { "value": "adapts", "label": "My voice shifts depending on what I'm writing and who I'm writing for" },
+      { "value": "developing", "label": "I'm still figuring out what my writing voice is" }
+    ],
+    "scoring": {
+      "dimensions": ["voice_consistency", "self_awareness"],
+      "weights": { "voice_consistency": 0.9, "self_awareness": 0.7 },
+      "scoring_map": {
+        "strong_identity": { "voice_consistency": 5, "self_awareness": 5 },
+        "adapts": { "voice_consistency": 3, "self_awareness": 4 },
+        "developing": { "voice_consistency": 1, "self_awareness": 2 }
+      }
+    },
+    "metadata": {
+      "self_reportability_tier": 2,
+      "finding_refs": ["PL-004", "PL-009"],
+      "bias_mitigation": "All options framed positively; no option implies deficiency",
+      "branching": { "required_branches": ["*"] },
+      "position": { "module_sequence": 3, "funnel_stage": "general" },
+      "estimated_seconds": 20,
+      "format_category": "forced_choice"
+    }
+  },
+  {
+    "question_id": "M01-Q04",
+    "module_id": "M01",
+    "module_name": "Writing Identity & Context",
+    "text": "Who is your most frequent audience? Think about the people who read your writing most often.",
+    "type": "select",
+    "options": [
+      { "value": "colleagues", "label": "Colleagues and coworkers" },
+      { "value": "clients", "label": "Clients or customers" },
+      { "value": "general_public", "label": "General public or broad readership" },
+      { "value": "specialists", "label": "Subject-matter experts or specialists" },
+      { "value": "friends_family", "label": "Friends and family" },
+      { "value": "self", "label": "Primarily myself (journals, notes)" },
+      { "value": "students", "label": "Students or learners" }
+    ],
+    "scoring": {
+      "dimensions": ["audience_awareness", "formality_baseline"],
+      "weights": { "audience_awareness": 0.8, "formality_baseline": 0.4 }
+    },
+    "metadata": {
+      "self_reportability_tier": 1,
+      "finding_refs": ["LT-002"],
+      "bias_mitigation": "Broad audience categories to avoid prestige bias",
+      "branching": { "required_branches": ["*"] },
+      "position": { "module_sequence": 4, "funnel_stage": "general" },
+      "estimated_seconds": 15,
+      "format_category": "select"
+    }
+  },
+  {
+    "question_id": "M01-Q05",
+    "module_id": "M01",
+    "module_name": "Writing Identity & Context",
+    "text": "Think of a piece of writing you're proud of. Without sharing the actual content, describe what made it work well in a few sentences.",
+    "type": "open_ended",
+    "scoring": {
+      "dimensions": ["voice_awareness", "self_reflection_depth"],
+      "weights": { "voice_awareness": 0.7, "self_reflection_depth": 0.8 }
+    },
+    "metadata": {
+      "self_reportability_tier": 2,
+      "finding_refs": ["PL-009"],
+      "bias_mitigation": "Indirect elicitation through reflection rather than direct self-assessment",
+      "branching": { "required_branches": ["*"] },
+      "position": { "module_sequence": 5, "funnel_stage": "exploratory" },
+      "estimated_seconds": 60,
+      "format_category": "open_ended"
+    }
+  },
+  {
+    "question_id": "M01-Q06",
+    "module_id": "M01",
+    "module_name": "Writing Identity & Context",
+    "text": "How much do you intentionally adjust your writing style for different contexts (e.g., switching between a work email and a personal message)?",
+    "type": "likert",
+    "options": [
+      { "value": 1, "label": "I write essentially the same way regardless of context" },
+      { "value": 2, "label": "I make minor adjustments" },
+      { "value": 3, "label": "I moderately adapt my style" },
+      { "value": 4, "label": "I significantly shift my style" },
+      { "value": 5, "label": "I write in completely different voices for different contexts" }
+    ],
+    "scoring": {
+      "dimensions": ["contextual_adaptability", "voice_consistency"],
+      "weights": { "contextual_adaptability": 0.9, "voice_consistency": 0.6 },
+      "scoring_map": {
+        "1": { "contextual_adaptability": 1, "voice_consistency": 5 },
+        "2": { "contextual_adaptability": 2, "voice_consistency": 4 },
+        "3": { "contextual_adaptability": 3, "voice_consistency": 3 },
+        "4": { "contextual_adaptability": 4, "voice_consistency": 2 },
+        "5": { "contextual_adaptability": 5, "voice_consistency": 1 }
+      }
+    },
+    "metadata": {
+      "self_reportability_tier": 2,
+      "finding_refs": ["PL-004"],
+      "bias_mitigation": "Bidirectional scale with neutral midpoint; neither pole framed as preferable",
+      "branching": { "required_branches": ["*"] },
+      "position": { "module_sequence": 6, "funnel_stage": "comparative" },
+      "estimated_seconds": 15,
+      "format_category": "likert"
+    }
+  },
+  {
+    "question_id": "M01-Q07",
+    "module_id": "M01",
+    "module_name": "Writing Identity & Context",
+    "text": "Imagine a colleague asks you to describe your writing style in three words. What would you say?",
+    "type": "open_ended",
+    "scoring": {
+      "dimensions": ["voice_identity", "self_awareness"],
+      "weights": { "voice_identity": 0.9, "self_awareness": 0.6 }
+    },
+    "metadata": {
+      "self_reportability_tier": 2,
+      "finding_refs": ["PL-009"],
+      "bias_mitigation": "Projective framing (third-party perspective) reduces social desirability bias",
+      "branching": { "required_branches": ["*"] },
+      "position": { "module_sequence": 7, "funnel_stage": "exploratory" },
+      "estimated_seconds": 30,
+      "format_category": "open_ended"
+    }
+  },
+  {
+    "question_id": "M01-Q08",
+    "module_id": "M01",
+    "module_name": "Writing Identity & Context",
+    "text": "Which of these best describes how your writing has changed over time?",
+    "type": "forced_choice",
+    "options": [
+      { "value": "simpler", "label": "It has become simpler and more direct over the years" },
+      { "value": "complex", "label": "It has become more nuanced and layered" },
+      { "value": "stable", "label": "It has stayed fairly consistent throughout my life" }
+    ],
+    "scoring": {
+      "dimensions": ["voice_evolution", "complexity_preference"],
+      "weights": { "voice_evolution": 0.7, "complexity_preference": 0.5 },
+      "scoring_map": {
+        "simpler": { "voice_evolution": 4, "complexity_preference": 2 },
+        "complex": { "voice_evolution": 4, "complexity_preference": 5 },
+        "stable": { "voice_evolution": 1, "complexity_preference": 3 }
+      }
+    },
+    "metadata": {
+      "self_reportability_tier": 2,
+      "finding_refs": ["LT-002", "PL-004"],
+      "bias_mitigation": "Neutral framing; evolution directions presented without value judgment",
+      "branching": { "required_branches": ["*"] },
+      "position": { "module_sequence": 8, "funnel_stage": "comparative" },
+      "estimated_seconds": 15,
+      "format_category": "forced_choice"
+    }
+  },
+  {
+    "question_id": "M01-Q09",
+    "module_id": "M01",
+    "module_name": "Writing Identity & Context",
+    "text": "When you read something you wrote a year ago, what is your typical reaction?",
+    "type": "forced_choice",
+    "options": [
+      { "value": "recognize", "label": "It sounds like me — I recognize my voice immediately" },
+      { "value": "cringe", "label": "I notice things I'd write differently now" },
+      { "value": "surprise", "label": "I'm sometimes surprised by how different it sounds from how I write today" }
+    ],
+    "scoring": {
+      "dimensions": ["voice_consistency", "voice_evolution"],
+      "weights": { "voice_consistency": 0.8, "voice_evolution": 0.6 },
+      "scoring_map": {
+        "recognize": { "voice_consistency": 5, "voice_evolution": 1 },
+        "cringe": { "voice_consistency": 3, "voice_evolution": 3 },
+        "surprise": { "voice_consistency": 1, "voice_evolution": 5 }
+      }
+    },
+    "metadata": {
+      "self_reportability_tier": 2,
+      "finding_refs": ["PL-009"],
+      "bias_mitigation": "Scenario-based reflection avoids abstract self-assessment",
+      "branching": { "required_branches": ["*"] },
+      "position": { "module_sequence": 9, "funnel_stage": "specific" },
+      "estimated_seconds": 15,
+      "format_category": "forced_choice"
+    }
+  },
+  {
+    "question_id": "M01-Q10",
+    "module_id": "M01",
+    "module_name": "Writing Identity & Context",
+    "text": "Write a brief paragraph (3-5 sentences) introducing yourself as if you were writing a bio for a website or publication. Write it in whatever style feels most natural to you.",
+    "type": "writing_sample",
+    "scoring": {
+      "dimensions": ["voice_identity", "formality_baseline", "tone_warmth", "complexity_preference"],
+      "weights": { "voice_identity": 1.0, "formality_baseline": 0.7, "tone_warmth": 0.6, "complexity_preference": 0.5 }
+    },
+    "metadata": {
+      "self_reportability_tier": 4,
+      "finding_refs": ["LT-002", "PL-004", "PL-009"],
+      "bias_mitigation": "Behavioral measurement bypasses self-report limitations; analyzed computationally",
+      "branching": { "required_branches": ["*"] },
+      "position": { "module_sequence": 10, "funnel_stage": "probing" },
+      "estimated_seconds": 120,
+      "format_category": "writing_sample"
+    }
+  }
+]

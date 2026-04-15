@@ -1,0 +1,72 @@
+{
+    "positive_emotion": [
+        "love", "nice", "sweet", "happy", "joy", "hope", "glad",
+        "wonderful", "beautiful", "excellent", "great", "good",
+        "amazing", "fantastic", "brilliant", "pleased", "delighted",
+        "cheerful", "grateful", "thankful", "appreciate", "enjoy",
+        "excited", "thrilled", "enthusiastic", "optimistic", "proud",
+        "satisfied", "content", "peaceful", "calm", "comfortable",
+        "warm", "kind", "gentle", "generous", "caring", "tender",
+        "affection", "admire", "inspire", "encourage", "celebrate",
+        "succeed", "triumph", "bliss", "paradise", "treasure",
+        "blessing", "fortunate", "lucky"
+    ],
+    "negative_emotion": [
+        "hate", "angry", "sad", "fear", "worry", "pain", "hurt",
+        "terrible", "awful", "horrible", "bad", "ugly", "nasty",
+        "cruel", "mean", "hostile", "aggressive", "violent",
+        "frustrated", "disappointed", "depressed", "anxious",
+        "nervous", "stressed", "overwhelmed", "miserable",
+        "lonely", "ashamed", "embarrassed", "guilty", "regret",
+        "sorry", "grief", "mourn", "suffer", "ache", "agony",
+        "despair", "hopeless", "helpless", "worthless", "useless",
+        "disgust", "contempt", "resent", "bitter", "jealous",
+        "envy", "rage", "fury"
+    ],
+    "cognitive_process": [
+        "think", "know", "believe", "understand", "consider",
+        "realize", "recognize", "remember", "forget", "learn",
+        "decide", "choose", "reason", "analyze", "evaluate",
+        "assess", "judge", "conclude", "infer", "deduce",
+        "assume", "suppose", "imagine", "wonder", "question",
+        "doubt", "suspect", "speculate", "hypothesize", "predict",
+        "expect", "anticipate", "plan", "intend", "mean",
+        "cause", "effect", "result", "consequence", "therefore",
+        "because", "since", "thus", "hence", "whether",
+        "perhaps", "maybe", "possibly", "probably", "certainly"
+    ],
+    "social_process": [
+        "talk", "share", "help", "give", "meet", "join",
+        "together", "group", "team", "friend", "family",
+        "people", "person", "human", "social", "community",
+        "society", "culture", "relationship", "connection",
+        "communicate", "discuss", "argue", "agree", "disagree",
+        "negotiate", "cooperate", "collaborate", "compete",
+        "support", "encourage", "advise", "guide", "lead",
+        "follow", "trust", "respect", "admire", "love",
+        "care", "thank", "please", "sorry", "excuse",
+        "invite", "welcome", "belong", "participate", "engage"
+    ],
+    "first_person_singular": [
+        "i", "me", "my", "mine", "myself"
+    ],
+    "first_person_plural": [
+        "we", "us", "our", "ours", "ourselves"
+    ],
+    "second_person": [
+        "you", "your", "yours", "yourself", "yourselves"
+    ],
+    "articles": [
+        "a", "an", "the"
+    ],
+    "prepositions": [
+        "about", "above", "across", "after", "against", "along",
+        "among", "around", "at", "before", "behind", "below",
+        "beneath", "beside", "between", "beyond", "by", "despite",
+        "down", "during", "except", "for", "from", "in", "inside",
+        "into", "like", "near", "of", "off", "on", "onto", "out",
+        "outside", "over", "past", "since", "through", "throughout",
+        "till", "to", "toward", "towards", "under", "underneath",
+        "until", "up", "upon", "with", "within", "without"
+    ]
+}

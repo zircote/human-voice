@@ -1,0 +1,230 @@
+[
+  {
+    "question_id": "M05-Q01",
+    "module_id": "M05",
+    "module_name": "Narrative & Cognitive Style",
+    "text": "When you need to explain a complex idea, what is your instinctive approach?",
+    "type": "forced_choice",
+    "options": [
+      { "value": "analogy", "label": "I reach for an analogy or metaphor to make it relatable" },
+      { "value": "steps", "label": "I break it into logical steps and walk through them sequentially" },
+      { "value": "example", "label": "I give a concrete example or case study" }
+    ],
+    "scoring": {
+      "dimensions": ["explanation_style", "narrative_preference", "abstraction_level"],
+      "weights": { "explanation_style": 1.0, "narrative_preference": 0.7, "abstraction_level": 0.5 },
+      "scoring_map": {
+        "analogy": { "explanation_style": 1, "narrative_preference": 4, "abstraction_level": 4, "narrativity": 4 },
+        "steps": { "explanation_style": 2, "narrative_preference": 2, "abstraction_level": 3, "narrativity": 2 },
+        "example": { "explanation_style": 3, "narrative_preference": 3, "abstraction_level": 2, "narrativity": 3 }
+      }
+    },
+    "metadata": {
+      "self_reportability_tier": 2,
+      "finding_refs": ["PL-001", "PL-009"],
+      "bias_mitigation": "All explanation strategies framed as effective; no hierarchy implied",
+      "branching": { "required_branches": ["*"] },
+      "position": { "module_sequence": 1, "funnel_stage": "general" },
+      "estimated_seconds": 20,
+      "format_category": "forced_choice"
+    }
+  },
+  {
+    "question_id": "M05-Q02",
+    "module_id": "M05",
+    "module_name": "Narrative & Cognitive Style",
+    "text": "How do you typically structure a piece of writing? Describe your usual process or pattern.",
+    "type": "process_narration",
+    "scoring": {
+      "dimensions": ["structural_approach", "planning_style", "cognitive_organization"],
+      "weights": { "structural_approach": 0.9, "planning_style": 0.8, "cognitive_organization": 0.7 }
+    },
+    "metadata": {
+      "self_reportability_tier": 2,
+      "finding_refs": ["PL-009"],
+      "bias_mitigation": "Process narration captures actual behavior rather than idealized self-image",
+      "branching": { "required_branches": ["*"] },
+      "position": { "module_sequence": 2, "funnel_stage": "exploratory" },
+      "estimated_seconds": 60,
+      "format_category": "process_narration"
+    }
+  },
+  {
+    "question_id": "M05-Q03",
+    "module_id": "M05",
+    "module_name": "Narrative & Cognitive Style",
+    "text": "When making an argument in writing, do you prefer to build up to your main point or state it upfront?",
+    "type": "forced_choice",
+    "options": [
+      { "value": "bottom_line_first", "label": "State my conclusion first, then support it with evidence" },
+      { "value": "build_up", "label": "Build the argument step by step and arrive at the conclusion" },
+      { "value": "depends", "label": "It depends on the audience and context" }
+    ],
+    "scoring": {
+      "dimensions": ["argument_structure", "cognitive_organization", "audience_awareness"],
+      "weights": { "argument_structure": 1.0, "cognitive_organization": 0.8, "audience_awareness": 0.4 },
+      "scoring_map": {
+        "bottom_line_first": { "argument_structure": 1, "cognitive_organization": 4, "audience_awareness": 3, "narrativity": 2 },
+        "build_up": { "argument_structure": 5, "cognitive_organization": 3, "audience_awareness": 3, "narrativity": 5 },
+        "depends": { "argument_structure": 3, "cognitive_organization": 3, "audience_awareness": 5, "narrativity": 3 }
+      }
+    },
+    "metadata": {
+      "self_reportability_tier": 2,
+      "finding_refs": ["PL-001", "PL-009"],
+      "bias_mitigation": "Both structures presented as valid rhetorical strategies",
+      "branching": { "required_branches": ["*"] },
+      "position": { "module_sequence": 3, "funnel_stage": "comparative" },
+      "estimated_seconds": 15,
+      "format_category": "forced_choice"
+    }
+  },
+  {
+    "question_id": "M05-Q04",
+    "module_id": "M05",
+    "module_name": "Narrative & Cognitive Style",
+    "text": "How often do you use metaphors, similes, or figurative language in your writing?",
+    "type": "likert",
+    "options": [
+      { "value": 1, "label": "Almost never — I prefer literal, direct language" },
+      { "value": 2, "label": "Rarely — only when nothing else captures the idea" },
+      { "value": 3, "label": "Sometimes — when it helps illustrate a point" },
+      { "value": 4, "label": "Often — figurative language enriches my writing" },
+      { "value": 5, "label": "Frequently — metaphor and imagery are central to how I think and write" }
+    ],
+    "scoring": {
+      "dimensions": ["figurative_language_usage", "narrative_preference", "abstraction_level"],
+      "weights": { "figurative_language_usage": 1.0, "narrative_preference": 0.6, "abstraction_level": 0.5 },
+      "scoring_map": {
+        "1": { "figurative_language_usage": 1, "narrative_preference": 1, "abstraction_level": 1, "narrativity": 1, "risk_tolerance": 1 },
+        "2": { "figurative_language_usage": 2, "narrative_preference": 2, "abstraction_level": 2, "narrativity": 2, "risk_tolerance": 2 },
+        "3": { "figurative_language_usage": 3, "narrative_preference": 3, "abstraction_level": 3, "narrativity": 3, "risk_tolerance": 3 },
+        "4": { "figurative_language_usage": 4, "narrative_preference": 4, "abstraction_level": 4, "narrativity": 4, "risk_tolerance": 4 },
+        "5": { "figurative_language_usage": 5, "narrative_preference": 5, "abstraction_level": 5, "narrativity": 5, "risk_tolerance": 5 }
+      }
+    },
+    "metadata": {
+      "self_reportability_tier": 2,
+      "finding_refs": ["PL-009"],
+      "bias_mitigation": "Both literal and figurative styles framed as deliberate choices",
+      "branching": { "required_branches": ["*"] },
+      "position": { "module_sequence": 4, "funnel_stage": "specific" },
+      "estimated_seconds": 15,
+      "format_category": "likert"
+    }
+  },
+  {
+    "question_id": "M05-Q05",
+    "module_id": "M05",
+    "module_name": "Narrative & Cognitive Style",
+    "text": "Do you tend to think in terms of stories and narratives, or in terms of frameworks and categories?",
+    "type": "likert",
+    "options": [
+      { "value": 1, "label": "Strongly narrative — I naturally think in stories and sequences" },
+      { "value": 2, "label": "Mostly narrative with some structural thinking" },
+      { "value": 3, "label": "A blend of both, depending on the situation" },
+      { "value": 4, "label": "Mostly structural with some narrative thinking" },
+      { "value": 5, "label": "Strongly analytical — I naturally think in frameworks, models, and categories" }
+    ],
+    "scoring": {
+      "dimensions": ["cognitive_style", "narrative_preference", "structural_thinking"],
+      "weights": { "cognitive_style": 1.0, "narrative_preference": 0.9, "structural_thinking": 0.8 },
+      "scoring_map": {
+        "1": { "cognitive_style": 1, "narrative_preference": 5, "structural_thinking": 1, "narrativity": 5 },
+        "2": { "cognitive_style": 2, "narrative_preference": 4, "structural_thinking": 2, "narrativity": 4 },
+        "3": { "cognitive_style": 3, "narrative_preference": 3, "structural_thinking": 3, "narrativity": 3 },
+        "4": { "cognitive_style": 4, "narrative_preference": 2, "structural_thinking": 4, "narrativity": 2 },
+        "5": { "cognitive_style": 5, "narrative_preference": 1, "structural_thinking": 5, "narrativity": 1 }
+      }
+    },
+    "metadata": {
+      "self_reportability_tier": 2,
+      "finding_refs": ["PL-001", "PL-009"],
+      "bias_mitigation": "Bidirectional scale with balanced endpoints; both cognitive styles valued equally",
+      "branching": { "required_branches": ["*"] },
+      "position": { "module_sequence": 5, "funnel_stage": "general" },
+      "estimated_seconds": 15,
+      "format_category": "likert"
+    }
+  },
+  {
+    "question_id": "M05-Q06",
+    "module_id": "M05",
+    "module_name": "Narrative & Cognitive Style",
+    "text": "When you write, how do you handle digressions and tangential ideas?",
+    "type": "forced_choice",
+    "options": [
+      { "value": "include", "label": "I embrace them — tangents often become the most interesting parts" },
+      { "value": "footnote", "label": "I capture them but put them aside (footnotes, parentheticals, asides)" },
+      { "value": "cut", "label": "I cut them — every sentence should serve the main point" }
+    ],
+    "scoring": {
+      "dimensions": ["digression_tolerance", "structural_discipline", "narrative_preference"],
+      "weights": { "digression_tolerance": 1.0, "structural_discipline": 0.7, "narrative_preference": 0.5 },
+      "scoring_map": {
+        "include": { "digression_tolerance": 5, "structural_discipline": 1, "narrative_preference": 4 },
+        "footnote": { "digression_tolerance": 3, "structural_discipline": 3, "narrative_preference": 3 },
+        "cut": { "digression_tolerance": 1, "structural_discipline": 5, "narrative_preference": 2 }
+      }
+    },
+    "metadata": {
+      "self_reportability_tier": 2,
+      "finding_refs": ["PL-009"],
+      "bias_mitigation": "All approaches framed as deliberate writing strategies",
+      "branching": { "required_branches": ["*"] },
+      "position": { "module_sequence": 6, "funnel_stage": "specific" },
+      "estimated_seconds": 20,
+      "format_category": "forced_choice"
+    }
+  },
+  {
+    "question_id": "M05-Q07",
+    "module_id": "M05",
+    "module_name": "Narrative & Cognitive Style",
+    "text": "How do you use transitions between ideas in your writing?",
+    "type": "forced_choice",
+    "options": [
+      { "value": "explicit", "label": "I use explicit transition words and phrases ('However,' 'Furthermore,' 'In contrast,')" },
+      { "value": "implicit", "label": "I let the logical flow speak for itself — readers can follow the connections" },
+      { "value": "mixed", "label": "A mix — I use transitions where the shift is significant and skip them for obvious connections" }
+    ],
+    "scoring": {
+      "dimensions": ["structural_explicitness", "reader_guidance", "cognitive_organization"],
+      "weights": { "structural_explicitness": 1.0, "reader_guidance": 0.8, "cognitive_organization": 0.5 },
+      "scoring_map": {
+        "explicit": { "structural_explicitness": 5, "reader_guidance": 5, "cognitive_organization": 4 },
+        "implicit": { "structural_explicitness": 1, "reader_guidance": 2, "cognitive_organization": 3 },
+        "mixed": { "structural_explicitness": 3, "reader_guidance": 4, "cognitive_organization": 4 }
+      }
+    },
+    "metadata": {
+      "self_reportability_tier": 2,
+      "finding_refs": ["PL-009"],
+      "bias_mitigation": "All transition strategies presented as valid; no approach labeled as better",
+      "branching": { "required_branches": ["*"] },
+      "position": { "module_sequence": 7, "funnel_stage": "specific" },
+      "estimated_seconds": 20,
+      "format_category": "forced_choice"
+    }
+  },
+  {
+    "question_id": "M05-Q08",
+    "module_id": "M05",
+    "module_name": "Narrative & Cognitive Style",
+    "text": "Explain a concept you know well to someone unfamiliar with it. Write 3-5 sentences as if you're actually helping someone understand. Pick any topic you like.",
+    "type": "writing_sample",
+    "scoring": {
+      "dimensions": ["explanation_style", "cognitive_organization", "figurative_language_usage", "audience_awareness", "narrative_preference"],
+      "weights": { "explanation_style": 1.0, "cognitive_organization": 0.8, "figurative_language_usage": 0.6, "audience_awareness": 0.7, "narrative_preference": 0.5 }
+    },
+    "metadata": {
+      "self_reportability_tier": 4,
+      "finding_refs": ["PL-001", "PL-009"],
+      "bias_mitigation": "Behavioral measurement; actual explanatory writing reveals cognitive style directly",
+      "branching": { "required_branches": ["*"] },
+      "position": { "module_sequence": 8, "funnel_stage": "probing" },
+      "estimated_seconds": 120,
+      "format_category": "writing_sample"
+    }
+  }
+]

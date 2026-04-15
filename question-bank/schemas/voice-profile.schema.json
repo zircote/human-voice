@@ -1,0 +1,327 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://voice.zircote.com/schemas/voice-profile.schema.json",
+  "title": "Voice Profile",
+  "description": "The primary output artifact of the voice elicitation engine. A comprehensive, quantified representation of a writer's voice across gold-standard dimensions, gap dimensions, semantic differentials, calibration data, and distinctive features.",
+  "type": "object",
+  "required": [
+    "$schema",
+    "profile_id",
+    "created_at",
+    "version",
+    "session_id",
+    "identity_summary",
+    "writer_type",
+    "gold_standard_dimensions",
+    "gap_dimensions",
+    "semantic_differential",
+    "calibration",
+    "distinctive_features",
+    "voice_stability_map",
+    "writing_sample_analysis",
+    "metadata"
+  ],
+  "$defs": {
+    "gold_standard_dimension": {
+      "type": "object",
+      "description": "A gold-standard voice dimension with composite score derived from self-report and observed measurement.",
+      "required": ["score", "self_report", "observed", "confidence"],
+      "properties": {
+        "score": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 100,
+          "description": "Composite score blending self-report and observed values, weighted by confidence."
+        },
+        "self_report": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 100,
+          "description": "Score derived from the participant's self-reported responses."
+        },
+        "observed": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 100,
+          "description": "Score derived from behavioral observation and writing sample analysis."
+        },
+        "confidence": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1,
+          "description": "Confidence level in the composite score (0 = no confidence, 1 = full confidence). Influenced by self-reportability tier, response quality, and measurement agreement."
+        }
+      },
+      "additionalProperties": false
+    },
+    "gap_dimension": {
+      "type": "object",
+      "description": "A secondary voice dimension measured through self-report, observation, or both.",
+      "required": ["score", "source"],
+      "properties": {
+        "score": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 100,
+          "description": "Dimension score on a 0-100 scale."
+        },
+        "source": {
+          "type": "string",
+          "enum": ["self_report", "observed", "both"],
+          "description": "Measurement source for this dimension."
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  "properties": {
+    "$schema": {
+      "const": "voice-profile/v1",
+      "description": "Schema version identifier for this voice profile format."
+    },
+    "profile_id": {
+      "type": "string",
+      "format": "uuid",
+      "description": "Unique identifier for this voice profile."
+    },
+    "created_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "ISO-8601 timestamp of when this profile was generated."
+    },
+    "version": {
+      "type": "string",
+      "pattern": "^\\d+\\.\\d+\\.\\d+$",
+      "description": "Semantic version of this voice profile (e.g., '1.0.0')."
+    },
+    "session_id": {
+      "type": "string",
+      "format": "uuid",
+      "description": "Identifier of the interview session that produced this profile."
+    },
+    "identity_summary": {
+      "type": "string",
+      "minLength": 1,
+      "description": "A natural-language summary of the writer's voice identity, suitable for display or use as a system prompt preamble."
+    },
+    "writer_type": {
+      "type": "string",
+      "description": "The participant's determined writer type that guided interview branching."
+    },
+    "gold_standard_dimensions": {
+      "type": "object",
+      "description": "The 8 core voice dimensions measured with high rigor through triangulated self-report and behavioral observation.",
+      "required": [
+        "formality",
+        "emotional_tone",
+        "personality",
+        "complexity",
+        "audience_awareness",
+        "authority",
+        "narrativity",
+        "humor"
+      ],
+      "properties": {
+        "formality": {
+          "$ref": "#/$defs/gold_standard_dimension",
+          "description": "Degree of formal vs. informal register in writing."
+        },
+        "emotional_tone": {
+          "$ref": "#/$defs/gold_standard_dimension",
+          "description": "Emotional valence and intensity in writing, from reserved to expressive."
+        },
+        "personality": {
+          "$ref": "#/$defs/gold_standard_dimension",
+          "description": "Degree to which the writer's personality emerges through their prose."
+        },
+        "complexity": {
+          "$ref": "#/$defs/gold_standard_dimension",
+          "description": "Syntactic and conceptual complexity of the writing."
+        },
+        "audience_awareness": {
+          "$ref": "#/$defs/gold_standard_dimension",
+          "description": "Degree to which the writer adapts to and addresses their audience."
+        },
+        "authority": {
+          "$ref": "#/$defs/gold_standard_dimension",
+          "description": "Level of authoritative, expert, or confident voice."
+        },
+        "narrativity": {
+          "$ref": "#/$defs/gold_standard_dimension",
+          "description": "Tendency toward narrative and storytelling in writing."
+        },
+        "humor": {
+          "$ref": "#/$defs/gold_standard_dimension",
+          "description": "Use of humor, wit, irony, and playfulness in writing."
+        }
+      },
+      "additionalProperties": false
+    },
+    "gap_dimensions": {
+      "type": "object",
+      "description": "Secondary voice dimensions that extend the profile beyond the 8 gold-standard measures. Keyed by dimension name.",
+      "additionalProperties": {
+        "$ref": "#/$defs/gap_dimension"
+      }
+    },
+    "semantic_differential": {
+      "type": "object",
+      "description": "20 bipolar adjective pair ratings capturing nuanced stylistic preferences. Keys are hyphenated pair identifiers (e.g., 'formal-casual').",
+      "additionalProperties": {
+        "type": "number",
+        "minimum": 1.0,
+        "maximum": 7.0,
+        "description": "Position on the bipolar scale from 1.0 (first pole) to 7.0 (second pole)."
+      }
+    },
+    "calibration": {
+      "type": "object",
+      "description": "Self-awareness calibration data comparing self-report to observed scores, identifying blind spots and aspirational gaps.",
+      "required": [
+        "overall_self_awareness",
+        "high_awareness_dimensions",
+        "blind_spots",
+        "aspirational_gaps"
+      ],
+      "properties": {
+        "overall_self_awareness": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1,
+          "description": "Aggregate self-awareness score (0 = no correlation between self-report and observed, 1 = perfect alignment)."
+        },
+        "high_awareness_dimensions": {
+          "type": "array",
+          "description": "Dimensions where self-report closely matches observed scores.",
+          "items": { "type": "string" }
+        },
+        "blind_spots": {
+          "type": "array",
+          "description": "Dimensions where self-report diverges significantly from observed scores, indicating limited self-awareness.",
+          "items": { "type": "string" }
+        },
+        "aspirational_gaps": {
+          "type": "array",
+          "description": "Dimensions where the participant aspires to a different level than their current observed score.",
+          "items": {
+            "type": "object",
+            "required": ["dimension", "current", "desired", "delta"],
+            "properties": {
+              "dimension": {
+                "type": "string",
+                "description": "Name of the dimension with an aspirational gap."
+              },
+              "current": {
+                "type": "number",
+                "minimum": 0,
+                "maximum": 100,
+                "description": "Current observed score for this dimension."
+              },
+              "desired": {
+                "type": "number",
+                "minimum": 0,
+                "maximum": 100,
+                "description": "Desired/aspirational score the participant would like to achieve."
+              },
+              "delta": {
+                "type": "number",
+                "description": "Difference between desired and current (positive = aspires higher, negative = aspires lower)."
+              }
+            },
+            "additionalProperties": false
+          }
+        }
+      },
+      "additionalProperties": false
+    },
+    "distinctive_features": {
+      "type": "array",
+      "description": "Salient, unusual, or particularly noteworthy aspects of the writer's voice that distinguish them.",
+      "items": { "type": "string" }
+    },
+    "voice_stability_map": {
+      "type": "object",
+      "description": "Characterizes which voice attributes remain stable and which adapt across different writing contexts.",
+      "required": ["stable_across_contexts", "adapts_by_context"],
+      "properties": {
+        "stable_across_contexts": {
+          "type": "array",
+          "description": "Voice attributes that remain consistent regardless of audience or genre.",
+          "items": { "type": "string" }
+        },
+        "adapts_by_context": {
+          "type": "array",
+          "description": "Voice attributes that the writer consciously or unconsciously adjusts by context.",
+          "items": { "type": "string" }
+        }
+      },
+      "additionalProperties": false
+    },
+    "writing_sample_analysis": {
+      "type": "object",
+      "description": "Aggregate statistics from NLP analysis of writing samples collected during the session.",
+      "required": ["sample_count", "total_words"],
+      "properties": {
+        "sample_count": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Number of writing samples analyzed."
+        },
+        "total_words": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Total word count across all writing samples."
+        }
+      },
+      "additionalProperties": {
+        "type": "number",
+        "description": "Computed aggregate metrics from writing sample analysis."
+      }
+    },
+    "metadata": {
+      "type": "object",
+      "description": "Session and quality metadata summarizing how the profile was derived.",
+      "required": [
+        "questions_answered",
+        "modules_completed",
+        "duration_seconds",
+        "branch_path",
+        "attention_check_pass",
+        "satisficing_flags"
+      ],
+      "properties": {
+        "questions_answered": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Total number of questions answered in the session."
+        },
+        "modules_completed": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Number of modules fully completed."
+        },
+        "duration_seconds": {
+          "type": "number",
+          "minimum": 0,
+          "description": "Total session duration in seconds."
+        },
+        "branch_path": {
+          "type": "array",
+          "description": "The branching path taken through the adaptive interview.",
+          "items": { "type": "string" }
+        },
+        "attention_check_pass": {
+          "type": "boolean",
+          "description": "Whether the participant passed the minimum threshold for attention checks."
+        },
+        "satisficing_flags": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Total number of satisficing indicators (too-fast responses, straightlining) detected."
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": false
+}

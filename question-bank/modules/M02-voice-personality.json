@@ -1,0 +1,331 @@
+[
+  {
+    "question_id": "M02-Q01",
+    "module_id": "M02",
+    "module_name": "Voice Personality & Values",
+    "text": "When you write, what matters most to you about how your words come across?",
+    "type": "forced_choice",
+    "options": [
+      { "value": "clarity", "label": "Being clear and easily understood" },
+      { "value": "authenticity", "label": "Sounding genuine and true to myself" },
+      { "value": "persuasion", "label": "Being convincing and compelling" }
+    ],
+    "scoring": {
+      "dimensions": ["voice_values", "communication_priority"],
+      "weights": { "voice_values": 0.9, "communication_priority": 0.8 },
+      "scoring_map": {
+        "clarity": { "voice_values": 3, "communication_priority": 5, "personality": 3 },
+        "authenticity": { "voice_values": 5, "communication_priority": 3, "personality": 5 },
+        "persuasion": { "voice_values": 4, "communication_priority": 4, "personality": 4 }
+      }
+    },
+    "metadata": {
+      "self_reportability_tier": 2,
+      "finding_refs": ["PL-001", "EF-003"],
+      "bias_mitigation": "All options framed as positive writing values; no hierarchy implied",
+      "branching": { "required_branches": ["*"] },
+      "position": { "module_sequence": 1, "funnel_stage": "general" },
+      "estimated_seconds": 20,
+      "format_category": "forced_choice"
+    }
+  },
+  {
+    "question_id": "M02-Q02",
+    "module_id": "M02",
+    "module_name": "Voice Personality & Values",
+    "text": "How important is it for your writing to reflect your personality, even in professional contexts?",
+    "type": "likert",
+    "options": [
+      { "value": 1, "label": "Not at all — I keep personality out of professional writing" },
+      { "value": 2, "label": "Slightly — a hint of personality is fine" },
+      { "value": 3, "label": "Moderately — I like my personality to show through" },
+      { "value": 4, "label": "Very — my personality is a key part of my writing" },
+      { "value": 5, "label": "Extremely — my writing is inseparable from who I am" }
+    ],
+    "scoring": {
+      "dimensions": ["personality_expression", "authenticity_drive"],
+      "weights": { "personality_expression": 0.9, "authenticity_drive": 0.7 },
+      "scoring_map": {
+        "1": { "personality_expression": 1, "authenticity_drive": 1 },
+        "2": { "personality_expression": 2, "authenticity_drive": 2 },
+        "3": { "personality_expression": 3, "authenticity_drive": 3 },
+        "4": { "personality_expression": 4, "authenticity_drive": 4 },
+        "5": { "personality_expression": 5, "authenticity_drive": 5 }
+      }
+    },
+    "metadata": {
+      "self_reportability_tier": 1,
+      "finding_refs": ["PL-001"],
+      "bias_mitigation": "Bidirectional scale; professional restraint and personal expression both valid",
+      "branching": { "required_branches": ["*"] },
+      "position": { "module_sequence": 2, "funnel_stage": "general" },
+      "estimated_seconds": 15,
+      "format_category": "likert"
+    }
+  },
+  {
+    "question_id": "M02-Q03",
+    "module_id": "M02",
+    "module_name": "Voice Personality & Values",
+    "text": "You're writing an important email and realize your first draft sounds too stiff. What do you do?",
+    "type": "scenario",
+    "options": [
+      { "value": "loosen", "label": "Rewrite it in a more conversational tone" },
+      { "value": "keep", "label": "Keep it as-is — formality is appropriate for important messages" },
+      { "value": "split", "label": "Find a middle ground — keep the structure but warm up the language" }
+    ],
+    "scoring": {
+      "dimensions": ["formality_preference", "tone_warmth", "adaptability"],
+      "weights": { "formality_preference": 0.6, "tone_warmth": 0.8, "adaptability": 0.5 },
+      "scoring_map": {
+        "loosen": { "formality_preference": 2, "tone_warmth": 5, "adaptability": 4, "personality": 4, "influence_absorption": 4 },
+        "keep": { "formality_preference": 5, "tone_warmth": 2, "adaptability": 2, "personality": 2, "influence_absorption": 2 },
+        "split": { "formality_preference": 3, "tone_warmth": 4, "adaptability": 5, "personality": 3, "influence_absorption": 5 }
+      }
+    },
+    "metadata": {
+      "self_reportability_tier": 3,
+      "finding_refs": ["EF-003", "PL-011"],
+      "bias_mitigation": "Scenario-based to bypass social desirability; no option framed as ideal",
+      "branching": { "required_branches": ["*"] },
+      "position": { "module_sequence": 3, "funnel_stage": "exploratory" },
+      "estimated_seconds": 25,
+      "format_category": "scenario"
+    }
+  },
+  {
+    "question_id": "M02-Q04",
+    "module_id": "M02",
+    "module_name": "Voice Personality & Values",
+    "text": "If your writing voice were a person at a dinner party, which best describes them?",
+    "type": "projective",
+    "options": [
+      { "value": "storyteller", "label": "The engaging storyteller who holds the room's attention" },
+      { "value": "listener", "label": "The thoughtful listener who speaks carefully and precisely" },
+      { "value": "debater", "label": "The sharp debater who challenges ideas with energy" },
+      { "value": "host", "label": "The warm host who makes everyone feel included" },
+      { "value": "observer", "label": "The quiet observer who shares surprising insights" }
+    ],
+    "scoring": {
+      "dimensions": ["voice_archetype", "tone_warmth", "energy_level"],
+      "weights": { "voice_archetype": 1.0, "tone_warmth": 0.6, "energy_level": 0.5 },
+      "scoring_map": {
+        "storyteller": { "voice_archetype": 1, "tone_warmth": 4, "energy_level": 5, "personality": 4 },
+        "listener": { "voice_archetype": 2, "tone_warmth": 3, "energy_level": 2, "personality": 3 },
+        "debater": { "voice_archetype": 3, "tone_warmth": 2, "energy_level": 5, "personality": 3 },
+        "host": { "voice_archetype": 4, "tone_warmth": 5, "energy_level": 3, "personality": 4 },
+        "observer": { "voice_archetype": 5, "tone_warmth": 3, "energy_level": 1, "personality": 2 }
+      }
+    },
+    "metadata": {
+      "self_reportability_tier": 3,
+      "finding_refs": ["PL-001", "PL-012"],
+      "bias_mitigation": "Projective technique reduces direct self-assessment bias; metaphorical framing",
+      "branching": { "required_branches": ["*"] },
+      "position": { "module_sequence": 4, "funnel_stage": "exploratory" },
+      "estimated_seconds": 25,
+      "format_category": "projective"
+    }
+  },
+  {
+    "question_id": "M02-Q05",
+    "module_id": "M02",
+    "module_name": "Voice Personality & Values",
+    "text": "How do you feel about using humor in your writing?",
+    "type": "likert",
+    "options": [
+      { "value": 1, "label": "I avoid humor entirely — it doesn't belong in my writing" },
+      { "value": 2, "label": "I use it rarely and only when clearly appropriate" },
+      { "value": 3, "label": "I include it occasionally to keep things engaging" },
+      { "value": 4, "label": "Humor is a regular part of my writing toolkit" },
+      { "value": 5, "label": "Humor is central to my voice — I can't write without it" }
+    ],
+    "scoring": {
+      "dimensions": ["humor_usage", "tone_warmth", "personality_expression"],
+      "weights": { "humor_usage": 1.0, "tone_warmth": 0.5, "personality_expression": 0.6 },
+      "scoring_map": {
+        "1": { "humor_usage": 1, "tone_warmth": 2, "personality_expression": 1 },
+        "2": { "humor_usage": 2, "tone_warmth": 3, "personality_expression": 2 },
+        "3": { "humor_usage": 3, "tone_warmth": 3, "personality_expression": 3 },
+        "4": { "humor_usage": 4, "tone_warmth": 4, "personality_expression": 4 },
+        "5": { "humor_usage": 5, "tone_warmth": 5, "personality_expression": 5 }
+      }
+    },
+    "metadata": {
+      "self_reportability_tier": 1,
+      "finding_refs": ["PL-011"],
+      "bias_mitigation": "Bidirectional scale; humor avoidance framed as a deliberate choice, not a deficit",
+      "branching": { "required_branches": ["*"] },
+      "position": { "module_sequence": 5, "funnel_stage": "specific" },
+      "estimated_seconds": 15,
+      "format_category": "likert"
+    }
+  },
+  {
+    "question_id": "M02-Q06",
+    "module_id": "M02",
+    "module_name": "Voice Personality & Values",
+    "text": "Which of these writers or writing styles do you most admire (regardless of whether you write like them)?",
+    "type": "select_multiple",
+    "options": [
+      { "value": "hemingway", "label": "Spare and direct (Hemingway-like)" },
+      { "value": "literary", "label": "Rich and layered (Toni Morrison, Virginia Woolf)" },
+      { "value": "conversational", "label": "Warm and conversational (David Sedaris, Nora Ephron)" },
+      { "value": "technical", "label": "Precise and analytical (academic or scientific prose)" },
+      { "value": "poetic", "label": "Lyrical and evocative (Mary Oliver, Ocean Vuong)" },
+      { "value": "provocative", "label": "Bold and provocative (Joan Didion, Hunter S. Thompson)" },
+      { "value": "accessible", "label": "Clear and accessible (Malcolm Gladwell, Mary Roach)" }
+    ],
+    "scoring": {
+      "dimensions": ["aesthetic_preference", "complexity_preference", "voice_archetype"],
+      "weights": { "aesthetic_preference": 0.8, "complexity_preference": 0.5, "voice_archetype": 0.4 }
+    },
+    "metadata": {
+      "self_reportability_tier": 1,
+      "finding_refs": ["PL-001", "PL-012"],
+      "bias_mitigation": "Multiple selections allowed; diverse styles represented without ranking",
+      "branching": { "required_branches": ["*"] },
+      "position": { "module_sequence": 6, "funnel_stage": "exploratory" },
+      "estimated_seconds": 25,
+      "format_category": "select_multiple"
+    }
+  },
+  {
+    "question_id": "M02-Q07",
+    "module_id": "M02",
+    "module_name": "Voice Personality & Values",
+    "text": "When you need to deliver difficult feedback in writing, which approach do you instinctively take?",
+    "type": "forced_choice",
+    "options": [
+      { "value": "direct", "label": "Direct and straightforward — I state the issue clearly" },
+      { "value": "diplomatic", "label": "Diplomatic and cushioned — I soften the message carefully" },
+      { "value": "constructive", "label": "Constructive framing — I focus on solutions rather than problems" }
+    ],
+    "scoring": {
+      "dimensions": ["directness", "tone_warmth", "empathy_expression"],
+      "weights": { "directness": 0.9, "tone_warmth": 0.6, "empathy_expression": 0.7 },
+      "scoring_map": {
+        "direct": { "directness": 5, "tone_warmth": 2, "empathy_expression": 2, "authority": 5 },
+        "diplomatic": { "directness": 2, "tone_warmth": 4, "empathy_expression": 5, "authority": 2 },
+        "constructive": { "directness": 3, "tone_warmth": 4, "empathy_expression": 4, "authority": 3 }
+      }
+    },
+    "metadata": {
+      "self_reportability_tier": 2,
+      "finding_refs": ["EF-003", "PL-011"],
+      "bias_mitigation": "Behavioral scenario reduces social desirability; all approaches framed positively",
+      "branching": { "required_branches": ["*"] },
+      "position": { "module_sequence": 7, "funnel_stage": "specific" },
+      "estimated_seconds": 20,
+      "format_category": "forced_choice"
+    }
+  },
+  {
+    "question_id": "M02-Q08",
+    "module_id": "M02",
+    "module_name": "Voice Personality & Values",
+    "text": "How do you feel about using first person ('I think...', 'In my experience...') in professional writing?",
+    "type": "likert",
+    "options": [
+      { "value": 1, "label": "I strongly avoid it — professional writing should be impersonal" },
+      { "value": 2, "label": "I minimize it but use it when necessary" },
+      { "value": 3, "label": "I use it sometimes when it adds clarity or authenticity" },
+      { "value": 4, "label": "I use it regularly — it makes writing more honest" },
+      { "value": 5, "label": "I prefer it — removing 'I' makes writing feel evasive" }
+    ],
+    "scoring": {
+      "dimensions": ["personality_expression", "formality_preference", "authenticity_drive"],
+      "weights": { "personality_expression": 0.7, "formality_preference": 0.6, "authenticity_drive": 0.8 },
+      "scoring_map": {
+        "1": { "personality_expression": 1, "formality_preference": 5, "authenticity_drive": 2, "humor": 1 },
+        "2": { "personality_expression": 2, "formality_preference": 4, "authenticity_drive": 3, "humor": 2 },
+        "3": { "personality_expression": 3, "formality_preference": 3, "authenticity_drive": 3, "humor": 3 },
+        "4": { "personality_expression": 4, "formality_preference": 2, "authenticity_drive": 4, "humor": 4 },
+        "5": { "personality_expression": 5, "formality_preference": 1, "authenticity_drive": 5, "humor": 5 }
+      }
+    },
+    "metadata": {
+      "self_reportability_tier": 1,
+      "finding_refs": ["PL-001", "PL-012"],
+      "bias_mitigation": "Both poles justified with reasoning to avoid anchoring",
+      "branching": { "required_branches": ["*"] },
+      "position": { "module_sequence": 8, "funnel_stage": "specific" },
+      "estimated_seconds": 15,
+      "format_category": "likert"
+    }
+  },
+  {
+    "question_id": "M02-Q09",
+    "module_id": "M02",
+    "module_name": "Voice Personality & Values",
+    "text": "Think about a writer whose voice you'd never want your own writing to sound like. Without naming them, what is it about their style that doesn't resonate with you?",
+    "type": "open_ended",
+    "scoring": {
+      "dimensions": ["voice_identity", "aesthetic_preference", "anti_patterns"],
+      "weights": { "voice_identity": 0.7, "aesthetic_preference": 0.8, "anti_patterns": 1.0 }
+    },
+    "metadata": {
+      "self_reportability_tier": 2,
+      "finding_refs": ["PL-012"],
+      "bias_mitigation": "Negative-space elicitation reveals preferences through aversion rather than aspiration",
+      "branching": { "required_branches": ["*"] },
+      "position": { "module_sequence": 9, "funnel_stage": "probing" },
+      "estimated_seconds": 45,
+      "format_category": "open_ended"
+    }
+  },
+  {
+    "question_id": "M02-Q10",
+    "module_id": "M02",
+    "module_name": "Voice Personality & Values",
+    "text": "When writing something personal or meaningful, do you tend to share your own vulnerability, or do you prefer to maintain emotional distance?",
+    "type": "likert",
+    "options": [
+      { "value": 1, "label": "I keep strong emotional distance in all my writing" },
+      { "value": 2, "label": "I share selectively and cautiously" },
+      { "value": 3, "label": "I balance openness with restraint" },
+      { "value": 4, "label": "I lean toward openness and emotional honesty" },
+      { "value": 5, "label": "I embrace vulnerability as a core part of my voice" }
+    ],
+    "scoring": {
+      "dimensions": ["vulnerability_comfort", "emotional_openness", "authenticity_drive"],
+      "weights": { "vulnerability_comfort": 1.0, "emotional_openness": 0.8, "authenticity_drive": 0.6 },
+      "scoring_map": {
+        "1": { "vulnerability_comfort": 1, "emotional_openness": 1, "authenticity_drive": 2, "risk_tolerance": 1 },
+        "2": { "vulnerability_comfort": 2, "emotional_openness": 2, "authenticity_drive": 3, "risk_tolerance": 2 },
+        "3": { "vulnerability_comfort": 3, "emotional_openness": 3, "authenticity_drive": 3, "risk_tolerance": 3 },
+        "4": { "vulnerability_comfort": 4, "emotional_openness": 4, "authenticity_drive": 4, "risk_tolerance": 4 },
+        "5": { "vulnerability_comfort": 5, "emotional_openness": 5, "authenticity_drive": 5, "risk_tolerance": 5 }
+      }
+    },
+    "metadata": {
+      "self_reportability_tier": 2,
+      "finding_refs": ["EF-003", "PL-011"],
+      "bias_mitigation": "Both distance and vulnerability framed as valid choices",
+      "branching": { "required_branches": ["*"] },
+      "position": { "module_sequence": 10, "funnel_stage": "probing" },
+      "estimated_seconds": 15,
+      "format_category": "likert"
+    }
+  },
+  {
+    "question_id": "M02-Q11",
+    "module_id": "M02",
+    "module_name": "Voice Personality & Values",
+    "text": "Write 2-3 sentences giving advice to a friend about something you know well. Write naturally, as if you were actually sending this to someone you care about.",
+    "type": "writing_sample",
+    "scoring": {
+      "dimensions": ["voice_identity", "tone_warmth", "personality_expression", "directness"],
+      "weights": { "voice_identity": 1.0, "tone_warmth": 0.8, "personality_expression": 0.7, "directness": 0.5 }
+    },
+    "metadata": {
+      "self_reportability_tier": 4,
+      "finding_refs": ["PL-001", "EF-003", "PL-012"],
+      "bias_mitigation": "Behavioral measurement; natural writing context minimizes performance bias",
+      "branching": { "required_branches": ["*"] },
+      "position": { "module_sequence": 11, "funnel_stage": "probing" },
+      "estimated_seconds": 90,
+      "format_category": "writing_sample"
+    }
+  }
+]

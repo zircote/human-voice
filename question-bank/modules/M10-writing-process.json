@@ -1,0 +1,237 @@
+[
+  {
+    "question_id": "M10-Q01",
+    "module_id": "M10",
+    "module_name": "Writing Process & Revision",
+    "text": "Write quickly and revise, or compose slowly and carefully?",
+    "type": "forced_choice",
+    "options": [
+      { "value": "quick_revise", "label": "Write quickly and revise afterward" },
+      { "value": "slow_careful", "label": "Compose slowly and carefully the first time" },
+      { "value": "depends_stakes", "label": "Depends on what\u2019s at stake" }
+    ],
+    "scoring": {
+      "dimensions": ["revision_style", "process_approach"],
+      "weights": { "revision_style": 0.9, "process_approach": 0.7 },
+      "scoring_map": {
+        "quick_revise": { "revision_style": 6, "process_approach": 2, "revision_orientation": 5 },
+        "slow_careful": { "revision_style": 2, "process_approach": 6, "revision_orientation": 2 },
+        "depends_stakes": { "revision_style": 4, "process_approach": 4, "revision_orientation": 3 }
+      }
+    },
+    "metadata": {
+      "self_reportability_tier": 1,
+      "finding_refs": ["PL-008", "EM-016", "EM-014"],
+      "bias_mitigation": "Both approaches framed as deliberate strategies; neither implies laziness or overthinking",
+      "branching": { "required_branches": ["creative_literary", "academic_technical"], "excluded_branches": [] },
+      "position": { "module_sequence": 1, "funnel_stage": "core" },
+      "estimated_seconds": 15,
+      "format_category": "forced_choice"
+    }
+  },
+  {
+    "question_id": "M10-Q02",
+    "module_id": "M10",
+    "module_name": "Writing Process & Revision",
+    "text": "When revising: more time restructuring logic or refining tone?",
+    "type": "forced_choice",
+    "options": [
+      { "value": "restructuring", "label": "More time restructuring logic and organization" },
+      { "value": "refining_tone", "label": "More time refining tone and word choice" },
+      { "value": "equal", "label": "About equal attention to both" }
+    ],
+    "scoring": {
+      "dimensions": ["revision_style"],
+      "weights": { "revision_style": 0.8 },
+      "scoring_map": {
+        "restructuring": { "revision_style": 2, "revision_orientation": 2 },
+        "refining_tone": { "revision_style": 6, "revision_orientation": 5 },
+        "equal": { "revision_style": 4, "revision_orientation": 3 }
+      }
+    },
+    "metadata": {
+      "self_reportability_tier": 1,
+      "finding_refs": ["PL-008", "EM-016", "EM-014"],
+      "bias_mitigation": "Both revision focuses presented as valid editorial priorities",
+      "branching": { "required_branches": ["creative_literary", "academic_technical"], "excluded_branches": [] },
+      "position": { "module_sequence": 2, "funnel_stage": "core" },
+      "estimated_seconds": 15,
+      "format_category": "forced_choice"
+    }
+  },
+  {
+    "question_id": "M10-Q03",
+    "module_id": "M10",
+    "module_name": "Writing Process & Revision",
+    "text": "Walk me through starting an important email \u2014 blank page to send",
+    "type": "process_narration",
+    "scoring": {
+      "dimensions": ["revision_style", "process_approach"],
+      "weights": { "revision_style": 0.9, "process_approach": 0.9 }
+    },
+    "metadata": {
+      "self_reportability_tier": 2,
+      "finding_refs": ["PL-008", "EM-016", "EM-014"],
+      "bias_mitigation": "Process narration captures actual behavior rather than idealized self-report",
+      "branching": { "required_branches": ["creative_literary", "academic_technical"], "excluded_branches": [] },
+      "position": { "module_sequence": 3, "funnel_stage": "deep_dive" },
+      "estimated_seconds": 120,
+      "format_category": "process_narration"
+    }
+  },
+  {
+    "question_id": "M10-Q04",
+    "module_id": "M10",
+    "module_name": "Writing Process & Revision",
+    "text": "Re-reading a draft: evaluate for accuracy/logic or reader experience?",
+    "type": "forced_choice",
+    "options": [
+      { "value": "accuracy", "label": "Primarily for accuracy and logical coherence" },
+      { "value": "experience", "label": "Primarily for reader experience and flow" },
+      { "value": "both", "label": "Both in roughly equal measure" },
+      { "value": "separate_passes", "label": "Separate passes for each" }
+    ],
+    "scoring": {
+      "dimensions": ["revision_style"],
+      "weights": { "revision_style": 0.7 },
+      "scoring_map": {
+        "accuracy": { "revision_style": 2, "revision_orientation": 2 },
+        "experience": { "revision_style": 6, "revision_orientation": 5 },
+        "both": { "revision_style": 4, "revision_orientation": 3 },
+        "separate_passes": { "revision_style": 5, "revision_orientation": 4 }
+      }
+    },
+    "metadata": {
+      "self_reportability_tier": 1,
+      "finding_refs": ["PL-008", "EM-016", "EM-014"],
+      "bias_mitigation": "Multiple revision strategies presented without hierarchy",
+      "branching": { "required_branches": ["creative_literary", "academic_technical"], "excluded_branches": [] },
+      "position": { "module_sequence": 4, "funnel_stage": "core" },
+      "estimated_seconds": 15,
+      "format_category": "forced_choice"
+    }
+  },
+  {
+    "question_id": "M10-Q05",
+    "module_id": "M10",
+    "module_name": "Writing Process & Revision",
+    "text": "More likely to split long sentences or combine short ones?",
+    "type": "forced_choice",
+    "options": [
+      { "value": "split", "label": "Split long sentences into shorter ones" },
+      { "value": "combine", "label": "Combine short sentences into longer ones" },
+      { "value": "both_equally", "label": "Both about equally" },
+      { "value": "neither", "label": "Neither \u2014 I tend to leave sentence length as-is" }
+    ],
+    "scoring": {
+      "dimensions": ["revision_style", "complexity_preference"],
+      "weights": { "revision_style": 0.6, "complexity_preference": 0.5 },
+      "scoring_map": {
+        "split": { "revision_style": 3, "complexity_preference": 2 },
+        "combine": { "revision_style": 5, "complexity_preference": 6 },
+        "both_equally": { "revision_style": 4, "complexity_preference": 4 },
+        "neither": { "revision_style": 2, "complexity_preference": 4 }
+      }
+    },
+    "metadata": {
+      "self_reportability_tier": 1,
+      "finding_refs": ["PL-008", "EM-016", "EM-014"],
+      "bias_mitigation": "All editing tendencies framed neutrally as stylistic preferences",
+      "branching": { "required_branches": ["creative_literary", "academic_technical"], "excluded_branches": [] },
+      "position": { "module_sequence": 5, "funnel_stage": "core" },
+      "estimated_seconds": 15,
+      "format_category": "forced_choice"
+    }
+  },
+  {
+    "question_id": "M10-Q06",
+    "module_id": "M10",
+    "module_name": "Writing Process & Revision",
+    "text": "After writing a draft, typically need to cut or add words?",
+    "type": "forced_choice",
+    "options": [
+      { "value": "cut", "label": "Usually need to cut \u2014 I tend to overwrite" },
+      { "value": "add", "label": "Usually need to add \u2014 I tend to underwrite" },
+      { "value": "about_right", "label": "Usually about the right length" }
+    ],
+    "scoring": {
+      "dimensions": ["revision_style"],
+      "weights": { "revision_style": 0.6 },
+      "scoring_map": {
+        "cut": { "revision_style": 5 },
+        "add": { "revision_style": 3 },
+        "about_right": { "revision_style": 2 }
+      }
+    },
+    "metadata": {
+      "self_reportability_tier": 1,
+      "finding_refs": ["PL-008", "EM-016", "EM-014"],
+      "bias_mitigation": "Both tendencies framed as natural drafting patterns without judgment",
+      "branching": { "required_branches": ["creative_literary", "academic_technical"], "excluded_branches": [] },
+      "position": { "module_sequence": 6, "funnel_stage": "core" },
+      "estimated_seconds": 15,
+      "format_category": "forced_choice"
+    }
+  },
+  {
+    "question_id": "M10-Q07",
+    "module_id": "M10",
+    "module_name": "Writing Process & Revision",
+    "text": "Do you ever read your writing aloud?",
+    "type": "likert",
+    "options": [
+      { "value": 1, "label": "Never" },
+      { "value": 2, "label": "Rarely" },
+      { "value": 3, "label": "Sometimes" },
+      { "value": 4, "label": "Often" },
+      { "value": 5, "label": "Always or almost always" }
+    ],
+    "scoring": {
+      "dimensions": ["revision_style"],
+      "weights": { "revision_style": 0.5 },
+      "scoring_map": {
+        "1": { "revision_style": 1 },
+        "2": { "revision_style": 2 },
+        "3": { "revision_style": 3 },
+        "4": { "revision_style": 4 },
+        "5": { "revision_style": 5 }
+      }
+    },
+    "metadata": {
+      "self_reportability_tier": 1,
+      "finding_refs": ["PL-008", "EM-016", "EM-014"],
+      "bias_mitigation": "Frequency scale without value judgment on reading aloud as a practice",
+      "branching": { "required_branches": ["creative_literary", "academic_technical"], "excluded_branches": [] },
+      "position": { "module_sequence": 7, "funnel_stage": "core" },
+      "estimated_seconds": 10,
+      "format_category": "likert"
+    }
+  },
+  {
+    "question_id": "M10-Q08",
+    "module_id": "M10",
+    "module_name": "Writing Process & Revision",
+    "text": "How many drafts does a typical piece go through?",
+    "type": "select",
+    "options": [
+      { "value": "one", "label": "One \u2014 I write and send" },
+      { "value": "two", "label": "Two \u2014 a rough draft and a revision" },
+      { "value": "three_to_five", "label": "Three to five rounds of revision" },
+      { "value": "many", "label": "Many \u2014 I revise extensively" },
+      { "value": "varies", "label": "It varies widely by the type of writing" }
+    ],
+    "scoring": {
+      "dimensions": ["revision_style"],
+      "weights": { "revision_style": 0.8 }
+    },
+    "metadata": {
+      "self_reportability_tier": 1,
+      "finding_refs": ["PL-008", "EM-016", "EM-014"],
+      "bias_mitigation": "All revision counts framed as valid; no count implies thoroughness or lack thereof",
+      "branching": { "required_branches": ["creative_literary", "academic_technical"], "excluded_branches": [] },
+      "position": { "module_sequence": 8, "funnel_stage": "core" },
+      "estimated_seconds": 15,
+      "format_category": "select"
+    }
+  }
+]

@@ -1,0 +1,26 @@
+{
+  "template_name": "academic-prose",
+  "display_name": "Academic Prose",
+  "description": "Scholarly, evidence-based, complex sentence structures. Hedging where appropriate, citations, formal vocabulary. Suitable for research papers, theses, and academic communication.",
+  "identity_summary": "A measured academic voice that builds arguments through evidence and careful qualification. Uses complex sentence structures with subordinate clauses and precise terminology.",
+  "dimensions": {
+    "formality": {"score": 85},
+    "emotional_tone": {"score": 20},
+    "personality": {"score": 20},
+    "complexity": {"score": 80},
+    "audience_awareness": {"score": 45},
+    "authority": {"score": 55},
+    "narrativity": {"score": 25},
+    "humor": {"score": 5}
+  },
+  "mechanics": {
+    "contractions": "never",
+    "oxford_comma": true,
+    "semicolons": "frequent",
+    "exclamation_marks": "never",
+    "parenthetical_style": "parentheses",
+    "active_voice": "mixed",
+    "paragraph_openers": "topic-sentence",
+    "list_usage": "rare"
+  }
+}

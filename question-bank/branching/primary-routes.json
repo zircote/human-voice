@@ -1,0 +1,48 @@
+{
+  "schema_version": "1.0.0",
+  "description": "Primary branching routes for the voice elicitation engine. Based on screening question responses, routes respondents into one of four writing-context paths.",
+  "screening_questions": ["M01-Q05", "M01-Q10", "M01-Q04", "M01-Q07"],
+  "branches": {
+    "creative_literary": {
+      "conditions": {
+        "writer_context": ["fiction", "poetry", "creative_nonfiction"],
+        "experience_level_min": 3
+      },
+      "activated_modules": ["M05", "M08", "M10"],
+      "description": "Creative/Literary path — activates narrativity, authority/register, and mechanics modules for writers in fiction, poetry, or creative nonfiction contexts"
+    },
+    "business_professional": {
+      "conditions": {
+        "writer_context": ["business", "marketing", "corporate"]
+      },
+      "activated_modules": ["M07", "M08", "M11"],
+      "description": "Business/Professional path — activates audience awareness, authority/register, and contextual adaptation modules for business, marketing, and corporate writers"
+    },
+    "academic_technical": {
+      "conditions": {
+        "writer_context": ["academic", "technical", "scientific"]
+      },
+      "activated_modules": ["M06", "M08", "M10"],
+      "description": "Academic/Technical path — activates complexity/structure, authority/register, and mechanics modules for academic, technical, and scientific writers"
+    },
+    "personal_journalistic": {
+      "conditions": {
+        "writer_context": ["personal", "journalism", "blog", "social"]
+      },
+      "activated_modules": ["M05", "M07", "M11"],
+      "description": "Personal/Journalistic path — activates narrativity, audience awareness, and contextual adaptation modules for personal, journalism, blog, and social media writers"
+    }
+  },
+  "default_branch": "personal_journalistic",
+  "evaluation_order": [
+    "creative_literary",
+    "business_professional",
+    "academic_technical",
+    "personal_journalistic"
+  ],
+  "notes": {
+    "branch_selection": "Evaluate conditions in order; first matching branch wins. Fall through to default_branch if no conditions match.",
+    "experience_level_min": "Only creative_literary requires a minimum experience level (3 on a 1-7 scale). All other branches match on writer_context alone.",
+    "activated_modules": "These modules are added to the base module sequence. Core modules (M01-M04, M09, M12) are always administered regardless of branch."
+  }
+}

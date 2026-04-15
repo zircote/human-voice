@@ -1,0 +1,268 @@
+[
+  {
+    "question_id": "M07-Q01",
+    "module_id": "M07",
+    "module_name": "Audience & Adaptation",
+    "text": "When you start writing, who do you picture reading it?",
+    "type": "open_ended",
+    "scoring": {
+      "dimensions": ["audience_awareness"],
+      "weights": { "audience_awareness": 0.9 }
+    },
+    "metadata": {
+      "self_reportability_tier": 1,
+      "finding_refs": ["LT-006", "PL-016", "PL-009", "PL-018"],
+      "bias_mitigation": "Open-ended elicitation avoids anchoring on specific audience types",
+      "branching": { "required_branches": ["*"], "excluded_branches": [] },
+      "position": { "module_sequence": 1, "funnel_stage": "exploratory" },
+      "estimated_seconds": 45,
+      "format_category": "open_ended"
+    }
+  },
+  {
+    "question_id": "M07-Q02",
+    "module_id": "M07",
+    "module_name": "Audience & Adaptation",
+    "text": "How much do you adjust vocabulary, sentence length, and tone for different audiences?",
+    "type": "likert",
+    "options": [
+      { "value": 1, "label": "Not at all — my style stays the same regardless of audience" },
+      { "value": 2, "label": "Slight adjustments" },
+      { "value": 3, "label": "Moderate adjustments" },
+      { "value": 4, "label": "Significant adjustments" },
+      { "value": 5, "label": "Substantial shifts" },
+      { "value": 6, "label": "Major transformation" },
+      { "value": 7, "label": "Completely different style for each audience" }
+    ],
+    "scoring": {
+      "dimensions": ["audience_awareness"],
+      "weights": { "audience_awareness": 1.0 },
+      "scoring_map": {
+        "1": { "audience_awareness": 1 },
+        "2": { "audience_awareness": 2 },
+        "3": { "audience_awareness": 3 },
+        "4": { "audience_awareness": 4 },
+        "5": { "audience_awareness": 5 },
+        "6": { "audience_awareness": 6 },
+        "7": { "audience_awareness": 7 }
+      }
+    },
+    "metadata": {
+      "self_reportability_tier": 1,
+      "finding_refs": ["LT-006", "PL-016", "PL-009", "PL-018"],
+      "bias_mitigation": "Bidirectional scale with neutral midpoint; neither pole framed as preferable",
+      "branching": { "required_branches": ["*"], "excluded_branches": [] },
+      "position": { "module_sequence": 2, "funnel_stage": "core" },
+      "estimated_seconds": 15,
+      "format_category": "likert"
+    }
+  },
+  {
+    "question_id": "M07-Q03",
+    "module_id": "M07",
+    "module_name": "Audience & Adaptation",
+    "text": "Do you write primarily to express yourself or to be understood?",
+    "type": "forced_choice",
+    "options": [
+      { "value": "express", "label": "Primarily to express myself" },
+      { "value": "understood", "label": "Primarily to be understood" },
+      { "value": "both_equally", "label": "Both equally" }
+    ],
+    "scoring": {
+      "dimensions": ["audience_awareness"],
+      "weights": { "audience_awareness": 0.8 },
+      "scoring_map": {
+        "express": { "audience_awareness": 2 },
+        "understood": { "audience_awareness": 6 },
+        "both_equally": { "audience_awareness": 4 }
+      }
+    },
+    "metadata": {
+      "self_reportability_tier": 1,
+      "finding_refs": ["LT-006", "PL-016", "PL-009", "PL-018"],
+      "bias_mitigation": "Neither orientation framed as superior; both are valid writing motivations",
+      "branching": { "required_branches": ["*"], "excluded_branches": [] },
+      "position": { "module_sequence": 3, "funnel_stage": "core" },
+      "estimated_seconds": 15,
+      "format_category": "forced_choice"
+    }
+  },
+  {
+    "question_id": "M07-Q04",
+    "module_id": "M07",
+    "module_name": "Audience & Adaptation",
+    "text": "How do you handle tension between authenticity and accessibility?",
+    "type": "scenario",
+    "scoring": {
+      "dimensions": ["audience_awareness"],
+      "weights": { "audience_awareness": 0.9 }
+    },
+    "metadata": {
+      "self_reportability_tier": 1,
+      "finding_refs": ["LT-006", "PL-016", "PL-009", "PL-018"],
+      "bias_mitigation": "Scenario-based framing elicits behavioral reasoning rather than abstract self-assessment",
+      "branching": { "required_branches": ["*"], "excluded_branches": [] },
+      "position": { "module_sequence": 4, "funnel_stage": "core" },
+      "estimated_seconds": 60,
+      "format_category": "scenario"
+    }
+  },
+  {
+    "question_id": "M07-Q05",
+    "module_id": "M07",
+    "module_name": "Audience & Adaptation",
+    "text": "Entering a new context: adopt prevailing style or maintain your own?",
+    "type": "forced_choice",
+    "options": [
+      { "value": "adopt", "label": "Adopt the prevailing style" },
+      { "value": "maintain", "label": "Maintain my own style" },
+      { "value": "blend", "label": "Blend elements of both" }
+    ],
+    "scoring": {
+      "dimensions": ["audience_awareness"],
+      "weights": { "audience_awareness": 0.7 },
+      "scoring_map": {
+        "adopt": { "audience_awareness": 6 },
+        "maintain": { "audience_awareness": 2 },
+        "blend": { "audience_awareness": 4 }
+      }
+    },
+    "metadata": {
+      "self_reportability_tier": 1,
+      "finding_refs": ["LT-006", "PL-016", "PL-009", "PL-018"],
+      "bias_mitigation": "All options framed as deliberate choices; no option implies deficiency",
+      "branching": { "required_branches": ["*"], "excluded_branches": [] },
+      "position": { "module_sequence": 5, "funnel_stage": "core" },
+      "estimated_seconds": 15,
+      "format_category": "forced_choice"
+    }
+  },
+  {
+    "question_id": "M07-Q06",
+    "module_id": "M07",
+    "module_name": "Audience & Adaptation",
+    "text": "Can you easily mimic another writer's style?",
+    "type": "likert",
+    "options": [
+      { "value": 1, "label": "Not at all — I can't replicate others' styles" },
+      { "value": 2, "label": "With great difficulty" },
+      { "value": 3, "label": "Somewhat, with effort" },
+      { "value": 4, "label": "Moderately well" },
+      { "value": 5, "label": "Fairly easily" },
+      { "value": 6, "label": "Quite easily" },
+      { "value": 7, "label": "Very easily — I can slip into other styles naturally" }
+    ],
+    "scoring": {
+      "dimensions": ["audience_awareness"],
+      "weights": { "audience_awareness": 0.7 },
+      "scoring_map": {
+        "1": { "audience_awareness": 1 },
+        "2": { "audience_awareness": 2 },
+        "3": { "audience_awareness": 3 },
+        "4": { "audience_awareness": 4 },
+        "5": { "audience_awareness": 5 },
+        "6": { "audience_awareness": 6 },
+        "7": { "audience_awareness": 7 }
+      }
+    },
+    "metadata": {
+      "self_reportability_tier": 1,
+      "finding_refs": ["LT-006", "PL-016", "PL-009", "PL-018"],
+      "bias_mitigation": "Bidirectional scale; neither high nor low mimicry framed as preferable",
+      "branching": { "required_branches": ["*"], "excluded_branches": [] },
+      "position": { "module_sequence": 6, "funnel_stage": "core" },
+      "estimated_seconds": 15,
+      "format_category": "likert"
+    }
+  },
+  {
+    "question_id": "M07-Q07",
+    "module_id": "M07",
+    "module_name": "Audience & Adaptation",
+    "text": "Do you write differently when someone reads it immediately vs. writing for yourself?",
+    "type": "scenario",
+    "scoring": {
+      "dimensions": ["audience_awareness"],
+      "weights": { "audience_awareness": 0.8 }
+    },
+    "metadata": {
+      "self_reportability_tier": 1,
+      "finding_refs": ["LT-006", "PL-016", "PL-009", "PL-018"],
+      "bias_mitigation": "Scenario-based framing grounds the question in concrete experience",
+      "branching": { "required_branches": ["*"], "excluded_branches": [] },
+      "position": { "module_sequence": 7, "funnel_stage": "core" },
+      "estimated_seconds": 60,
+      "format_category": "scenario"
+    }
+  },
+  {
+    "question_id": "M07-Q08",
+    "module_id": "M07",
+    "module_name": "Audience & Adaptation",
+    "text": "How does your voice change in collaborative vs. solo writing?",
+    "type": "scenario",
+    "scoring": {
+      "dimensions": ["audience_awareness"],
+      "weights": { "audience_awareness": 0.8 }
+    },
+    "metadata": {
+      "self_reportability_tier": 1,
+      "finding_refs": ["LT-006", "PL-016", "PL-009", "PL-018"],
+      "bias_mitigation": "Scenario-based comparison elicits concrete behavioral differences",
+      "branching": { "required_branches": ["*"], "excluded_branches": [] },
+      "position": { "module_sequence": 8, "funnel_stage": "core" },
+      "estimated_seconds": 60,
+      "format_category": "scenario"
+    }
+  },
+  {
+    "question_id": "M07-Q09",
+    "module_id": "M07",
+    "module_name": "Audience & Adaptation",
+    "text": "Does your writing become more or less 'you' when responding to someone?",
+    "type": "forced_choice",
+    "options": [
+      { "value": "more", "label": "More 'me' — responding brings out my voice" },
+      { "value": "less", "label": "Less 'me' — I accommodate the other person's style" },
+      { "value": "same", "label": "About the same either way" }
+    ],
+    "scoring": {
+      "dimensions": ["audience_awareness"],
+      "weights": { "audience_awareness": 0.7 },
+      "scoring_map": {
+        "more": { "audience_awareness": 3 },
+        "less": { "audience_awareness": 6 },
+        "same": { "audience_awareness": 4 }
+      }
+    },
+    "metadata": {
+      "self_reportability_tier": 1,
+      "finding_refs": ["LT-006", "PL-016", "PL-009", "PL-018"],
+      "bias_mitigation": "All options framed neutrally; no direction implies superiority",
+      "branching": { "required_branches": ["*"], "excluded_branches": [] },
+      "position": { "module_sequence": 9, "funnel_stage": "core" },
+      "estimated_seconds": 15,
+      "format_category": "forced_choice"
+    }
+  },
+  {
+    "question_id": "M07-Q10",
+    "module_id": "M07",
+    "module_name": "Audience & Adaptation",
+    "text": "Give an example of how your writing changes: casual \u2192 professional",
+    "type": "behavioral",
+    "scoring": {
+      "dimensions": ["audience_awareness"],
+      "weights": { "audience_awareness": 1.0 }
+    },
+    "metadata": {
+      "self_reportability_tier": 1,
+      "finding_refs": ["LT-006", "PL-016", "PL-009", "PL-018"],
+      "bias_mitigation": "Behavioral elicitation captures actual practice rather than self-perception",
+      "branching": { "required_branches": ["*"], "excluded_branches": [] },
+      "position": { "module_sequence": 10, "funnel_stage": "probing" },
+      "estimated_seconds": 90,
+      "format_category": "behavioral"
+    }
+  }
+]

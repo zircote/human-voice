@@ -7,7 +7,9 @@
 [![Node.js](https://img.shields.io/badge/Node.js-18+-339933?logo=nodedotjs&logoColor=white)](https://nodejs.org)
 [![GitHub Stars](https://img.shields.io/github/stars/zircote/human-voice?style=social)](https://github.com/zircote/human-voice)
 
-A Claude Code plugin that detects and prevents AI-generated writing patterns to ensure authentic, professional human voice in all content.
+A Claude Code plugin that detects AI-generated writing patterns and builds voice profiles through adaptive interviews and computational stylistics.
+
+> **Experimental.** This project is a research prototype. The scoring pipeline, dimension mapping, and NLP analysis have not been validated against external benchmarks or peer-reviewed psychometric standards. The voice profiles it produces are plausible but unproven. Treat the output as a starting point for editorial guidance, not as a validated instrument. The question bank, scoring weights, and dimension definitions will change as the system matures. Use it, break it, report what does not work.
 
 ![Human Voice Plugin - 4-tier analysis flow](.github/infographic.jpg)
 
@@ -48,9 +50,9 @@ Or copy to your project's `.claude-plugin/` directory.
 | Component | Name | Purpose |
 |-----------|------|---------|
 | Skill | human-voice | Core detection patterns and writing guidelines |
-| Command | `/human-voice:setup` | Interactive configuration wizard |
-| Command | `/human-voice:review [path]` | Analyze content for AI patterns |
-| Command | `/human-voice:fix [path]` | Auto-fix character-level issues |
+| Command | `/human-voice:voice-setup` | Interactive configuration wizard |
+| Command | `/human-voice:voice-review [path]` | Analyze content for AI patterns |
+| Command | `/human-voice:voice-fix [path]` | Auto-fix character-level issues |
 | Agent | voice-reviewer | Proactive content review after edits |
 
 ## Usage
@@ -59,13 +61,13 @@ Or copy to your project's `.claude-plugin/` directory.
 
 ```bash
 # Set up configuration for your project
-/human-voice:setup
+/human-voice:voice-setup
 
 # Review content for AI patterns
-/human-voice:review docs
+/human-voice:voice-review docs
 
 # Auto-fix character issues
-/human-voice:fix docs --dry-run
+/human-voice:voice-fix docs --dry-run
 ```
 
 ### Skill Triggers
@@ -82,23 +84,23 @@ The skill loads automatically when you say:
 
 **Set up configuration:**
 ```
-/human-voice:setup
+/human-voice:voice-setup
 ```
 
-Detects project structure, content directories, and creates `.claude/human-voice.local.md` with your preferences.
+Detects project structure, content directories, and creates `config.json` with your preferences.
 
 **Review content for AI patterns:**
 ```
-/human-voice:review docs           # review specific directory
-/human-voice:review content/blog   # review specific path
-/human-voice:review                # auto-detects content directories
+/human-voice:voice-review docs           # review specific directory
+/human-voice:voice-review content/blog   # review specific path
+/human-voice:voice-review                # auto-detects content directories
 ```
 
 **Auto-fix character issues:**
 ```
-/human-voice:fix docs              # apply fixes to directory
-/human-voice:fix --dry-run docs    # preview changes first
-/human-voice:fix                   # auto-detect and fix
+/human-voice:voice-fix docs              # apply fixes to directory
+/human-voice:voice-fix --dry-run docs    # preview changes first
+/human-voice:voice-fix                   # auto-detect and fix
 ```
 
 ### Agent
@@ -141,70 +143,9 @@ The `voice-reviewer` agent triggers:
 
 ## Configuration
 
-Run `/human-voice:setup` for interactive configuration, or create `.claude/human-voice.local.md` manually.
+Run `/human-voice:voice-setup` for interactive configuration, or edit `config.json` directly.
 
-See `templates/human-voice.local.md.example` for a complete example.
-
-### Basic Configuration
-
-```yaml
----
-extensions:
-  - .md
-  - .mdx
-  - .txt
-content_directories:
-  - _posts
-  - content
-  - docs
----
-```
-
-### Full Configuration Options
-
-```yaml
----
-extensions:
-  - .md
-  - .mdx
-  - .txt
-
-content_directories:
-  - _posts
-  - content
-  - docs
-
-ignore:
-  - "**/node_modules/**"
-  - "**/vendor/**"
-  - "CHANGELOG.md"
-
-detection:
-  character_patterns:
-    enabled: true
-    em_dash: true
-    smart_quotes: true
-    emojis: true
-  language_patterns:
-    enabled: true
-  structural_patterns:
-    enabled: true
-  voice_patterns:
-    enabled: true
-
-fix:
-  dry_run_by_default: true
-  report_format: detailed
-
-output:
-  verbosity: normal
-  format: markdown
----
-
-# Project Voice Notes
-
-Add project-specific voice guidelines here.
-```
+Configuration is stored at `$CLAUDE_PLUGIN_DATA/config.json` (defaults to `~/.human-voice/config.json` in standalone mode). Use `python -m lib.config show` to view the effective config, or `python -m lib.config reset` to write defaults.
 
 ## Memory Integration (Optional)
 
@@ -225,9 +166,9 @@ human-voice/
 ├── agents/
 │   └── voice-reviewer.md
 ├── commands/
-│   ├── fix.md
-│   ├── review.md
-│   └── setup.md
+│   ├── voice-fix.md
+│   ├── voice-review.md
+│   └── voice-setup.md
 ├── skills/
 │   └── human-voice/
 │       ├── SKILL.md
@@ -242,11 +183,34 @@ human-voice/
 │       └── examples/
 │           └── before-after.md
 ├── templates/
-│   └── human-voice.local.md.example
+│   └── observer-protocol.md
 ├── LICENSE
 ├── CHANGELOG.md
 └── README.md
 ```
+
+## Voice Elicitation (Voice)
+
+Voice is an experimental voice elicitation system that captures a writer's voice through a 67-question adaptive interview, computational NLP analysis of writing samples, and automated profile synthesis. It produces two independent profiles per writer: a self-reported profile (what the writer believes about their voice) and a computationally observed profile (what their writing exhibits). A calibration layer identifies where these profiles agree and where they diverge.
+
+> **Status**: The scoring pipeline produces numeric dimension scores but these scores have not been validated against external psychometric instruments. The NLP analysis uses standard stylometric measures (type-token ratio, Flesch-Kincaid, hedge density, etc.) but the mapping from NLP metrics to voice dimensions is hand-authored and unvalidated. The question bank is based on published findings in voice elicitation research but the specific item-to-dimension mappings are untested for reliability (Cronbach alpha) across a population. This is a functional prototype, not a finished measurement tool.
+
+### CLI Tools
+
+| Tool | Purpose |
+|------|---------|
+| `voice-session` | Session lifecycle: create, load, list, pause, resume |
+| `voice-scoring` | Score a completed session and produce dimension profiles |
+| `voice-nlp` | Run the stylometric NLP analysis pipeline on writing samples |
+| `voice-branching` | Evaluate interview routing and module sequencing |
+| `voice-sequencer` | Determine the next question based on session state |
+| `voice-quality` | Detect satisficing and response quality issues |
+
+### Getting Started
+
+See the [Getting Started tutorial](docs/tutorials/getting-started.md) for a complete walkthrough of running your first voice elicitation session.
+
+See the [CLI Reference](docs/reference/cli.md) for detailed documentation of all commands, options and output formats.
 
 ## Research Sources
 

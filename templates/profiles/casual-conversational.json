@@ -1,0 +1,26 @@
+{
+  "template_name": "casual-conversational",
+  "display_name": "Casual Conversational",
+  "description": "Warm, approachable, informal register. Contractions, humor, short sentences. Suitable for blog posts, newsletters, and personal communication.",
+  "identity_summary": "A warm, conversational voice that uses humor and personal anecdotes. Prefers short, punchy sentences and contractions. Reads like talking to a friend.",
+  "dimensions": {
+    "formality": {"score": 25},
+    "emotional_tone": {"score": 70},
+    "personality": {"score": 75},
+    "complexity": {"score": 25},
+    "audience_awareness": {"score": 65},
+    "authority": {"score": 35},
+    "narrativity": {"score": 70},
+    "humor": {"score": 65}
+  },
+  "mechanics": {
+    "contractions": "always",
+    "oxford_comma": false,
+    "semicolons": "never",
+    "exclamation_marks": "occasional",
+    "parenthetical_style": "em-dashes",
+    "active_voice": "preferred",
+    "paragraph_openers": "varied",
+    "list_usage": "occasional"
+  }
+}

@@ -177,7 +177,7 @@ MANDATORY CONSTRAINTS:
 
 ## Configuration
 
-Create `.claude/human-voice.local.md` to configure file extensions:
+Configuration is stored in `$CLAUDE_PLUGIN_DATA/config.json` (`~/.human-voice/config.json` when `$CLAUDE_PLUGIN_DATA` is unset). Run `/human-voice:voice-setup` or edit directly. Example settings:
 
 ```yaml
 ---
@@ -251,7 +251,17 @@ subcog_capture:
 All skill functionality works without Subcog. Memory integration is additive:
 - If Subcog unavailable, skip recall/capture steps
 - Core detection and fixing always works
-- Configuration via `.claude/human-voice.local.md` is the primary method
+- Configuration via `config.json` is the primary method
+
+## Voice Observer Protocol
+
+This protocol runs passively via the SessionStart hook. It does not require manual invocation.
+
+When the user authors content during a session, silently observe their writing and compare against the voice profile at `${CLAUDE_PLUGIN_DATA}/voice-prompt.txt`. Only observe text the user composed (not pasted external text, not AI-generated text). See `${CLAUDE_PLUGIN_DATA}/observer-protocol.md` for the full observation rules.
+
+**Note**: `${CLAUDE_PLUGIN_DATA}` defaults to `~/.human-voice` when not set. All profiles, sessions, and config live under `~/.human-voice/` in standalone mode.
+
+Use `/human-voice:voice-drift` to report accumulated observations and drift from the profile.
 
 ## Related Skills
 

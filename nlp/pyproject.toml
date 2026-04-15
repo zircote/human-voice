@@ -1,0 +1,24 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "voice-nlp"
+version = "0.1.0"
+description = "NLP pipeline for writing sample analysis in voice elicitation"
+requires-python = ">=3.10"
+license = "MIT"
+dependencies = [
+    "spacy>=3.7",
+    "textstat>=0.7",
+    "numpy>=1.24",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=7.0",
+    "pytest-cov>=4.0",
+]
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/voice_nlp"]

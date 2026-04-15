@@ -1,0 +1,140 @@
+[
+  {
+    "question_id": "M12-WS01",
+    "module_id": "M12",
+    "module_name": "Writing Samples & Calibration",
+    "text": "Draft a brief email declining a social invitation",
+    "type": "writing_sample",
+    "scoring": {
+      "dimensions": ["voice_identity", "formality_baseline", "tone_warmth", "audience_awareness"],
+      "weights": { "voice_identity": 1.0, "formality_baseline": 0.8, "tone_warmth": 0.7, "audience_awareness": 0.6 }
+    },
+    "metadata": {
+      "self_reportability_tier": 4,
+      "finding_refs": ["EM-012", "EM-011", "CS-016"],
+      "bias_mitigation": "Spontaneous writing sample bypasses self-report limitations; analyzed computationally",
+      "branching": { "required_branches": ["*"], "excluded_branches": [] },
+      "position": { "module_sequence": 1, "funnel_stage": "probing" },
+      "estimated_seconds": 120,
+      "format_category": "writing_sample"
+    }
+  },
+  {
+    "question_id": "M12-WS02",
+    "module_id": "M12",
+    "module_name": "Writing Samples & Calibration",
+    "text": "Describe a place that matters to you. Take your time.",
+    "type": "writing_sample",
+    "scoring": {
+      "dimensions": ["voice_identity", "tone_warmth", "complexity_preference", "sensory_detail"],
+      "weights": { "voice_identity": 1.0, "tone_warmth": 0.8, "complexity_preference": 0.7, "sensory_detail": 0.9 }
+    },
+    "metadata": {
+      "self_reportability_tier": 4,
+      "finding_refs": ["EM-012", "EM-011", "CS-016"],
+      "bias_mitigation": "Reflective prompt with encouragement to take time reduces performance anxiety",
+      "branching": { "required_branches": ["*"], "excluded_branches": [] },
+      "position": { "module_sequence": 2, "funnel_stage": "probing" },
+      "estimated_seconds": 180,
+      "format_category": "writing_sample"
+    }
+  },
+  {
+    "question_id": "M12-WS03",
+    "module_id": "M12",
+    "module_name": "Writing Samples & Calibration",
+    "text": "Explain a recent decision to an uninvolved colleague",
+    "type": "writing_sample",
+    "scoring": {
+      "dimensions": ["voice_identity", "formality_baseline", "authority", "audience_awareness"],
+      "weights": { "voice_identity": 1.0, "formality_baseline": 0.9, "authority": 0.7, "audience_awareness": 0.8 }
+    },
+    "metadata": {
+      "self_reportability_tier": 4,
+      "finding_refs": ["EM-012", "EM-011", "CS-016"],
+      "bias_mitigation": "Professional context sample provides behavioral baseline for workplace voice",
+      "branching": { "required_branches": ["*"], "excluded_branches": [] },
+      "position": { "module_sequence": 3, "funnel_stage": "probing" },
+      "estimated_seconds": 180,
+      "format_category": "writing_sample"
+    }
+  },
+  {
+    "question_id": "M12-WS04",
+    "module_id": "M12",
+    "module_name": "Writing Samples & Calibration",
+    "text": "Write the opening paragraph of a story set where you are now",
+    "type": "writing_sample",
+    "scoring": {
+      "dimensions": ["voice_identity", "complexity_preference", "sensory_detail", "creativity"],
+      "weights": { "voice_identity": 1.0, "complexity_preference": 0.8, "sensory_detail": 0.9, "creativity": 1.0 }
+    },
+    "metadata": {
+      "self_reportability_tier": 4,
+      "finding_refs": ["EM-012", "EM-011", "CS-016"],
+      "bias_mitigation": "Optional creative sample reduces anxiety for non-creative writers; grounded in immediate setting",
+      "branching": { "required_branches": ["*"], "excluded_branches": [] },
+      "position": { "module_sequence": 4, "funnel_stage": "probing" },
+      "estimated_seconds": 150,
+      "format_category": "writing_sample"
+    }
+  },
+  {
+    "question_id": "M12-Q01",
+    "module_id": "M12",
+    "module_name": "Writing Samples & Calibration",
+    "text": "How well do your answers capture your actual vs. idealized style?",
+    "type": "calibration",
+    "options": [
+      { "value": 1, "label": "Mostly idealized \u2014 I described who I want to be, not who I am" },
+      { "value": 2, "label": "Somewhat idealized" },
+      { "value": 3, "label": "Slightly idealized" },
+      { "value": 4, "label": "A fair mix of actual and aspirational" },
+      { "value": 5, "label": "Mostly accurate" },
+      { "value": 6, "label": "Very accurate" },
+      { "value": 7, "label": "Highly accurate \u2014 this is genuinely how I write" }
+    ],
+    "scoring": {
+      "dimensions": ["calibration_confidence", "self_awareness"],
+      "weights": { "calibration_confidence": 1.0, "self_awareness": 0.8 },
+      "scoring_map": {
+        "1": { "calibration_confidence": 1, "self_awareness": 5 },
+        "2": { "calibration_confidence": 2, "self_awareness": 4 },
+        "3": { "calibration_confidence": 3, "self_awareness": 4 },
+        "4": { "calibration_confidence": 4, "self_awareness": 3 },
+        "5": { "calibration_confidence": 5, "self_awareness": 3 },
+        "6": { "calibration_confidence": 6, "self_awareness": 2 },
+        "7": { "calibration_confidence": 7, "self_awareness": 2 }
+      }
+    },
+    "metadata": {
+      "self_reportability_tier": 1,
+      "finding_refs": ["EM-012", "EM-011", "CS-016"],
+      "bias_mitigation": "Meta-calibration question provides confidence weighting for all prior self-report answers",
+      "branching": { "required_branches": ["*"], "excluded_branches": [] },
+      "position": { "module_sequence": 5, "funnel_stage": "wrap_up" },
+      "estimated_seconds": 15,
+      "format_category": "calibration"
+    }
+  },
+  {
+    "question_id": "M12-Q02",
+    "module_id": "M12",
+    "module_name": "Writing Samples & Calibration",
+    "text": "Paste or upload a recent writing sample (300+ words)",
+    "type": "writing_sample",
+    "scoring": {
+      "dimensions": ["voice_identity", "formality_baseline", "tone_warmth", "complexity_preference", "lexical_signature", "punctuation_style"],
+      "weights": { "voice_identity": 1.0, "formality_baseline": 0.9, "tone_warmth": 0.8, "complexity_preference": 0.9, "lexical_signature": 1.0, "punctuation_style": 0.8 }
+    },
+    "metadata": {
+      "self_reportability_tier": 4,
+      "finding_refs": ["EM-012", "EM-011", "CS-016"],
+      "bias_mitigation": "Naturalistic sample from actual writing provides highest-fidelity voice signal; optional to reduce dropout",
+      "branching": { "required_branches": ["*"], "excluded_branches": [] },
+      "position": { "module_sequence": 6, "funnel_stage": "wrap_up" },
+      "estimated_seconds": 60,
+      "format_category": "writing_sample"
+    }
+  }
+]

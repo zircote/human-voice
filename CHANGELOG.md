@@ -5,6 +5,32 @@ All notable changes to the Human Voice plugin will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.5.0] - 2026-04-15
+
+### Fixed
+
+- **Auto-load config and profile**: `voice-review`, `voice-fix`, and `voice-reviewer` agent now read `~/.human-voice/config.json` and `~/.human-voice/profile.json` automatically. No longer need to specify content directories manually every invocation.
+
+## [0.4.0] - 2026-04-04
+
+### Added
+
+- **Voice Elicitation Engine**: Adaptive interview system for building multi-dimensional voice profiles
+  - 130 questions across 12 thematic modules + 20 semantic differential pairs
+  - 4 writer-type branches (Creative, Business, Academic, Personal)
+  - Dual-output architecture: self-reported preferences + computational observation
+  - NLP pipeline (spaCy): lexical diversity, syntactic complexity, pragmatic markers, discourse cohesion, LIWC-equivalent metrics
+  - Scoring engine: per-dimension subscale scoring, Cronbach's alpha, tier-weighted merging
+  - Calibration report: self-perception gap analysis, blind spots, aspirational gaps
+  - Session management with pause/resume across Claude Code sessions
+  - Active profile published to `~/.human-voice/profile.json` for cross-session use
+- **New Commands**: `interview`, `resume`, `status`, `profile`, `sessions`
+- **New Agents**: `interview-conductor`, `profile-synthesizer`
+- **New Skill**: `voice` for voice elicitation
+- **Documentation**: Diátaxis-structured docs (tutorial, how-to, reference, explanation)
+- **Tests**: 118 pytest tests covering session, branching, sequencing, quality, NLP, scoring, integration
+- **CLI Tools**: 7 bin/ executables for session, branching, sequencer, quality, NLP, scoring, profiles
+
 ## [0.3.0] - 2026-01-23
 
 ### Added
@@ -12,7 +38,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **Ignore Categories**: New `--ignore=categories` argument for both review and fix commands
   - Skip specific pattern categories during detection/fixing
   - Available categories: `emojis`, `em-dash`, `en-dash`, `smart-quotes`, `ellipsis`, `bullet`, `arrow`
-  - Example: `/human-voice:fix --ignore=emojis,em-dash docs/`
+  - Example: `/human-voice:voice-fix --ignore=emojis,em-dash docs/`
 - **Validation Warnings**: Unknown category names now show a warning with valid options
 
 ### Changed
@@ -47,9 +73,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Structural patterns detection (list addiction, rule of three)
   - Voice patterns detection (passive voice, generic analogies)
 - **Commands**:
-  - `/human-voice:setup` - Interactive configuration wizard
-  - `/human-voice:review [path]` - Analyze content for AI patterns
-  - `/human-voice:fix [path]` - Auto-fix character-level issues
+  - `/human-voice:voice-setup` - Interactive configuration wizard
+  - `/human-voice:voice-review [path]` - Analyze content for AI patterns
+  - `/human-voice:voice-fix [path]` - Auto-fix character-level issues
 - **Agent**: `voice-reviewer` - Proactive content review after Write/Edit operations
 - **Scripts**:
   - `validate-character-restrictions.js` - Validation script for character patterns
@@ -62,8 +88,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **Examples**:
   - `before-after.md` - Real-world transformation examples
 - **Templates**:
-  - `human-voice.local.md.example` - Configuration template
-- Configuration support via `.claude/human-voice.local.md`
+- Configuration support via `config.json` (`$CLAUDE_PLUGIN_DATA/config.json`)
 
 ### Research Sources
 
@@ -72,6 +97,8 @@ Pattern detection based on:
 - [The Field Guide to AI Slop](https://www.ignorance.ai/p/the-field-guide-to-ai-slop)
 - [Common AI Words - Grammarly](https://www.grammarly.com/blog/ai/common-ai-words/)
 
+[0.5.0]: https://github.com/zircote/human-voice/compare/v0.4.0...v0.5.0
+[0.4.0]: https://github.com/zircote/human-voice/compare/v0.3.0...v0.4.0
 [0.3.0]: https://github.com/zircote/human-voice/compare/v0.2.0...v0.3.0
 [0.2.0]: https://github.com/zircote/human-voice/compare/v0.1.0...v0.2.0
 [0.1.0]: https://github.com/zircote/human-voice/releases/tag/v0.1.0

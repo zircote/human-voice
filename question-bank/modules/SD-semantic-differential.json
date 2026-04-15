@@ -1,0 +1,762 @@
+[
+  {
+    "question_id": "SD-01",
+    "module_id": "SD",
+    "module_name": "Semantic Differential",
+    "text": "Formal \u2014 Casual",
+    "type": "semantic_differential",
+    "options": [
+      { "value": "1", "label": "1 - Strongly Formal" },
+      { "value": "2", "label": "2" },
+      { "value": "3", "label": "3" },
+      { "value": "4", "label": "4 - Neutral" },
+      { "value": "5", "label": "5" },
+      { "value": "6", "label": "6" },
+      { "value": "7", "label": "7 - Strongly Casual" }
+    ],
+    "scoring": {
+      "dimensions": ["formality"],
+      "weights": { "formality": 1.0 },
+      "scoring_map": {
+        "1": { "formality": 1 },
+        "2": { "formality": 2 },
+        "3": { "formality": 3 },
+        "4": { "formality": 4 },
+        "5": { "formality": 5 },
+        "6": { "formality": 6 },
+        "7": { "formality": 7 }
+      }
+    },
+    "metadata": {
+      "self_reportability_tier": 1,
+      "finding_refs": [],
+      "bias_mitigation": "Bipolar anchoring with balanced endpoints; 7-point scale with neutral midpoint",
+      "branching": { "required_branches": ["*"] },
+      "position": { "module_sequence": 1, "funnel_stage": "core" },
+      "estimated_seconds": 10,
+      "format_category": "semantic_differential"
+    }
+  },
+  {
+    "question_id": "SD-02",
+    "module_id": "SD",
+    "module_name": "Semantic Differential",
+    "text": "Serious \u2014 Playful",
+    "type": "semantic_differential",
+    "options": [
+      { "value": "1", "label": "1 - Strongly Serious" },
+      { "value": "2", "label": "2" },
+      { "value": "3", "label": "3" },
+      { "value": "4", "label": "4 - Neutral" },
+      { "value": "5", "label": "5" },
+      { "value": "6", "label": "6" },
+      { "value": "7", "label": "7 - Strongly Playful" }
+    ],
+    "scoring": {
+      "dimensions": ["humor"],
+      "weights": { "humor": 1.0 },
+      "scoring_map": {
+        "1": { "humor": 1 },
+        "2": { "humor": 2 },
+        "3": { "humor": 3 },
+        "4": { "humor": 4 },
+        "5": { "humor": 5 },
+        "6": { "humor": 6 },
+        "7": { "humor": 7 }
+      }
+    },
+    "metadata": {
+      "self_reportability_tier": 1,
+      "finding_refs": [],
+      "bias_mitigation": "Bipolar anchoring with balanced endpoints; 7-point scale with neutral midpoint",
+      "branching": { "required_branches": ["*"] },
+      "position": { "module_sequence": 2, "funnel_stage": "core" },
+      "estimated_seconds": 10,
+      "format_category": "semantic_differential"
+    }
+  },
+  {
+    "question_id": "SD-03",
+    "module_id": "SD",
+    "module_name": "Semantic Differential",
+    "text": "Elaborate \u2014 Minimalist",
+    "type": "semantic_differential",
+    "options": [
+      { "value": "1", "label": "1 - Strongly Elaborate" },
+      { "value": "2", "label": "2" },
+      { "value": "3", "label": "3" },
+      { "value": "4", "label": "4 - Neutral" },
+      { "value": "5", "label": "5" },
+      { "value": "6", "label": "6" },
+      { "value": "7", "label": "7 - Strongly Minimalist" }
+    ],
+    "scoring": {
+      "dimensions": ["complexity"],
+      "weights": { "complexity": 1.0 },
+      "scoring_map": {
+        "1": { "complexity": 1 },
+        "2": { "complexity": 2 },
+        "3": { "complexity": 3 },
+        "4": { "complexity": 4 },
+        "5": { "complexity": 5 },
+        "6": { "complexity": 6 },
+        "7": { "complexity": 7 }
+      }
+    },
+    "metadata": {
+      "self_reportability_tier": 2,
+      "finding_refs": [],
+      "bias_mitigation": "Bipolar anchoring with balanced endpoints; 7-point scale with neutral midpoint",
+      "branching": { "required_branches": ["*"] },
+      "position": { "module_sequence": 3, "funnel_stage": "core" },
+      "estimated_seconds": 10,
+      "format_category": "semantic_differential"
+    }
+  },
+  {
+    "question_id": "SD-04",
+    "module_id": "SD",
+    "module_name": "Semantic Differential",
+    "text": "Assertive \u2014 Tentative",
+    "type": "semantic_differential",
+    "options": [
+      { "value": "1", "label": "1 - Strongly Assertive" },
+      { "value": "2", "label": "2" },
+      { "value": "3", "label": "3" },
+      { "value": "4", "label": "4 - Neutral" },
+      { "value": "5", "label": "5" },
+      { "value": "6", "label": "6" },
+      { "value": "7", "label": "7 - Strongly Tentative" }
+    ],
+    "scoring": {
+      "dimensions": ["authority"],
+      "weights": { "authority": 1.0 },
+      "scoring_map": {
+        "1": { "authority": 1 },
+        "2": { "authority": 2 },
+        "3": { "authority": 3 },
+        "4": { "authority": 4 },
+        "5": { "authority": 5 },
+        "6": { "authority": 6 },
+        "7": { "authority": 7 }
+      }
+    },
+    "metadata": {
+      "self_reportability_tier": 2,
+      "finding_refs": [],
+      "bias_mitigation": "Bipolar anchoring with balanced endpoints; 7-point scale with neutral midpoint",
+      "branching": { "required_branches": ["*"] },
+      "position": { "module_sequence": 4, "funnel_stage": "core" },
+      "estimated_seconds": 10,
+      "format_category": "semantic_differential"
+    }
+  },
+  {
+    "question_id": "SD-05",
+    "module_id": "SD",
+    "module_name": "Semantic Differential",
+    "text": "Warm \u2014 Detached",
+    "type": "semantic_differential",
+    "options": [
+      { "value": "1", "label": "1 - Strongly Warm" },
+      { "value": "2", "label": "2" },
+      { "value": "3", "label": "3" },
+      { "value": "4", "label": "4 - Neutral" },
+      { "value": "5", "label": "5" },
+      { "value": "6", "label": "6" },
+      { "value": "7", "label": "7 - Strongly Detached" }
+    ],
+    "scoring": {
+      "dimensions": ["emotional_tone"],
+      "weights": { "emotional_tone": 1.0 },
+      "scoring_map": {
+        "1": { "emotional_tone": 1 },
+        "2": { "emotional_tone": 2 },
+        "3": { "emotional_tone": 3 },
+        "4": { "emotional_tone": 4 },
+        "5": { "emotional_tone": 5 },
+        "6": { "emotional_tone": 6 },
+        "7": { "emotional_tone": 7 }
+      }
+    },
+    "metadata": {
+      "self_reportability_tier": 1,
+      "finding_refs": [],
+      "bias_mitigation": "Bipolar anchoring with balanced endpoints; 7-point scale with neutral midpoint",
+      "branching": { "required_branches": ["*"] },
+      "position": { "module_sequence": 5, "funnel_stage": "core" },
+      "estimated_seconds": 10,
+      "format_category": "semantic_differential"
+    }
+  },
+  {
+    "question_id": "SD-06",
+    "module_id": "SD",
+    "module_name": "Semantic Differential",
+    "text": "Concrete \u2014 Abstract",
+    "type": "semantic_differential",
+    "options": [
+      { "value": "1", "label": "1 - Strongly Concrete" },
+      { "value": "2", "label": "2" },
+      { "value": "3", "label": "3" },
+      { "value": "4", "label": "4 - Neutral" },
+      { "value": "5", "label": "5" },
+      { "value": "6", "label": "6" },
+      { "value": "7", "label": "7 - Strongly Abstract" }
+    ],
+    "scoring": {
+      "dimensions": ["complexity", "narrativity"],
+      "weights": { "complexity": 0.5, "narrativity": 0.5 },
+      "scoring_map": {
+        "1": { "complexity": 1, "narrativity": 1 },
+        "2": { "complexity": 2, "narrativity": 2 },
+        "3": { "complexity": 3, "narrativity": 3 },
+        "4": { "complexity": 4, "narrativity": 4 },
+        "5": { "complexity": 5, "narrativity": 5 },
+        "6": { "complexity": 6, "narrativity": 6 },
+        "7": { "complexity": 7, "narrativity": 7 }
+      }
+    },
+    "metadata": {
+      "self_reportability_tier": 2,
+      "finding_refs": [],
+      "bias_mitigation": "Bipolar anchoring with balanced endpoints; 7-point scale with neutral midpoint",
+      "branching": { "required_branches": ["*"] },
+      "position": { "module_sequence": 6, "funnel_stage": "core" },
+      "estimated_seconds": 10,
+      "format_category": "semantic_differential"
+    }
+  },
+  {
+    "question_id": "SD-07",
+    "module_id": "SD",
+    "module_name": "Semantic Differential",
+    "text": "Structured \u2014 Flowing",
+    "type": "semantic_differential",
+    "options": [
+      { "value": "1", "label": "1 - Strongly Structured" },
+      { "value": "2", "label": "2" },
+      { "value": "3", "label": "3" },
+      { "value": "4", "label": "4 - Neutral" },
+      { "value": "5", "label": "5" },
+      { "value": "6", "label": "6" },
+      { "value": "7", "label": "7 - Strongly Flowing" }
+    ],
+    "scoring": {
+      "dimensions": ["complexity"],
+      "weights": { "complexity": 1.0 },
+      "scoring_map": {
+        "1": { "complexity": 1 },
+        "2": { "complexity": 2 },
+        "3": { "complexity": 3 },
+        "4": { "complexity": 4 },
+        "5": { "complexity": 5 },
+        "6": { "complexity": 6 },
+        "7": { "complexity": 7 }
+      }
+    },
+    "metadata": {
+      "self_reportability_tier": 2,
+      "finding_refs": [],
+      "bias_mitigation": "Bipolar anchoring with balanced endpoints; 7-point scale with neutral midpoint",
+      "branching": { "required_branches": ["*"] },
+      "position": { "module_sequence": 7, "funnel_stage": "core" },
+      "estimated_seconds": 10,
+      "format_category": "semantic_differential"
+    }
+  },
+  {
+    "question_id": "SD-08",
+    "module_id": "SD",
+    "module_name": "Semantic Differential",
+    "text": "Direct \u2014 Diplomatic",
+    "type": "semantic_differential",
+    "options": [
+      { "value": "1", "label": "1 - Strongly Direct" },
+      { "value": "2", "label": "2" },
+      { "value": "3", "label": "3" },
+      { "value": "4", "label": "4 - Neutral" },
+      { "value": "5", "label": "5" },
+      { "value": "6", "label": "6" },
+      { "value": "7", "label": "7 - Strongly Diplomatic" }
+    ],
+    "scoring": {
+      "dimensions": ["authority", "audience_awareness"],
+      "weights": { "authority": 0.5, "audience_awareness": 0.5 },
+      "scoring_map": {
+        "1": { "authority": 1, "audience_awareness": 1 },
+        "2": { "authority": 2, "audience_awareness": 2 },
+        "3": { "authority": 3, "audience_awareness": 3 },
+        "4": { "authority": 4, "audience_awareness": 4 },
+        "5": { "authority": 5, "audience_awareness": 5 },
+        "6": { "authority": 6, "audience_awareness": 6 },
+        "7": { "authority": 7, "audience_awareness": 7 }
+      }
+    },
+    "metadata": {
+      "self_reportability_tier": 2,
+      "finding_refs": [],
+      "bias_mitigation": "Bipolar anchoring with balanced endpoints; 7-point scale with neutral midpoint",
+      "branching": { "required_branches": ["*"] },
+      "position": { "module_sequence": 8, "funnel_stage": "core" },
+      "estimated_seconds": 10,
+      "format_category": "semantic_differential"
+    }
+  },
+  {
+    "question_id": "SD-09",
+    "module_id": "SD",
+    "module_name": "Semantic Differential",
+    "text": "Accessible \u2014 Specialized",
+    "type": "semantic_differential",
+    "options": [
+      { "value": "1", "label": "1 - Strongly Accessible" },
+      { "value": "2", "label": "2" },
+      { "value": "3", "label": "3" },
+      { "value": "4", "label": "4 - Neutral" },
+      { "value": "5", "label": "5" },
+      { "value": "6", "label": "6" },
+      { "value": "7", "label": "7 - Strongly Specialized" }
+    ],
+    "scoring": {
+      "dimensions": ["formality", "audience_awareness"],
+      "weights": { "formality": 0.5, "audience_awareness": 0.5 },
+      "scoring_map": {
+        "1": { "formality": 1, "audience_awareness": 1 },
+        "2": { "formality": 2, "audience_awareness": 2 },
+        "3": { "formality": 3, "audience_awareness": 3 },
+        "4": { "formality": 4, "audience_awareness": 4 },
+        "5": { "formality": 5, "audience_awareness": 5 },
+        "6": { "formality": 6, "audience_awareness": 6 },
+        "7": { "formality": 7, "audience_awareness": 7 }
+      }
+    },
+    "metadata": {
+      "self_reportability_tier": 1,
+      "finding_refs": [],
+      "bias_mitigation": "Bipolar anchoring with balanced endpoints; 7-point scale with neutral midpoint",
+      "branching": { "required_branches": ["*"] },
+      "position": { "module_sequence": 9, "funnel_stage": "core" },
+      "estimated_seconds": 10,
+      "format_category": "semantic_differential"
+    }
+  },
+  {
+    "question_id": "SD-10",
+    "module_id": "SD",
+    "module_name": "Semantic Differential",
+    "text": "Emotional \u2014 Analytical",
+    "type": "semantic_differential",
+    "options": [
+      { "value": "1", "label": "1 - Strongly Emotional" },
+      { "value": "2", "label": "2" },
+      { "value": "3", "label": "3" },
+      { "value": "4", "label": "4 - Neutral" },
+      { "value": "5", "label": "5" },
+      { "value": "6", "label": "6" },
+      { "value": "7", "label": "7 - Strongly Analytical" }
+    ],
+    "scoring": {
+      "dimensions": ["emotional_tone", "narrativity"],
+      "weights": { "emotional_tone": 0.5, "narrativity": 0.5 },
+      "scoring_map": {
+        "1": { "emotional_tone": 1, "narrativity": 1 },
+        "2": { "emotional_tone": 2, "narrativity": 2 },
+        "3": { "emotional_tone": 3, "narrativity": 3 },
+        "4": { "emotional_tone": 4, "narrativity": 4 },
+        "5": { "emotional_tone": 5, "narrativity": 5 },
+        "6": { "emotional_tone": 6, "narrativity": 6 },
+        "7": { "emotional_tone": 7, "narrativity": 7 }
+      }
+    },
+    "metadata": {
+      "self_reportability_tier": 1,
+      "finding_refs": [],
+      "bias_mitigation": "Bipolar anchoring with balanced endpoints; 7-point scale with neutral midpoint",
+      "branching": { "required_branches": ["*"] },
+      "position": { "module_sequence": 10, "funnel_stage": "core" },
+      "estimated_seconds": 10,
+      "format_category": "semantic_differential"
+    }
+  },
+  {
+    "question_id": "SD-11",
+    "module_id": "SD",
+    "module_name": "Semantic Differential",
+    "text": "Authoritative \u2014 Collaborative",
+    "type": "semantic_differential",
+    "options": [
+      { "value": "1", "label": "1 - Strongly Authoritative" },
+      { "value": "2", "label": "2" },
+      { "value": "3", "label": "3" },
+      { "value": "4", "label": "4 - Neutral" },
+      { "value": "5", "label": "5" },
+      { "value": "6", "label": "6" },
+      { "value": "7", "label": "7 - Strongly Collaborative" }
+    ],
+    "scoring": {
+      "dimensions": ["authority"],
+      "weights": { "authority": 1.0 },
+      "scoring_map": {
+        "1": { "authority": 1 },
+        "2": { "authority": 2 },
+        "3": { "authority": 3 },
+        "4": { "authority": 4 },
+        "5": { "authority": 5 },
+        "6": { "authority": 6 },
+        "7": { "authority": 7 }
+      }
+    },
+    "metadata": {
+      "self_reportability_tier": 2,
+      "finding_refs": [],
+      "bias_mitigation": "Bipolar anchoring with balanced endpoints; 7-point scale with neutral midpoint",
+      "branching": { "required_branches": ["*"] },
+      "position": { "module_sequence": 11, "funnel_stage": "core" },
+      "estimated_seconds": 10,
+      "format_category": "semantic_differential"
+    }
+  },
+  {
+    "question_id": "SD-12",
+    "module_id": "SD",
+    "module_name": "Semantic Differential",
+    "text": "Conventional \u2014 Experimental",
+    "type": "semantic_differential",
+    "options": [
+      { "value": "1", "label": "1 - Strongly Conventional" },
+      { "value": "2", "label": "2" },
+      { "value": "3", "label": "3" },
+      { "value": "4", "label": "4 - Neutral" },
+      { "value": "5", "label": "5" },
+      { "value": "6", "label": "6" },
+      { "value": "7", "label": "7 - Strongly Experimental" }
+    ],
+    "scoring": {
+      "dimensions": ["personality"],
+      "weights": { "personality": 1.0 },
+      "scoring_map": {
+        "1": { "personality": 1 },
+        "2": { "personality": 2 },
+        "3": { "personality": 3 },
+        "4": { "personality": 4 },
+        "5": { "personality": 5 },
+        "6": { "personality": 6 },
+        "7": { "personality": 7 }
+      }
+    },
+    "metadata": {
+      "self_reportability_tier": 2,
+      "finding_refs": [],
+      "bias_mitigation": "Bipolar anchoring with balanced endpoints; 7-point scale with neutral midpoint",
+      "branching": { "required_branches": ["*"] },
+      "position": { "module_sequence": 12, "funnel_stage": "core" },
+      "estimated_seconds": 10,
+      "format_category": "semantic_differential"
+    }
+  },
+  {
+    "question_id": "SD-13",
+    "module_id": "SD",
+    "module_name": "Semantic Differential",
+    "text": "Precise \u2014 Evocative",
+    "type": "semantic_differential",
+    "options": [
+      { "value": "1", "label": "1 - Strongly Precise" },
+      { "value": "2", "label": "2" },
+      { "value": "3", "label": "3" },
+      { "value": "4", "label": "4 - Neutral" },
+      { "value": "5", "label": "5" },
+      { "value": "6", "label": "6" },
+      { "value": "7", "label": "7 - Strongly Evocative" }
+    ],
+    "scoring": {
+      "dimensions": ["personality", "complexity"],
+      "weights": { "personality": 0.5, "complexity": 0.5 },
+      "scoring_map": {
+        "1": { "personality": 1, "complexity": 1 },
+        "2": { "personality": 2, "complexity": 2 },
+        "3": { "personality": 3, "complexity": 3 },
+        "4": { "personality": 4, "complexity": 4 },
+        "5": { "personality": 5, "complexity": 5 },
+        "6": { "personality": 6, "complexity": 6 },
+        "7": { "personality": 7, "complexity": 7 }
+      }
+    },
+    "metadata": {
+      "self_reportability_tier": 2,
+      "finding_refs": [],
+      "bias_mitigation": "Bipolar anchoring with balanced endpoints; 7-point scale with neutral midpoint",
+      "branching": { "required_branches": ["*"] },
+      "position": { "module_sequence": 13, "funnel_stage": "core" },
+      "estimated_seconds": 10,
+      "format_category": "semantic_differential"
+    }
+  },
+  {
+    "question_id": "SD-14",
+    "module_id": "SD",
+    "module_name": "Semantic Differential",
+    "text": "Concise \u2014 Expansive",
+    "type": "semantic_differential",
+    "options": [
+      { "value": "1", "label": "1 - Strongly Concise" },
+      { "value": "2", "label": "2" },
+      { "value": "3", "label": "3" },
+      { "value": "4", "label": "4 - Neutral" },
+      { "value": "5", "label": "5" },
+      { "value": "6", "label": "6" },
+      { "value": "7", "label": "7 - Strongly Expansive" }
+    ],
+    "scoring": {
+      "dimensions": ["complexity"],
+      "weights": { "complexity": 1.0 },
+      "scoring_map": {
+        "1": { "complexity": 1 },
+        "2": { "complexity": 2 },
+        "3": { "complexity": 3 },
+        "4": { "complexity": 4 },
+        "5": { "complexity": 5 },
+        "6": { "complexity": 6 },
+        "7": { "complexity": 7 }
+      }
+    },
+    "metadata": {
+      "self_reportability_tier": 1,
+      "finding_refs": [],
+      "bias_mitigation": "Bipolar anchoring with balanced endpoints; 7-point scale with neutral midpoint",
+      "branching": { "required_branches": ["*"] },
+      "position": { "module_sequence": 14, "funnel_stage": "core" },
+      "estimated_seconds": 10,
+      "format_category": "semantic_differential"
+    }
+  },
+  {
+    "question_id": "SD-15",
+    "module_id": "SD",
+    "module_name": "Semantic Differential",
+    "text": "Personal \u2014 Impersonal",
+    "type": "semantic_differential",
+    "options": [
+      { "value": "1", "label": "1 - Strongly Personal" },
+      { "value": "2", "label": "2" },
+      { "value": "3", "label": "3" },
+      { "value": "4", "label": "4 - Neutral" },
+      { "value": "5", "label": "5" },
+      { "value": "6", "label": "6" },
+      { "value": "7", "label": "7 - Strongly Impersonal" }
+    ],
+    "scoring": {
+      "dimensions": ["personality", "formality"],
+      "weights": { "personality": 0.5, "formality": 0.5 },
+      "scoring_map": {
+        "1": { "personality": 1, "formality": 1 },
+        "2": { "personality": 2, "formality": 2 },
+        "3": { "personality": 3, "formality": 3 },
+        "4": { "personality": 4, "formality": 4 },
+        "5": { "personality": 5, "formality": 5 },
+        "6": { "personality": 6, "formality": 6 },
+        "7": { "personality": 7, "formality": 7 }
+      }
+    },
+    "metadata": {
+      "self_reportability_tier": 1,
+      "finding_refs": [],
+      "bias_mitigation": "Bipolar anchoring with balanced endpoints; 7-point scale with neutral midpoint",
+      "branching": { "required_branches": ["*"] },
+      "position": { "module_sequence": 15, "funnel_stage": "core" },
+      "estimated_seconds": 10,
+      "format_category": "semantic_differential"
+    }
+  },
+  {
+    "question_id": "SD-16",
+    "module_id": "SD",
+    "module_name": "Semantic Differential",
+    "text": "Earnest \u2014 Ironic",
+    "type": "semantic_differential",
+    "options": [
+      { "value": "1", "label": "1 - Strongly Earnest" },
+      { "value": "2", "label": "2" },
+      { "value": "3", "label": "3" },
+      { "value": "4", "label": "4 - Neutral" },
+      { "value": "5", "label": "5" },
+      { "value": "6", "label": "6" },
+      { "value": "7", "label": "7 - Strongly Ironic" }
+    ],
+    "scoring": {
+      "dimensions": ["humor", "personality"],
+      "weights": { "humor": 0.5, "personality": 0.5 },
+      "scoring_map": {
+        "1": { "humor": 1, "personality": 1 },
+        "2": { "humor": 2, "personality": 2 },
+        "3": { "humor": 3, "personality": 3 },
+        "4": { "humor": 4, "personality": 4 },
+        "5": { "humor": 5, "personality": 5 },
+        "6": { "humor": 6, "personality": 6 },
+        "7": { "humor": 7, "personality": 7 }
+      }
+    },
+    "metadata": {
+      "self_reportability_tier": 2,
+      "finding_refs": [],
+      "bias_mitigation": "Bipolar anchoring with balanced endpoints; 7-point scale with neutral midpoint",
+      "branching": { "required_branches": ["*"] },
+      "position": { "module_sequence": 16, "funnel_stage": "core" },
+      "estimated_seconds": 10,
+      "format_category": "semantic_differential"
+    }
+  },
+  {
+    "question_id": "SD-17",
+    "module_id": "SD",
+    "module_name": "Semantic Differential",
+    "text": "Careful \u2014 Bold",
+    "type": "semantic_differential",
+    "options": [
+      { "value": "1", "label": "1 - Strongly Careful" },
+      { "value": "2", "label": "2" },
+      { "value": "3", "label": "3" },
+      { "value": "4", "label": "4 - Neutral" },
+      { "value": "5", "label": "5" },
+      { "value": "6", "label": "6" },
+      { "value": "7", "label": "7 - Strongly Bold" }
+    ],
+    "scoring": {
+      "dimensions": ["authority", "personality"],
+      "weights": { "authority": 0.5, "personality": 0.5 },
+      "scoring_map": {
+        "1": { "authority": 1, "personality": 1 },
+        "2": { "authority": 2, "personality": 2 },
+        "3": { "authority": 3, "personality": 3 },
+        "4": { "authority": 4, "personality": 4 },
+        "5": { "authority": 5, "personality": 5 },
+        "6": { "authority": 6, "personality": 6 },
+        "7": { "authority": 7, "personality": 7 }
+      }
+    },
+    "metadata": {
+      "self_reportability_tier": 2,
+      "finding_refs": [],
+      "bias_mitigation": "Bipolar anchoring with balanced endpoints; 7-point scale with neutral midpoint",
+      "branching": { "required_branches": ["*"] },
+      "position": { "module_sequence": 17, "funnel_stage": "core" },
+      "estimated_seconds": 10,
+      "format_category": "semantic_differential"
+    }
+  },
+  {
+    "question_id": "SD-18",
+    "module_id": "SD",
+    "module_name": "Semantic Differential",
+    "text": "Narrative \u2014 Expository",
+    "type": "semantic_differential",
+    "options": [
+      { "value": "1", "label": "1 - Strongly Narrative" },
+      { "value": "2", "label": "2" },
+      { "value": "3", "label": "3" },
+      { "value": "4", "label": "4 - Neutral" },
+      { "value": "5", "label": "5" },
+      { "value": "6", "label": "6" },
+      { "value": "7", "label": "7 - Strongly Expository" }
+    ],
+    "scoring": {
+      "dimensions": ["narrativity"],
+      "weights": { "narrativity": 1.0 },
+      "scoring_map": {
+        "1": { "narrativity": 1 },
+        "2": { "narrativity": 2 },
+        "3": { "narrativity": 3 },
+        "4": { "narrativity": 4 },
+        "5": { "narrativity": 5 },
+        "6": { "narrativity": 6 },
+        "7": { "narrativity": 7 }
+      }
+    },
+    "metadata": {
+      "self_reportability_tier": 2,
+      "finding_refs": [],
+      "bias_mitigation": "Bipolar anchoring with balanced endpoints; 7-point scale with neutral midpoint",
+      "branching": { "required_branches": ["*"] },
+      "position": { "module_sequence": 18, "funnel_stage": "core" },
+      "estimated_seconds": 10,
+      "format_category": "semantic_differential"
+    }
+  },
+  {
+    "question_id": "SD-19",
+    "module_id": "SD",
+    "module_name": "Semantic Differential",
+    "text": "Inclusive \u2014 Exclusive",
+    "type": "semantic_differential",
+    "options": [
+      { "value": "1", "label": "1 - Strongly Inclusive" },
+      { "value": "2", "label": "2" },
+      { "value": "3", "label": "3" },
+      { "value": "4", "label": "4 - Neutral" },
+      { "value": "5", "label": "5" },
+      { "value": "6", "label": "6" },
+      { "value": "7", "label": "7 - Strongly Exclusive" }
+    ],
+    "scoring": {
+      "dimensions": ["audience_awareness"],
+      "weights": { "audience_awareness": 1.0 },
+      "scoring_map": {
+        "1": { "audience_awareness": 1 },
+        "2": { "audience_awareness": 2 },
+        "3": { "audience_awareness": 3 },
+        "4": { "audience_awareness": 4 },
+        "5": { "audience_awareness": 5 },
+        "6": { "audience_awareness": 6 },
+        "7": { "audience_awareness": 7 }
+      }
+    },
+    "metadata": {
+      "self_reportability_tier": 1,
+      "finding_refs": [],
+      "bias_mitigation": "Bipolar anchoring with balanced endpoints; 7-point scale with neutral midpoint",
+      "branching": { "required_branches": ["*"] },
+      "position": { "module_sequence": 19, "funnel_stage": "core" },
+      "estimated_seconds": 10,
+      "format_category": "semantic_differential"
+    }
+  },
+  {
+    "question_id": "SD-20",
+    "module_id": "SD",
+    "module_name": "Semantic Differential",
+    "text": "Spontaneous \u2014 Deliberate",
+    "type": "semantic_differential",
+    "options": [
+      { "value": "1", "label": "1 - Strongly Spontaneous" },
+      { "value": "2", "label": "2" },
+      { "value": "3", "label": "3" },
+      { "value": "4", "label": "4 - Neutral" },
+      { "value": "5", "label": "5" },
+      { "value": "6", "label": "6" },
+      { "value": "7", "label": "7 - Strongly Deliberate" }
+    ],
+    "scoring": {
+      "dimensions": ["personality"],
+      "weights": { "personality": 1.0 },
+      "scoring_map": {
+        "1": { "personality": 1 },
+        "2": { "personality": 2 },
+        "3": { "personality": 3 },
+        "4": { "personality": 4 },
+        "5": { "personality": 5 },
+        "6": { "personality": 6 },
+        "7": { "personality": 7 }
+      }
+    },
+    "metadata": {
+      "self_reportability_tier": 2,
+      "finding_refs": [],
+      "bias_mitigation": "Bipolar anchoring with balanced endpoints; 7-point scale with neutral midpoint",
+      "branching": { "required_branches": ["*"] },
+      "position": { "module_sequence": 20, "funnel_stage": "core" },
+      "estimated_seconds": 10,
+      "format_category": "semantic_differential"
+    }
+  }
+]

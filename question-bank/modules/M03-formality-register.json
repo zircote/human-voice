@@ -1,0 +1,274 @@
+[
+  {
+    "question_id": "M03-Q01",
+    "module_id": "M03",
+    "module_name": "Formality & Register",
+    "text": "Where does your default writing style fall on the formality spectrum?",
+    "type": "likert",
+    "options": [
+      { "value": 1, "label": "Very casual — like texting a close friend" },
+      { "value": 2, "label": "Casual — relaxed and conversational" },
+      { "value": 3, "label": "Moderate — professional but approachable" },
+      { "value": 4, "label": "Formal — polished and structured" },
+      { "value": 5, "label": "Very formal — precise, reserved, and traditional" }
+    ],
+    "scoring": {
+      "dimensions": ["formality_baseline", "register_default"],
+      "weights": { "formality_baseline": 1.0, "register_default": 0.9 },
+      "scoring_map": {
+        "1": { "formality_baseline": 1, "register_default": 1 },
+        "2": { "formality_baseline": 2, "register_default": 2 },
+        "3": { "formality_baseline": 3, "register_default": 3 },
+        "4": { "formality_baseline": 4, "register_default": 4 },
+        "5": { "formality_baseline": 5, "register_default": 5 }
+      }
+    },
+    "metadata": {
+      "self_reportability_tier": 1,
+      "finding_refs": ["LT-002", "PL-004"],
+      "bias_mitigation": "Descriptive anchors at each point; neutral midpoint label",
+      "branching": { "required_branches": ["*"] },
+      "position": { "module_sequence": 1, "funnel_stage": "general" },
+      "estimated_seconds": 15,
+      "format_category": "likert"
+    }
+  },
+  {
+    "question_id": "M03-Q02",
+    "module_id": "M03",
+    "module_name": "Formality & Register",
+    "text": "How do you feel about contractions (e.g., 'don't' vs. 'do not', 'it's' vs. 'it is') in professional writing?",
+    "type": "forced_choice",
+    "options": [
+      { "value": "always_use", "label": "I use them freely — they make writing sound natural" },
+      { "value": "selective", "label": "I use them selectively based on context" },
+      { "value": "avoid", "label": "I generally avoid them in professional contexts" }
+    ],
+    "scoring": {
+      "dimensions": ["formality_baseline", "conversational_markers"],
+      "weights": { "formality_baseline": 0.8, "conversational_markers": 0.9 },
+      "scoring_map": {
+        "always_use": { "formality_baseline": 1, "conversational_markers": 5 },
+        "selective": { "formality_baseline": 3, "conversational_markers": 3 },
+        "avoid": { "formality_baseline": 5, "conversational_markers": 1 }
+      }
+    },
+    "metadata": {
+      "self_reportability_tier": 1,
+      "finding_refs": ["LT-002"],
+      "bias_mitigation": "Concrete linguistic marker; easy to self-assess accurately",
+      "branching": { "required_branches": ["*"] },
+      "position": { "module_sequence": 2, "funnel_stage": "specific" },
+      "estimated_seconds": 15,
+      "format_category": "forced_choice"
+    }
+  },
+  {
+    "question_id": "M03-Q03",
+    "module_id": "M03",
+    "module_name": "Formality & Register",
+    "text": "You're writing to someone you've never met about a project collaboration. Which greeting feels most natural to you?",
+    "type": "scenario",
+    "options": [
+      { "value": "hey", "label": "Hey [Name]," },
+      { "value": "hi", "label": "Hi [Name]," },
+      { "value": "dear", "label": "Dear [Name]," },
+      { "value": "hello", "label": "Hello [Name]," },
+      { "value": "no_greeting", "label": "[Name] —" }
+    ],
+    "scoring": {
+      "dimensions": ["formality_baseline", "register_default", "social_warmth"],
+      "weights": { "formality_baseline": 0.7, "register_default": 0.8, "social_warmth": 0.5 },
+      "scoring_map": {
+        "hey": { "formality_baseline": 1, "register_default": 1, "social_warmth": 4 },
+        "hi": { "formality_baseline": 2, "register_default": 2, "social_warmth": 4 },
+        "dear": { "formality_baseline": 5, "register_default": 5, "social_warmth": 3 },
+        "hello": { "formality_baseline": 4, "register_default": 4, "social_warmth": 3 },
+        "no_greeting": { "formality_baseline": 3, "register_default": 3, "social_warmth": 2 }
+      }
+    },
+    "metadata": {
+      "self_reportability_tier": 1,
+      "finding_refs": ["PL-004"],
+      "bias_mitigation": "Behavioral scenario with concrete options; no option labeled as 'correct'",
+      "branching": { "required_branches": ["*"] },
+      "position": { "module_sequence": 3, "funnel_stage": "specific" },
+      "estimated_seconds": 15,
+      "format_category": "scenario"
+    }
+  },
+  {
+    "question_id": "M03-Q04",
+    "module_id": "M03",
+    "module_name": "Formality & Register",
+    "text": "How do you handle jargon or technical language when writing for a mixed audience?",
+    "type": "forced_choice",
+    "options": [
+      { "value": "avoid", "label": "I avoid jargon entirely and use plain language" },
+      { "value": "use_explain", "label": "I use jargon but explain it when I do" },
+      { "value": "assume", "label": "I use the precise terms and trust readers to look things up" }
+    ],
+    "scoring": {
+      "dimensions": ["audience_awareness", "precision_preference", "accessibility_priority"],
+      "weights": { "audience_awareness": 0.8, "precision_preference": 0.7, "accessibility_priority": 0.9 },
+      "scoring_map": {
+        "avoid": { "audience_awareness": 5, "precision_preference": 2, "accessibility_priority": 5, "formality": 2 },
+        "use_explain": { "audience_awareness": 4, "precision_preference": 4, "accessibility_priority": 4, "formality": 3 },
+        "assume": { "audience_awareness": 2, "precision_preference": 5, "accessibility_priority": 1, "formality": 5 }
+      }
+    },
+    "metadata": {
+      "self_reportability_tier": 2,
+      "finding_refs": ["LT-002", "PL-004"],
+      "bias_mitigation": "All options reflect valid communication strategies",
+      "branching": { "required_branches": ["*"] },
+      "position": { "module_sequence": 4, "funnel_stage": "comparative" },
+      "estimated_seconds": 20,
+      "format_category": "forced_choice"
+    }
+  },
+  {
+    "question_id": "M03-Q05",
+    "module_id": "M03",
+    "module_name": "Formality & Register",
+    "text": "When you re-read a draft, which issue are you more likely to fix?",
+    "type": "forced_choice",
+    "options": [
+      { "value": "too_formal", "label": "It sounds too stiff — I loosen it up" },
+      { "value": "too_casual", "label": "It sounds too casual — I tighten it up" },
+      { "value": "both_equal", "label": "I adjust in both directions about equally" }
+    ],
+    "scoring": {
+      "dimensions": ["formality_baseline", "editing_instinct"],
+      "weights": { "formality_baseline": 0.8, "editing_instinct": 0.5 },
+      "scoring_map": {
+        "too_formal": { "formality_baseline": 2, "editing_instinct": 3 },
+        "too_casual": { "formality_baseline": 4, "editing_instinct": 3 },
+        "both_equal": { "formality_baseline": 3, "editing_instinct": 4 }
+      }
+    },
+    "metadata": {
+      "self_reportability_tier": 2,
+      "finding_refs": ["PL-004"],
+      "bias_mitigation": "Indirect measurement of formality preference through editing behavior",
+      "branching": { "required_branches": ["*"] },
+      "position": { "module_sequence": 5, "funnel_stage": "comparative" },
+      "estimated_seconds": 15,
+      "format_category": "forced_choice"
+    }
+  },
+  {
+    "question_id": "M03-Q06",
+    "module_id": "M03",
+    "module_name": "Formality & Register",
+    "text": "How quickly does your writing shift to informal when you get to know someone professionally?",
+    "type": "likert",
+    "options": [
+      { "value": 1, "label": "Very quickly — after one or two exchanges" },
+      { "value": 2, "label": "Fairly quickly — within a few interactions" },
+      { "value": 3, "label": "Gradually — I match the other person's level over time" },
+      { "value": 4, "label": "Slowly — I stay fairly formal unless they shift first" },
+      { "value": 5, "label": "Rarely — I maintain the same level of formality regardless" }
+    ],
+    "scoring": {
+      "dimensions": ["register_flexibility", "formality_baseline", "social_calibration"],
+      "weights": { "register_flexibility": 0.9, "formality_baseline": 0.5, "social_calibration": 0.7 },
+      "scoring_map": {
+        "1": { "register_flexibility": 5, "formality_baseline": 1, "social_calibration": 3 },
+        "2": { "register_flexibility": 4, "formality_baseline": 2, "social_calibration": 4 },
+        "3": { "register_flexibility": 3, "formality_baseline": 3, "social_calibration": 5 },
+        "4": { "register_flexibility": 2, "formality_baseline": 4, "social_calibration": 3 },
+        "5": { "register_flexibility": 1, "formality_baseline": 5, "social_calibration": 2 }
+      }
+    },
+    "metadata": {
+      "self_reportability_tier": 2,
+      "finding_refs": ["PL-004"],
+      "bias_mitigation": "Behavioral framing; quick vs slow adaptation both presented neutrally",
+      "branching": { "required_branches": ["*"] },
+      "position": { "module_sequence": 6, "funnel_stage": "specific" },
+      "estimated_seconds": 15,
+      "format_category": "likert"
+    }
+  },
+  {
+    "question_id": "M03-Q07",
+    "module_id": "M03",
+    "module_name": "Formality & Register",
+    "text": "How do you feel about starting a sentence with 'And' or 'But' in professional writing?",
+    "type": "forced_choice",
+    "options": [
+      { "value": "embrace", "label": "Totally fine — it's natural and effective" },
+      { "value": "cautious", "label": "I do it sometimes but try to limit it" },
+      { "value": "avoid", "label": "I avoid it — it feels too informal for professional contexts" }
+    ],
+    "scoring": {
+      "dimensions": ["formality_baseline", "conversational_markers", "rule_adherence"],
+      "weights": { "formality_baseline": 0.6, "conversational_markers": 0.8, "rule_adherence": 0.7 },
+      "scoring_map": {
+        "embrace": { "formality_baseline": 1, "conversational_markers": 5, "rule_adherence": 1 },
+        "cautious": { "formality_baseline": 3, "conversational_markers": 3, "rule_adherence": 3 },
+        "avoid": { "formality_baseline": 5, "conversational_markers": 1, "rule_adherence": 5 }
+      }
+    },
+    "metadata": {
+      "self_reportability_tier": 1,
+      "finding_refs": ["LT-002"],
+      "bias_mitigation": "Concrete grammatical feature; opinions presented without prescriptive framing",
+      "branching": { "required_branches": ["*"] },
+      "position": { "module_sequence": 7, "funnel_stage": "specific" },
+      "estimated_seconds": 15,
+      "format_category": "forced_choice"
+    }
+  },
+  {
+    "question_id": "M03-Q08",
+    "module_id": "M03",
+    "module_name": "Formality & Register",
+    "text": "You need to decline an invitation from a professional acquaintance. Write 2-3 sentences declining gracefully in whatever tone feels natural to you.",
+    "type": "writing_sample",
+    "scoring": {
+      "dimensions": ["formality_baseline", "register_default", "tone_warmth", "social_calibration"],
+      "weights": { "formality_baseline": 0.9, "register_default": 0.8, "tone_warmth": 0.7, "social_calibration": 0.6 }
+    },
+    "metadata": {
+      "self_reportability_tier": 4,
+      "finding_refs": ["LT-002", "PL-004"],
+      "bias_mitigation": "Behavioral measurement; actual writing reveals register more accurately than self-report",
+      "branching": { "required_branches": ["*"] },
+      "position": { "module_sequence": 8, "funnel_stage": "probing" },
+      "estimated_seconds": 90,
+      "format_category": "writing_sample"
+    }
+  },
+  {
+    "question_id": "M03-Q09",
+    "module_id": "M03",
+    "module_name": "Formality & Register",
+    "text": "When you see writing that uses very casual language in a professional document (emoji, slang, text-speak), what is your gut reaction?",
+    "type": "forced_choice",
+    "options": [
+      { "value": "positive", "label": "It feels refreshing and human" },
+      { "value": "neutral", "label": "It depends entirely on the context" },
+      { "value": "negative", "label": "It feels inappropriate and undermines credibility" }
+    ],
+    "scoring": {
+      "dimensions": ["formality_baseline", "register_tolerance", "convention_adherence"],
+      "weights": { "formality_baseline": 0.7, "register_tolerance": 0.9, "convention_adherence": 0.6 },
+      "scoring_map": {
+        "positive": { "formality_baseline": 1, "register_tolerance": 5, "convention_adherence": 1 },
+        "neutral": { "formality_baseline": 3, "register_tolerance": 3, "convention_adherence": 3 },
+        "negative": { "formality_baseline": 5, "register_tolerance": 1, "convention_adherence": 5 }
+      }
+    },
+    "metadata": {
+      "self_reportability_tier": 1,
+      "finding_refs": ["PL-004"],
+      "bias_mitigation": "Gut reaction framing bypasses deliberate self-presentation",
+      "branching": { "required_branches": ["*"] },
+      "position": { "module_sequence": 9, "funnel_stage": "probing" },
+      "estimated_seconds": 15,
+      "format_category": "forced_choice"
+    }
+  }
+]

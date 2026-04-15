@@ -1,0 +1,422 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://voice.zircote.com/schemas/writing-analysis.schema.json",
+  "title": "Voice Writing Analysis",
+  "description": "Output of the NLP analysis pipeline for a single writing sample. Contains comprehensive lexical, syntactic, pragmatic, discourse, and formatting features extracted from the participant's text, along with readability scores and LIWC-equivalent psycholinguistic markers.",
+  "type": "object",
+  "required": [
+    "sample_id",
+    "session_id",
+    "prompt_id",
+    "prompt_type",
+    "raw_text",
+    "word_count",
+    "sentence_count",
+    "lexical_features",
+    "syntactic_features",
+    "pragmatic_features",
+    "liwc_equivalent",
+    "formatting_features",
+    "discourse_features",
+    "formality_f_score",
+    "flesch_kincaid_grade",
+    "flesch_reading_ease",
+    "gunning_fog"
+  ],
+  "properties": {
+    "sample_id": {
+      "type": "string",
+      "format": "uuid",
+      "description": "Unique identifier for this writing sample analysis."
+    },
+    "session_id": {
+      "type": "string",
+      "format": "uuid",
+      "description": "Identifier of the interview session that collected this writing sample."
+    },
+    "prompt_id": {
+      "type": "string",
+      "description": "Identifier of the prompt that elicited this writing sample."
+    },
+    "prompt_type": {
+      "type": "string",
+      "enum": ["spontaneous", "reflective", "professional", "creative"],
+      "description": "Category of the writing prompt, determining the expected register and style context."
+    },
+    "raw_text": {
+      "type": "string",
+      "minLength": 1,
+      "description": "The participant's original unmodified writing sample text."
+    },
+    "word_count": {
+      "type": "integer",
+      "minimum": 0,
+      "description": "Total number of words in the writing sample."
+    },
+    "sentence_count": {
+      "type": "integer",
+      "minimum": 0,
+      "description": "Total number of sentences in the writing sample."
+    },
+    "lexical_features": {
+      "type": "object",
+      "description": "Vocabulary richness and lexical diversity metrics.",
+      "required": [
+        "mtld",
+        "mattr_window_50",
+        "hapax_ratio",
+        "avg_word_length_chars",
+        "avg_word_length_syllables",
+        "latinate_germanic_ratio",
+        "vocabulary_sophistication"
+      ],
+      "properties": {
+        "mtld": {
+          "type": "number",
+          "minimum": 0,
+          "description": "Measure of Textual Lexical Diversity. Higher values indicate greater lexical diversity. Robust to text length variation."
+        },
+        "mattr_window_50": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1,
+          "description": "Moving Average Type-Token Ratio with a 50-word window. Normalized lexical diversity measure between 0 and 1."
+        },
+        "hapax_ratio": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1,
+          "description": "Proportion of words that appear exactly once (hapax legomena) in the sample."
+        },
+        "avg_word_length_chars": {
+          "type": "number",
+          "minimum": 0,
+          "description": "Average word length measured in characters."
+        },
+        "avg_word_length_syllables": {
+          "type": "number",
+          "minimum": 0,
+          "description": "Average word length measured in syllables."
+        },
+        "latinate_germanic_ratio": {
+          "type": "number",
+          "minimum": 0,
+          "description": "Ratio of Latinate-origin to Germanic-origin words. Higher values indicate more formal, academic vocabulary."
+        },
+        "vocabulary_sophistication": {
+          "type": "number",
+          "minimum": 0,
+          "description": "Proportion of low-frequency words based on corpus frequency norms. Higher values indicate more sophisticated vocabulary."
+        }
+      },
+      "additionalProperties": false
+    },
+    "syntactic_features": {
+      "type": "object",
+      "description": "Sentence structure and grammatical complexity metrics.",
+      "required": [
+        "mean_sentence_length",
+        "sentence_length_sd",
+        "mean_clause_length",
+        "clauses_per_sentence",
+        "dependent_clause_ratio",
+        "complex_t_unit_ratio",
+        "complex_nominal_per_t_unit",
+        "active_voice_ratio",
+        "left_branching_ratio"
+      ],
+      "properties": {
+        "mean_sentence_length": {
+          "type": "number",
+          "minimum": 0,
+          "description": "Average number of words per sentence."
+        },
+        "sentence_length_sd": {
+          "type": "number",
+          "minimum": 0,
+          "description": "Standard deviation of sentence lengths. Higher values indicate more varied sentence structure."
+        },
+        "mean_clause_length": {
+          "type": "number",
+          "minimum": 0,
+          "description": "Average number of words per clause."
+        },
+        "clauses_per_sentence": {
+          "type": "number",
+          "minimum": 0,
+          "description": "Average number of clauses per sentence. Indicates syntactic embedding depth."
+        },
+        "dependent_clause_ratio": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1,
+          "description": "Proportion of clauses that are dependent (subordinate). Higher values indicate more complex subordination."
+        },
+        "complex_t_unit_ratio": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1,
+          "description": "Proportion of T-units containing dependent clauses."
+        },
+        "complex_nominal_per_t_unit": {
+          "type": "number",
+          "minimum": 0,
+          "description": "Average number of complex nominals (noun phrases with modifiers) per T-unit."
+        },
+        "active_voice_ratio": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1,
+          "description": "Proportion of clauses in active voice (vs. passive). Higher values indicate more direct, active writing."
+        },
+        "left_branching_ratio": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1,
+          "description": "Proportion of sentences with left-branching (front-loaded modifier) structure."
+        }
+      },
+      "additionalProperties": false
+    },
+    "pragmatic_features": {
+      "type": "object",
+      "description": "Interpersonal and rhetorical stance markers reflecting the writer's pragmatic choices.",
+      "required": [
+        "hedge_count",
+        "boost_count",
+        "hedge_boost_ratio",
+        "self_mention_count",
+        "engagement_markers",
+        "attitude_markers"
+      ],
+      "properties": {
+        "hedge_count": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Number of hedging expressions (e.g., 'perhaps', 'might', 'somewhat') indicating epistemic caution."
+        },
+        "boost_count": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Number of boosting expressions (e.g., 'clearly', 'obviously', 'certainly') indicating epistemic confidence."
+        },
+        "hedge_boost_ratio": {
+          "type": "number",
+          "minimum": 0,
+          "description": "Ratio of hedges to boosters. Values > 1 indicate cautious stance; < 1 indicate confident stance."
+        },
+        "self_mention_count": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Count of first-person references indicating authorial presence."
+        },
+        "engagement_markers": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Count of reader-engagement devices (questions, directives, shared knowledge references)."
+        },
+        "attitude_markers": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Count of explicit attitude expressions (evaluative adjectives, agreement/disagreement markers)."
+        }
+      },
+      "additionalProperties": false
+    },
+    "liwc_equivalent": {
+      "type": "object",
+      "description": "Psycholinguistic markers equivalent to LIWC (Linguistic Inquiry and Word Count) summary dimensions.",
+      "required": [
+        "analytical_thinking",
+        "clout",
+        "authenticity",
+        "emotional_tone",
+        "first_person_singular_pct",
+        "first_person_plural_pct",
+        "second_person_pct",
+        "positive_emotion_pct",
+        "negative_emotion_pct",
+        "cognitive_process_pct"
+      ],
+      "properties": {
+        "analytical_thinking": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 100,
+          "description": "Degree of formal, logical, and hierarchical thinking patterns (0-100)."
+        },
+        "clout": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 100,
+          "description": "Relative social status and confidence expressed through language (0-100)."
+        },
+        "authenticity": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 100,
+          "description": "Degree of honest, personal, and disclosing language (0-100)."
+        },
+        "emotional_tone": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 100,
+          "description": "Overall emotional tone from negative (0) to positive (100). 50 = neutral."
+        },
+        "first_person_singular_pct": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 100,
+          "description": "Percentage of words that are first-person singular pronouns (I, me, my)."
+        },
+        "first_person_plural_pct": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 100,
+          "description": "Percentage of words that are first-person plural pronouns (we, us, our)."
+        },
+        "second_person_pct": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 100,
+          "description": "Percentage of words that are second-person pronouns (you, your)."
+        },
+        "positive_emotion_pct": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 100,
+          "description": "Percentage of words conveying positive emotions."
+        },
+        "negative_emotion_pct": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 100,
+          "description": "Percentage of words conveying negative emotions."
+        },
+        "cognitive_process_pct": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 100,
+          "description": "Percentage of words related to cognitive processes (cause, know, think)."
+        }
+      },
+      "additionalProperties": false
+    },
+    "formatting_features": {
+      "type": "object",
+      "description": "Punctuation and formatting choices that reveal stylistic preferences.",
+      "required": [
+        "semicolons_per_100_words",
+        "em_dashes_per_100_words",
+        "exclamation_marks",
+        "question_marks",
+        "parenthetical_asides",
+        "contractions_per_100_words",
+        "avg_paragraph_length_words"
+      ],
+      "properties": {
+        "semicolons_per_100_words": {
+          "type": "number",
+          "minimum": 0,
+          "description": "Frequency of semicolons normalized per 100 words."
+        },
+        "em_dashes_per_100_words": {
+          "type": "number",
+          "minimum": 0,
+          "description": "Frequency of em dashes normalized per 100 words."
+        },
+        "exclamation_marks": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Total count of exclamation marks in the sample."
+        },
+        "question_marks": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Total count of question marks in the sample."
+        },
+        "parenthetical_asides": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Count of parenthetical expressions (text within parentheses)."
+        },
+        "contractions_per_100_words": {
+          "type": "number",
+          "minimum": 0,
+          "description": "Frequency of contractions normalized per 100 words. Higher values suggest informal register."
+        },
+        "avg_paragraph_length_words": {
+          "type": "number",
+          "minimum": 0,
+          "description": "Average number of words per paragraph."
+        }
+      },
+      "additionalProperties": false
+    },
+    "discourse_features": {
+      "type": "object",
+      "description": "Text cohesion and discourse-level organization metrics.",
+      "required": [
+        "causal_connective_density",
+        "additive_connective_density",
+        "adversative_connective_density",
+        "temporal_connective_density",
+        "referential_cohesion",
+        "propositional_idea_density"
+      ],
+      "properties": {
+        "causal_connective_density": {
+          "type": "number",
+          "minimum": 0,
+          "description": "Density of causal connectives (because, therefore, so) per 100 words."
+        },
+        "additive_connective_density": {
+          "type": "number",
+          "minimum": 0,
+          "description": "Density of additive connectives (and, also, moreover) per 100 words."
+        },
+        "adversative_connective_density": {
+          "type": "number",
+          "minimum": 0,
+          "description": "Density of adversative connectives (but, however, although) per 100 words."
+        },
+        "temporal_connective_density": {
+          "type": "number",
+          "minimum": 0,
+          "description": "Density of temporal connectives (then, before, after) per 100 words."
+        },
+        "referential_cohesion": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1,
+          "description": "Degree of referential overlap between adjacent sentences (0 = no overlap, 1 = complete overlap)."
+        },
+        "propositional_idea_density": {
+          "type": "number",
+          "minimum": 0,
+          "description": "Average number of propositions (idea units) per sentence."
+        }
+      },
+      "additionalProperties": false
+    },
+    "formality_f_score": {
+      "type": "number",
+      "description": "Heylighen & Dewaele F-score measuring formality from contextual vs. non-contextual word classes. Range typically -100 to 100."
+    },
+    "flesch_kincaid_grade": {
+      "type": "number",
+      "minimum": 0,
+      "description": "Flesch-Kincaid Grade Level indicating the U.S. school grade level needed to understand the text."
+    },
+    "flesch_reading_ease": {
+      "type": "number",
+      "description": "Flesch Reading Ease score. Higher values (up to ~120) indicate easier text; lower values indicate more difficult text."
+    },
+    "gunning_fog": {
+      "type": "number",
+      "minimum": 0,
+      "description": "Gunning Fog Index estimating years of formal education needed to understand the text on first reading."
+    }
+  },
+  "additionalProperties": false
+}

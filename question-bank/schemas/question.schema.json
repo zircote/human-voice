@@ -1,0 +1,211 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://voice.zircote.com/schemas/question.schema.json",
+  "title": "Voice Question",
+  "description": "Defines a single question in the voice elicitation interview engine. Each question belongs to a module, has a specific type, optional response options, follow-up branching logic, scoring rules, and rich metadata for sequencing and bias mitigation.",
+  "type": "object",
+  "required": [
+    "question_id",
+    "module_id",
+    "module_name",
+    "text",
+    "type",
+    "metadata"
+  ],
+  "properties": {
+    "question_id": {
+      "type": "string",
+      "pattern": "^(M\\d{2}-[A-Z]{1,2}\\d{2}[a-z]?|SD-\\d{2})$",
+      "description": "Unique identifier for this question. Standard modules use Mxx-Qnn format; semantic differential uses SD-nn format."
+    },
+    "module_id": {
+      "type": "string",
+      "pattern": "^(M\\d{2}|SD)$",
+      "description": "Identifier of the module this question belongs to. Standard modules use Mxx format; SD denotes the screening/demographic module."
+    },
+    "module_name": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Human-readable name of the module (e.g., 'Formality & Register', 'Emotional Tone')."
+    },
+    "text": {
+      "type": "string",
+      "minLength": 1,
+      "description": "The question text presented to the participant during the interview."
+    },
+    "type": {
+      "type": "string",
+      "enum": [
+        "likert",
+        "forced_choice",
+        "semantic_differential",
+        "scenario",
+        "open_ended",
+        "projective",
+        "writing_sample",
+        "calibration",
+        "select",
+        "select_multiple",
+        "behavioral",
+        "process_narration"
+      ],
+      "description": "The response format type. Determines how the question is rendered and how responses are captured."
+    },
+    "options": {
+      "type": "array",
+      "description": "Available response options for closed-ended question types (likert, forced_choice, select, select_multiple, semantic_differential).",
+      "items": {
+        "type": "object",
+        "required": ["value", "label"],
+        "properties": {
+          "value": {
+            "oneOf": [
+              { "type": "string" },
+              { "type": "number" }
+            ],
+            "description": "Machine-readable value stored when this option is selected."
+          },
+          "label": {
+            "type": "string",
+            "minLength": 1,
+            "description": "Human-readable label displayed to the participant."
+          }
+        },
+        "additionalProperties": false
+      },
+      "minItems": 2
+    },
+    "follow_up": {
+      "type": "object",
+      "description": "Conditional follow-up question triggered by a specific response to this question.",
+      "required": ["condition", "question_id"],
+      "properties": {
+        "condition": {
+          "description": "The condition that must be met for the follow-up to trigger. Can be a specific value, a comparison expression, or a boolean rule.",
+          "oneOf": [
+            { "type": "string" },
+            { "type": "number" },
+            { "type": "boolean" }
+          ]
+        },
+        "question_id": {
+          "type": "string",
+          "pattern": "^M\\d{2}-[A-Z]{1,2}\\d{2}[a-z]?$",
+          "description": "The question_id of the follow-up question to present when the condition is met."
+        }
+      },
+      "additionalProperties": false
+    },
+    "scoring": {
+      "type": "object",
+      "description": "Scoring configuration that maps responses to voice profile dimensions.",
+      "properties": {
+        "dimensions": {
+          "type": "array",
+          "description": "List of voice profile dimension keys this question contributes to.",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "minItems": 1
+        },
+        "weights": {
+          "type": "object",
+          "description": "Dimension-keyed weights indicating relative contribution of this question to each dimension score.",
+          "additionalProperties": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 1
+          }
+        },
+        "scoring_map": {
+          "type": "object",
+          "description": "Maps response values to numeric scores per dimension. Keys are response values (as strings); values are objects mapping dimension names to scores.",
+          "additionalProperties": {
+            "oneOf": [
+              { "type": "number" },
+              {
+                "type": "object",
+                "additionalProperties": { "type": "number" }
+              }
+            ]
+          }
+        }
+      },
+      "additionalProperties": false
+    },
+    "metadata": {
+      "type": "object",
+      "description": "Rich metadata governing question presentation, sequencing, bias mitigation, and timing.",
+      "required": [
+        "self_reportability_tier",
+        "estimated_seconds",
+        "format_category"
+      ],
+      "properties": {
+        "self_reportability_tier": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 4,
+          "description": "How reliably participants can self-report on this dimension. Tier 1 = high accuracy, Tier 4 = low accuracy (requires behavioral/observational measurement)."
+        },
+        "finding_refs": {
+          "type": "array",
+          "description": "References to research findings that inform this question's design.",
+          "items": {
+            "type": "string"
+          },
+          "default": []
+        },
+        "bias_mitigation": {
+          "type": "string",
+          "description": "Description of the bias mitigation strategy applied to this question (e.g., 'reversed anchoring', 'indirect phrasing', 'scenario-based')."
+        },
+        "branching": {
+          "type": "object",
+          "description": "Branching constraints that control when this question is included or excluded based on the participant's writer type path.",
+          "properties": {
+            "required_branches": {
+              "type": "array",
+              "description": "Writer type branches that must be active for this question to appear.",
+              "items": { "type": "string" }
+            },
+            "excluded_branches": {
+              "type": "array",
+              "description": "Writer type branches for which this question is skipped.",
+              "items": { "type": "string" }
+            }
+          },
+          "additionalProperties": false
+        },
+        "position": {
+          "type": "object",
+          "description": "Positioning hints for question ordering within the interview flow.",
+          "properties": {
+            "module_sequence": {
+              "type": "integer",
+              "minimum": 0,
+              "description": "Ordinal position of this question within its module."
+            },
+            "funnel_stage": {
+              "type": "string",
+              "description": "Stage in the interview funnel (e.g., 'screening', 'core', 'deep_dive', 'wrap_up')."
+            }
+          },
+          "additionalProperties": false
+        },
+        "estimated_seconds": {
+          "type": "integer",
+          "minimum": 1,
+          "description": "Estimated time in seconds for a participant to read and respond to this question."
+        },
+        "format_category": {
+          "type": "string",
+          "description": "Category label for format rotation tracking. Used to prevent monotony by avoiding consecutive questions of the same format."
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": false
+}
