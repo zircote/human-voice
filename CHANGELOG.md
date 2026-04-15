@@ -5,6 +5,12 @@ All notable changes to the Human Voice plugin will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.5.0] - 2026-04-15
+
+### Fixed
+
+- **Auto-load config and profile**: `voice-review`, `voice-fix`, and `voice-reviewer` agent now read `~/.human-voice/config.json` and `~/.human-voice/profile.json` automatically. No longer need to specify content directories manually every invocation.
+
 ## [0.4.0] - 2026-04-04
 
 ### Added
@@ -91,6 +97,8 @@ Pattern detection based on:
 - [The Field Guide to AI Slop](https://www.ignorance.ai/p/the-field-guide-to-ai-slop)
 - [Common AI Words - Grammarly](https://www.grammarly.com/blog/ai/common-ai-words/)
 
+[0.5.0]: https://github.com/zircote/human-voice/compare/v0.4.0...v0.5.0
+[0.4.0]: https://github.com/zircote/human-voice/compare/v0.3.0...v0.4.0
 [0.3.0]: https://github.com/zircote/human-voice/compare/v0.2.0...v0.3.0
 [0.2.0]: https://github.com/zircote/human-voice/compare/v0.1.0...v0.2.0
 [0.1.0]: https://github.com/zircote/human-voice/releases/tag/v0.1.0
