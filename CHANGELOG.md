@@ -5,6 +5,16 @@ All notable changes to the Human Voice plugin will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.8.2] - 2026-04-22
+
+### Fixed
+
+- `/human-voice:voice-copilot-install` slash command invoked
+  `bin/voice-copilot-install` via a relative path, which failed when Claude's
+  cwd was the user's target project rather than the plugin root. Updated the
+  command to invoke `"${CLAUDE_PLUGIN_ROOT}/bin/voice-copilot-install"`, which
+  keeps the caller's cwd intact so `--target=.` still resolves to the project.
+
 ## [0.8.1] - 2026-04-22
 
 ### Fixed
@@ -167,6 +177,7 @@ Pattern detection based on:
 - [The Field Guide to AI Slop](https://www.ignorance.ai/p/the-field-guide-to-ai-slop)
 - [Common AI Words - Grammarly](https://www.grammarly.com/blog/ai/common-ai-words/)
 
+[0.8.2]: https://github.com/zircote/human-voice/compare/v0.8.1...v0.8.2
 [0.8.1]: https://github.com/zircote/human-voice/compare/v0.8.0...v0.8.1
 [0.8.0]: https://github.com/zircote/human-voice/compare/v0.7.0...v0.8.0
 [0.7.0]: https://github.com/zircote/human-voice/compare/v0.5.0...v0.7.0
