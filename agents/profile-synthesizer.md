@@ -93,11 +93,11 @@ print(f'Profile published as {slug} -> {path}')
 "
 ```
 
-This stores the profile under `$CLAUDE_PLUGIN_DATA/profiles/{slug}/` and activates it, which copies to the top-level well-known locations:
-- `$CLAUDE_PLUGIN_DATA/profile.json` — full voice profile (read by hooks and agents)
-- `$CLAUDE_PLUGIN_DATA/voice-prompt.txt` — compact injection text for LLM system prompts
+This stores the profile under `~/.human-voice/profiles/{slug}/` and activates it, which copies to the top-level well-known locations:
+- `~/.human-voice/profile.json` — full voice profile (read by hooks and agents)
+- `~/.human-voice/voice-prompt.txt` — compact injection text for LLM system prompts
 
-**IMPORTANT**: When `$CLAUDE_PLUGIN_DATA` is not set, the data directory defaults to `~/.human-voice`. All profiles, sessions, and config live under `~/.human-voice/` in standalone/development mode. When looking for existing profiles, always check `~/.human-voice/profiles/` and `~/.human-voice/profile.json` as the canonical fallback locations.
+**IMPORTANT**: All profiles, sessions, and config live under `~/.human-voice/`. This is the single canonical location — no env vars redirect it. Always look for existing profiles at `~/.human-voice/profiles/` and the active profile at `~/.human-voice/profile.json`.
 
 The session is also marked as `complete` automatically.
 

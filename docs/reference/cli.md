@@ -7,7 +7,7 @@ diataxis_describes: CLI commands and bin/ executables
 
 All CLI commands output JSON to stdout. Errors are written to stderr as JSON objects with an `error` key. Exit code `0` indicates success; non-zero indicates failure.
 
-Session data is stored under `${CLAUDE_PLUGIN_DATA}/sessions/{session_id}/`.
+Session data is stored under `~/.human-voice/sessions/{session_id}/`.
 
 ## bin/ Executables
 
@@ -81,8 +81,8 @@ voice-branching module-sequence --writer-type business_professional
 
 voice-branching check-triggers \
   --module M03 \
-  --state ${CLAUDE_PLUGIN_DATA}/sessions/abc123/state.json \
-  --responses ${CLAUDE_PLUGIN_DATA}/sessions/abc123/responses.jsonl
+  --state ~/.human-voice/sessions/abc123/state.json \
+  --responses ~/.human-voice/sessions/abc123/responses.jsonl
 ```
 
 ---
@@ -116,8 +116,8 @@ Question sequencing engine. Delegates to `lib.sequencer`.
 
 ```bash
 voice-sequencer next-question \
-  --state ${CLAUDE_PLUGIN_DATA}/sessions/abc123/state.json \
-  --responses ${CLAUDE_PLUGIN_DATA}/sessions/abc123/responses.jsonl
+  --state ~/.human-voice/sessions/abc123/state.json \
+  --responses ~/.human-voice/sessions/abc123/responses.jsonl
 
 voice-sequencer active-modules --writer-type academic_technical
 ```
@@ -133,7 +133,7 @@ Satisficing and quality detection. Delegates to `lib.quality`.
 | Subcommand | Options | Description |
 |---|---|---|
 | `check-response` | `--response JSON --recent JSON --question JSON` | Check a single response for quality issues. `--response` is a JSON string of the current response. `--recent` is a JSON array of recent responses. `--question` is a JSON string of the question definition. |
-| `check-session` | `--session-dir PATH` | Generate a quality report for a complete session. PATH is a session directory (e.g., `${CLAUDE_PLUGIN_DATA}/sessions/{id}/`). |
+| `check-session` | `--session-dir PATH` | Generate a quality report for a complete session. PATH is a session directory (e.g., `~/.human-voice/sessions/{id}/`). |
 
 #### Output Format
 
@@ -166,7 +166,7 @@ voice-quality check-response \
   --question '{"estimated_seconds": 15}'
 
 voice-quality check-session \
-  --session-dir ${CLAUDE_PLUGIN_DATA}/sessions/a1b2c3d4/
+  --session-dir ~/.human-voice/sessions/a1b2c3d4/
 ```
 
 ---
@@ -196,11 +196,11 @@ Each analysis produces a JSON file conforming to `writing-analysis.schema.json`.
 
 ```bash
 voice-nlp analyze \
-  --input ${CLAUDE_PLUGIN_DATA}/sessions/abc123/writing-samples/sample-01.json \
+  --input ~/.human-voice/sessions/abc123/writing-samples/sample-01.json \
   --output analysis.json
 
 voice-nlp analyze-session \
-  --session-dir ${CLAUDE_PLUGIN_DATA}/sessions/abc123/
+  --session-dir ~/.human-voice/sessions/abc123/
 ```
 
 ---
@@ -263,7 +263,7 @@ Writes results to `{session-dir}/scores/self-report.json` containing:
 
 ```bash
 voice-scoring score \
-  --session-dir ${CLAUDE_PLUGIN_DATA}/sessions/a1b2c3d4/
+  --session-dir ~/.human-voice/sessions/a1b2c3d4/
 ```
 
 ---
@@ -313,7 +313,7 @@ Start a new voice elicitation interview session.
 | Aspect | Detail |
 |---|---|
 | **Tools used** | Read, Write, Bash, Glob, AskUserQuestion, Agent |
-| **Creates** | Session directory at `${CLAUDE_PLUGIN_DATA}/sessions/{session_id}/` |
+| **Creates** | Session directory at `~/.human-voice/sessions/{session_id}/` |
 | **Initializes** | `state.json`, `responses.json`, `scores.json` |
 | **Behavior** | Creates a new session directory, then begins an interactive voice elicitation interview. Questions are presented one at a time in conversational format. The participant types responses directly and may type `pause` at any time to suspend the session. On completion, scoring results are written to the session's `scores/` directory. |
 
@@ -325,7 +325,7 @@ Resume a paused or interrupted interview session.
 |---|---|
 | **Tools used** | Read, Write, Bash, Glob, AskUserQuestion, Agent |
 | **Arguments** | Optional session ID (prompts for selection if omitted) |
-| **Behavior** | Scans `${CLAUDE_PLUGIN_DATA}/sessions/` for sessions with status `paused` or `in_progress`, presents a selection table, validates session integrity, then resumes the interview conductor from the exact pause point. |
+| **Behavior** | Scans `~/.human-voice/sessions/` for sessions with status `paused` or `in_progress`, presents a selection table, validates session integrity, then resumes the interview conductor from the exact pause point. |
 
 ### /voice:status
 
@@ -364,7 +364,7 @@ Interactive setup wizard for human-voice configuration.
 | Aspect | Detail |
 |---|---|
 | **Tools used** | Read, Write, Bash, Glob, AskUserQuestion |
-| **Creates** | `${CLAUDE_PLUGIN_DATA}/config.json` |
+| **Creates** | `~/.human-voice/config.json` |
 | **Behavior** | Detects project structure (content directories, file extensions, static site generators), gathers preferences through interactive questions (detection tiers, fix behavior, interview defaults), writes the unified config file, and verifies it. Optionally offers an initial content scan. |
 
 ### /voice:review

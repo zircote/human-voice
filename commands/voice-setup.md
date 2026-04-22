@@ -7,11 +7,11 @@ allowed-tools: Read, Write, Bash(python3:*), Bash(mkdir:*), Glob, AskUserQuestio
 
 # Human Voice Setup
 
-Interactive configuration wizard. Creates `${CLAUDE_PLUGIN_DATA}/config.json` — the unified config for both AI pattern detection and voice elicitation.
+Interactive configuration wizard. Creates `~/.human-voice/config.json` — the unified config for both AI pattern detection and voice elicitation.
 
 ## Process
 
-1. **Check for existing config**: Read `${CLAUDE_PLUGIN_DATA}/config.json` if it exists. Ask: "Configuration exists. Update or replace?"
+1. **Check for existing config**: Read `~/.human-voice/config.json` if it exists. Ask: "Configuration exists. Update or replace?"
 
 2. **Detect project structure**: Scan for content directories (`docs/`, `_posts/`, `content/`, `_docs/`), markdown files, and static site generators.
 
@@ -25,7 +25,7 @@ Interactive configuration wizard. Creates `${CLAUDE_PLUGIN_DATA}/config.json` �
    
    **Interview defaults**: Override estimated questions, format streak limit, quality thresholds?
 
-4. **Write config**: Run `python3 -c "from lib.config import save_config; import json; save_config(json.loads('{...}'))"` to write `${CLAUDE_PLUGIN_DATA}/config.json` atomically.
+4. **Write config**: Run `python3 -c "from lib.config import save_config; import json; save_config(json.loads('{...}'))"` to write `~/.human-voice/config.json` atomically.
 
 5. **Verify**: Run `python3 -m lib.config show` to display the saved config.
 
@@ -49,7 +49,7 @@ The config file is JSON, schema-validated against `question-bank/schemas/config.
     "output": { "verbosity": "normal", ... }
   },
   "interview": {
-    "session_storage": "${CLAUDE_PLUGIN_DATA}/sessions",
+    "session_storage": "~/.human-voice/sessions",
     "estimated_questions": 70,
     "quality": { ... },
     "scoring": { ... },

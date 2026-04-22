@@ -13,7 +13,7 @@ diataxis_goal: "Interpret scoring results and calibration data from a completed 
 ## Open the scoring output
 
 1. Locate your session directory. Run `voice-session list` to find the session ID.
-2. Open `${CLAUDE_PLUGIN_DATA}/sessions/{session_id}/scores/self-report.json` in a text editor or pipe it through `python3 -m json.tool` for formatted output.
+2. Open `~/.human-voice/sessions/{session_id}/scores/self-report.json` in a text editor or pipe it through `python3 -m json.tool` for formatted output.
 
 ## Read the self_report_scores section
 

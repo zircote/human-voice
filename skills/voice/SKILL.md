@@ -30,7 +30,7 @@ The interview spans 12 modules plus a screening/demographic preamble (SD). Modul
 ## Starting an Interview
 
 1. Generate a UUID session ID.
-2. Create the session directory at `${CLAUDE_PLUGIN_DATA}/sessions/{session_id}/`.
+2. Create the session directory at `~/.human-voice/sessions/{session_id}/`.
 3. Initialize `state.json` with status `init`, empty response arrays, and module progress tracking.
 4. Load the question bank from the project's `question-bank/modules/` directory.
 5. Begin with the screening/demographic module (SD) to establish baseline writer type and branching path.
@@ -38,7 +38,7 @@ The interview spans 12 modules plus a screening/demographic preamble (SD). Modul
 
 ## Resuming an Interview
 
-1. List session directories under `${CLAUDE_PLUGIN_DATA}/sessions/`.
+1. List session directories under `~/.human-voice/sessions/`.
 2. Identify sessions with status `paused` or `in_progress` in their `state.json`.
 3. Load the selected session's state, including the last answered question, current module, and accumulated responses.
 4. Resume from the next unanswered question, preserving all prior scoring and branching decisions.
@@ -55,11 +55,11 @@ The final profile includes per-dimension scores, a composite writer-type classif
 
 ## Data Directory
 
-`${CLAUDE_PLUGIN_DATA}` defaults to `~/.human-voice` when not set. **All profiles, sessions, and config live under `~/.human-voice/` in standalone/development mode.** When referencing `${CLAUDE_PLUGIN_DATA}` below, substitute `~/.human-voice` if the environment variable is unset.
+**All profiles, sessions, and config live under `~/.human-voice/`.** This is the single canonical location — the plugin does not honour plugin-runtime data directories, ensuring consistent profile access across multiple Claude accounts.
 
 ## Session Storage
 
-All session data is stored under `${CLAUDE_PLUGIN_DATA}/sessions/{session_id}/`:
+All session data is stored under `~/.human-voice/sessions/{session_id}/`:
 
 - `state.json` — Session state: status, current module, current question index, branching path, timestamps
 - `responses.json` — Raw responses keyed by question_id with timestamps

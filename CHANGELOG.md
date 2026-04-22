@@ -5,23 +5,27 @@ All notable changes to the Human Voice plugin will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [0.6.0] - 2026-04-22
+## [0.7.0] - 2026-04-22
 
-### Fixed
+### Changed
 
-- Plugin no longer reads profiles from the wrong directory when another plugin's
-  `CLAUDE_PLUGIN_DATA` leaks into the session environment. `lib.config` now
-  validates that the env-supplied path belongs to human-voice (basename or
-  `.human-voice-plugin` marker) before honouring it, otherwise falls back to
-  `~/.human-voice/`. SessionStart hooks and `scripts/setup.sh` now resolve the
-  data dir through Python instead of relying on raw shell expansion.
+- **Single canonical data directory.** All plugin data (profiles, sessions,
+  config, voice-prompt.txt, observer-protocol.md) now lives in
+  `~/.human-voice/` unconditionally. `CLAUDE_PLUGIN_DATA` and any other env
+  var are ignored by the resolver. Rationale: users with multiple Claude
+  accounts and differing `~/.claude*` directories want exactly one place for
+  voice data. Skills, commands, agents, hooks, and setup script all point at
+  `~/.human-voice/` directly.
+- `lib.config.migrate_legacy_data` is now a no-op shim retained only for
+  backward-compatible callers.
 
-### Added
+### Removed
 
-- `HUMAN_VOICE_DATA_DIR` environment variable: plugin-scoped override for the
-  data directory. Takes precedence over `CLAUDE_PLUGIN_DATA`.
-- `.human-voice-plugin` marker file stamped on the data dir on first access so
-  the directory is self-identifying across sessions.
+- Env-var based data-directory resolution. The short-lived `HUMAN_VOICE_DATA_DIR`
+  override (introduced in 0.6.0 but never released) is also removed — there is
+  no escape hatch by design.
+- `.human-voice-plugin` marker / stamping (no longer needed with a single
+  fixed location).
 
 ## [0.5.0] - 2026-04-15
 
@@ -115,7 +119,7 @@ Pattern detection based on:
 - [The Field Guide to AI Slop](https://www.ignorance.ai/p/the-field-guide-to-ai-slop)
 - [Common AI Words - Grammarly](https://www.grammarly.com/blog/ai/common-ai-words/)
 
-[0.6.0]: https://github.com/zircote/human-voice/compare/v0.5.0...v0.6.0
+[0.7.0]: https://github.com/zircote/human-voice/compare/v0.5.0...v0.7.0
 [0.5.0]: https://github.com/zircote/human-voice/compare/v0.4.0...v0.5.0
 [0.4.0]: https://github.com/zircote/human-voice/compare/v0.3.0...v0.4.0
 [0.3.0]: https://github.com/zircote/human-voice/compare/v0.2.0...v0.3.0
