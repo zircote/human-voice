@@ -10,7 +10,7 @@ diataxis_describes: "Environment variables, CLI flags, directory layout, session
 | Variable | Purpose | Default |
 |---|---|---|
 | `VOICE_QUESTION_BANK` | Path to the question-bank directory containing scoring metadata and module definitions. Overrides automatic parent-walk discovery. The `--metadata-dir` CLI flag takes precedence over this variable. Legacy name `MIVOCA_QUESTION_BANK` is also accepted as a fallback. | _(none)_ |
-| `CLAUDE_PLUGIN_DATA` | Root data directory for the plugin. When set (typically by the Claude Code runtime), all session data, config, and profiles are stored here. When unset, falls back to `~/.human-voice`. | _(none)_ |
+| `CLAUDE_PLUGIN_DATA` | **Ignored.** All data lives in `~/.human-voice` unconditionally. The plugin does not honour plugin-runtime data directories — intentional so users with multiple Claude accounts (differing `~/.claude*` configurations) share a single canonical profile store. | _(none)_ |
 
 ## CLI Flags
 
@@ -22,7 +22,7 @@ diataxis_describes: "Environment variables, CLI flags, directory layout, session
 
 ## Directory Layout
 
-### Home directory: `${CLAUDE_PLUGIN_DATA}/`
+### Home directory: `~/.human-voice/`
 
 | Path | Type | Description |
 |---|---|---|
@@ -32,7 +32,7 @@ diataxis_describes: "Environment variables, CLI flags, directory layout, session
 | `profile.json` | File | The most recently completed voice profile. |
 | `voice-prompt.txt` | File | Generated voice prompt derived from the completed profile. |
 
-### Session directory: `${CLAUDE_PLUGIN_DATA}/sessions/{session_id}/`
+### Session directory: `~/.human-voice/sessions/{session_id}/`
 
 | Path | Type | Description |
 |---|---|---|
@@ -98,16 +98,11 @@ When the scoring engine needs question-bank metadata files (`dimension-item-mapp
 
 ## Data Directory Resolution
 
-The plugin resolves its data directory as follows:
-
-1. If `CLAUDE_PLUGIN_DATA` is set (the Claude Code runtime sets this automatically), use that path
-2. Otherwise, fall back to `~/.human-voice`
-
-On first run, if data exists in `~/.human-voice` but `CLAUDE_PLUGIN_DATA` points elsewhere, the plugin migrates files from the legacy location automatically.
+All plugin data lives in `~/.human-voice`. There is no resolution logic, no env-var override, and no plugin-runtime path. This is intentional: the plugin supports users who run multiple Claude accounts with different `~/.claude*` directories, and a single canonical data directory keeps profiles, sessions, and config in exactly one place regardless of which account is active.
 
 ## config.json Structure
 
-The configuration file lives at `${CLAUDE_PLUGIN_DATA}/config.json`. The file is JSON, validated against `question-bank/schemas/config.schema.json`. Partial configs are supported: any missing keys are filled from the built-in defaults via deep merge.
+The configuration file lives at `~/.human-voice/config.json`. The file is JSON, validated against `question-bank/schemas/config.schema.json`. Partial configs are supported: any missing keys are filled from the built-in defaults via deep merge.
 
 You can view the effective config at any time:
 
@@ -183,7 +178,7 @@ Each key is a boolean toggle. Set to `false` to skip that pattern category.
 
 | Key | Type | Default | Description |
 |---|---|---|---|
-| `session_storage` | string | `"$CLAUDE_PLUGIN_DATA/sessions"` | Directory for session state persistence. |
+| `session_storage` | string | `"~/.human-voice/sessions"` | Directory for session state persistence. |
 | `total_estimated_minutes` | integer | `35` | Estimated interview duration in minutes. |
 | `estimated_questions` | integer | `70` | Target question count for a complete session. |
 | `format_streak_limit` | integer | `5` | Max consecutive same-format questions before a forced format change. |
@@ -244,9 +239,9 @@ Each key is a boolean toggle. Set to `false` to skip that pattern category.
 
 | Key | Type | Default | Description |
 |---|---|---|---|
-| `publish_to` | string | `"$CLAUDE_PLUGIN_DATA/profile.json"` | Path where the completed voice profile JSON is written. |
-| `injection_to` | string | `"$CLAUDE_PLUGIN_DATA/voice-prompt.txt"` | Path where the voice prompt injection text is written. |
-| `profiles_dir` | string | `"$CLAUDE_PLUGIN_DATA/profiles"` | Directory where named profiles are stored by the profile registry. |
+| `publish_to` | string | `"~/.human-voice/profile.json"` | Path where the completed voice profile JSON is written. |
+| `injection_to` | string | `"~/.human-voice/voice-prompt.txt"` | Path where the voice prompt injection text is written. |
+| `profiles_dir` | string | `"~/.human-voice/profiles"` | Directory where named profiles are stored by the profile registry. |
 | `population_means` | object | _(see below)_ | Population baseline statistics for z-score computation. |
 
 #### population_means defaults

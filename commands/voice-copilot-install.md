@@ -1,0 +1,50 @@
+---
+description: Install voice profile(s) into a project's GitHub Copilot configuration
+---
+
+# /human-voice:voice-copilot-install
+
+Install one or more human-voice profiles into a target project as GitHub Copilot
+custom instructions, prompts, agents, AGENTS.md, and a PR review workflow.
+
+## Arguments
+
+`$ARGUMENTS` — optional CLI args forwarded to `bin/voice-copilot-install`.
+Examples:
+
+- `--target /path/to/repo` (default: current working directory)
+- `--profile robert-allen` (single profile; default: active profile)
+- `--profiles robert-allen,tech-authority --route 'docs/**=tech-authority;**/*.md=robert-allen'`
+- `--default robert-allen` (which installed slug is the repo default)
+- `--overwrite error|merge|force` (default: `merge` — replaces marker blocks, preserves surrounding content)
+- `--dry-run` (print intended writes, touch nothing)
+- `--no-workflow`, `--no-prompts`, `--no-agent`, `--no-agents-md`, `--no-redact`
+
+If `$ARGUMENTS` is empty, run with defaults (active profile, install into cwd, merge mode).
+
+## Steps
+
+**Important**: always invoke the CLI via its absolute path at `${CLAUDE_PLUGIN_ROOT}/bin/voice-copilot-install`. The default `--target=.` resolves against the user's current working directory (the project they're standing in), which is what you want. Do NOT `cd` into the plugin root first — that would make `--target=.` resolve to the plugin itself.
+
+1. **Run**: `"${CLAUDE_PLUGIN_ROOT}/bin/voice-copilot-install" $ARGUMENTS`. Surface the list of written/skipped files. If the user passed `--dry-run`, the CLI will print intended writes and touch nothing — do not follow up with a real install unless they ask.
+
+2. **Report**: Summarise what was written and point the user at `.github/copilot-instructions.md` as the entry point. If a workflow was written, remind them to commit and push so Copilot code review picks it up on the next PR.
+
+## What gets written
+
+- `.github/copilot-instructions.md` — repo-wide, loaded by Copilot automatically on GitHub.
+- `AGENTS.md` at repo root — coding-agent instructions.
+- `.github/instructions/human-voice-<slug>.instructions.md` — path-scoped (one per profile; `applyTo` glob drives routing).
+- `.github/prompts/voice-{review,fix,draft}.prompt.md` — reusable Copilot Chat slash commands.
+- `.github/agents/human-voice-<slug>.agent.md` — Copilot custom agents (one per profile).
+- `.github/human-voice/<slug>/profile.json` + `voice-prompt.txt` — redacted profile artefacts.
+- `.github/human-voice/scripts/*.js` — bundled validator scripts.
+- `.github/workflows/voice-review.yml` — PR workflow that runs validators on changed prose and comments findings.
+
+Repo-wide instructions and AGENTS.md are written inside `<!-- human-voice:start -->` / `<!-- human-voice:end -->` markers, so re-runs are idempotent and never clobber user-added content outside the block.
+
+## Notes
+
+- Profile data is redacted by default before embedding (drops `metadata` and `known_gaps`, trims `calibration` to its summary). Pass `--no-redact` only for private repos.
+- The workflow triggers only on pull requests touching `docs/**`, `README*`, `CHANGELOG*`, `CONTRIBUTING*`, and `**/*.{md,mdx}`.
+- For multi-profile installs, provide a `--route` spec mapping globs to slugs. The default profile applies to anything not matched by an explicit glob.

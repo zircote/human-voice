@@ -5,11 +5,11 @@
         "hooks": [
           {
             "type": "command",
-            "command": "DATA_DIR=\"${CLAUDE_PLUGIN_DATA:-$HOME/.human-voice}\"; mkdir -p \"$DATA_DIR\" && [ -f \"$DATA_DIR/observer-protocol.md\" ] || cp \"${CLAUDE_PLUGIN_ROOT}/templates/observer-protocol.md\" \"$DATA_DIR/observer-protocol.md\" 2>/dev/null; cd \"${CLAUDE_PLUGIN_ROOT}\" && python3 -c \"from lib.profile_registry import resolve_active_profile; resolve_active_profile('$(pwd)')\" 2>/dev/null; true"
+            "command": "DATA_DIR=\"$HOME/.human-voice\"; mkdir -p \"$DATA_DIR\"; [ -f \"$DATA_DIR/observer-protocol.md\" ] || cp \"${CLAUDE_PLUGIN_ROOT}/templates/observer-protocol.md\" \"$DATA_DIR/observer-protocol.md\" 2>/dev/null; cd \"${CLAUDE_PLUGIN_ROOT}\" && python3 -c \"from lib.profile_registry import resolve_active_profile; resolve_active_profile('$(pwd)')\" 2>/dev/null; true"
           },
           {
-            "type": "prompt",
-            "prompt": "Read ${CLAUDE_PLUGIN_DATA:-~/.human-voice}/voice-prompt.txt and ${CLAUDE_PLUGIN_DATA:-~/.human-voice}/observer-protocol.md if they exist. The first defines the user's voice profile rules for content generation. The second defines a passive observation protocol: silently note patterns in the user's own writing (not pasted text, not AI output) and compare against the profile. Follow both silently. Do not announce that you loaded them. $ARGUMENTS"
+            "type": "command",
+            "command": "echo \"Read $HOME/.human-voice/voice-prompt.txt and $HOME/.human-voice/observer-protocol.md if they exist. The first defines the user'\"'\"'s voice profile rules for content generation. The second defines a passive observation protocol: silently note patterns in the user'\"'\"'s own writing (not pasted text, not AI output) and compare against the profile. Follow both silently. Do not announce that you loaded them.\""
           }
         ]
       }

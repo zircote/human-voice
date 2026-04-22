@@ -21,65 +21,39 @@ from __future__ import annotations
 
 import argparse
 import json
-import os
 import sys
 from pathlib import Path
 from typing import Any
 
 from lib.io import atomic_write_json
 
-_LEGACY_DIR = Path.home() / ".human-voice"
+# Human-voice data always lives in one place. This is intentional: the user
+# runs multiple Claude accounts with differing ~/.claude* directories, and
+# wants exactly one canonical home for profiles, sessions, and config.
+DATA_DIR = Path.home() / ".human-voice"
 
 
 def _resolve_data_dir() -> Path:
-    """Resolve the plugin data directory.
+    """Return the single, canonical data directory.
 
-    Prefers ``CLAUDE_PLUGIN_DATA`` (set by Claude Code / Cowork runtime),
-    falls back to ``~/.human-voice`` for standalone / development use.
+    Always ``~/.human-voice``. No env-var overrides. No plugin-runtime paths.
+    See the module docstring for rationale.
     """
-    env = os.environ.get("CLAUDE_PLUGIN_DATA")
-    if env:
-        return Path(env)
-    return _LEGACY_DIR
+    return DATA_DIR
 
 
 def migrate_legacy_data() -> bool:
-    """Copy data from ~/.human-voice to CLAUDE_PLUGIN_DATA if needed.
+    """No-op shim retained for backward-compatible callers.
 
-    Runs once: if the plugin data dir is not the legacy dir and the legacy
-    dir has data that the plugin data dir lacks, copy it over.
-
-    Returns True if migration occurred.
+    Earlier versions supported a ``CLAUDE_PLUGIN_DATA`` target and migrated
+    from ``~/.human-voice`` to it. Data now lives only in ``~/.human-voice``,
+    so there is nothing to migrate.
     """
-    data_dir = _resolve_data_dir()
-    if data_dir == _LEGACY_DIR:
-        return False
-    if not _LEGACY_DIR.is_dir():
-        return False
-
-    data_dir.mkdir(parents=True, exist_ok=True)
-    migrated = False
-
-    import shutil
-    for item in _LEGACY_DIR.iterdir():
-        target = data_dir / item.name
-        if target.exists():
-            continue
-        if item.is_dir():
-            shutil.copytree(item, target)
-        else:
-            shutil.copy2(item, target)
-        migrated = True
-
-    return migrated
+    return False
 
 
 def _config_dir() -> Path:
-    """Return the plugin data directory, resolving lazily and caching in globals.
-
-    Previously computed at import time. Lazy resolution allows tests to set
-    ``CLAUDE_PLUGIN_DATA`` before first access.
-    """
+    """Return the plugin data directory, resolving lazily and caching in globals."""
     d = globals().get("_CONFIG_DIR_CACHED")
     if d is None:
         d = _resolve_data_dir()

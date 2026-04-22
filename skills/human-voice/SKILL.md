@@ -177,7 +177,7 @@ MANDATORY CONSTRAINTS:
 
 ## Configuration
 
-Configuration is stored in `$CLAUDE_PLUGIN_DATA/config.json` (`~/.human-voice/config.json` when `$CLAUDE_PLUGIN_DATA` is unset). Run `/human-voice:voice-setup` or edit directly. Example settings:
+Configuration is stored in `~/.human-voice/config.json`. Run `/human-voice:voice-setup` or edit directly. Example settings:
 
 ```yaml
 ---
@@ -257,9 +257,9 @@ All skill functionality works without Subcog. Memory integration is additive:
 
 This protocol runs passively via the SessionStart hook. It does not require manual invocation.
 
-When the user authors content during a session, silently observe their writing and compare against the voice profile at `${CLAUDE_PLUGIN_DATA}/voice-prompt.txt`. Only observe text the user composed (not pasted external text, not AI-generated text). See `${CLAUDE_PLUGIN_DATA}/observer-protocol.md` for the full observation rules.
+When the user authors content during a session, silently observe their writing and compare against the voice profile at `~/.human-voice/voice-prompt.txt`. Only observe text the user composed (not pasted external text, not AI-generated text). See `~/.human-voice/observer-protocol.md` for the full observation rules.
 
-**Note**: `${CLAUDE_PLUGIN_DATA}` defaults to `~/.human-voice` when not set. All profiles, sessions, and config live under `~/.human-voice/` in standalone mode.
+**Note**: All profiles, sessions, and config live under `~/.human-voice/`. This is the single canonical location regardless of which Claude account or plugin runtime is active.
 
 Use `/human-voice:voice-drift` to report accumulated observations and drift from the profile.
 

@@ -5,6 +5,95 @@ All notable changes to the Human Voice plugin will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.8.3] - 2026-04-22
+
+### Changed
+
+- `/human-voice:voice-copilot-install` slash command simplified: single
+  invocation step that honours the user's flags as passed. When `--dry-run`
+  is supplied the CLI prints intended writes and stops; Claude no longer
+  chases a real install afterwards unless explicitly asked.
+
+## [0.8.2] - 2026-04-22
+
+### Fixed
+
+- `/human-voice:voice-copilot-install` slash command invoked
+  `bin/voice-copilot-install` via a relative path, which failed when Claude's
+  cwd was the user's target project rather than the plugin root. Updated the
+  command to invoke `"${CLAUDE_PLUGIN_ROOT}/bin/voice-copilot-install"`, which
+  keeps the caller's cwd intact so `--target=.` still resolves to the project.
+
+## [0.8.1] - 2026-04-22
+
+### Fixed
+
+- `voice-copilot-install` defaulted `--target=.` to the plugin root because the
+  bash wrapper did `cd "$PLUGIN_ROOT"` before exec. Removed the chdir; PYTHONPATH
+  already lets Python import `lib.*` from anywhere, and `.` now correctly
+  resolves to the user's cwd.
+
+## [0.8.0] - 2026-04-22
+
+### Added
+
+- **`/human-voice:voice-copilot-install` command** (CLI: `bin/voice-copilot-install`)
+  — installs one or more voice profiles into a target project's GitHub Copilot
+  configuration. Writes the full surface so Copilot (code review, coding agent,
+  Chat) applies the voice automatically:
+  - `.github/copilot-instructions.md` (repo-wide, marker-idempotent)
+  - `AGENTS.md` at repo root (coding-agent focus, marker-idempotent)
+  - `.github/instructions/human-voice-<slug>.instructions.md` with `applyTo`
+    globs (one per profile; path-scoped routing)
+  - `.github/prompts/voice-{review,fix,draft}.prompt.md` (Copilot Chat slash
+    commands)
+  - `.github/agents/human-voice-<slug>.agent.md` (Copilot custom agents)
+  - `.github/human-voice/<slug>/profile.json` (redacted) +
+    `voice-prompt.txt`
+  - `.github/human-voice/scripts/*.js` (bundled character-restriction
+    validators)
+  - `.github/workflows/voice-review.yml` (PR workflow that runs the validator
+    and posts findings as a PR comment; triggers on `docs/**`, `README*`,
+    `CHANGELOG*`, `CONTRIBUTING*`, `**/*.{md,mdx}`)
+- Multi-profile install with `--profiles a,b --route 'GLOB=SLUG;...'` routing.
+- Idempotent merge semantics via `<!-- human-voice:start -->` /
+  `<!-- human-voice:end -->` markers — re-running never clobbers user content.
+- Profile redaction by default (drops `metadata`, `known_gaps`, trims
+  `calibration` to summary) so public repos don't leak session notes. Pass
+  `--no-redact` to opt out.
+- Overwrite policies: `merge` (default), `force`, `error`.
+- `--dry-run` mode that prints intended writes without touching the filesystem.
+- 21 new tests under `tests/test_copilot_install.py` covering redaction,
+  routing, single/multi-profile install, overwrite policies, idempotency, and
+  dry-run.
+
+### Changed
+
+- Expanded `docs/guides/copilot-integration.md` to document the new installer
+  alongside the existing minimal-export flow.
+
+## [0.7.0] - 2026-04-22
+
+### Changed
+
+- **Single canonical data directory.** All plugin data (profiles, sessions,
+  config, voice-prompt.txt, observer-protocol.md) now lives in
+  `~/.human-voice/` unconditionally. `CLAUDE_PLUGIN_DATA` and any other env
+  var are ignored by the resolver. Rationale: users with multiple Claude
+  accounts and differing `~/.claude*` directories want exactly one place for
+  voice data. Skills, commands, agents, hooks, and setup script all point at
+  `~/.human-voice/` directly.
+- `lib.config.migrate_legacy_data` is now a no-op shim retained only for
+  backward-compatible callers.
+
+### Removed
+
+- Env-var based data-directory resolution. The short-lived `HUMAN_VOICE_DATA_DIR`
+  override (introduced in 0.6.0 but never released) is also removed — there is
+  no escape hatch by design.
+- `.human-voice-plugin` marker / stamping (no longer needed with a single
+  fixed location).
+
 ## [0.5.0] - 2026-04-15
 
 ### Fixed
@@ -97,6 +186,11 @@ Pattern detection based on:
 - [The Field Guide to AI Slop](https://www.ignorance.ai/p/the-field-guide-to-ai-slop)
 - [Common AI Words - Grammarly](https://www.grammarly.com/blog/ai/common-ai-words/)
 
+[0.8.3]: https://github.com/zircote/human-voice/compare/v0.8.2...v0.8.3
+[0.8.2]: https://github.com/zircote/human-voice/compare/v0.8.1...v0.8.2
+[0.8.1]: https://github.com/zircote/human-voice/compare/v0.8.0...v0.8.1
+[0.8.0]: https://github.com/zircote/human-voice/compare/v0.7.0...v0.8.0
+[0.7.0]: https://github.com/zircote/human-voice/compare/v0.5.0...v0.7.0
 [0.5.0]: https://github.com/zircote/human-voice/compare/v0.4.0...v0.5.0
 [0.4.0]: https://github.com/zircote/human-voice/compare/v0.3.0...v0.4.0
 [0.3.0]: https://github.com/zircote/human-voice/compare/v0.2.0...v0.3.0

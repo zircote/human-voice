@@ -38,7 +38,7 @@ pip install -e "./scoring[dev]"
 echo ""
 
 # 5. Download spaCy model into plugin data directory
-DATA_DIR="${CLAUDE_PLUGIN_DATA:-$HOME/.human-voice}"
+DATA_DIR="$HOME/.human-voice"
 mkdir -p "$DATA_DIR/models"
 echo "[5/8] Downloading spaCy en_core_web_sm model to $DATA_DIR/models ..."
 python3 -m spacy download en_core_web_sm
@@ -58,13 +58,8 @@ else
     mkdir -p "$DATA_DIR"
 fi
 
-# 7. Migrate legacy data if needed
-if [ -d "$HOME/.human-voice" ] && [ ! -L "$HOME/.human-voice" ] && [ "$DATA_DIR" != "$HOME/.human-voice" ]; then
-    echo "[7/8] Migrating legacy data from ~/.human-voice ..."
-    python3 -c "from lib.config import migrate_legacy_data; print('Migrated' if migrate_legacy_data() else 'Nothing to migrate')"
-else
-    echo "[7/8] No legacy migration needed"
-fi
+# 7. Data directory is always ~/.human-voice — no migration needed
+echo "[7/8] Data directory is ~/.human-voice (canonical, no migration)"
 echo ""
 
 # 8. Validate JSON files

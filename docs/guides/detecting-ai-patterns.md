@@ -27,7 +27,7 @@ The wizard walks through:
 - **Fix behavior**: Whether to default to dry-run mode and whether to back up files
 - **Output format**: Verbosity level and output format (markdown or JSON)
 
-You can also edit `${CLAUDE_PLUGIN_DATA}/config.json` directly. See the [Configuration Reference](../reference/configuration.md) for the full config structure.
+You can also edit `~/.human-voice/config.json` directly. See the [Configuration Reference](../reference/configuration.md) for the full config structure.
 
 ## Review content for AI patterns
 

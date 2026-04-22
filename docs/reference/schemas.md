@@ -20,7 +20,7 @@ All schemas use JSON Schema Draft 2020-12. Schema files are located in `question
 
 ## Configuration
 
-Defines the unified configuration for the human-voice plugin, covering AI writing pattern detection settings and voice elicitation interview settings. Stored at `$CLAUDE_PLUGIN_DATA/config.json`.
+Defines the unified configuration for the human-voice plugin, covering AI writing pattern detection settings and voice elicitation interview settings. Stored at `~/.human-voice/config.json`.
 
 The schema contains two top-level sections:
 
