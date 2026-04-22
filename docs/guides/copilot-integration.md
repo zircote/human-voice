@@ -6,7 +6,12 @@ diataxis_goal: Export voice profiles to a repository for use by GitHub Copilot a
 
 # Integrating with GitHub Copilot
 
-This guide covers how to export voice profiles to a repository so GitHub Copilot applies them automatically during content generation and review.
+This guide covers how to install voice profiles into a project so GitHub Copilot (code review, coding agent, chat) applies them automatically.
+
+Two commands are available:
+
+- **`voice-copilot-install`** (recommended) — writes the full Copilot surface: `copilot-instructions.md`, path-scoped `instructions/*.instructions.md`, reusable `prompts/*.prompt.md`, custom `agents/*.agent.md`, root `AGENTS.md`, redacted profile artefacts under `.github/human-voice/`, and a PR review workflow. Idempotent.
+- **`voice-profiles install`** (minimal) — writes only a single `.github/copilot-instructions.md`. Retained for users who want the smallest footprint.
 
 ## Prerequisites
 
@@ -14,9 +19,73 @@ This guide covers how to export voice profiles to a repository so GitHub Copilot
 - The human-voice plugin installed
 - GitHub Copilot enabled on the target repository
 
-## Install profiles to a repository
+## Full Copilot install (recommended)
 
-Use the `voice-profiles install` command to export one or more profiles into a repository. This generates a single `.github/copilot-instructions.md` file containing all specified profiles with routing logic.
+Run the slash command from the target project root, or invoke the CLI directly:
+
+```
+/human-voice:voice-copilot-install
+```
+
+```bash
+bin/voice-copilot-install --target /path/to/repo
+```
+
+With no flags, this installs the currently-active profile into the cwd using merge mode. The command is idempotent — re-running replaces only the content between `<!-- human-voice:start -->` / `<!-- human-voice:end -->` markers; anything you added outside those markers is preserved.
+
+### What it writes
+
+| Path | Role |
+|---|---|
+| `.github/copilot-instructions.md` | Repo-wide instructions loaded automatically by Copilot. |
+| `AGENTS.md` | Root-level instructions for Copilot coding agent. |
+| `.github/instructions/human-voice-<slug>.instructions.md` | Path-scoped rules; the `applyTo` frontmatter glob drives routing. |
+| `.github/prompts/voice-review.prompt.md` | `/voice-review` slash command in Copilot Chat. |
+| `.github/prompts/voice-fix.prompt.md` | `/voice-fix` — rewrite a selection in-voice. |
+| `.github/prompts/voice-draft.prompt.md` | `/voice-draft` — new content in-voice. |
+| `.github/agents/human-voice-<slug>.agent.md` | Copilot custom agents (one per profile). |
+| `.github/human-voice/<slug>/profile.json` | Redacted profile (metadata and raw calibration stripped). |
+| `.github/human-voice/<slug>/voice-prompt.txt` | Compact voice rules. |
+| `.github/human-voice/scripts/*.js` | Bundled character-restriction validators. |
+| `.github/workflows/voice-review.yml` | PR workflow that runs the validator and posts findings. |
+
+### Multi-profile install with routing
+
+Install multiple profiles and map globs to slugs via `--route`:
+
+```bash
+bin/voice-copilot-install \
+  --profiles robert-allen,tech-authority \
+  --default robert-allen \
+  --route 'docs/**=tech-authority;**/*.md=robert-allen' \
+  --target /path/to/repo
+```
+
+Each profile gets its own `instructions/*.instructions.md` with a distinct `applyTo` glob. The default profile covers anything not matched by an explicit glob.
+
+### Privacy
+
+By default, the installer redacts the embedded `profile.json`: it drops `metadata` (session ID, notes), drops `known_gaps`, and trims `calibration` to its summary. The retained fields (`dimensions`, `mechanics`, `distinctive_features`, `voice_aspirations`, `identity_summary`, `calibration.summary`) are the signals Copilot needs to emulate voice. Pass `--no-redact` only for private repos where the full profile is acceptable.
+
+### Dry run
+
+```bash
+bin/voice-copilot-install --dry-run
+```
+
+Prints the list of files that would be written, with byte sizes. Touches nothing.
+
+### Overwrite policies
+
+- `--overwrite merge` (default) — replace content between markers; preserve surrounding text.
+- `--overwrite force` — overwrite the entire target file.
+- `--overwrite error` — fail if any target exists.
+
+Non-markered files (instructions, prompts, agents, workflow, embedded artefacts) are overwritten in `force` mode and skipped in `error` mode.
+
+## Minimal install (legacy)
+
+Use the original `voice-profiles install` command to export one or more profiles into a repository. This generates a single `.github/copilot-instructions.md` file containing all specified profiles with routing logic.
 
 ```bash
 bin/voice-profiles install robert-allen zircote-brand --to-repo ../my-repo

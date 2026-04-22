@@ -5,6 +5,45 @@ All notable changes to the Human Voice plugin will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.8.0] - 2026-04-22
+
+### Added
+
+- **`/human-voice:voice-copilot-install` command** (CLI: `bin/voice-copilot-install`)
+  — installs one or more voice profiles into a target project's GitHub Copilot
+  configuration. Writes the full surface so Copilot (code review, coding agent,
+  Chat) applies the voice automatically:
+  - `.github/copilot-instructions.md` (repo-wide, marker-idempotent)
+  - `AGENTS.md` at repo root (coding-agent focus, marker-idempotent)
+  - `.github/instructions/human-voice-<slug>.instructions.md` with `applyTo`
+    globs (one per profile; path-scoped routing)
+  - `.github/prompts/voice-{review,fix,draft}.prompt.md` (Copilot Chat slash
+    commands)
+  - `.github/agents/human-voice-<slug>.agent.md` (Copilot custom agents)
+  - `.github/human-voice/<slug>/profile.json` (redacted) +
+    `voice-prompt.txt`
+  - `.github/human-voice/scripts/*.js` (bundled character-restriction
+    validators)
+  - `.github/workflows/voice-review.yml` (PR workflow that runs the validator
+    and posts findings as a PR comment; triggers on `docs/**`, `README*`,
+    `CHANGELOG*`, `CONTRIBUTING*`, `**/*.{md,mdx}`)
+- Multi-profile install with `--profiles a,b --route 'GLOB=SLUG;...'` routing.
+- Idempotent merge semantics via `<!-- human-voice:start -->` /
+  `<!-- human-voice:end -->` markers — re-running never clobbers user content.
+- Profile redaction by default (drops `metadata`, `known_gaps`, trims
+  `calibration` to summary) so public repos don't leak session notes. Pass
+  `--no-redact` to opt out.
+- Overwrite policies: `merge` (default), `force`, `error`.
+- `--dry-run` mode that prints intended writes without touching the filesystem.
+- 21 new tests under `tests/test_copilot_install.py` covering redaction,
+  routing, single/multi-profile install, overwrite policies, idempotency, and
+  dry-run.
+
+### Changed
+
+- Expanded `docs/guides/copilot-integration.md` to document the new installer
+  alongside the existing minimal-export flow.
+
 ## [0.7.0] - 2026-04-22
 
 ### Changed
@@ -119,6 +158,7 @@ Pattern detection based on:
 - [The Field Guide to AI Slop](https://www.ignorance.ai/p/the-field-guide-to-ai-slop)
 - [Common AI Words - Grammarly](https://www.grammarly.com/blog/ai/common-ai-words/)
 
+[0.8.0]: https://github.com/zircote/human-voice/compare/v0.7.0...v0.8.0
 [0.7.0]: https://github.com/zircote/human-voice/compare/v0.5.0...v0.7.0
 [0.5.0]: https://github.com/zircote/human-voice/compare/v0.4.0...v0.5.0
 [0.4.0]: https://github.com/zircote/human-voice/compare/v0.3.0...v0.4.0

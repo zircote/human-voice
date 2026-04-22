@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+# Install voice profiles into a project's GitHub Copilot configuration.
+set -euo pipefail
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+PLUGIN_ROOT="${CLAUDE_PLUGIN_ROOT:-$(cd "$SCRIPT_DIR/.." && pwd)}"
+export PYTHONPATH="${PLUGIN_ROOT}:${PLUGIN_ROOT}/scoring/src:${PLUGIN_ROOT}/nlp/src:${PYTHONPATH:-}"
+cd "$PLUGIN_ROOT"
+exec python3 -m lib.copilot_install "$@"
