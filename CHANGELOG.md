@@ -5,6 +5,15 @@ All notable changes to the Human Voice plugin will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.8.1] - 2026-04-22
+
+### Fixed
+
+- `voice-copilot-install` defaulted `--target=.` to the plugin root because the
+  bash wrapper did `cd "$PLUGIN_ROOT"` before exec. Removed the chdir; PYTHONPATH
+  already lets Python import `lib.*` from anywhere, and `.` now correctly
+  resolves to the user's cwd.
+
 ## [0.8.0] - 2026-04-22
 
 ### Added
@@ -158,6 +167,7 @@ Pattern detection based on:
 - [The Field Guide to AI Slop](https://www.ignorance.ai/p/the-field-guide-to-ai-slop)
 - [Common AI Words - Grammarly](https://www.grammarly.com/blog/ai/common-ai-words/)
 
+[0.8.1]: https://github.com/zircote/human-voice/compare/v0.8.0...v0.8.1
 [0.8.0]: https://github.com/zircote/human-voice/compare/v0.7.0...v0.8.0
 [0.7.0]: https://github.com/zircote/human-voice/compare/v0.5.0...v0.7.0
 [0.5.0]: https://github.com/zircote/human-voice/compare/v0.4.0...v0.5.0
