@@ -38,7 +38,8 @@ pip install -e "./scoring[dev]"
 echo ""
 
 # 5. Download spaCy model into plugin data directory
-DATA_DIR="${CLAUDE_PLUGIN_DATA:-$HOME/.human-voice}"
+DATA_DIR=$(python3 -c "from lib.config import CONFIG_DIR; print(CONFIG_DIR)" 2>/dev/null)
+DATA_DIR="${DATA_DIR:-$HOME/.human-voice}"
 mkdir -p "$DATA_DIR/models"
 echo "[5/8] Downloading spaCy en_core_web_sm model to $DATA_DIR/models ..."
 python3 -m spacy download en_core_web_sm

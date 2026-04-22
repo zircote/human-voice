@@ -29,18 +29,67 @@ from typing import Any
 from lib.io import atomic_write_json
 
 _LEGACY_DIR = Path.home() / ".human-voice"
+_PLUGIN_SLUG = "human-voice"
+_DATA_DIR_MARKER = ".human-voice-plugin"
+
+
+def _belongs_to_this_plugin(path: Path) -> bool:
+    """Heuristic: does *path* look like this plugin's data directory?
+
+    Returns True if any of:
+    - the basename contains ``human-voice`` (Claude Code / Cowork convention
+      places plugin data at ``…/plugins/data/<plugin-name>``);
+    - the directory contains the ``.human-voice-plugin`` marker stamped by
+      this plugin on first use;
+    - the directory contains our well-known top-level files.
+
+    Anything else is assumed to belong to a different plugin whose
+    ``CLAUDE_PLUGIN_DATA`` has leaked into the current process env.
+    """
+    if _PLUGIN_SLUG in path.name:
+        return True
+    if (path / _DATA_DIR_MARKER).is_file():
+        return True
+    if (path / "voice-prompt.txt").is_file():
+        return True
+    # profile.json alone is too generic (other plugins may use that name),
+    # so require it alongside a voice-specific sibling.
+    if (path / "profile.json").is_file() and (path / "sessions").is_dir():
+        return True
+    return False
 
 
 def _resolve_data_dir() -> Path:
     """Resolve the plugin data directory.
 
-    Prefers ``CLAUDE_PLUGIN_DATA`` (set by Claude Code / Cowork runtime),
-    falls back to ``~/.human-voice`` for standalone / development use.
+    Resolution order:
+    1. ``HUMAN_VOICE_DATA_DIR`` — explicit plugin-scoped override, always wins.
+    2. ``CLAUDE_PLUGIN_DATA`` — only if :func:`_belongs_to_this_plugin` recognises
+       the target. This guards against a leaked value set by another plugin.
+    3. ``~/.human-voice`` — standalone / development fallback.
     """
+    override = os.environ.get("HUMAN_VOICE_DATA_DIR")
+    if override:
+        return Path(override).expanduser()
+
     env = os.environ.get("CLAUDE_PLUGIN_DATA")
     if env:
-        return Path(env)
+        path = Path(env).expanduser()
+        if _belongs_to_this_plugin(path):
+            return path
+        # Value is set but points at another plugin's data dir — ignore it.
+
     return _LEGACY_DIR
+
+
+def _stamp_data_dir(path: Path) -> None:
+    """Drop a marker file so this dir is self-identifying on next access."""
+    try:
+        marker = path / _DATA_DIR_MARKER
+        if not marker.exists():
+            marker.write_text("human-voice plugin data directory\n", encoding="utf-8")
+    except OSError:
+        pass
 
 
 def migrate_legacy_data() -> bool:
@@ -84,6 +133,8 @@ def _config_dir() -> Path:
     if d is None:
         d = _resolve_data_dir()
         globals()["_CONFIG_DIR_CACHED"] = d
+        if d.is_dir():
+            _stamp_data_dir(d)
     return d
 
 

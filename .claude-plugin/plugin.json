@@ -1,6 +1,6 @@
 {
   "name": "human-voice",
-  "version": "0.5.0",
+  "version": "0.6.0",
   "description": "Detect AI-generated writing patterns and build authentic voice profiles through adaptive interviews and computational stylistics",
   "author": {
     "name": "zircote",

@@ -5,6 +5,24 @@ All notable changes to the Human Voice plugin will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.6.0] - 2026-04-22
+
+### Fixed
+
+- Plugin no longer reads profiles from the wrong directory when another plugin's
+  `CLAUDE_PLUGIN_DATA` leaks into the session environment. `lib.config` now
+  validates that the env-supplied path belongs to human-voice (basename or
+  `.human-voice-plugin` marker) before honouring it, otherwise falls back to
+  `~/.human-voice/`. SessionStart hooks and `scripts/setup.sh` now resolve the
+  data dir through Python instead of relying on raw shell expansion.
+
+### Added
+
+- `HUMAN_VOICE_DATA_DIR` environment variable: plugin-scoped override for the
+  data directory. Takes precedence over `CLAUDE_PLUGIN_DATA`.
+- `.human-voice-plugin` marker file stamped on the data dir on first access so
+  the directory is self-identifying across sessions.
+
 ## [0.5.0] - 2026-04-15
 
 ### Fixed
@@ -97,6 +115,7 @@ Pattern detection based on:
 - [The Field Guide to AI Slop](https://www.ignorance.ai/p/the-field-guide-to-ai-slop)
 - [Common AI Words - Grammarly](https://www.grammarly.com/blog/ai/common-ai-words/)
 
+[0.6.0]: https://github.com/zircote/human-voice/compare/v0.5.0...v0.6.0
 [0.5.0]: https://github.com/zircote/human-voice/compare/v0.4.0...v0.5.0
 [0.4.0]: https://github.com/zircote/human-voice/compare/v0.3.0...v0.4.0
 [0.3.0]: https://github.com/zircote/human-voice/compare/v0.2.0...v0.3.0

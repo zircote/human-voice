@@ -10,7 +10,8 @@ diataxis_describes: "Environment variables, CLI flags, directory layout, session
 | Variable | Purpose | Default |
 |---|---|---|
 | `VOICE_QUESTION_BANK` | Path to the question-bank directory containing scoring metadata and module definitions. Overrides automatic parent-walk discovery. The `--metadata-dir` CLI flag takes precedence over this variable. Legacy name `MIVOCA_QUESTION_BANK` is also accepted as a fallback. | _(none)_ |
-| `CLAUDE_PLUGIN_DATA` | Root data directory for the plugin. When set (typically by the Claude Code runtime), all session data, config, and profiles are stored here. When unset, falls back to `~/.human-voice`. | _(none)_ |
+| `CLAUDE_PLUGIN_DATA` | Root data directory for the plugin. Honoured only when the path is recognised as this plugin's data dir (basename contains `human-voice`, or the directory contains a `.human-voice-plugin` marker / `voice-prompt.txt`). If set but unrecognised — e.g. leaked from another plugin in the same session — the value is ignored and resolution falls back to `~/.human-voice`. | _(none)_ |
+| `HUMAN_VOICE_DATA_DIR` | Plugin-scoped override for the data directory. Takes precedence over `CLAUDE_PLUGIN_DATA`. Use this to force a specific path regardless of runtime-supplied values. | _(none)_ |
 
 ## CLI Flags
 
