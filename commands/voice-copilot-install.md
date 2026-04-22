@@ -26,11 +26,9 @@ If `$ARGUMENTS` is empty, run with defaults (active profile, install into cwd, m
 
 **Important**: always invoke the CLI via its absolute path at `${CLAUDE_PLUGIN_ROOT}/bin/voice-copilot-install`. The default `--target=.` resolves against the user's current working directory (the project they're standing in), which is what you want. Do NOT `cd` into the plugin root first — that would make `--target=.` resolve to the plugin itself.
 
-1. **Show the plan**: Run `"${CLAUDE_PLUGIN_ROOT}/bin/voice-copilot-install" --dry-run $ARGUMENTS` first. Print the list of files that would be written. Ask the user to confirm before proceeding unless they explicitly passed flags indicating they want to proceed immediately.
+1. **Run**: `"${CLAUDE_PLUGIN_ROOT}/bin/voice-copilot-install" $ARGUMENTS`. Surface the list of written/skipped files. If the user passed `--dry-run`, the CLI will print intended writes and touch nothing — do not follow up with a real install unless they ask.
 
-2. **Run the install**: `"${CLAUDE_PLUGIN_ROOT}/bin/voice-copilot-install" $ARGUMENTS`. Surface the list of written/skipped files.
-
-3. **Report**: Summarise what was written and point the user at `.github/copilot-instructions.md` as the entry point. If a workflow was written, remind them to commit and push so Copilot code review picks it up on the next PR.
+2. **Report**: Summarise what was written and point the user at `.github/copilot-instructions.md` as the entry point. If a workflow was written, remind them to commit and push so Copilot code review picks it up on the next PR.
 
 ## What gets written
 
