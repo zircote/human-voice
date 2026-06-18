@@ -5,6 +5,22 @@ All notable changes to the Human Voice plugin will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [Unreleased]
+
+### Added
+
+- New "false candor" detection category: honesty-signaling frames such as
+  "to be honest", "in all honesty", "to be transparent", and "truth be told".
+  Announcing your own honesty implies you were not honest before it, so the
+  reviewer now flags these frames and the generation constraints forbid them.
+  Added to the language-patterns reference, the human-voice SKILL, the
+  voice-reviewer agent (Claude and Copilot variants), the Copilot install
+  generator, the config schema description, the detection guide, and the
+  README. Folded under the existing `hedging` detection flag (no new config
+  key). The category targets the honesty *frame* only, not honest content,
+  and deliberately excludes bare adverbs ("genuinely", "truly", "frankly")
+  to avoid false positives.
+
 ## [0.8.3] - 2026-04-22
 
 ### Changed

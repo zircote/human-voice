@@ -37,6 +37,7 @@ When generating or editing markdown content, documentation, blog posts, or any p
 ### Anti-Patterns (Never Generate These)
 
 - Hedging: "It is worth noting," "It is important to mention," "arguably"
+- False candor: "To be honest," "In all honesty," "To be transparent," "Truth be told" (announcing honesty implies prior dishonesty)
 - Filler: "In order to," "Due to the fact that," "At the end of the day"
 - Meta-commentary: "In this article," "As mentioned earlier," "Let us explore"
 - Excessive enthusiasm: "amazing," "incredible," "game-changing"

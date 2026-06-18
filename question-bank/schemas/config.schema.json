@@ -86,7 +86,7 @@
             "hedging": {
               "type": "boolean",
               "default": true,
-              "description": "Detect excessive hedging language ('it's worth noting', 'it's important to remember', 'arguably') that AI uses to appear balanced."
+              "description": "Detect excessive hedging language ('it's worth noting', 'it's important to remember', 'arguably') and false-candor frames ('to be honest', 'in all honesty', 'to be transparent', 'truth be told') that AI uses to appear balanced or sincere."
             },
             "filler": {
               "type": "boolean",

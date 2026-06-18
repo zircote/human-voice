@@ -84,6 +84,7 @@ If neither file exists, fall back to scanning `.md`/`.mdx` in the current direct
 2. **Language Pattern Scan**: Search for:
    - AI buzzwords: delve, realm, pivotal, harness, revolutionize, seamlessly, cutting-edge
    - Hedging phrases: "it's worth noting", "generally speaking", "arguably"
+   - False candor: "to be honest", "in all honesty", "to be transparent", "truth be told" (announcing honesty implies prior dishonesty)
    - Filler phrases: "in order to", "due to the fact", "at the end of the day"
    - Meta-commentary: "in this article", "let's dive in", "let's explore"
 

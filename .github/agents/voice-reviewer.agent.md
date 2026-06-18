@@ -60,6 +60,7 @@ You review content for compliance with the author's voice profile and AI writing
 ### AI Writing Anti-Patterns (Flag These)
 
 - **Hedging**: "It is worth noting," "It is important to mention," "arguably"
+- **False candor**: "To be honest," "In all honesty," "To be transparent," "Truth be told." Announcing honesty implies prior dishonesty; state the point plainly instead
 - **Filler**: "In order to," "Due to the fact that," "At the end of the day"
 - **Meta-commentary**: "In this article," "As mentioned earlier," "Let us explore"
 - **Excessive enthusiasm**: "amazing," "incredible," "game-changing"

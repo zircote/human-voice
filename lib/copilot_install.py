@@ -329,6 +329,7 @@ def render_instructions_file(
         "- Em dashes (—), en dashes (– unless numeric range), smart quotes, Unicode ellipsis (…).",
         "- Emoji in prose (unless the profile explicitly allows).",
         "- Hedging filler: \"it's worth noting that\", \"navigating the landscape\", \"in today's fast-paced\".",
+        "- False candor: \"to be honest\", \"in all honesty\", \"to be transparent\", \"truth be told\" (announcing honesty implies prior dishonesty).",
         "- Rule-of-three cadence (\"fast, reliable, and scalable\") and from-X-to-Y constructions.",
         "- Generic analogies (\"like a symphony\", \"like a well-oiled machine\").",
         "- Meta-commentary (\"This response will explore...\").",

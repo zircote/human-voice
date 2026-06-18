@@ -63,6 +63,7 @@ The review scans for patterns in four tiers, from most concrete to most subjecti
 
 - **Buzzwords**: "delve", "leverage", "tapestry", "landscape", "robust", "comprehensive"
 - **Hedging**: "it's worth noting", "it's important to remember", "arguably"
+- **False candor**: "to be honest", "in all honesty", "to be transparent", "truth be told"
 - **Filler**: "in today's world", "at the end of the day", "when it comes to"
 - **Meta-commentary**: "as an AI", "let me explain", "in this article we will explore"
 

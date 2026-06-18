@@ -23,6 +23,30 @@ These patterns require human judgment but are strong AI indicators.
 grep -rn -i -E "it's worth noting|it's important to mention|generally speaking|in my opinion|as a matter of fact|to be honest|at the end of the day|it goes without saying|arguably|to some extent" _posts/ content/ _docs/
 ```
 
+## Honesty-Signaling Phrases (False Candor)
+
+These frames announce that what follows is honest, transparent, or candid. Protesting your honesty implies you were not honest before it. Only liars need to convince a reader they are telling the truth. Delete the frame and let the statement stand on its own.
+
+| Pattern | Issue | Better Alternative |
+|---------|-------|-------------------|
+| "To be honest..." | Implies you were not honest elsewhere | Remove entirely |
+| "In all honesty..." | Same implication, more weight | Remove entirely |
+| "Let me be honest..." | Performs candor instead of being plain | State the point directly |
+| "Honestly speaking..." | Filler that signals the opposite | Remove entirely |
+| "To be fully transparent..." | Announces a virtue rather than showing it | Just disclose the thing |
+| "To be candid..." / "To be frank..." | Same false-candor tell | Remove entirely |
+| "Truth be told..." | Cliche that implies prior concealment | Remove entirely |
+| "I'll be honest with you..." | Manufactured intimacy | State the point directly |
+| "Not gonna lie..." | Signals that lying was on the table | Remove entirely |
+
+Note: this targets the honesty *frame*, not honest content. "I was honest about the tradeoffs" and "the report is transparent about its limits" are fine. The tell is announcing your own honesty, not being honest.
+
+### Detection Command
+
+```bash
+grep -rn -i -E "to be honest|in all honesty|let me be honest|honestly speaking|to be (fully )?(transparent|candid|frank)|truth be told|i'?ll be honest with you|if i'?m being honest|not gonna lie" _posts/ content/ _docs/
+```
+
 ## AI Buzzwords (Replace with Plain Language)
 
 | Word | Issue | Alternatives |

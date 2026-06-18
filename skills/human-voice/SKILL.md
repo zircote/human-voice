@@ -51,6 +51,7 @@ grep -rn -i -E "it's worth noting|generally speaking|at the end of the day" <dir
 
 Key categories to check:
 - **Hedging phrases**: "It's worth noting", "Generally speaking", "Arguably"
+- **False candor**: "To be honest", "In all honesty", "To be transparent", "Truth be told" (announcing honesty implies you were not honest before it)
 - **AI buzzwords**: delve, realm, pivotal, harness, revolutionize, seamlessly
 - **Filler phrases**: "In order to", "Due to the fact that", "At this point in time"
 - **Excessive transitions**: Furthermore, Moreover, Additionally, Consequently
@@ -152,6 +153,7 @@ Apply the voice review checklist:
 8. Don't claim without evidence: Show the improvement with numbers
 9. Don't over-explain: Trust your reader
 10. Don't use em dashes: Use colons, commas, or periods
+11. Don't announce your honesty: Drop "to be honest", "in all honesty", "to be transparent". Protesting candor signals its opposite. State the point instead
 
 ## Content Generation Constraints
 
@@ -166,6 +168,8 @@ MANDATORY CONSTRAINTS:
   cutting-edge, game-changing, robust, leverage, utilize, facilitate,
   synergy, paradigm, holistic, ecosystem, innovative, transformative
 - No hedging: "it's worth noting", "generally speaking", "arguably"
+- No false candor: "to be honest", "in all honesty", "to be transparent",
+  "truth be told" (announcing honesty implies prior dishonesty)
 - No filler: "in order to", "due to the fact", "at the end of the day"
 - No meta-commentary: "In this article", "Let's dive in", "As mentioned"
 - Use active voice

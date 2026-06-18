@@ -125,6 +125,7 @@ The `voice-reviewer` agent triggers:
 
 - **Buzzwords**: delve, realm, pivotal, harness, revolutionize, seamlessly
 - **Hedging**: "it's worth noting", "generally speaking", "arguably"
+- **False candor**: "to be honest", "in all honesty", "to be transparent", "truth be told"
 - **Filler**: "in order to", "due to the fact", "at this point in time"
 
 ### Tier 3: Structural Patterns
